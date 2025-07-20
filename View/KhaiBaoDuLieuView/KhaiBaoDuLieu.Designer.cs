@@ -47,6 +47,7 @@
             this.btn_tttb.TabIndex = 0;
             this.btn_tttb.Text = "Thông tin tập bài";
             this.btn_tttb.UseVisualStyleBackColor = true;
+            this.btn_tttb.Click += new System.EventHandler(this.btn_tttb_Click);
             // 
             // btn_qstgcd
             // 

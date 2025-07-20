@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS thongtintepbai (
     chihuyhaucan TEXT,
     chihuyduan_tt TEXT,
     chihuyhaucan_tt TEXT,
-    phienhedonvitapbai TEXT,
     captren TEXT,
     capminh TEXT,
     User TEXT

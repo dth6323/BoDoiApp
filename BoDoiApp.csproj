@@ -65,7 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataLayer\ThongTinTepBai.cs" />
+    <Compile Include="DataLayer\ThongTinTepBaiData.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="View\DangNhap\DangKy.cs">
       <SubType>Form</SubType>

@@ -259,6 +259,7 @@
             this.btn_luu.TabIndex = 16;
             this.btn_luu.Text = "Lưu";
             this.btn_luu.UseVisualStyleBackColor = true;
+            this.btn_luu.Click += new System.EventHandler(this.btn_luu_Click);
             // 
             // btn_thoat
             // 

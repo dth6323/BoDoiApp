@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,8 @@ namespace BoDoiApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            FormMana.KhaiBaoDuLieu.Show();
+            this.Hide();
         }
 
         private void Form1_Load(object sender, EventArgs e)

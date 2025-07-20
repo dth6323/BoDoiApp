@@ -21,5 +21,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
 
         }
+
+        private void btn_tttb_Click(object sender, EventArgs e)
+        {
+            FormMana.ThongTinTapBai.Show();
+            this.Hide();
+        }
     }
 }
