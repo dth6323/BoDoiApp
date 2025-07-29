@@ -81,6 +81,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 {
                     MessageBox.Show("Thêm thông tin thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
+                isAddingNew = false;
             }
             else
             {
@@ -94,6 +96,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
         }
 
-
+        private void btn_thoat_Click(object sender, EventArgs e)
+        {
+            FormMana.KhaiBaoDuLieu.Show();
+            this.Hide();
+        }
     }
 }

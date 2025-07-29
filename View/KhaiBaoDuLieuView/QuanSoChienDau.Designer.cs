@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_thoat = new System.Windows.Forms.Button();
+            this.txt_luu = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txt_phdv1
@@ -149,18 +150,30 @@
             // 
             // btn_thoat
             // 
-            this.btn_thoat.Location = new System.Drawing.Point(310, 284);
+            this.btn_thoat.Location = new System.Drawing.Point(370, 284);
             this.btn_thoat.Name = "btn_thoat";
             this.btn_thoat.Size = new System.Drawing.Size(75, 23);
             this.btn_thoat.TabIndex = 2;
             this.btn_thoat.Text = "Thoát";
             this.btn_thoat.UseVisualStyleBackColor = true;
+            this.btn_thoat.Click += new System.EventHandler(this.btn_thoat_Click);
+            // 
+            // txt_luu
+            // 
+            this.txt_luu.Location = new System.Drawing.Point(258, 284);
+            this.txt_luu.Name = "txt_luu";
+            this.txt_luu.Size = new System.Drawing.Size(75, 23);
+            this.txt_luu.TabIndex = 3;
+            this.txt_luu.Text = "Lưu";
+            this.txt_luu.UseVisualStyleBackColor = true;
+            this.txt_luu.Click += new System.EventHandler(this.txt_luu_Click);
             // 
             // QuanSoChienDau
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 385);
+            this.Controls.Add(this.txt_luu);
             this.Controls.Add(this.btn_thoat);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -201,5 +214,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_thoat;
+        private System.Windows.Forms.Button txt_luu;
     }
 }

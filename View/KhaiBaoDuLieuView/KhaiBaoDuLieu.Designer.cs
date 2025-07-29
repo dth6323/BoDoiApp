@@ -57,6 +57,7 @@
             this.btn_qstgcd.TabIndex = 0;
             this.btn_qstgcd.Text = "Quân số tham gia chiến đấu";
             this.btn_qstgcd.UseVisualStyleBackColor = true;
+            this.btn_qstgcd.Click += new System.EventHandler(this.btn_qstgcd_Click);
             // 
             // btn_vchc
             // 
@@ -66,6 +67,7 @@
             this.btn_vchc.TabIndex = 0;
             this.btn_vchc.Text = "Vật chất hiện có";
             this.btn_vchc.UseVisualStyleBackColor = true;
+            this.btn_vchc.Click += new System.EventHandler(this.btn_vchc_Click);
             // 
             // btn_qddtttbsvc
             // 
@@ -75,6 +77,7 @@
             this.btn_qddtttbsvc.TabIndex = 0;
             this.btn_qddtttbsvc.Text = "Qui định dự trữ, tiêu thụ, bổ sung vật chất";
             this.btn_qddtttbsvc.UseVisualStyleBackColor = true;
+            this.btn_qddtttbsvc.Click += new System.EventHandler(this.btn_qddtttbsvc_Click);
             // 
             // btn_ddvcmtgc
             // 

@@ -17,14 +17,18 @@ namespace BoDoiApp.View
         public static KhaiBaoDuLieu KhaiBaoDuLieu { get; set; }
         public static ThongTinTapBai ThongTinTapBai { get; set; }
         public static QuanSoChienDau QuanSoChienDau { get; set; }
+        public static VatChatHienCoView VatChatHienCo { get; set; }
+        public static QuyDinhDuTruTieuThuBoSungVatChat QuyDinhDuTruTieuThuBoSung { get; set; }
         public static void Init()
         {
+            QuyDinhDuTruTieuThuBoSung = new QuyDinhDuTruTieuThuBoSungVatChat();
             Formmain = new Form1();
             Dangnhap = new dn();
             Dangky = new DangKy();
             KhaiBaoDuLieu = new KhaiBaoDuLieu();
             ThongTinTapBai = new ThongTinTapBai();
             QuanSoChienDau = new QuanSoChienDau();
+            VatChatHienCo = new VatChatHienCoView();
         }
     }
 }
