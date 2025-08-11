@@ -1,12 +1,7 @@
-﻿using BoDoiApp.form;
-using BoDoiApp.View;
-using BoDoiApp.View.KhaiBaoDuLieuView;
+﻿using BoDoiApp.View;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BoDoiApp
@@ -25,15 +20,12 @@ namespace BoDoiApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FormMana.Init();
-            Application.Run(FormMana.Dangnhap);
+            Application.Run(FormMana.BanDo);
         }
 
         private static void InitializeDatabase()
         {
-            if (!File.Exists("schema.sql"))
-            {
-                throw new FileNotFoundException("Không tìm thấy file schema.sql");
-            }
+
 
             using (var connection = new SQLiteConnection(connectionString))
             {
