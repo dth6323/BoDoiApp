@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataLayer\MapIcon.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\ThongTinTepBaiData.cs" />
@@ -77,6 +78,12 @@
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormMana.cs" />
+    <Compile Include="View\KhaiBaoDuLieuView\BanDo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\BanDo.Designer.cs">
+      <DependentUpon>BanDo.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\DangNhap\dn.resx">
       <DependentUpon>dn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\BanDo.resx">
+      <DependentUpon>BanDo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.resx">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
