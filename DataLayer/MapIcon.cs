@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 
-
 namespace BoDoiApp.DataLayer
 {
     public class MapIcon
@@ -9,5 +8,7 @@ namespace BoDoiApp.DataLayer
         public string Label { get; set; }
         public Color IconColor { get; set; }
         public int Size { get; set; }
+        public Image CustomIcon { get; set; } // Thêm để lưu custom icon
+        public string FileName { get; set; } // Thêm để lưu tên file gốc
     }
 }

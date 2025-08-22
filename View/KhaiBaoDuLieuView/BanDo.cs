@@ -6,11 +6,11 @@ using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 using BoDoiApp.DataLayer;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
-   
     public partial class BanDo : Form
     {
         private const int TILE_SIZE = 512;
@@ -30,13 +30,18 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private int maxPyramidLevel = 0;
         private Size originalImageSize;
 
-        // Icon management
+        // Icon management - Cập nhật
         private List<MapIcon> mapIcons = new List<MapIcon>();
         private Image locationIcon;
+        private MapIcon selectedIcon = null;
+        private bool isDraggingIcon = false;
+        private PointF iconDragOffset;
+
         public BanDo()
         {
             InitializeComponent();
             CreateDefaultLocationIcon();
+            
             pictureBox = new PictureBox
             {
                 Dock = DockStyle.Fill,
@@ -51,13 +56,59 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             this.Controls.Add(pictureBox);
 
+            // Panel chứa các buttons
+            Panel buttonPanel = new Panel
+            {
+                Dock = DockStyle.Bottom,
+                Height = 40
+            };
+
             Button loadButton = new Button
             {
                 Text = "Load Image",
-                Dock = DockStyle.Top
+                Width = 100,
+                Height = 30,
+                Left = 10,
+                Top = 5
             };
             loadButton.Click += LoadButton_Click;
-            this.Controls.Add(loadButton);
+            buttonPanel.Controls.Add(loadButton);
+
+            Button saveButton = new Button
+            {
+                Text = "Save Image",
+                Width = 100,
+                Height = 30,
+                Left = 120,
+                Top = 5
+            };
+            saveButton.Click += SaveButton_Click;
+            buttonPanel.Controls.Add(saveButton);
+
+            Button clearIconsButton = new Button
+            {
+                Text = "Clear Icons",
+                Width = 100,
+                Height = 30,
+                Left = 230,
+                Top = 5
+            };
+            clearIconsButton.Click += (s, e) => ClearMapIcons();
+            buttonPanel.Controls.Add(clearIconsButton);
+
+            // Thêm button test
+            Button testIconButton = new Button
+            {
+                Text = "Test Icon",
+                Width = 100,
+                Height = 30,
+                Left = 340,
+                Top = 5
+            };
+            testIconButton.Click += (s, e) => AddTestIcon();
+            buttonPanel.Controls.Add(testIconButton);
+
+            this.Controls.Add(buttonPanel);
 
             this.DoubleBuffered = true;
         }
@@ -72,14 +123,13 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 using (SolidBrush brush = new SolidBrush(Color.Red))
                 {
                     g.FillEllipse(brush, 8, 4, 16, 16);
-                    Point[] triagle =
+                    Point[] triangle =
                     {
                         new Point(16, 20),
                         new Point(12, 28),
                         new Point(20, 28)
                     };
-                    g.FillPolygon(brush, triagle);
-
+                    g.FillPolygon(brush, triangle);
                 }
                 using (SolidBrush whiteBrush = new SolidBrush(Color.White))
                 {
@@ -87,6 +137,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 }
             }
         }
+
+        // 1. Load ảnh và hiển thị lên pictureBox
         private void LoadButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -112,7 +164,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                     originalImage = newImage;
                                     originalImageSize = originalImage.Size;
 
-                                    // Calculate pyramid levels
                                     CalculatePyramidLevels();
 
                                     zoomLevel = 1.0f;
@@ -131,6 +182,77 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             }));
                         }
                     });
+                }
+            }
+        }
+
+        // 4. Save ảnh đã load + các icon đè lên ảnh
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (originalImage == null)
+            {
+                MessageBox.Show("No image loaded to save.");
+                return;
+            }
+
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpg)|*.jpg|BMP Files (*.bmp)|*.bmp";
+                saveFileDialog.DefaultExt = "png";
+                
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        // Tạo ảnh mới với các icons được vẽ lên
+                        Bitmap resultImage = new Bitmap(originalImage.Width, originalImage.Height);
+                        using (Graphics g = Graphics.FromImage(resultImage))
+                        {
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+                            
+                            // Vẽ ảnh gốc
+                            g.DrawImage(originalImage, 0, 0);
+                            
+                            // Vẽ tất cả các icons lên ảnh
+                            foreach (var icon in mapIcons)
+                            {
+                                Image iconToDraw = icon.CustomIcon ?? locationIcon;
+                                if (iconToDraw != null)
+                                {
+                                    float iconSize = icon.Size;
+                                    float iconX = icon.ImagePosition.X - iconSize / 2;
+                                    float iconY = icon.ImagePosition.Y - iconSize;
+                                    
+                                    RectangleF iconRect = new RectangleF(iconX, iconY, iconSize, iconSize);
+                                    g.DrawImage(iconToDraw, iconRect);
+                                }
+                            }
+                        }
+                        
+                        // Lưu ảnh
+                        ImageFormat format = ImageFormat.Png;
+                        string extension = Path.GetExtension(saveFileDialog.FileName).ToLower();
+                        switch (extension)
+                        {
+                            case ".jpg":
+                            case ".jpeg":
+                                format = ImageFormat.Jpeg;
+                                break;
+                            case ".bmp":
+                                format = ImageFormat.Bmp;
+                                break;
+                        }
+                        
+                        resultImage.Save(saveFileDialog.FileName, format);
+                        resultImage.Dispose();
+                        
+                        MessageBox.Show("Image saved successfully!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving image: {ex.Message}");
+                    }
                 }
             }
         }
@@ -158,8 +280,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private int GetBestPyramidLevel(float zoom)
         {
-            // Choose pyramid level based on zoom
-            if (zoom >= 1.0f) return 0; // Use original resolution
+            if (zoom >= 1.0f) return 0;
 
             float targetScale = 1.0f / zoom;
             int level = 0;
@@ -187,22 +308,18 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             float pyramidScale = (float)pyramidSize.Width / originalImageSize.Width;
             float effectiveZoom = zoomLevel / pyramidScale;
 
-            // Calculate visible area
             Rectangle clipRect = e.ClipRectangle;
 
-            // Convert screen coordinates to image coordinates
             float imageLeft = (-offset.X) / effectiveZoom;
             float imageTop = (-offset.Y) / effectiveZoom;
             float imageRight = imageLeft + clipRect.Width / effectiveZoom;
             float imageBottom = imageTop + clipRect.Height / effectiveZoom;
 
-            // Calculate tile range
             int startTileX = Math.Max(0, (int)Math.Floor(imageLeft / TILE_SIZE));
             int startTileY = Math.Max(0, (int)Math.Floor(imageTop / TILE_SIZE));
             int endTileX = Math.Min((pyramidSize.Width - 1) / TILE_SIZE, (int)Math.Ceiling(imageRight / TILE_SIZE));
             int endTileY = Math.Min((pyramidSize.Height - 1) / TILE_SIZE, (int)Math.Ceiling(imageBottom / TILE_SIZE));
 
-            // Render visible tiles
             for (int tileY = startTileY; tileY <= endTileY; tileY++)
             {
                 for (int tileX = startTileX; tileX <= endTileX; tileX++)
@@ -220,58 +337,481 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     }
                 }
             }
-            DrawMapIcons(g, effectiveZoom);
+            DrawMapIcons(g, zoomLevel);
         }
-        private void DrawMapIcons(Graphics g, float effectiveZoom)
+
+        private void DrawMapIcons(Graphics g, float currentZoomLevel)
         {
-            Console.WriteLine($"Drawing {mapIcons.Count} map icons at zoom level {effectiveZoom}");
+            Console.WriteLine($"DrawMapIcons called with {mapIcons.Count} icons, zoom: {currentZoomLevel}");
+            
             foreach (var icon in mapIcons)
             {
-                // Chuyển đổi vị trí từ tọa độ ảnh sang tọa độ màn hình
-                float screenX = offset.X + icon.ImagePosition.X * effectiveZoom;
-                float screenY = offset.Y + icon.ImagePosition.Y * effectiveZoom;
-
-                // Tính toán kích thước icon theo zoom level
-                float iconSize = icon.Size * Math.Min(effectiveZoom, 1.0f); // Giới hạn kích thước tối đa
-                iconSize = Math.Max(iconSize, 16); // Kích thước tối thiểu
-
-                // Căn giữa icon
-                float iconX = screenX - iconSize / 2;
-                float iconY = screenY - iconSize;
-
-                // Chỉ vẽ icon nếu nó nằm trong vùng hiển thị
-                Rectangle iconRect = new Rectangle((int)iconX, (int)iconY, (int)iconSize, (int)iconSize);
-                if (iconRect.IntersectsWith(new Rectangle(0, 0, pictureBox.Width, pictureBox.Height)))
+                try
                 {
-                    // Vẽ icon
-                    if (locationIcon != null)
-                    {
-                        g.DrawImage(locationIcon, iconRect);
-                    }
+                    // Chuyển đổi vị trí từ tọa độ ảnh sang tọa độ màn hình
+                    float screenX = offset.X + icon.ImagePosition.X * currentZoomLevel;
+                    float screenY = offset.Y + icon.ImagePosition.Y * currentZoomLevel;
 
-                    // Vẽ label nếu có
-                    if (!string.IsNullOrEmpty(icon.Label))
+                    float iconSize = 50; // Kích thước cố định
+
+                    float iconX = screenX - iconSize / 2;
+                    float iconY = screenY - iconSize;
+
+                    Rectangle iconRect = new Rectangle((int)iconX, (int)iconY, (int)iconSize, (int)iconSize);
+                    
+                    Console.WriteLine($"Drawing icon '{icon.Label}' at screen position ({screenX}, {screenY}), rect: {iconRect}");
+                    
+                    // Luôn vẽ icon để test, không cần kiểm tra intersect
+                    // if (iconRect.IntersectsWith(new Rectangle(0, 0, pictureBox.Width, pictureBox.Height)))
                     {
-                        using (Font font = new Font("Arial", 8))
-                        using (SolidBrush textBrush = new SolidBrush(Color.Black))
-                        using (SolidBrush backgroundBrush = new SolidBrush(Color.White))
+                        // Vẽ icon (custom hoặc default)
+                        Image iconToDraw = icon.CustomIcon ?? locationIcon;
+                        if (iconToDraw != null)
                         {
-                            SizeF textSize = g.MeasureString(icon.Label, font);
-                            float textX = screenX - textSize.Width / 2;
-                            float textY = screenY + 5;
+                            g.DrawImage(iconToDraw, iconRect);
+                            Console.WriteLine($"Icon '{icon.Label}' drawn successfully");
+                        }
+                        else
+                        {
+                            // Vẽ hình chữ nhật màu đỏ nếu không có icon
+                            g.FillRectangle(Brushes.Red, iconRect);
+                            Console.WriteLine($"Drew red rectangle for icon '{icon.Label}'");
+                        }
 
-                            // Vẽ nền cho text
-                            RectangleF textBackground = new RectangleF(textX - 2, textY, textSize.Width + 4, textSize.Height);
-                            g.FillRectangle(backgroundBrush, textBackground);
-                            g.DrawRectangle(Pens.Black, Rectangle.Round(textBackground));
+                        // Highlight icon được chọn
+                        if (icon == selectedIcon)
+                        {
+                            using (Pen pen = new Pen(Color.Blue, 2))
+                            {
+                                g.DrawRectangle(pen, iconRect);
+                            }
+                        }
 
-                            // Vẽ text
-                            g.DrawString(icon.Label, font, textBrush, textX, textY);
+                        // Vẽ label nếu có
+                        if (!string.IsNullOrEmpty(icon.Label))
+                        {
+                            using (Font font = new Font("Arial", 8))
+                            using (SolidBrush textBrush = new SolidBrush(Color.Black))
+                            using (SolidBrush backgroundBrush = new SolidBrush(Color.White))
+                            {
+                                SizeF textSize = g.MeasureString(icon.Label, font);
+                                float textX = screenX - textSize.Width / 2;
+                                float textY = screenY + 5;
+
+                                RectangleF textBackground = new RectangleF(textX - 2, textY, textSize.Width + 4, textSize.Height);
+                                g.FillRectangle(backgroundBrush, textBackground);
+                                g.DrawRectangle(Pens.Black, Rectangle.Round(textBackground));
+
+                                g.DrawString(icon.Label, font, textBrush, textX, textY);
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error drawing icon '{icon.Label}': {ex.Message}");
+                }
             }
         }
+
+        // Helper method để kiểm tra click trên icon
+        private MapIcon GetIconAtPosition(PointF screenPosition)
+        {
+            foreach (var icon in mapIcons)
+            {
+                float screenX = offset.X + icon.ImagePosition.X * zoomLevel;
+                float screenY = offset.Y + icon.ImagePosition.Y * zoomLevel;
+                
+                float iconSize = 50;
+                float iconX = screenX - iconSize / 2;
+                float iconY = screenY - iconSize;
+                
+                RectangleF iconRect = new RectangleF(iconX, iconY, iconSize, iconSize);
+                if (iconRect.Contains(screenPosition))
+                {
+                    return icon;
+                }
+            }
+            return null;
+        }
+
+        // Helper method để chuyển đổi tọa độ màn hình sang tọa độ ảnh
+        private PointF ScreenToImageCoordinates(PointF screenPoint)
+        {
+            return new PointF(
+                (screenPoint.X - offset.X) / zoomLevel,
+                (screenPoint.Y - offset.Y) / zoomLevel
+            );
+        }
+
+        private void PictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Kiểm tra xem có click trên icon nào không
+                MapIcon clickedIcon = GetIconAtPosition(new PointF(e.X, e.Y));
+                
+                if (clickedIcon != null)
+                {
+                    selectedIcon = clickedIcon;
+                    isDraggingIcon = true;
+                    
+                    // Tính offset từ vị trí click đến center của icon
+                    float screenX = offset.X + clickedIcon.ImagePosition.X * zoomLevel;
+                    float screenY = offset.Y + clickedIcon.ImagePosition.Y * zoomLevel;
+                    iconDragOffset = new PointF(e.X - screenX, e.Y - screenY);
+                    
+                    pictureBox.Invalidate();
+                }
+                else
+                {
+                    selectedIcon = null;
+                    isDragging = true;
+                    lastMousePos = e.Location;
+                    pictureBox.Invalidate();
+                }
+            }
+        }
+
+        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDraggingIcon && selectedIcon != null)
+            {
+                // Di chuyển icon
+                PointF newScreenPos = new PointF(e.X - iconDragOffset.X, e.Y - iconDragOffset.Y);
+                selectedIcon.ImagePosition = ScreenToImageCoordinates(newScreenPos);
+                pictureBox.Invalidate();
+            }
+            else if (isDragging)
+            {
+                // Di chuyển map
+                offset.X += e.X - lastMousePos.X;
+                offset.Y += e.Y - lastMousePos.Y;
+                lastMousePos = e.Location;
+
+                ClampOffset();
+                pictureBox.Invalidate();
+            }
+        }
+
+        private void PictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+                isDraggingIcon = false;
+            }
+        }
+
+        private void PictureBox_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (originalImage == null) return;
+
+            float zoomSpeed = 0.1f;
+            float oldZoomLevel = zoomLevel;
+            if (e.Delta > 0)
+                zoomLevel = Math.Min(zoomLevel + zoomSpeed, 10.0f);
+            else
+                zoomLevel = Math.Max(zoomLevel - zoomSpeed, 0.1f);
+
+            float mouseX = e.X - offset.X;
+            float mouseY = e.Y - offset.Y;
+            float scaleChange = zoomLevel / oldZoomLevel;
+            offset.X = e.X - mouseX * scaleChange;
+            offset.Y = e.Y - mouseY * scaleChange;
+
+            ClampOffset();
+            pictureBox.Invalidate();
+        }
+
+        private void PictureBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (originalImage == null || e.Button != MouseButtons.Right) return;
+
+            PointF imagePosition = ScreenToImageCoordinates(new PointF(e.X, e.Y));
+
+            if (imagePosition.X >= 0 && imagePosition.X < originalImageSize.Width && 
+                imagePosition.Y >= 0 && imagePosition.Y < originalImageSize.Height)
+            {
+                AddMapIcon(imagePosition, $"Location {mapIcons.Count + 1}");
+            }
+        }
+
+        public void AddMapIcon(PointF imagePosition, string label = "", Image customIcon = null, string fileName = "")
+        {
+            Console.WriteLine($"Adding map icon at position: {imagePosition}, label: {label}");
+            
+            mapIcons.Add(new MapIcon
+            {
+                ImagePosition = imagePosition,
+                Label = label,
+                IconColor = Color.Red,
+                Size = 50,
+                CustomIcon = customIcon,
+                FileName = fileName
+            });
+
+            Console.WriteLine($"Total icons: {mapIcons.Count}");
+            pictureBox.Invalidate();
+        }
+
+        // Thêm phương thức test để tạo icon mẫu
+        public void AddTestIcon()
+        {
+            if (originalImage != null)
+            {
+                // Thêm icon test ở giữa ảnh
+                PointF centerPosition = new PointF(originalImageSize.Width / 2, originalImageSize.Height / 2);
+                AddMapIcon(centerPosition, "Test Icon", null, "test");
+                Console.WriteLine("Test icon added");
+            }
+            else
+            {
+                Console.WriteLine("No image loaded - cannot add test icon");
+            }
+        }
+
+        public void ClearMapIcons()
+        {
+            // Dispose custom icons trước khi clear
+            foreach (var icon in mapIcons)
+            {
+                icon.CustomIcon?.Dispose();
+            }
+            mapIcons.Clear();
+            selectedIcon = null;
+            pictureBox.Invalidate();
+        }
+
+        // 2. Chọn các giai đoạn ở combobox và load các icon vào flowpanel
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            flowLayoutPanel1.Controls.Clear();
+            
+            if (comboBox1.SelectedItem == null) return;
+            
+            string selectItem = comboBox1.SelectedItem.ToString();
+            
+            // Đường dẫn folder chứa icons theo giai đoạn
+            string folderPath = @"D:\Desktop\ThuatToan\MH3D";
+            
+            // Có thể thay đổi folder theo giai đoạn được chọn
+            switch (selectItem)
+            {
+                case "Giai đoạn 1":
+                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan1";
+                    break;
+                case "Giai đoạn 2":
+                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan2";
+                    break;
+                case "Giai đoạn 3":
+                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan3";
+                    break;
+                case "Giai đoạn 4":
+                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan4";
+                    break;
+                default:
+                    folderPath = @"D:\Desktop\ThuatToan\MH3D";
+                    break;
+            }
+            
+            // Fallback về folder mặc định nếu folder giai đoạn không tồn tại
+            if (!Directory.Exists(folderPath))
+            {
+                folderPath = @"D:\Desktop\ThuatToan\MH3D";
+            }
+            
+            if (Directory.Exists(folderPath))
+            {
+                var imageFiles = Directory.GetFiles(folderPath, "*.png")
+                    .Concat(Directory.GetFiles(folderPath, "*.jpg"))
+                    .Concat(Directory.GetFiles(folderPath, "*.jpeg"))
+                    .Concat(Directory.GetFiles(folderPath, "*.bmp"))
+                    .ToArray();
+                    
+                foreach (var file in imageFiles)
+                {
+                    try
+                    {
+                        PictureBox pb = new PictureBox();
+                        pb.Image = Image.FromFile(file);
+                        pb.SizeMode = PictureBoxSizeMode.Zoom;
+                        pb.Width = 50;
+                        pb.Height = 50;
+                        pb.Tag = file; // Lưu đường dẫn file
+                        pb.BorderStyle = BorderStyle.FixedSingle;
+
+                        // Enable drag and drop
+                        pb.MouseDown += (s, ev) =>
+                        {
+                            if (ev.Button == MouseButtons.Left)
+                            {
+                                PictureBox sourcePb = s as PictureBox;
+                                if (sourcePb != null && sourcePb.Image != null)
+                                {
+                                    // Tạo data object với cả image và file path
+                                    DataObject data = new DataObject();
+                                    data.SetData("FilePath", sourcePb.Tag.ToString());
+                                    data.SetData(DataFormats.Bitmap, sourcePb.Image);
+                                    
+                                    Console.WriteLine($"Starting drag operation for: {sourcePb.Tag}");
+                                    sourcePb.DoDragDrop(data, DragDropEffects.Copy);
+                                }
+                            }
+                        };
+
+                        flowLayoutPanel1.Controls.Add(pb);
+                        Console.WriteLine($"Added icon: {Path.GetFileName(file)}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error loading image {file}: {ex.Message}");
+                    }
+                }
+            }
+            else
+            {
+                // Tạo một vài icon mẫu nếu không tìm thấy folder
+                CreateSampleIcons();
+            }
+        }
+
+        // Tạo icons mẫu nếu không tìm thấy folder
+        private void CreateSampleIcons()
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                PictureBox pb = new PictureBox();
+                
+                // Tạo icon mẫu
+                Bitmap sampleIcon = new Bitmap(32, 32);
+                using (Graphics g = Graphics.FromImage(sampleIcon))
+                {
+                    g.Clear(Color.LightBlue);
+                    g.FillEllipse(new SolidBrush(Color.Blue), 4, 4, 24, 24);
+                    g.DrawString(i.ToString(), new Font("Arial", 12), Brushes.White, 12, 8);
+                }
+                
+                pb.Image = sampleIcon;
+                pb.SizeMode = PictureBoxSizeMode.Zoom;
+                pb.Width = 50;
+                pb.Height = 50;
+                pb.Tag = $"Sample_Icon_{i}";
+                pb.BorderStyle = BorderStyle.FixedSingle;
+
+                pb.MouseDown += (s, ev) =>
+                {
+                    if (ev.Button == MouseButtons.Left)
+                    {
+                        PictureBox sourcePb = s as PictureBox;
+                        if (sourcePb != null && sourcePb.Image != null)
+                        {
+                            DataObject data = new DataObject();
+                            data.SetData("FilePath", sourcePb.Tag.ToString());
+                            data.SetData(DataFormats.Bitmap, sourcePb.Image);
+                            
+                            sourcePb.DoDragDrop(data, DragDropEffects.Copy);
+                        }
+                    }
+                };
+
+                flowLayoutPanel1.Controls.Add(pb);
+            }
+        }
+        // 3. Drag and drop icons từ flowlayout lên ảnh
+        private void BanDo_Load(object sender, EventArgs e)
+        {
+            // Thiết lập drag and drop cho pictureBox
+            pictureBox.AllowDrop = true;
+
+            pictureBox.DragEnter += (s, ev) =>
+            {
+                Console.WriteLine("DragEnter event triggered");
+                // Kiểm tra xem data có chứa bitmap không
+                if (ev.Data.GetDataPresent(DataFormats.Bitmap) || ev.Data.GetDataPresent("FilePath"))
+                {
+                    ev.Effect = DragDropEffects.Copy;
+                    Console.WriteLine("Drag effect set to Copy");
+                }
+                else
+                {
+                    ev.Effect = DragDropEffects.None;
+                    Console.WriteLine("Drag effect set to None");
+                }
+            };
+
+            pictureBox.DragDrop += (s, ev) =>
+            {
+                Console.WriteLine("DragDrop event triggered");
+                
+                try
+                {
+                    if (originalImage == null)
+                    {
+                        MessageBox.Show("Please load an image first!");
+                        return;
+                    }
+
+                    Image droppedImg = null;
+                    string fileName = "Dropped Icon";
+
+                    // Lấy dữ liệu từ drag operation
+                    if (ev.Data.GetDataPresent(DataFormats.Bitmap))
+                    {
+                        droppedImg = (Image)ev.Data.GetData(DataFormats.Bitmap);
+                        Console.WriteLine("Got bitmap data");
+                    }
+
+                    if (ev.Data.GetDataPresent("FilePath"))
+                    {
+                        string filePath = (string)ev.Data.GetData("FilePath");
+                        fileName = Path.GetFileNameWithoutExtension(filePath);
+                        Console.WriteLine($"Got file path: {filePath}");
+                    }
+
+                    if (droppedImg != null)
+                    {
+                        // Chuyển đổi vị trí drop sang tọa độ ảnh
+                        Point dropPoint = pictureBox.PointToClient(new Point(ev.X, ev.Y));
+                        PointF imagePosition = ScreenToImageCoordinates(new PointF(dropPoint.X, dropPoint.Y));
+                        
+                        Console.WriteLine($"Drop point: {dropPoint}, Image position: {imagePosition}");
+                        
+                        // Kiểm tra xem vị trí có hợp lệ không
+                        if (imagePosition.X >= 0 && imagePosition.X < originalImageSize.Width && 
+                            imagePosition.Y >= 0 && imagePosition.Y < originalImageSize.Height)
+                        {
+                            // Tạo copy của image để tránh conflict
+                            Bitmap iconCopy = new Bitmap(droppedImg);
+                            
+                            // Thêm icon tại vị trí drop
+                            AddMapIcon(imagePosition, fileName, iconCopy, fileName);
+                            Console.WriteLine($"Icon added successfully at {imagePosition}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Drop position is outside image bounds");
+                            MessageBox.Show("Please drop the icon on the image area.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No image data found in drag operation");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error in DragDrop: {ex.Message}");
+                    MessageBox.Show($"Error dropping icon: {ex.Message}");
+                }
+            };
+
+            // Thiết lập các thuộc tính form
+            this.AllowDrop = true;
+            
+            Console.WriteLine("BanDo_Load completed - Drag and drop initialized");
+        }
+
         private Image GetTile(int level, int tileX, int tileY)
         {
             string tileKey = $"{level}_{tileX}_{tileY}";
@@ -281,7 +821,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 return tileCache[tileKey];
             }
 
-            // Generate tile on demand
             Image tile = GenerateTile(level, tileX, tileY);
             if (tile != null)
             {
@@ -290,7 +829,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             return tile;
         }
-
 
         private Image GenerateTile(int level, int tileX, int tileY)
         {
@@ -304,7 +842,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             int sourceWidth = (int)(TILE_SIZE / scale);
             int sourceHeight = (int)(TILE_SIZE / scale);
 
-            // Clamp to image bounds
             sourceX = Math.Max(0, Math.Min(sourceX, originalImageSize.Width - 1));
             sourceY = Math.Max(0, Math.Min(sourceY, originalImageSize.Height - 1));
             sourceWidth = Math.Min(sourceWidth, originalImageSize.Width - sourceX);
@@ -334,7 +871,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void CacheTile(string tileKey, Image tile)
         {
-            // Remove oldest tiles if cache is full
             while (tileCache.Count >= MAX_CACHE_TILES && tileCacheOrder.Count > 0)
             {
                 string oldestKey = tileCacheOrder.Dequeue();
@@ -359,91 +895,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             tileCacheOrder.Clear();
         }
 
-        private void PictureBox_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (originalImage == null) return;
-
-            float zoomSpeed = 0.1f;
-            float oldZoomLevel = zoomLevel;
-            if (e.Delta > 0)
-                zoomLevel = Math.Min(zoomLevel + zoomSpeed, 10.0f);
-            else
-                zoomLevel = Math.Max(zoomLevel - zoomSpeed, 0.1f);
-
-            float mouseX = e.X - offset.X;
-            float mouseY = e.Y - offset.Y;
-            float scaleChange = zoomLevel / oldZoomLevel;
-            offset.X = e.X - mouseX * scaleChange;
-            offset.Y = e.Y - mouseY * scaleChange;
-
-            ClampOffset();
-            pictureBox.Invalidate();
-        }
-
-        private void PictureBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isDragging = true;
-                lastMousePos = e.Location;
-            }
-        }
-
-        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isDragging)
-            {
-                offset.X += e.X - lastMousePos.X;
-                offset.Y += e.Y - lastMousePos.Y;
-                lastMousePos = e.Location;
-
-                ClampOffset();
-                pictureBox.Invalidate();
-            }
-        }
-
-        private void PictureBox_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isDragging = false;
-            }
-        }
-        private void PictureBox_MouseClick(object sender, MouseEventArgs e)
-        {
-            Console.WriteLine($"Mouse clicked at: {e.Location}");
-            if (originalImage == null || e.Button != MouseButtons.Right) return;
-
-            // Chuyển đổi tọa độ click từ màn hình sang tọa độ ảnh
-            int pyramidLevel = GetBestPyramidLevel(zoomLevel);
-            Size pyramidSize = pyramidSizes[pyramidLevel];
-            float pyramidScale = (float)pyramidSize.Width / originalImageSize.Width;
-            float effectiveZoom = zoomLevel / pyramidScale;
-
-            float imageX = (e.X - offset.X) / effectiveZoom;
-            float imageY = (e.Y - offset.Y) / effectiveZoom;
-
-            // Thêm icon mới
-            AddMapIcon(new PointF(imageX, imageY), $"Location {mapIcons.Count + 1}");
-        }
-        public void AddMapIcon(PointF imagePosition, string label = "")
-        {
-            mapIcons.Add(new MapIcon
-            {
-                ImagePosition = imagePosition,
-                Label = label,
-                IconColor = Color.Red,
-                Size = 32
-            });
-
-            pictureBox.Invalidate();
-        }
-
-        public void ClearMapIcons()
-        {
-            mapIcons.Clear();
-            pictureBox.Invalidate();
-        }
         private void ClampOffset()
         {
             if (originalImage == null) return;
@@ -458,11 +909,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             locationIcon?.Dispose();
+            ClearMapIcons(); // Sẽ dispose các custom icons
             ClearCache();
             originalImage?.Dispose();
             base.OnFormClosing(e);
         }
-
-        
     }
 }
