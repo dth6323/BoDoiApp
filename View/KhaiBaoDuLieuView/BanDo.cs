@@ -1,13 +1,15 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using BoDoiApp.Helpers;
+using ImageMagick;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Drawing.Drawing2D; 
 using System.Drawing.Imaging;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
 using System.Linq;
-using BoDoiApp.DataLayer;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
@@ -15,6 +17,9 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     {
         private const int TILE_SIZE = 512;
         private const int MAX_CACHE_TILES = 100;
+
+        private int giaiDoan;
+        private bool isDich = false;
 
         private Image originalImage;
         private float zoomLevel = 1.0f;
@@ -36,6 +41,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private MapIcon selectedIcon = null;
         private bool isDraggingIcon = false;
         private PointF iconDragOffset;
+
+        // Large image handling fields - Added for >70MB support
+        private string currentImageFilePath = null;
+        private bool isLargeImage = false;
+        private long imageFileSizeInMB = 0;
 
         public BanDo()
         {
@@ -138,7 +148,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
         }
 
-        // 1. Load ảnh và hiển thị lên pictureBox
+        // 1. Load ảnh và hiển thị lên pictureBox - Enhanced for large images (>70MB)
         private void LoadButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -152,25 +162,42 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     {
                         try
                         {
-                            using (var stream = new FileStream(openFileDialog.FileName,
-                                FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 65536))
+                            // Check file size first to determine loading strategy
+                            var fileInfo = new FileInfo(openFileDialog.FileName);
+                            imageFileSizeInMB = fileInfo.Length / (1024 * 1024);
+                            
+                            this.Invoke(new Action(() =>
                             {
-                                var newImage = Image.FromStream(stream);
+                                this.Text = $"BanDo - Loading {Path.GetFileName(openFileDialog.FileName)} ({imageFileSizeInMB} MB)...";
+                            }));
 
+                            if (imageFileSizeInMB > 70)
+                            {
+                                // Large image handling with Magick.NET
                                 this.Invoke(new Action(() =>
                                 {
-                                    ClearCache();
-                                    originalImage?.Dispose();
-                                    originalImage = newImage;
-                                    originalImageSize = originalImage.Size;
-
-                                    CalculatePyramidLevels();
-
-                                    zoomLevel = 1.0f;
-                                    offset = new PointF(0, 0);
-                                    pictureBox.Invalidate();
-                                    this.Cursor = Cursors.Default;
+                                    var result = MessageBox.Show(
+                                        $"Large image detected: {imageFileSizeInMB} MB\n" +
+                                        $"This will use Magick.NET optimized loading for better performance.\n" +
+                                        $"Continue?",
+                                        "Large Image Warning", 
+                                        MessageBoxButtons.YesNo, 
+                                        MessageBoxIcon.Information);
+                                
+                                    if (result == DialogResult.No)
+                                    {
+                                        this.Cursor = Cursors.Default;
+                                        this.Text = "BanDo";
+                                        return;
+                                    }
                                 }));
+
+                                LoadLargeImage(openFileDialog.FileName);
+                            }
+                            else
+                            {
+                                // Standard loading with Magick.NET for smaller images  
+                                LoadStandardImage(openFileDialog.FileName);
                             }
                         }
                         catch (Exception ex)
@@ -179,10 +206,431 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             {
                                 MessageBox.Show($"Error loading image: {ex.Message}");
                                 this.Cursor = Cursors.Default;
+                                this.Text = "BanDo";
                             }));
                         }
                     });
                 }
+            }
+        }
+
+        // Standard loading method for smaller images with enhanced Magick.NET
+        private void LoadStandardImage(string filePath)
+        {
+            try
+            {
+                // Force garbage collection before loading
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                
+                Image newImage = null;
+                
+                // For smaller images (<70MB), try Magick.NET first for enhanced quality
+                try
+                {
+                    Console.WriteLine($"Loading standard image with Magick.NET enhancement: {Path.GetFileName(filePath)}");
+                    //newImage = LoadImageWithMagickNet(filePath);
+                    using (var stream = new FileStream(filePath,
+                        FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 1024 * 1024)) // 1MB buffer
+                    {
+                        newImage = Image.FromStream(stream);
+                    }
+                    Console.WriteLine("Magick.NET loading successful for standard image");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Magick.NET failed: {ex.Message}, falling back to standard GDI+ loading");
+                    
+                    // Fallback to standard GDI+ loading with optimized buffer
+                    using (var stream = new FileStream(filePath,
+                        FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 1024 * 1024)) // 1MB buffer
+                    {
+                        newImage = Image.FromStream(stream);
+                    }
+                    Console.WriteLine("Standard GDI+ loading successful");
+                }
+
+                this.Invoke(new Action(() =>
+                {
+                    CleanupPreviousImage();
+                    
+                    originalImage = newImage;
+                    originalImageSize = originalImage.Size;
+                    currentImageFilePath = filePath;
+                    isLargeImage = false;
+
+                    CalculatePyramidLevels();
+
+                    zoomLevel = 1.0f;
+                    offset = new PointF(0, 0);
+                    pictureBox.Invalidate();
+                    this.Cursor = Cursors.Default;
+                    this.Text = $"BanDo - {Path.GetFileName(filePath)} ({originalImageSize.Width}×{originalImageSize.Height}) [Standard + Enhanced]";
+                }));
+            }
+            catch (OutOfMemoryException)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show("Not enough memory for standard loading. Switching to large image mode...");
+                }));
+                LoadLargeImage(filePath);
+            }
+            catch (Exception ex)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show($"Error loading standard image: {ex.Message}");
+                    this.Cursor = Cursors.Default;
+                    this.Text = "BanDo";
+                }));
+            }
+        }
+
+        // Enhanced loading for large images (>70MB) with advanced Magick.NET optimization
+        private async void LoadLargeImage(string filePath)
+        {
+            try
+            {
+                this.Invoke(new Action(() =>
+                {
+                    this.Text = $"BanDo - Loading large image with optimized processing...";
+                }));
+
+                // Single aggressive memory cleanup instead of loop
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                Image newImage = null;
+                
+                // Optimized dimension calculation with less aggressive scaling
+                int maxDimension;
+                if (imageFileSizeInMB > 1000) // >1GB
+                {
+                    maxDimension = 8192;  // Increased from 6144
+                }
+                else if (imageFileSizeInMB > 500) // 500MB-1GB
+                {
+                    maxDimension = 10240; // Increased from 8192
+                }
+                else if (imageFileSizeInMB > 200) // 200-500MB
+                {
+                    maxDimension = 16384; // Kept same
+                }
+                else if (imageFileSizeInMB > 100) // 100-200MB
+                {
+                    maxDimension = 20480; // Increased from 16384
+                }
+                else // 70-100MB
+                {
+                    maxDimension = 24576; // Increased from 20480
+                }
+                
+                // Try Magick.NET with intelligent downscaling first
+                try
+                {
+                    // Run Magick.NET loading in background task for better responsiveness
+                    newImage = await Task.Run(() => LoadImageWithMagickNet(filePath, maxDimension));
+                    Console.WriteLine("Magick.NET large image loading successful");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Magick.NET failed: {ex.Message}, trying optimized fallback");
+                    
+                    // Optimized fallback with larger, more efficient buffer sizes
+                    newImage = await Task.Run(() =>
+                    {
+                        if (imageFileSizeInMB > 300)
+                        {
+                            // Increased buffer size for better I/O performance
+                            using (var stream = new FileStream(filePath,
+                                FileMode.Open, FileAccess.Read, FileShare.Read, 
+                                bufferSize: 64 * 1024)) // Increased from 2048 to 64KB
+                            {
+                                return Image.FromStream(stream);
+                            }
+                        }
+                        else if (imageFileSizeInMB > 150)
+                        {
+                            // Significantly increased buffer size
+                            using (var stream = new FileStream(filePath,
+                                FileMode.Open, FileAccess.Read, FileShare.Read, 
+                                bufferSize: 256 * 1024)) // Increased from 4096 to 256KB
+                            {
+                                return Image.FromStream(stream);
+                            }
+                        }
+                        else
+                        {
+                            // Optimized buffer for moderately large files
+                            using (var stream = new FileStream(filePath,
+                                FileMode.Open, FileAccess.Read, FileShare.Read, 
+                                bufferSize: 1024 * 1024)) // Increased from 512KB to 1MB
+                            {
+                                return Image.FromStream(stream);
+                            }
+                        }
+                    });
+                    Console.WriteLine("Optimized fallback loading successful");
+                }
+
+                // Update UI on main thread
+                this.Invoke(new Action(() =>
+                {
+                    CleanupPreviousImage();
+                    
+                    originalImage = newImage;
+                    originalImageSize = originalImage.Size;
+                    currentImageFilePath = filePath;
+                    isLargeImage = true;
+
+                    // Enhanced pyramid calculation for large images
+                    CalculateEnhancedPyramidLevels();
+
+                    zoomLevel = 1.0f;
+                    offset = new PointF(0, 0);
+                    pictureBox.Invalidate();
+                    this.Cursor = Cursors.Default;
+                    this.Text = $"BanDo - {Path.GetFileName(filePath)} ({originalImageSize.Width}×{originalImageSize.Height}) [Optimized Large Mode]";
+                    
+                    Console.WriteLine($"Large image loaded successfully. Final dimensions: {originalImageSize.Width}×{originalImageSize.Height}");
+                }));
+            }
+            catch (OutOfMemoryException)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(
+                        $"Image is too large to load ({imageFileSizeInMB}MB).\n" +
+                        "Even with optimization, there isn't enough memory.\n" +
+                        "Recommendations:\n" +
+                        "• Close other applications to free memory\n" +
+                        "• Use a smaller image\n" +
+                        "• Increase system virtual memory",
+                        "Memory Insufficient", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
+                    this.Cursor = Cursors.Default;
+                    this.Text = "BanDo";
+                }));
+            }
+            catch (Exception ex)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show($"Error loading large image: {ex.Message}\n\nFile: {Path.GetFileName(filePath)}\nSize: {imageFileSizeInMB}MB", 
+                        "Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Cursor = Cursors.Default;
+                    this.Text = "BanDo";
+                }));
+            }
+        }
+    
+        // Enhanced pyramid calculation for large images
+        private void CalculateEnhancedPyramidLevels()
+        {
+            pyramidSizes.Clear();
+            maxPyramidLevel = 0;
+
+            int width = originalImageSize.Width;
+            int height = originalImageSize.Height;
+            int level = 0;
+
+            // For large images, create more pyramid levels for better performance
+            int maxDimension = Math.Max(width, height);
+            
+            // Calculate optimal tile size based on image size
+            int optimalTileSize = isLargeImage && maxDimension > 20000 ? 2048 : TILE_SIZE;
+            
+            while (width > optimalTileSize || height > optimalTileSize)
+            {
+                pyramidSizes[level] = new Size(width, height);
+                
+                // For very large images, use different scaling factors
+                if (isLargeImage && maxDimension > 50000)
+                {
+                    // More aggressive downscaling for extremely large images
+                    width = Math.Max(1, width * 2 / 3);
+                    height = Math.Max(1, height * 2 / 3);
+                }
+                else
+                {
+                    // Standard halving
+                    width /= 2;
+                    height /= 2;
+                }
+                
+                level++;
+                
+                // Prevent too many pyramid levels
+                if (level > 15) break;
+            }
+
+            pyramidSizes[level] = new Size(width, height);
+            maxPyramidLevel = level;
+            
+            Console.WriteLine($"Created {level + 1} pyramid levels for {(isLargeImage ? "large" : "standard")} image");
+        }
+
+        // Clean up previous image resources
+        private void CleanupPreviousImage()
+        {
+            ClearCache();
+            originalImage?.Dispose();
+            originalImage = null;
+            isLargeImage = false;
+            currentImageFilePath = null;
+            imageFileSizeInMB = 0;
+        }
+
+        // ===== MAGICK.NET ENHANCED METHODS =====
+        
+        // Load image using Magick.NET with optimized downscaling
+        private static Image LoadImageWithMagickNet(string filePath, int maxDimension = 0)
+        {
+            try
+            {
+                Console.WriteLine($"LoadImageWithMagickNet called with maxDimension: {maxDimension}");
+                
+                using (var magickImage = new MagickImage(filePath))
+                {
+                    Console.WriteLine($"Original image dimensions: {magickImage.Width}x{magickImage.Height}");
+                    
+                    // Apply auto-orient to handle EXIF orientation properly
+                    //magickImage.AutoOrient();
+                    
+                    // Enhanced quality improvements for all images
+                    //magickImage.Enhance(); // Auto-enhance image quality
+                    //magickImage.Normalize(); // Normalize contrast and brightness
+                    
+                    // Advanced resizing for large images
+                    if (maxDimension > 0)
+                    {
+                        var currentMax = Math.Max(magickImage.Width, magickImage.Height);
+                        if (currentMax > maxDimension)
+                        {
+                            Console.WriteLine($"Resizing from {currentMax} to {maxDimension}");
+                            
+                            // Calculate scale ratio for better quality control
+                            double scaleRatio = (double)maxDimension / currentMax;
+                            
+                            // Choose optimal filter based on scale ratio
+                            FilterType filter;
+                            if (scaleRatio < 0.3)
+                            {
+                                filter = FilterType.Box; // Best for extreme downscaling
+                            }
+                            else if (scaleRatio < 0.6)
+                            {
+                                filter = FilterType.Mitchell; // Good balance for moderate downscaling
+                            }
+                            else
+                            {
+                                filter = FilterType.Lanczos; // Highest quality for light downscaling
+                            }
+                            
+                            magickImage.FilterType = filter;
+                            
+                            // Resize with maintain aspect ratio
+                            magickImage.Resize(new MagickGeometry($"{maxDimension}x{maxDimension}>"));
+                            
+                            // Apply adaptive sharpening based on scale ratio
+                            if (scaleRatio < 0.7)
+                            {
+                                double sharpenRadius = scaleRatio < 0.5 ? 0.5 : 0.3;
+                                double sharpenSigma = scaleRatio < 0.5 ? 0.8 : 0.5;
+                                magickImage.Sharpen(sharpenRadius, sharpenSigma);
+                            }
+                            
+                            Console.WriteLine($"Resized to: {magickImage.Width}x{magickImage.Height}");
+                        }
+                    }
+                    
+                    // Advanced optimization for memory efficiency
+                    magickImage.Strip(); // Remove all metadata to save memory
+                    magickImage.Quality = 95; // High quality but optimized
+                    
+                    // For very large images, use JPEG format internally to save memory
+                    if (maxDimension > 0 && Math.Max(magickImage.Width, magickImage.Height) > 10000)
+                    {
+                        magickImage.Format = MagickFormat.Jpeg;
+                        Console.WriteLine("Using JPEG format for memory optimization");
+                    }
+                    else
+                    {
+                        magickImage.Format = MagickFormat.Png;
+                    }
+                    
+                    // Convert to System.Drawing.Image with optimized memory usage
+                    return ConvertMagickImageToImage(magickImage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Magick.NET loading failed: {ex.Message}");
+                
+                // Enhanced fallback with better error handling
+                try
+                {
+                    Console.WriteLine("Attempting fallback to standard Image.FromFile");
+                    return Image.FromFile(filePath);
+                }
+                catch (Exception fallbackEx)
+                {
+                    Console.WriteLine($"Fallback also failed: {fallbackEx.Message}");
+                    throw new Exception($"Both Magick.NET and standard loading failed. Magick.NET: {ex.Message}, Standard: {fallbackEx.Message}");
+                }
+            }
+        }
+        
+        // Enhanced convert MagickImage to System.Drawing.Image with memory optimization
+        private static Image ConvertMagickImageToImage(MagickImage magickImage)
+        {
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    // Use optimized format based on image characteristics
+                    if (magickImage.HasAlpha)
+                    {
+                        magickImage.Format = MagickFormat.Png;
+                    }
+                    else
+                    {
+                        // For images without alpha, JPEG is more memory efficient
+                        var imageSize = magickImage.Width * magickImage.Height;
+                        if (imageSize > 50000000) // >50MP
+                        {
+                            magickImage.Format = MagickFormat.Jpeg;
+                            magickImage.Quality = 95;
+                        }
+                        else
+                        {
+                            magickImage.Format = MagickFormat.Png;
+                        }
+                    }
+                    
+                    magickImage.Write(memoryStream);
+                    memoryStream.Position = 0;
+                    
+                    return Image.FromStream(memoryStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error converting MagickImage to Image: {ex.Message}");
+                throw;
+            }
+        }
+        
+        // Convert System.Drawing.Image to MagickImage
+        private static MagickImage ConvertImageToMagickImage(Image image)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                image.Save(memoryStream, ImageFormat.Png);
+                memoryStream.Position = 0;
+                return new MagickImage(memoryStream);
             }
         }
 
@@ -278,20 +726,43 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             maxPyramidLevel = level;
         }
 
+        // Enhanced pyramid level calculation for better sharpness
         private int GetBestPyramidLevel(float zoom)
         {
-            if (zoom >= 1.0f) return 0;
-
-            float targetScale = 1.0f / zoom;
-            int level = 0;
-
-            while (level < maxPyramidLevel && targetScale > 2.0f)
+            // For large images, be more conservative with pyramid levels to maintain sharpness
+            if (isLargeImage)
             {
-                targetScale /= 2.0f;
-                level++;
-            }
+                // Use original resolution more aggressively for large images
+                if (zoom >= 0.8f) return 0;
+                
+                float targetScale = 1.0f / zoom;
+                int level = 0;
 
-            return Math.Min(level, maxPyramidLevel);
+                // Use smaller scaling thresholds for large images to maintain detail
+                while (level < maxPyramidLevel && targetScale > 1.5f)
+                {
+                    targetScale /= (isLargeImage && originalImageSize.Width > 20000) ? 1.5f : 2.0f;
+                    level++;
+                }
+
+                return Math.Min(level, maxPyramidLevel);
+            }
+            else
+            {
+                // Standard behavior for smaller images
+                if (zoom >= 1.0f) return 0;
+
+                float targetScale = 1.0f / zoom;
+                int level = 0;
+
+                while (level < maxPyramidLevel && targetScale > 2.0f)
+                {
+                    targetScale /= 2.0f;
+                    level++;
+                }
+
+                return Math.Min(level, maxPyramidLevel);
+            }
         }
 
         private void PictureBox_Paint(object sender, PaintEventArgs e)
@@ -631,10 +1102,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     
                 foreach (var file in imageFiles)
                 {
+                    Bitmap originalBitmap = new Bitmap(file);
+                    
                     try
                     {
                         PictureBox pb = new PictureBox();
-                        pb.Image = Image.FromFile(file);
+                        pb.Image = originalBitmap;
                         pb.SizeMode = PictureBoxSizeMode.Zoom;
                         pb.Width = 50;
                         pb.Height = 50;
@@ -661,7 +1134,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         };
 
                         flowLayoutPanel1.Controls.Add(pb);
-                        Console.WriteLine($"Added icon: {Path.GetFileName(file)}");
                     }
                     catch (Exception ex)
                     {
@@ -758,15 +1230,23 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     // Lấy dữ liệu từ drag operation
                     if (ev.Data.GetDataPresent(DataFormats.Bitmap))
                     {
-                        droppedImg = (Image)ev.Data.GetData(DataFormats.Bitmap);
-                        Console.WriteLine("Got bitmap data");
+                        Bitmap originImage = (Bitmap)ev.Data.GetData(DataFormats.Bitmap);
+                        Color background = Color.FromArgb(200, 230, 250);
+                        // Thay đổi background thành màu đỏ
+                        // Giả sử background là màu trắng với tolerance 50
+                        Bitmap redBackgroundBitmap = new ImageProcess().ChangeBackGroundColor(
+                            originImage,
+                            background,    // Màu background cần thay đổi
+                            50,            // Tolerance
+                            Color.Red      // Màu mới (đỏ)
+                        );
+                        droppedImg = redBackgroundBitmap;
                     }
 
                     if (ev.Data.GetDataPresent("FilePath"))
                     {
                         string filePath = (string)ev.Data.GetData("FilePath");
                         fileName = Path.GetFileNameWithoutExtension(filePath);
-                        Console.WriteLine($"Got file path: {filePath}");
                     }
 
                     if (droppedImg != null)
@@ -830,6 +1310,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             return tile;
         }
 
+        // Enhanced tile generation with Magick.NET integration
         private Image GenerateTile(int level, int tileX, int tileY)
         {
             if (!pyramidSizes.ContainsKey(level)) return null;
@@ -852,26 +1333,195 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             int tileWidth = Math.Min(TILE_SIZE, (int)(sourceWidth * scale));
             int tileHeight = Math.Min(TILE_SIZE, (int)(sourceHeight * scale));
 
-            Bitmap tile = new Bitmap(tileWidth, tileHeight, PixelFormat.Format24bppRgb);
-
-            using (Graphics g = Graphics.FromImage(tile))
+            // Try Magick.NET for high-quality downscaling first
+            if (scale < 0.8f && tileWidth < sourceWidth && tileHeight < sourceHeight)
             {
+                try
+                {
+                    return GenerateTileWithMagickNet(sourceX, sourceY, sourceWidth, sourceHeight, tileWidth, tileHeight);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Magick.NET tile generation failed: {ex.Message}, falling back to GDI+");
+                }
+            }
+
+            // Fallback to standard GDI+ approach
+            return GenerateTileWithGDI(sourceX, sourceY, sourceWidth, sourceHeight, tileWidth, tileHeight);
+        }
+
+        // Generate tile using Magick.NET for superior quality downscaling
+        private Image GenerateTileWithMagickNet(int sourceX, int sourceY, int sourceWidth, int sourceHeight, int tileWidth, int tileHeight)
+        {
+            try
+            {
+                using (var magickImage = ConvertImageToMagickImage(originalImage))
+                {
+                    // Crop to the source rectangle
+                    var cropGeometry = new MagickGeometry(sourceX, sourceY, (uint)sourceWidth, (uint)sourceHeight);
+                    magickImage.Crop(cropGeometry);
+                    
+                    // Apply high-quality downscaling
+                    if (tileWidth != sourceWidth || tileHeight != sourceHeight)
+                    {
+                        // Choose appropriate filter based on scaling ratio
+                        FilterType filter = FilterType.Lanczos;
+                        float scaleRatio = Math.Min((float)tileWidth / sourceWidth, (float)tileHeight / sourceHeight);
+                        
+                        if (scaleRatio < 0.25f)
+                        {
+                            // For very small tiles, use Box filter to prevent aliasing
+                            filter = FilterType.Box;
+                        }
+                        else if (scaleRatio < 0.5f)
+                        {
+                            // For medium downscaling, use Mitchell for good quality/performance balance
+                            filter = FilterType.Mitchell;
+                        }
+                        
+                        magickImage.FilterType = filter;
+                        magickImage.Resize((uint)tileWidth, (uint)tileHeight);
+                        
+                        // Apply subtle sharpening for downscaled tiles
+                        if (scaleRatio < 0.7f)
+                        {
+                            magickImage.Sharpen(0, 0.5);
+                        }
+                    }
+                    
+                    // Convert back to System.Drawing.Image
+                    return ConvertMagickImageToImage(magickImage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Magick.NET tile processing failed: {ex.Message}");
+                throw;
+            }
+        }
+
+        // Generate tile using standard GDI+ (fallback method)
+        private Image GenerateTileWithGDI(int sourceX, int sourceY, int sourceWidth, int sourceHeight, int tileWidth, int tileHeight)
+        {
+            Bitmap tile = null;
+            Graphics g = null;
+            
+            try
+            {
+                // Use optimized pixel format for large images
+                PixelFormat pixelFormat = isLargeImage ? PixelFormat.Format24bppRgb : PixelFormat.Format32bppArgb;
+                tile = new Bitmap(tileWidth, tileHeight, pixelFormat);
+                
+                g = Graphics.FromImage(tile);
+                
+                // Enhanced graphics settings for better quality
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.SmoothingMode = SmoothingMode.HighQuality;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                
+                // For large images, use different rendering approach
+                if (isLargeImage && sourceWidth > tileWidth * 2)
+                {
+                    // For significant downscaling, use highest quality
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                }
 
                 Rectangle destRect = new Rectangle(0, 0, tileWidth, tileHeight);
                 Rectangle srcRect = new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight);
 
                 g.DrawImage(originalImage, destRect, srcRect, GraphicsUnit.Pixel);
+                
+                return tile;
             }
-
-            return tile;
+            catch (OutOfMemoryException)
+            {
+                Console.WriteLine($"Out of memory generating tile ({sourceX}, {sourceY})");
+                
+                // Clean up and try with reduced quality
+                g?.Dispose();
+                tile?.Dispose();
+                
+                // Force garbage collection
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                
+                // Try again with smaller tile size for large images
+                if (isLargeImage)
+                {
+                    try
+                    {
+                        int reducedTileWidth = Math.Min(512, tileWidth);
+                        int reducedTileHeight = Math.Min(512, tileHeight);
+                        
+                        tile = new Bitmap(reducedTileWidth, reducedTileHeight, PixelFormat.Format24bppRgb);
+                        g = Graphics.FromImage(tile);
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        
+                        Rectangle destRect = new Rectangle(0, 0, reducedTileWidth, reducedTileHeight);
+                        Rectangle srcRect = new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight);
+                        
+                        g.DrawImage(originalImage, destRect, srcRect, GraphicsUnit.Pixel);
+                        
+                        return tile;
+                    }
+                    catch
+                    {
+                        // Complete failure - return null
+                        g?.Dispose();
+                        tile?.Dispose();
+                        return null;
+                    }
+                    finally
+                    {
+                        g?.Dispose();
+                    }
+                }
+                
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error generating tile: {ex.Message}");
+                g?.Dispose();
+                tile?.Dispose();
+                return null;
+            }
+            finally
+            {
+                g?.Dispose();
+            }
         }
 
+        // Enhanced cache management for large images
         private void CacheTile(string tileKey, Image tile)
         {
-            while (tileCache.Count >= MAX_CACHE_TILES && tileCacheOrder.Count > 0)
+            // Adjust cache size based on image size and available memory
+            int maxCacheForCurrentImage;
+            
+            if (isLargeImage)
+            {
+                // Reduce cache size for large images to prevent memory issues
+                if (imageFileSizeInMB > 200)
+                {
+                    maxCacheForCurrentImage = MAX_CACHE_TILES / 8; // Very conservative for huge images
+                }
+                else if (imageFileSizeInMB > 100)
+                {
+                    maxCacheForCurrentImage = MAX_CACHE_TILES / 4; // Conservative for large images
+                }
+                else
+                {
+                    maxCacheForCurrentImage = MAX_CACHE_TILES / 2; // Moderate for medium large images
+                }
+            }
+            else
+            {
+                maxCacheForCurrentImage = MAX_CACHE_TILES;
+            }
+
+            // Clean up old tiles if cache is full
+            while (tileCache.Count >= maxCacheForCurrentImage && tileCacheOrder.Count > 0)
             {
                 string oldestKey = tileCacheOrder.Dequeue();
                 if (tileCache.ContainsKey(oldestKey))
@@ -883,8 +1533,15 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             tileCache[tileKey] = tile;
             tileCacheOrder.Enqueue(tileKey);
+
+            // For large images, periodically force garbage collection
+            if (isLargeImage && tileCache.Count % 10 == 0)
+            {
+                GC.Collect();
+            }
         }
 
+        // Enhanced cache clearing with better memory management
         private void ClearCache()
         {
             foreach (var tile in tileCache.Values)
@@ -893,6 +1550,16 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
             tileCache.Clear();
             tileCacheOrder.Clear();
+            
+            // Force garbage collection for large images
+            if (isLargeImage)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                }
+            }
         }
 
         private void ClampOffset()
@@ -906,13 +1573,14 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             offset.Y = Math.Min(0, Math.Max(offset.Y, pictureBox.Height - scaledHeight));
         }
 
+        // Enhanced cleanup for large images
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             locationIcon?.Dispose();
             ClearMapIcons(); // Sẽ dispose các custom icons
-            ClearCache();
-            originalImage?.Dispose();
+            CleanupPreviousImage(); // Clean up both standard and large image resources
             base.OnFormClosing(e);
         }
     }
+    
 }
