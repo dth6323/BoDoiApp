@@ -16,7 +16,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     public partial class BanDo : Form
     {
         private const int TILE_SIZE = 512;
-        private const int MAX_CACHE_TILES = 100;
+        private const int MAX_CACHE_TILES = 200;
 
         private int giaiDoan;
         private bool isDich = false;
@@ -193,6 +193,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                 }));
 
                                 LoadLargeImage(openFileDialog.FileName);
+
                             }
                             else
                             {
@@ -292,123 +293,191 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             try
             {
-                this.Invoke(new Action(() =>
+                await Task.Run(() =>
                 {
-                    this.Text = $"BanDo - Loading large image with optimized processing...";
-                }));
-
-                // Single aggressive memory cleanup instead of loop
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                Image newImage = null;
-                
-                // Optimized dimension calculation with less aggressive scaling
-                int maxDimension;
-                if (imageFileSizeInMB > 1000) // >1GB
-                {
-                    maxDimension = 8192;  // Increased from 6144
-                }
-                else if (imageFileSizeInMB > 500) // 500MB-1GB
-                {
-                    maxDimension = 10240; // Increased from 8192
-                }
-                else if (imageFileSizeInMB > 200) // 200-500MB
-                {
-                    maxDimension = 16384; // Kept same
-                }
-                else if (imageFileSizeInMB > 100) // 100-200MB
-                {
-                    maxDimension = 20480; // Increased from 16384
-                }
-                else // 70-100MB
-                {
-                    maxDimension = 24576; // Increased from 20480
-                }
-                
-                // Try Magick.NET with intelligent downscaling first
-                try
-                {
-                    // Run Magick.NET loading in background task for better responsiveness
-                    newImage = await Task.Run(() => LoadImageWithMagickNet(filePath, maxDimension));
-                    Console.WriteLine("Magick.NET large image loading successful");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Magick.NET failed: {ex.Message}, trying optimized fallback");
-                    
-                    // Optimized fallback with larger, more efficient buffer sizes
-                    newImage = await Task.Run(() =>
+                    this.Invoke(new Action(() =>
                     {
-                        if (imageFileSizeInMB > 300)
-                        {
-                            // Increased buffer size for better I/O performance
-                            using (var stream = new FileStream(filePath,
-                                FileMode.Open, FileAccess.Read, FileShare.Read, 
-                                bufferSize: 64 * 1024)) // Increased from 2048 to 64KB
-                            {
-                                return Image.FromStream(stream);
-                            }
-                        }
-                        else if (imageFileSizeInMB > 150)
-                        {
-                            // Significantly increased buffer size
-                            using (var stream = new FileStream(filePath,
-                                FileMode.Open, FileAccess.Read, FileShare.Read, 
-                                bufferSize: 256 * 1024)) // Increased from 4096 to 256KB
-                            {
-                                return Image.FromStream(stream);
-                            }
-                        }
-                        else
-                        {
-                            // Optimized buffer for moderately large files
-                            using (var stream = new FileStream(filePath,
-                                FileMode.Open, FileAccess.Read, FileShare.Read, 
-                                bufferSize: 1024 * 1024)) // Increased from 512KB to 1MB
-                            {
-                                return Image.FromStream(stream);
-                            }
-                        }
-                    });
-                    Console.WriteLine("Optimized fallback loading successful");
-                }
+                        this.Text = $"BanDo - Processing large image with Magick.NET...";
+                    }));
 
-                // Update UI on main thread
-                this.Invoke(new Action(() =>
-                {
-                    CleanupPreviousImage();
-                    
-                    originalImage = newImage;
-                    originalImageSize = originalImage.Size;
-                    currentImageFilePath = filePath;
-                    isLargeImage = true;
+                    // Force aggressive garbage collection before loading large image
+                    for (int i = 0; i < 3; i++)
+                    {
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                    }
 
-                    // Enhanced pyramid calculation for large images
-                    CalculateEnhancedPyramidLevels();
+                    MagickImage magickImage = null;
+                    Image downsampledImage = null;
 
-                    zoomLevel = 1.0f;
-                    offset = new PointF(0, 0);
-                    pictureBox.Invalidate();
-                    this.Cursor = Cursors.Default;
-                    this.Text = $"BanDo - {Path.GetFileName(filePath)} ({originalImageSize.Width}×{originalImageSize.Height}) [Optimized Large Mode]";
-                    
-                    Console.WriteLine($"Large image loaded successfully. Final dimensions: {originalImageSize.Width}×{originalImageSize.Height}");
-                }));
+                    try
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Text = $"BanDo - Reading large image metadata...";
+                        }));
+
+                        // First, read just the image info to get dimensions without loading full image
+                        // Replace this line:
+                        // using (var imageInfo = new MagickImageInfo(filePath))
+                        // With the following (remove the using statement, just declare the variable):
+
+                        MagickImageInfo imageInfo = new MagickImageInfo(filePath);
+                            var originalWidth = (int)imageInfo.Width;
+                            var originalHeight = (int)imageInfo.Height;
+                            var maxDimension = Math.Max(originalWidth, originalHeight);
+
+                            this.Invoke(new Action(() =>
+                            {
+                                this.Text = $"BanDo - Large image: {originalWidth}×{originalHeight} ({imageFileSizeInMB}MB)";
+                            }));
+
+                            // Determine optimal downsampling strategy based on image size
+                            int targetMaxDimension;
+                            if (imageFileSizeInMB > 500)
+                            {
+                                targetMaxDimension = 8192; // Ultra large images
+                            }
+                            else if (imageFileSizeInMB > 200)
+                            {
+                                targetMaxDimension = 12288; // Very large images
+                            }
+                            else if (imageFileSizeInMB > 100)
+                            {
+                                targetMaxDimension = 16384; // Large images
+                            }
+                            else
+                            {
+                                targetMaxDimension = 20480; // Medium large images
+                            }
+
+                            this.Invoke(new Action(() =>
+                            {
+                                this.Text = $"BanDo - Loading and downsampling to {targetMaxDimension}px...";
+                            }));
+
+                            // Load image with optimized settings for large files
+                            magickImage = new MagickImage();
+
+                            // Configure read settings for large images
+                            var readSettings = new MagickReadSettings();
+
+                            // For extremely large images, use define to optimize reading
+                            if (imageFileSizeInMB > 200)
+                            {
+                                readSettings.SetDefine(MagickFormat.Jpeg, "size", $"{targetMaxDimension}x{targetMaxDimension}");
+                                readSettings.SetDefine("jpeg:size", $"{targetMaxDimension}x{targetMaxDimension}");
+                            }
+
+                            // Read the image with settings
+                            magickImage.Read(filePath, readSettings);
+
+                            this.Invoke(new Action(() =>
+                            {
+                                this.Text = $"BanDo - Applying optimizations...";
+                            }));
+
+                            // Apply auto-orient to handle EXIF orientation
+                            magickImage.AutoOrient();
+
+                            // Strip metadata to save memory
+                            magickImage.Strip();
+
+                            // Apply quality enhancements for large images
+                            magickImage.Enhance();
+                            magickImage.Normalize();
+
+                            // Downsample if necessary
+                            if (maxDimension > targetMaxDimension)
+                            {
+                                this.Invoke(new Action(() =>
+                                {
+                                    this.Text = $"BanDo - Downsampling from {maxDimension}px to {targetMaxDimension}px...";
+                                }));
+
+                                // Use optimal filter for large image downsampling
+                                FilterType filter = FilterType.Lanczos;
+                                double scaleRatio = (double)targetMaxDimension / maxDimension;
+
+                                if (scaleRatio < 0.25)
+                                {
+                                    filter = FilterType.Box; // Best for extreme downscaling
+                                }
+                                else if (scaleRatio < 0.5)
+                                {
+                                    filter = FilterType.Mitchell; // Good for moderate downscaling
+                                }
+
+                                magickImage.FilterType = filter;
+                                magickImage.Resize(new MagickGeometry($"{targetMaxDimension}x{targetMaxDimension}>"));
+
+                                // Apply subtle sharpening after downsampling
+                                if (scaleRatio < 0.7)
+                                {
+                                    magickImage.Sharpen(0.5, 0.8);
+                                }
+                            }
+
+                            this.Invoke(new Action(() =>
+                            {
+                                this.Text = $"BanDo - Converting to display format...";
+                            }));
+
+                            // Optimize format for memory usage
+                            magickImage.Format = MagickFormat.Jpeg;
+                            magickImage.Quality = 90; // High quality but compressed
+
+                            // Convert to System.Drawing.Image
+                            downsampledImage = ConvertMagickImageToImage(magickImage);
+
+                            // Store original dimensions for proper coordinate mapping
+                            var finalWidth = (int)magickImage.Width;
+                            var finalHeight = (int)magickImage.Height;
+
+                            this.Invoke(new Action(() =>
+                            {
+                                CleanupPreviousImage();
+
+                                originalImage = downsampledImage;
+                                originalImageSize = new Size(originalWidth, originalHeight); // Keep original size for coordinate mapping
+                                currentImageFilePath = filePath;
+                                isLargeImage = true;
+
+                                // Calculate enhanced pyramid levels for large images
+                                CalculateEnhancedPyramidLevels();
+
+                                zoomLevel = 1.0f;
+                                offset = new PointF(0, 0);
+                                pictureBox.Invalidate();
+
+                                this.Text = $"BanDo - {Path.GetFileName(filePath)} ({originalWidth}×{originalHeight} → {finalWidth}×{finalHeight}) [Large Image Mode]";
+                                this.Cursor = Cursors.Default;
+
+                                // Show completion message
+                                var message = $"Large image loaded successfully!\n" +
+                                            $"Original: {originalWidth}×{originalHeight} ({imageFileSizeInMB}MB)\n" +
+                                            $"Display: {finalWidth}×{finalHeight}\n" +
+                                            $"Memory optimization: {(double)imageFileSizeInMB / ((finalWidth * finalHeight * 3) / (1024.0 * 1024.0)):F1}x reduction";
+
+                                MessageBox.Show(message, "Large Image Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }));
+                    }
+                    finally
+                    {
+                        // Clean up MagickImage resources
+                        magickImage?.Dispose();
+                    }
+                });
             }
             catch (OutOfMemoryException)
             {
                 this.Invoke(new Action(() =>
                 {
                     MessageBox.Show(
-                        $"Image is too large to load ({imageFileSizeInMB}MB).\n" +
-                        "Even with optimization, there isn't enough memory.\n" +
-                        "Recommendations:\n" +
-                        "• Close other applications to free memory\n" +
-                        "• Use a smaller image\n" +
-                        "• Increase system virtual memory",
-                        "Memory Insufficient", 
-                        MessageBoxButtons.OK, 
+                        $"Not enough memory to load this {imageFileSizeInMB}MB image.\n" +
+                        $"Please try closing other applications or use a smaller image.",
+                        "Memory Error",
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                     this.Cursor = Cursors.Default;
                     this.Text = "BanDo";
@@ -418,8 +487,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 this.Invoke(new Action(() =>
                 {
-                    MessageBox.Show($"Error loading large image: {ex.Message}\n\nFile: {Path.GetFileName(filePath)}\nSize: {imageFileSizeInMB}MB", 
-                        "Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        $"Error loading large image: {ex.Message}\n" +
+                        $"File: {Path.GetFileName(filePath)} ({imageFileSizeInMB}MB)",
+                        "Large Image Loading Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     this.Cursor = Cursors.Default;
                     this.Text = "BanDo";
                 }));
