@@ -3,8 +3,9 @@ using BoDoiApp.Helpers;
 using ImageMagick;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D; 
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private const int TILE_SIZE = 512;
         private const int MAX_CACHE_TILES = 200;
 
-        private int giaiDoan;
+        private Color giaiDoan;
         private bool isDich = false;
 
         private Image originalImage;
@@ -51,7 +52,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             InitializeComponent();
             CreateDefaultLocationIcon();
-            
+
             pictureBox = new PictureBox
             {
                 Dock = DockStyle.Fill,
@@ -165,7 +166,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             // Check file size first to determine loading strategy
                             var fileInfo = new FileInfo(openFileDialog.FileName);
                             imageFileSizeInMB = fileInfo.Length / (1024 * 1024);
-                            
+
                             this.Invoke(new Action(() =>
                             {
                                 this.Text = $"BanDo - Loading {Path.GetFileName(openFileDialog.FileName)} ({imageFileSizeInMB} MB)...";
@@ -180,10 +181,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                         $"Large image detected: {imageFileSizeInMB} MB\n" +
                                         $"This will use Magick.NET optimized loading for better performance.\n" +
                                         $"Continue?",
-                                        "Large Image Warning", 
-                                        MessageBoxButtons.YesNo, 
+                                        "Large Image Warning",
+                                        MessageBoxButtons.YesNo,
                                         MessageBoxIcon.Information);
-                                
+
                                     if (result == DialogResult.No)
                                     {
                                         this.Cursor = Cursors.Default;
@@ -223,9 +224,9 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 // Force garbage collection before loading
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-                
+
                 Image newImage = null;
-                
+
                 // For smaller images (<70MB), try Magick.NET first for enhanced quality
                 try
                 {
@@ -241,7 +242,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Magick.NET failed: {ex.Message}, falling back to standard GDI+ loading");
-                    
+
                     // Fallback to standard GDI+ loading with optimized buffer
                     using (var stream = new FileStream(filePath,
                         FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 1024 * 1024)) // 1MB buffer
@@ -254,7 +255,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 this.Invoke(new Action(() =>
                 {
                     CleanupPreviousImage();
-                    
+
                     originalImage = newImage;
                     originalImageSize = originalImage.Size;
                     currentImageFilePath = filePath;
@@ -323,144 +324,144 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         // With the following (remove the using statement, just declare the variable):
 
                         MagickImageInfo imageInfo = new MagickImageInfo(filePath);
-                            var originalWidth = (int)imageInfo.Width;
-                            var originalHeight = (int)imageInfo.Height;
-                            var maxDimension = Math.Max(originalWidth, originalHeight);
+                        var originalWidth = (int)imageInfo.Width;
+                        var originalHeight = (int)imageInfo.Height;
+                        var maxDimension = Math.Max(originalWidth, originalHeight);
 
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Text = $"BanDo - Large image: {originalWidth}×{originalHeight} ({imageFileSizeInMB}MB)";
+                        }));
+
+                        // Determine optimal downsampling strategy based on image size
+                        int targetMaxDimension;
+                        if (imageFileSizeInMB > 500)
+                        {
+                            targetMaxDimension = 8192; // Ultra large images
+                        }
+                        else if (imageFileSizeInMB > 200)
+                        {
+                            targetMaxDimension = 12288; // Very large images
+                        }
+                        else if (imageFileSizeInMB > 100)
+                        {
+                            targetMaxDimension = 16384; // Large images
+                        }
+                        else
+                        {
+                            targetMaxDimension = 20480; // Medium large images
+                        }
+
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Text = $"BanDo - Loading and downsampling to {targetMaxDimension}px...";
+                        }));
+
+                        // Load image with optimized settings for large files
+                        magickImage = new MagickImage();
+
+                        // Configure read settings for large images
+                        var readSettings = new MagickReadSettings();
+
+                        // For extremely large images, use define to optimize reading
+                        if (imageFileSizeInMB > 200)
+                        {
+                            readSettings.SetDefine(MagickFormat.Jpeg, "size", $"{targetMaxDimension}x{targetMaxDimension}");
+                            readSettings.SetDefine("jpeg:size", $"{targetMaxDimension}x{targetMaxDimension}");
+                        }
+
+                        // Read the image with settings
+                        magickImage.Read(filePath, readSettings);
+
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Text = $"BanDo - Applying optimizations...";
+                        }));
+
+                        // Apply auto-orient to handle EXIF orientation
+                        magickImage.AutoOrient();
+
+                        // Strip metadata to save memory
+                        magickImage.Strip();
+
+                        // Apply quality enhancements for large images
+                        magickImage.Enhance();
+                        magickImage.Normalize();
+
+                        // Downsample if necessary
+                        if (maxDimension > targetMaxDimension)
+                        {
                             this.Invoke(new Action(() =>
                             {
-                                this.Text = $"BanDo - Large image: {originalWidth}×{originalHeight} ({imageFileSizeInMB}MB)";
+                                this.Text = $"BanDo - Downsampling from {maxDimension}px to {targetMaxDimension}px...";
                             }));
 
-                            // Determine optimal downsampling strategy based on image size
-                            int targetMaxDimension;
-                            if (imageFileSizeInMB > 500)
+                            // Use optimal filter for large image downsampling
+                            FilterType filter = FilterType.Lanczos;
+                            double scaleRatio = (double)targetMaxDimension / maxDimension;
+
+                            if (scaleRatio < 0.25)
                             {
-                                targetMaxDimension = 8192; // Ultra large images
+                                filter = FilterType.Box; // Best for extreme downscaling
                             }
-                            else if (imageFileSizeInMB > 200)
+                            else if (scaleRatio < 0.5)
                             {
-                                targetMaxDimension = 12288; // Very large images
-                            }
-                            else if (imageFileSizeInMB > 100)
-                            {
-                                targetMaxDimension = 16384; // Large images
-                            }
-                            else
-                            {
-                                targetMaxDimension = 20480; // Medium large images
+                                filter = FilterType.Mitchell; // Good for moderate downscaling
                             }
 
-                            this.Invoke(new Action(() =>
+                            magickImage.FilterType = filter;
+                            magickImage.Resize(new MagickGeometry($"{targetMaxDimension}x{targetMaxDimension}>"));
+
+                            // Apply subtle sharpening after downsampling
+                            if (scaleRatio < 0.7)
                             {
-                                this.Text = $"BanDo - Loading and downsampling to {targetMaxDimension}px...";
-                            }));
-
-                            // Load image with optimized settings for large files
-                            magickImage = new MagickImage();
-
-                            // Configure read settings for large images
-                            var readSettings = new MagickReadSettings();
-
-                            // For extremely large images, use define to optimize reading
-                            if (imageFileSizeInMB > 200)
-                            {
-                                readSettings.SetDefine(MagickFormat.Jpeg, "size", $"{targetMaxDimension}x{targetMaxDimension}");
-                                readSettings.SetDefine("jpeg:size", $"{targetMaxDimension}x{targetMaxDimension}");
+                                magickImage.Sharpen(0.5, 0.8);
                             }
+                        }
 
-                            // Read the image with settings
-                            magickImage.Read(filePath, readSettings);
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Text = $"BanDo - Converting to display format...";
+                        }));
 
-                            this.Invoke(new Action(() =>
-                            {
-                                this.Text = $"BanDo - Applying optimizations...";
-                            }));
+                        // Optimize format for memory usage
+                        magickImage.Format = MagickFormat.Jpeg;
+                        magickImage.Quality = 90; // High quality but compressed
 
-                            // Apply auto-orient to handle EXIF orientation
-                            magickImage.AutoOrient();
+                        // Convert to System.Drawing.Image
+                        downsampledImage = ConvertMagickImageToImage(magickImage);
 
-                            // Strip metadata to save memory
-                            magickImage.Strip();
+                        // Store original dimensions for proper coordinate mapping
+                        var finalWidth = (int)magickImage.Width;
+                        var finalHeight = (int)magickImage.Height;
 
-                            // Apply quality enhancements for large images
-                            magickImage.Enhance();
-                            magickImage.Normalize();
+                        this.Invoke(new Action(() =>
+                        {
+                            CleanupPreviousImage();
 
-                            // Downsample if necessary
-                            if (maxDimension > targetMaxDimension)
-                            {
-                                this.Invoke(new Action(() =>
-                                {
-                                    this.Text = $"BanDo - Downsampling from {maxDimension}px to {targetMaxDimension}px...";
-                                }));
+                            originalImage = downsampledImage;
+                            originalImageSize = new Size(originalWidth, originalHeight); // Keep original size for coordinate mapping
+                            currentImageFilePath = filePath;
+                            isLargeImage = true;
 
-                                // Use optimal filter for large image downsampling
-                                FilterType filter = FilterType.Lanczos;
-                                double scaleRatio = (double)targetMaxDimension / maxDimension;
+                            // Calculate enhanced pyramid levels for large images
+                            CalculateEnhancedPyramidLevels();
 
-                                if (scaleRatio < 0.25)
-                                {
-                                    filter = FilterType.Box; // Best for extreme downscaling
-                                }
-                                else if (scaleRatio < 0.5)
-                                {
-                                    filter = FilterType.Mitchell; // Good for moderate downscaling
-                                }
+                            zoomLevel = 1.0f;
+                            offset = new PointF(0, 0);
+                            pictureBox.Invalidate();
 
-                                magickImage.FilterType = filter;
-                                magickImage.Resize(new MagickGeometry($"{targetMaxDimension}x{targetMaxDimension}>"));
+                            this.Text = $"BanDo - {Path.GetFileName(filePath)} ({originalWidth}×{originalHeight} → {finalWidth}×{finalHeight}) [Large Image Mode]";
+                            this.Cursor = Cursors.Default;
 
-                                // Apply subtle sharpening after downsampling
-                                if (scaleRatio < 0.7)
-                                {
-                                    magickImage.Sharpen(0.5, 0.8);
-                                }
-                            }
+                            // Show completion message
+                            var message = $"Large image loaded successfully!\n" +
+                                        $"Original: {originalWidth}×{originalHeight} ({imageFileSizeInMB}MB)\n" +
+                                        $"Display: {finalWidth}×{finalHeight}\n" +
+                                        $"Memory optimization: {(double)imageFileSizeInMB / ((finalWidth * finalHeight * 3) / (1024.0 * 1024.0)):F1}x reduction";
 
-                            this.Invoke(new Action(() =>
-                            {
-                                this.Text = $"BanDo - Converting to display format...";
-                            }));
-
-                            // Optimize format for memory usage
-                            magickImage.Format = MagickFormat.Jpeg;
-                            magickImage.Quality = 90; // High quality but compressed
-
-                            // Convert to System.Drawing.Image
-                            downsampledImage = ConvertMagickImageToImage(magickImage);
-
-                            // Store original dimensions for proper coordinate mapping
-                            var finalWidth = (int)magickImage.Width;
-                            var finalHeight = (int)magickImage.Height;
-
-                            this.Invoke(new Action(() =>
-                            {
-                                CleanupPreviousImage();
-
-                                originalImage = downsampledImage;
-                                originalImageSize = new Size(originalWidth, originalHeight); // Keep original size for coordinate mapping
-                                currentImageFilePath = filePath;
-                                isLargeImage = true;
-
-                                // Calculate enhanced pyramid levels for large images
-                                CalculateEnhancedPyramidLevels();
-
-                                zoomLevel = 1.0f;
-                                offset = new PointF(0, 0);
-                                pictureBox.Invalidate();
-
-                                this.Text = $"BanDo - {Path.GetFileName(filePath)} ({originalWidth}×{originalHeight} → {finalWidth}×{finalHeight}) [Large Image Mode]";
-                                this.Cursor = Cursors.Default;
-
-                                // Show completion message
-                                var message = $"Large image loaded successfully!\n" +
-                                            $"Original: {originalWidth}×{originalHeight} ({imageFileSizeInMB}MB)\n" +
-                                            $"Display: {finalWidth}×{finalHeight}\n" +
-                                            $"Memory optimization: {(double)imageFileSizeInMB / ((finalWidth * finalHeight * 3) / (1024.0 * 1024.0)):F1}x reduction";
-
-                                MessageBox.Show(message, "Large Image Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }));
+                            MessageBox.Show(message, "Large Image Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }));
                     }
                     finally
                     {
@@ -498,7 +499,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 }));
             }
         }
-    
+
         // Enhanced pyramid calculation for large images
         private void CalculateEnhancedPyramidLevels()
         {
@@ -511,14 +512,14 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             // For large images, create more pyramid levels for better performance
             int maxDimension = Math.Max(width, height);
-            
+
             // Calculate optimal tile size based on image size
             int optimalTileSize = isLargeImage && maxDimension > 20000 ? 2048 : TILE_SIZE;
-            
+
             while (width > optimalTileSize || height > optimalTileSize)
             {
                 pyramidSizes[level] = new Size(width, height);
-                
+
                 // For very large images, use different scaling factors
                 if (isLargeImage && maxDimension > 50000)
                 {
@@ -532,16 +533,16 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     width /= 2;
                     height /= 2;
                 }
-                
+
                 level++;
-                
+
                 // Prevent too many pyramid levels
                 if (level > 15) break;
             }
 
             pyramidSizes[level] = new Size(width, height);
             maxPyramidLevel = level;
-            
+
             Console.WriteLine($"Created {level + 1} pyramid levels for {(isLargeImage ? "large" : "standard")} image");
         }
 
@@ -557,25 +558,25 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         }
 
         // ===== MAGICK.NET ENHANCED METHODS =====
-        
+
         // Load image using Magick.NET with optimized downscaling
         private static Image LoadImageWithMagickNet(string filePath, int maxDimension = 0)
         {
             try
             {
                 Console.WriteLine($"LoadImageWithMagickNet called with maxDimension: {maxDimension}");
-                
+
                 using (var magickImage = new MagickImage(filePath))
                 {
                     Console.WriteLine($"Original image dimensions: {magickImage.Width}x{magickImage.Height}");
-                    
+
                     // Apply auto-orient to handle EXIF orientation properly
                     //magickImage.AutoOrient();
-                    
+
                     // Enhanced quality improvements for all images
                     //magickImage.Enhance(); // Auto-enhance image quality
                     //magickImage.Normalize(); // Normalize contrast and brightness
-                    
+
                     // Advanced resizing for large images
                     if (maxDimension > 0)
                     {
@@ -583,10 +584,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         if (currentMax > maxDimension)
                         {
                             Console.WriteLine($"Resizing from {currentMax} to {maxDimension}");
-                            
+
                             // Calculate scale ratio for better quality control
                             double scaleRatio = (double)maxDimension / currentMax;
-                            
+
                             // Choose optimal filter based on scale ratio
                             FilterType filter;
                             if (scaleRatio < 0.3)
@@ -601,12 +602,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             {
                                 filter = FilterType.Lanczos; // Highest quality for light downscaling
                             }
-                            
+
                             magickImage.FilterType = filter;
-                            
+
                             // Resize with maintain aspect ratio
                             magickImage.Resize(new MagickGeometry($"{maxDimension}x{maxDimension}>"));
-                            
+
                             // Apply adaptive sharpening based on scale ratio
                             if (scaleRatio < 0.7)
                             {
@@ -614,15 +615,15 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                 double sharpenSigma = scaleRatio < 0.5 ? 0.8 : 0.5;
                                 magickImage.Sharpen(sharpenRadius, sharpenSigma);
                             }
-                            
+
                             Console.WriteLine($"Resized to: {magickImage.Width}x{magickImage.Height}");
                         }
                     }
-                    
+
                     // Advanced optimization for memory efficiency
                     magickImage.Strip(); // Remove all metadata to save memory
                     magickImage.Quality = 95; // High quality but optimized
-                    
+
                     // For very large images, use JPEG format internally to save memory
                     if (maxDimension > 0 && Math.Max(magickImage.Width, magickImage.Height) > 10000)
                     {
@@ -633,7 +634,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     {
                         magickImage.Format = MagickFormat.Png;
                     }
-                    
+
                     // Convert to System.Drawing.Image with optimized memory usage
                     return ConvertMagickImageToImage(magickImage);
                 }
@@ -641,7 +642,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             catch (Exception ex)
             {
                 Console.WriteLine($"Magick.NET loading failed: {ex.Message}");
-                
+
                 // Enhanced fallback with better error handling
                 try
                 {
@@ -655,7 +656,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 }
             }
         }
-        
+
         // Enhanced convert MagickImage to System.Drawing.Image with memory optimization
         private static Image ConvertMagickImageToImage(MagickImage magickImage)
         {
@@ -682,10 +683,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             magickImage.Format = MagickFormat.Png;
                         }
                     }
-                    
+
                     magickImage.Write(memoryStream);
                     memoryStream.Position = 0;
-                    
+
                     return Image.FromStream(memoryStream);
                 }
             }
@@ -695,7 +696,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 throw;
             }
         }
-        
+
         // Convert System.Drawing.Image to MagickImage
         private static MagickImage ConvertImageToMagickImage(Image image)
         {
@@ -720,7 +721,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 saveFileDialog.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpg)|*.jpg|BMP Files (*.bmp)|*.bmp";
                 saveFileDialog.DefaultExt = "png";
-                
+
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
@@ -731,10 +732,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         {
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                             g.SmoothingMode = SmoothingMode.HighQuality;
-                            
+
                             // Vẽ ảnh gốc
                             g.DrawImage(originalImage, 0, 0);
-                            
+
                             // Vẽ tất cả các icons lên ảnh
                             foreach (var icon in mapIcons)
                             {
@@ -744,13 +745,13 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                     float iconSize = icon.Size;
                                     float iconX = icon.ImagePosition.X - iconSize / 2;
                                     float iconY = icon.ImagePosition.Y - iconSize;
-                                    
+
                                     RectangleF iconRect = new RectangleF(iconX, iconY, iconSize, iconSize);
                                     g.DrawImage(iconToDraw, iconRect);
                                 }
                             }
                         }
-                        
+
                         // Lưu ảnh
                         ImageFormat format = ImageFormat.Png;
                         string extension = Path.GetExtension(saveFileDialog.FileName).ToLower();
@@ -764,10 +765,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                 format = ImageFormat.Bmp;
                                 break;
                         }
-                        
+
                         resultImage.Save(saveFileDialog.FileName, format);
                         resultImage.Dispose();
-                        
+
                         MessageBox.Show("Image saved successfully!");
                     }
                     catch (Exception ex)
@@ -807,7 +808,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 // Use original resolution more aggressively for large images
                 if (zoom >= 0.8f) return 0;
-                
+
                 float targetScale = 1.0f / zoom;
                 int level = 0;
 
@@ -887,7 +888,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void DrawMapIcons(Graphics g, float currentZoomLevel)
         {
             Console.WriteLine($"DrawMapIcons called with {mapIcons.Count} icons, zoom: {currentZoomLevel}");
-            
+
             foreach (var icon in mapIcons)
             {
                 try
@@ -902,9 +903,9 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     float iconY = screenY - iconSize;
 
                     Rectangle iconRect = new Rectangle((int)iconX, (int)iconY, (int)iconSize, (int)iconSize);
-                    
+
                     Console.WriteLine($"Drawing icon '{icon.Label}' at screen position ({screenX}, {screenY}), rect: {iconRect}");
-                    
+
                     // Luôn vẽ icon để test, không cần kiểm tra intersect
                     // if (iconRect.IntersectsWith(new Rectangle(0, 0, pictureBox.Width, pictureBox.Height)))
                     {
@@ -965,11 +966,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 float screenX = offset.X + icon.ImagePosition.X * zoomLevel;
                 float screenY = offset.Y + icon.ImagePosition.Y * zoomLevel;
-                
+
                 float iconSize = 50;
                 float iconX = screenX - iconSize / 2;
                 float iconY = screenY - iconSize;
-                
+
                 RectangleF iconRect = new RectangleF(iconX, iconY, iconSize, iconSize);
                 if (iconRect.Contains(screenPosition))
                 {
@@ -994,17 +995,17 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 // Kiểm tra xem có click trên icon nào không
                 MapIcon clickedIcon = GetIconAtPosition(new PointF(e.X, e.Y));
-                
+
                 if (clickedIcon != null)
                 {
                     selectedIcon = clickedIcon;
                     isDraggingIcon = true;
-                    
+
                     // Tính offset từ vị trí click đến center của icon
                     float screenX = offset.X + clickedIcon.ImagePosition.X * zoomLevel;
                     float screenY = offset.Y + clickedIcon.ImagePosition.Y * zoomLevel;
                     iconDragOffset = new PointF(e.X - screenX, e.Y - screenY);
-                    
+
                     pictureBox.Invalidate();
                 }
                 else
@@ -1074,7 +1075,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             PointF imagePosition = ScreenToImageCoordinates(new PointF(e.X, e.Y));
 
-            if (imagePosition.X >= 0 && imagePosition.X < originalImageSize.Width && 
+            if (imagePosition.X >= 0 && imagePosition.X < originalImageSize.Width &&
                 imagePosition.Y >= 0 && imagePosition.Y < originalImageSize.Height)
             {
                 AddMapIcon(imagePosition, $"Location {mapIcons.Count + 1}");
@@ -1084,7 +1085,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         public void AddMapIcon(PointF imagePosition, string label = "", Image customIcon = null, string fileName = "")
         {
             Console.WriteLine($"Adding map icon at position: {imagePosition}, label: {label}");
-            
+
             mapIcons.Add(new MapIcon
             {
                 ImagePosition = imagePosition,
@@ -1128,98 +1129,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         }
 
         // 2. Chọn các giai đoạn ở combobox và load các icon vào flowpanel
-        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            flowLayoutPanel1.Controls.Clear();
-            
-            if (comboBox1.SelectedItem == null) return;
-            
-            string selectItem = comboBox1.SelectedItem.ToString();
-            
-            // Đường dẫn folder chứa icons theo giai đoạn
-            string folderPath = @"D:\Desktop\ThuatToan\MH3D";
-            
-            // Có thể thay đổi folder theo giai đoạn được chọn
-            switch (selectItem)
-            {
-                case "Giai đoạn 1":
-                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan1";
-                    break;
-                case "Giai đoạn 2":
-                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan2";
-                    break;
-                case "Giai đoạn 3":
-                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan3";
-                    break;
-                case "Giai đoạn 4":
-                    folderPath = @"D:\Desktop\ThuatToan\MH3D\GiaiDoan4";
-                    break;
-                default:
-                    folderPath = @"D:\Desktop\ThuatToan\MH3D";
-                    break;
-            }
-            
-            // Fallback về folder mặc định nếu folder giai đoạn không tồn tại
-            if (!Directory.Exists(folderPath))
-            {
-                folderPath = @"D:\Desktop\ThuatToan\MH3D";
-            }
-            
-            if (Directory.Exists(folderPath))
-            {
-                var imageFiles = Directory.GetFiles(folderPath, "*.png")
-                    .Concat(Directory.GetFiles(folderPath, "*.jpg"))
-                    .Concat(Directory.GetFiles(folderPath, "*.jpeg"))
-                    .Concat(Directory.GetFiles(folderPath, "*.bmp"))
-                    .ToArray();
-                    
-                foreach (var file in imageFiles)
-                {
-                    Bitmap originalBitmap = new Bitmap(file);
-                    
-                    try
-                    {
-                        PictureBox pb = new PictureBox();
-                        pb.Image = originalBitmap;
-                        pb.SizeMode = PictureBoxSizeMode.Zoom;
-                        pb.Width = 50;
-                        pb.Height = 50;
-                        pb.Tag = file; // Lưu đường dẫn file
-                        pb.BorderStyle = BorderStyle.FixedSingle;
 
-                        // Enable drag and drop
-                        pb.MouseDown += (s, ev) =>
-                        {
-                            if (ev.Button == MouseButtons.Left)
-                            {
-                                PictureBox sourcePb = s as PictureBox;
-                                if (sourcePb != null && sourcePb.Image != null)
-                                {
-                                    // Tạo data object với cả image và file path
-                                    DataObject data = new DataObject();
-                                    data.SetData("FilePath", sourcePb.Tag.ToString());
-                                    data.SetData(DataFormats.Bitmap, sourcePb.Image);
-                                    
-                                    Console.WriteLine($"Starting drag operation for: {sourcePb.Tag}");
-                                    sourcePb.DoDragDrop(data, DragDropEffects.Copy);
-                                }
-                            }
-                        };
-
-                        flowLayoutPanel1.Controls.Add(pb);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error loading image {file}: {ex.Message}");
-                    }
-                }
-            }
-            else
-            {
-                // Tạo một vài icon mẫu nếu không tìm thấy folder
-                CreateSampleIcons();
-            }
-        }
 
         // Tạo icons mẫu nếu không tìm thấy folder
         private void CreateSampleIcons()
@@ -1227,7 +1137,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             for (int i = 1; i <= 5; i++)
             {
                 PictureBox pb = new PictureBox();
-                
+
                 // Tạo icon mẫu
                 Bitmap sampleIcon = new Bitmap(32, 32);
                 using (Graphics g = Graphics.FromImage(sampleIcon))
@@ -1236,7 +1146,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     g.FillEllipse(new SolidBrush(Color.Blue), 4, 4, 24, 24);
                     g.DrawString(i.ToString(), new Font("Arial", 12), Brushes.White, 12, 8);
                 }
-                
+
                 pb.Image = sampleIcon;
                 pb.SizeMode = PictureBoxSizeMode.Zoom;
                 pb.Width = 50;
@@ -1254,7 +1164,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             DataObject data = new DataObject();
                             data.SetData("FilePath", sourcePb.Tag.ToString());
                             data.SetData(DataFormats.Bitmap, sourcePb.Image);
-                            
+
                             sourcePb.DoDragDrop(data, DragDropEffects.Copy);
                         }
                     }
@@ -1266,6 +1176,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         // 3. Drag and drop icons từ flowlayout lên ảnh
         private void BanDo_Load(object sender, EventArgs e)
         {
+            comboBox1.Items.Clear();
+            comboBox1.Items.Add("Chon Loại Binh chủng");
+            comboBox1.Items.AddRange(new FileHelper().ReadDirectoryString("C:\\Users\\NguyenBirain\\Documents\\Thai Ha\\Images\\Nhóm KHQS\\"));
+            comboBox1.SelectedIndex = 0;
             // Thiết lập drag and drop cho pictureBox
             pictureBox.AllowDrop = true;
 
@@ -1288,7 +1202,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             pictureBox.DragDrop += (s, ev) =>
             {
                 Console.WriteLine("DragDrop event triggered");
-                
+
                 try
                 {
                     if (originalImage == null)
@@ -1311,7 +1225,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             originImage,
                             background,    // Màu background cần thay đổi
                             50,            // Tolerance
-                            Color.Red      // Màu mới (đỏ)
+                            giaiDoan      // Màu mới (đỏ)
                         );
                         droppedImg = redBackgroundBitmap;
                     }
@@ -1327,16 +1241,16 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         // Chuyển đổi vị trí drop sang tọa độ ảnh
                         Point dropPoint = pictureBox.PointToClient(new Point(ev.X, ev.Y));
                         PointF imagePosition = ScreenToImageCoordinates(new PointF(dropPoint.X, dropPoint.Y));
-                        
+
                         Console.WriteLine($"Drop point: {dropPoint}, Image position: {imagePosition}");
-                        
+
                         // Kiểm tra xem vị trí có hợp lệ không
-                        if (imagePosition.X >= 0 && imagePosition.X < originalImageSize.Width && 
+                        if (imagePosition.X >= 0 && imagePosition.X < originalImageSize.Width &&
                             imagePosition.Y >= 0 && imagePosition.Y < originalImageSize.Height)
                         {
                             // Tạo copy của image để tránh conflict
                             Bitmap iconCopy = new Bitmap(droppedImg);
-                            
+
                             // Thêm icon tại vị trí drop
                             AddMapIcon(imagePosition, fileName, iconCopy, fileName);
                             Console.WriteLine($"Icon added successfully at {imagePosition}");
@@ -1361,7 +1275,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             // Thiết lập các thuộc tính form
             this.AllowDrop = true;
-            
+
             Console.WriteLine("BanDo_Load completed - Drag and drop initialized");
         }
 
@@ -1433,14 +1347,14 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     // Crop to the source rectangle
                     var cropGeometry = new MagickGeometry(sourceX, sourceY, (uint)sourceWidth, (uint)sourceHeight);
                     magickImage.Crop(cropGeometry);
-                    
+
                     // Apply high-quality downscaling
                     if (tileWidth != sourceWidth || tileHeight != sourceHeight)
                     {
                         // Choose appropriate filter based on scaling ratio
                         FilterType filter = FilterType.Lanczos;
                         float scaleRatio = Math.Min((float)tileWidth / sourceWidth, (float)tileHeight / sourceHeight);
-                        
+
                         if (scaleRatio < 0.25f)
                         {
                             // For very small tiles, use Box filter to prevent aliasing
@@ -1451,17 +1365,17 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             // For medium downscaling, use Mitchell for good quality/performance balance
                             filter = FilterType.Mitchell;
                         }
-                        
+
                         magickImage.FilterType = filter;
                         magickImage.Resize((uint)tileWidth, (uint)tileHeight);
-                        
+
                         // Apply subtle sharpening for downscaled tiles
                         if (scaleRatio < 0.7f)
                         {
                             magickImage.Sharpen(0, 0.5);
                         }
                     }
-                    
+
                     // Convert back to System.Drawing.Image
                     return ConvertMagickImageToImage(magickImage);
                 }
@@ -1478,21 +1392,21 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             Bitmap tile = null;
             Graphics g = null;
-            
+
             try
             {
                 // Use optimized pixel format for large images
                 PixelFormat pixelFormat = isLargeImage ? PixelFormat.Format24bppRgb : PixelFormat.Format32bppArgb;
                 tile = new Bitmap(tileWidth, tileHeight, pixelFormat);
-                
+
                 g = Graphics.FromImage(tile);
-                
+
                 // Enhanced graphics settings for better quality
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.SmoothingMode = SmoothingMode.HighQuality;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 g.CompositingQuality = CompositingQuality.HighQuality;
-                
+
                 // For large images, use different rendering approach
                 if (isLargeImage && sourceWidth > tileWidth * 2)
                 {
@@ -1504,21 +1418,21 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 Rectangle srcRect = new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight);
 
                 g.DrawImage(originalImage, destRect, srcRect, GraphicsUnit.Pixel);
-                
+
                 return tile;
             }
             catch (OutOfMemoryException)
             {
                 Console.WriteLine($"Out of memory generating tile ({sourceX}, {sourceY})");
-                
+
                 // Clean up and try with reduced quality
                 g?.Dispose();
                 tile?.Dispose();
-                
+
                 // Force garbage collection
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-                
+
                 // Try again with smaller tile size for large images
                 if (isLargeImage)
                 {
@@ -1526,16 +1440,16 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     {
                         int reducedTileWidth = Math.Min(512, tileWidth);
                         int reducedTileHeight = Math.Min(512, tileHeight);
-                        
+
                         tile = new Bitmap(reducedTileWidth, reducedTileHeight, PixelFormat.Format24bppRgb);
                         g = Graphics.FromImage(tile);
                         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        
+
                         Rectangle destRect = new Rectangle(0, 0, reducedTileWidth, reducedTileHeight);
                         Rectangle srcRect = new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight);
-                        
+
                         g.DrawImage(originalImage, destRect, srcRect, GraphicsUnit.Pixel);
-                        
+
                         return tile;
                     }
                     catch
@@ -1550,7 +1464,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         g?.Dispose();
                     }
                 }
-                
+
                 return null;
             }
             catch (Exception ex)
@@ -1571,7 +1485,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             // Adjust cache size based on image size and available memory
             int maxCacheForCurrentImage;
-            
+
             if (isLargeImage)
             {
                 // Reduce cache size for large images to prevent memory issues
@@ -1623,7 +1537,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
             tileCache.Clear();
             tileCacheOrder.Clear();
-            
+
             // Force garbage collection for large images
             if (isLargeImage)
             {
@@ -1654,6 +1568,103 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             CleanupPreviousImage(); // Clean up both standard and large image resources
             base.OnFormClosing(e);
         }
-    }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var value = comboBox2.SelectedItem.ToString();
+            switch (value)
+            {
+                case "Giai đoạn 1":
+                    giaiDoan = Color.Red;
+                    break;
+                case "Giai đoạn 2":
+                    giaiDoan = Color.Orange;
+                    break;
+                case "Giai đoạn 3":
+                    giaiDoan = Color.Yellow;
+                    break;
+                case "Giai đoạn 4":
+                    giaiDoan = Color.Green;
+                    break;
+                case "Giai đoạn 5":
+                    giaiDoan = Color.Blue;
+                    break;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        
+            flowLayoutPanel1.Controls.Clear();
+
+            if (comboBox1.SelectedItem == null) return;
+
+            string selectItem = comboBox1.SelectedItem.ToString();
+
+            string folderPath = Path.Combine("C:\\Users\\NguyenBirain\\Documents\\Thai Ha\\Images\\Nhóm KHQS", selectItem);
+
+            // Fallback về folder mặc định nếu folder giai đoạn không tồn tại
+            if (!Directory.Exists(folderPath))
+            {
+                folderPath = @"D:\Desktop\ThuatToan\MH3D";
+            }
+
+            if (Directory.Exists(folderPath))
+            {
+                var imageFiles = Directory.GetFiles(folderPath, "*.png")
+                    .Concat(Directory.GetFiles(folderPath, "*.jpg"))
+                    .Concat(Directory.GetFiles(folderPath, "*.jpeg"))
+                    .Concat(Directory.GetFiles(folderPath, "*.bmp"))
+                    .ToArray();
+
+                foreach (var file in imageFiles)
+                {
+                    Bitmap originalBitmap = new Bitmap(file);
+
+                    try
+                    {
+                        PictureBox pb = new PictureBox();
+                        pb.Image = originalBitmap;
+                        pb.SizeMode = PictureBoxSizeMode.Zoom;
+                        pb.Width = 50;
+                        pb.Height = 50;
+                        pb.Tag = file; // Lưu đường dẫn file
+                        pb.BorderStyle = BorderStyle.FixedSingle;
+
+                        // Enable drag and drop
+                        pb.MouseDown += (s, ev) =>
+                        {
+                            if (ev.Button == MouseButtons.Left)
+                            {
+                                PictureBox sourcePb = s as PictureBox;
+                                if (sourcePb != null && sourcePb.Image != null)
+                                {
+                                    // Tạo data object với cả image và file path
+                                    DataObject data = new DataObject();
+                                    data.SetData("FilePath", sourcePb.Tag.ToString());
+                                    data.SetData(DataFormats.Bitmap, sourcePb.Image);
+
+                                    Console.WriteLine($"Starting drag operation for: {sourcePb.Tag}");
+                                    sourcePb.DoDragDrop(data, DragDropEffects.Copy);
+                                }
+                            }
+                        };
+
+                        flowLayoutPanel1.Controls.Add(pb);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error loading image {file}: {ex.Message}");
+                    }
+                }
+            }
+            else
+            {
+                // Tạo một vài icon mẫu nếu không tìm thấy folder
+                CreateSampleIcons();
+            }
+        }
     
+    }
+
 }
