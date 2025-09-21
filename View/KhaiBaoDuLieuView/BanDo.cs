@@ -19,7 +19,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private const int TILE_SIZE = 512;
         private const int MAX_CACHE_TILES = 200;
 
-        private Color giaiDoan;
+        private Color giaiDoan = Color.Pink;
         private bool isDich = false;
 
         private Image originalImage;
@@ -1178,7 +1178,9 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             comboBox1.Items.Clear();
             comboBox1.Items.Add("Chon Loại Binh chủng");
-            comboBox1.Items.AddRange(new FileHelper().ReadDirectoryString("C:\\Users\\NguyenBirain\\Documents\\Thai Ha\\Images\\Nhóm KHQS\\"));
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "Nhóm KHQS");
+            System.Diagnostics.Debug.WriteLine($"Loading icons from path: {path}");
+            comboBox1.Items.AddRange(new FileHelper().ReadDirectoryString(path.Replace(@"\bin\Debug","")));
             comboBox1.SelectedIndex = 0;
             // Thiết lập drag and drop cho pictureBox
             pictureBox.AllowDrop = true;
@@ -1218,16 +1220,29 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     if (ev.Data.GetDataPresent(DataFormats.Bitmap))
                     {
                         Bitmap originImage = (Bitmap)ev.Data.GetData(DataFormats.Bitmap);
-                        Color background = Color.FromArgb(200, 230, 250);
+                        Color background = Color.FromArgb(252, 153, 204);
                         // Thay đổi background thành màu đỏ
                         // Giả sử background là màu trắng với tolerance 50
                         Bitmap redBackgroundBitmap = new ImageProcess().ChangeBackGroundColor(
                             originImage,
                             background,    // Màu background cần thay đổi
-                            50,            // Tolerance
+                            80,            // Tolerance
                             giaiDoan      // Màu mới (đỏ)
                         );
-                        droppedImg = redBackgroundBitmap;
+                        if (isDich == true)
+                        {
+                            Bitmap EnemiesImage = new ImageProcess().ChangeBackGroundColor(
+                            redBackgroundBitmap,
+                            Color.Red,    // Màu background cần thay đổi
+                            80,            // Tolerance
+                            Color.Blue      // Màu mới của dịch (xanh dương) 
+                            );
+                            droppedImg = EnemiesImage;
+                        }
+                        else
+                        {
+                            droppedImg = redBackgroundBitmap;
+                        }
                     }
 
                     if (ev.Data.GetDataPresent("FilePath"))
@@ -1575,39 +1590,40 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             switch (value)
             {
                 case "Giai đoạn 1":
-                    giaiDoan = Color.Red;
+                    giaiDoan = Color.FromArgb(234, 164, 188);
                     break;
                 case "Giai đoạn 2":
-                    giaiDoan = Color.Orange;
+                    giaiDoan = Color.Yellow;
                     break;
                 case "Giai đoạn 3":
-                    giaiDoan = Color.Yellow;
+                    giaiDoan = Color.FromArgb(234, 164, 188);
                     break;
                 case "Giai đoạn 4":
                     giaiDoan = Color.Green;
                     break;
                 case "Giai đoạn 5":
-                    giaiDoan = Color.Blue;
+                    giaiDoan = Color.FromArgb(249, 150, 197);
+                    break;
+                case "Giai đoạn 6":
+                    giaiDoan = Color.FromArgb(232, 152, 55);
+                    break;
+                case "Giai đoạn 7":
+                    giaiDoan = Color.White;
                     break;
             }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-        
+
             flowLayoutPanel1.Controls.Clear();
 
             if (comboBox1.SelectedItem == null) return;
 
             string selectItem = comboBox1.SelectedItem.ToString();
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "Nhóm KHQS").Replace(@"\bin\Debug", "");
+            string folderPath = Path.Combine(path, selectItem);
 
-            string folderPath = Path.Combine("C:\\Users\\NguyenBirain\\Documents\\Thai Ha\\Images\\Nhóm KHQS", selectItem);
-
-            // Fallback về folder mặc định nếu folder giai đoạn không tồn tại
-            if (!Directory.Exists(folderPath))
-            {
-                folderPath = @"D:\Desktop\ThuatToan\MH3D";
-            }
 
             if (Directory.Exists(folderPath))
             {
@@ -1664,7 +1680,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 CreateSampleIcons();
             }
         }
-    
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            isDich = checkBox1.Checked;
+
+        }
     }
 
 }
