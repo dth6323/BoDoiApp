@@ -18,6 +18,7 @@ namespace BoDoiApp.View
         public static ThongTinTapBai ThongTinTapBai { get; set; }
         public static QuanSoChienDau QuanSoChienDau { get; set; }
         public static VatChatHienCoView VatChatHienCo { get; set; }
+        public static BanDo BanDo { get; set; }
         public static QuyDinhDuTruTieuThuBoSungVatChat QuyDinhDuTruTieuThuBoSung { get; set; }
         public static void Init()
         {
@@ -29,6 +30,7 @@ namespace BoDoiApp.View
             ThongTinTapBai = new ThongTinTapBai();
             QuanSoChienDau = new QuanSoChienDau();
             VatChatHienCo = new VatChatHienCoView();
+            BanDo = new BanDo();
         }
     }
 }
