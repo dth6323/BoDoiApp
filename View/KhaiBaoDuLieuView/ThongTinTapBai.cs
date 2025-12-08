@@ -41,12 +41,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 txt_m2.Text = row["manh2"]?.ToString() ?? "";
                 txt_m3.Text = row["manh3"]?.ToString() ?? "";
                 txt_m4.Text = row["manh4"]?.ToString() ?? "";
-                txt_chtd.Text = row["chihuyduan"]?.ToString() ?? "";
+                txt_tl.Text = row["chihuyduan"]?.ToString() ?? "";
                 txt_chhc.Text = row["chihuyhaucan"]?.ToString() ?? "";
-                txt_chtdtt.Text = row["chihuyduan_tt"]?.ToString() ?? "";
+                txt_nam.Text = row["chihuyduan_tt"]?.ToString() ?? "";
                 txt_chhctt.Text = row["chihuyhaucan_tt"]?.ToString() ?? "";
-                txt_ct.Text = row["captren"]?.ToString() ?? "";
-                txt_cm.Text = row["capminh"]?.ToString() ?? "";
+                txt_CHHCKT.Text = row["captren"]?.ToString() ?? "";
+                txt_ntt.Text = row["capminh"]?.ToString() ?? "";
                 // ... các textbox khác tương tự
             }
         }
@@ -62,12 +62,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             string manh2 = txt_m2.Text ?? "";
             string manh3 = txt_m3.Text ?? "";
             string manh4 = txt_m4.Text ?? "";
-            string chiHuyTieuDoan = txt_chtd.Text ?? "";
+            string chiHuyTieuDoan = txt_tl.Text ?? "";
             string chiHuyHauCan = txt_chhc.Text ?? "";
-            string chiHuyTieuDoanTT = txt_chtdtt.Text ?? "";
+            string chiHuyTieuDoanTT = txt_nam.Text ?? "";
             string chiHuyHauCanTT = txt_chhctt.Text ?? "";
-            string capTren = txt_ct.Text ?? "";
-            string capMinh = txt_cm.Text ?? "";
+            string capTren = txt_CHHCKT.Text ?? "";
+            string capMinh = txt_ntt.Text ?? "";
 
             bool result;
 
@@ -100,6 +100,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             FormMana.KhaiBaoDuLieu.Show();
             this.Hide();
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

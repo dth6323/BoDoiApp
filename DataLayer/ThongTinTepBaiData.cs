@@ -13,123 +13,163 @@ namespace BoDoiApp.DataLayer
         {
         }
 
-        public bool ThemThongTin(string tendaubai, string sochuy, string bandotapbai,string manh1, string manh2, string manh3, string manh4, string chihuyduan,
-            string chihuyhaucan, string chihuyduan_tt, string chihuytieudoan_tt,
-            string captren, string capminh)
+        // ================================================================
+        //  THÊM THÔNG TIN
+        // ================================================================
+        public bool ThemThongTin(
+            string thongTinTapBai,
+            string viTriChiHuy,
+            string thoiGian,
+            string manh1,
+            string manh2,
+            string manh3,
+            string manh4,
+            string tyLe,
+            string nam,
+            string chiHuyHCKT,
+            string nguoiThayThe
+        )
         {
             try
             {
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO thongtintepbai (tendaubai, sochuy, bandotapbai, manh1, manh2, manh3, manh4, chihuyduan, chihuyhaucan, " +
-                                 "chihuyduan_tt, chihuyhaucan_tt, captren, capminh, User) " +
-                                 "VALUES (@tendaubai, @sochuy, @bandotapbai, @manh1, @manh2, @manh3, @manh4, @chihuyduan, @chihuyhaucan, " +
-                                 "@chihuyduan_tt, @chihuyhaucan_tt, @captren, @capminh, @User)";
 
+                    string sql = @"
+                        INSERT INTO thongtintapbai 
+                        (thongtintapbai, vitrichihuy, thoigian, 
+                         manh1, manh2, manh3, manh4,
+                         tyle, nam, chihuy_hckt, nguoithaythe, user)
+                        VALUES
+                        (@thongtintapbai, @vitrichihuy, @thoigian,
+                         @manh1, @manh2, @manh3, @manh4,
+                         @tyle, @nam, @chihuy_hckt, @nguoithaythe, @user)
+                    ";
 
-                    using (var command = new SQLiteCommand(sql, connection))
+                    using (var cmd = new SQLiteCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@tendaubai", tendaubai ?? "");
-                        command.Parameters.AddWithValue("@sochuy", sochuy ?? "");
-                        command.Parameters.AddWithValue("@bandotapbai", bandotapbai ?? "");
-                        command.Parameters.AddWithValue("@manh1", manh1 ?? "");
-                        command.Parameters.AddWithValue("@manh2", manh2 ?? "");
-                        command.Parameters.AddWithValue("@manh3", manh3 ?? "");
-                        command.Parameters.AddWithValue("@manh4", manh4 ?? "");
-                        command.Parameters.AddWithValue("@chihuyduan", chihuyduan ?? "");
-                        command.Parameters.AddWithValue("@chihuyhaucan", chihuyhaucan ?? "");
-                        command.Parameters.AddWithValue("@chihuyduan_tt", chihuyduan_tt ?? "");
-                        command.Parameters.AddWithValue("@chihuyhaucan_tt", chihuytieudoan_tt ?? "");
-                        command.Parameters.AddWithValue("@captren", captren ?? "");
-                        command.Parameters.AddWithValue("@capminh", capminh ?? "");
-                        command.Parameters.AddWithValue("@User", Properties.Settings.Default.Username); 
-                        return command.ExecuteNonQuery() >0;
+                        cmd.Parameters.AddWithValue("@thongtintapbai", thongTinTapBai ?? "");
+                        cmd.Parameters.AddWithValue("@vitrichihuy", viTriChiHuy ?? "");
+                        cmd.Parameters.AddWithValue("@thoigian", thoiGian ?? "");
+                        cmd.Parameters.AddWithValue("@manh1", manh1 ?? "");
+                        cmd.Parameters.AddWithValue("@manh2", manh2 ?? "");
+                        cmd.Parameters.AddWithValue("@manh3", manh3 ?? "");
+                        cmd.Parameters.AddWithValue("@manh4", manh4 ?? "");
+                        cmd.Parameters.AddWithValue("@tyle", tyLe ?? "");
+                        cmd.Parameters.AddWithValue("@nam", nam ?? "");
+                        cmd.Parameters.AddWithValue("@chihuy_hckt", chiHuyHCKT ?? "");
+                        cmd.Parameters.AddWithValue("@nguoithaythe", nguoiThayThe ?? "");
+                        cmd.Parameters.AddWithValue("@user", Properties.Settings.Default.Username);
+
+                        return cmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi khi thêm thông tin: {ex.Message}\nError Code: {ex.ErrorCode}");
+                MessageBox.Show($"Lỗi thêm thông tin: {ex.Message}");
                 return false;
             }
         }
 
-        public bool CapNhatThongTin(string tendaubai, string sochuy, string bandotapbai, string manh1, string manh2, string manh3, string manh4, string chihuytieudoan, string chihuyhaucan, string chihuytieudoan_tt, string chihuyhaucan_tt, string captren, string capminh)
+        // ================================================================
+        //  CẬP NHẬT THÔNG TIN
+        // ================================================================
+        public bool CapNhatThongTin(
+            int id,
+            string thongTinTapBai,
+            string viTriChiHuy,
+            string thoiGian,
+            string manh1,
+            string manh2,
+            string manh3,
+            string manh4,
+            string tyLe,
+            string nam,
+            string chiHuyHCKT,
+            string nguoiThayThe
+        )
         {
             try
             {
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = @"UPDATE thongtintepbai 
-                          SET tendaubai = @tendaubai,
-                              sochuy = @sochuy,
-                              bandotapbai = @bandotapbai,
-                              manh1 = @manh1,
-                              manh2 = @manh2,
-                              manh3 = @manh3,
-                              manh4 = @manh4,
-                              chihuyduan = @chihuytieudoan,
-                              chihuyhaucan = @chihuyhaucan,
-                              chihuyduan_tt = @chihuytieudoan_tt,
-                              chihuyhaucan_tt = @chihuyhaucan_tt,
-                              captren = @captren,
-                              capminh = @capminh
-                          WHERE id = @id;";
 
-                    using (var command = new SQLiteCommand(sql, connection))
+                    string sql = @"
+                        UPDATE thongtintapbai SET
+                            thongtintapbai = @thongtintapbai,
+                            vitrichihuy = @vitrichihuy,
+                            thoigian = @thoigian,
+                            manh1 = @manh1,
+                            manh2 = @manh2,
+                            manh3 = @manh3,
+                            manh4 = @manh4,
+                            tyle = @tyle,
+                            nam = @nam,
+                            chihuy_hckt = @chihuy_hckt,
+                            nguoithaythe = @nguoithaythe
+                        WHERE id = @id
+                    ";
+
+                    using (var cmd = new SQLiteCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", Properties.Settings.Default.Username);
-                        command.Parameters.AddWithValue("@tendaubai", tendaubai ?? "");
-                        command.Parameters.AddWithValue("@sochuy", sochuy ?? "");
-                        command.Parameters.AddWithValue("@bandotapbai", bandotapbai ?? "");
-                        command.Parameters.AddWithValue("@manh1", manh1 ?? "");
-                        command.Parameters.AddWithValue("@manh2", manh2 ?? "");
-                        command.Parameters.AddWithValue("@manh3", manh3 ?? "");
-                        command.Parameters.AddWithValue("@manh4", manh4 ?? "");
-                        command.Parameters.AddWithValue("@chihuytieudoan", chihuytieudoan ?? "");
-                        command.Parameters.AddWithValue("@chihuyhaucan", chihuyhaucan ?? "");
-                        command.Parameters.AddWithValue("@chihuytieudoan_tt", chihuytieudoan_tt ?? "");
-                        command.Parameters.AddWithValue("@chihuyhaucan_tt", chihuyhaucan_tt ?? "");
-                        command.Parameters.AddWithValue("@captren", captren ?? "");
-                        command.Parameters.AddWithValue("@capminh", capminh ?? "");
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.Parameters.AddWithValue("@thongtintapbai", thongTinTapBai ?? "");
+                        cmd.Parameters.AddWithValue("@vitrichihuy", viTriChiHuy ?? "");
+                        cmd.Parameters.AddWithValue("@thoigian", thoiGian ?? "");
+                        cmd.Parameters.AddWithValue("@manh1", manh1 ?? "");
+                        cmd.Parameters.AddWithValue("@manh2", manh2 ?? "");
+                        cmd.Parameters.AddWithValue("@manh3", manh3 ?? "");
+                        cmd.Parameters.AddWithValue("@manh4", manh4 ?? "");
+                        cmd.Parameters.AddWithValue("@tyle", tyLe ?? "");
+                        cmd.Parameters.AddWithValue("@nam", nam ?? "");
+                        cmd.Parameters.AddWithValue("@chihuy_hckt", chiHuyHCKT ?? "");
+                        cmd.Parameters.AddWithValue("@nguoithaythe", nguoiThayThe ?? "");
 
-                        return command.ExecuteNonQuery() > 0;
+                        return cmd.ExecuteNonQuery() > 0;
                     }
                 }
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi khi cập nhật thông tin: {ex.Message}");
+                MessageBox.Show($"Lỗi cập nhật: {ex.Message}");
                 return false;
             }
         }
 
+        // ================================================================
+        //  LẤY THÔNG TIN THEO USER
+        // ================================================================
         public DataTable LayThongTin()
         {
             DataTable dt = new DataTable();
+
             try
             {
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM thongtintepbai WHERE User = @sochuy";
 
-                    using (var command = new SQLiteCommand(sql, connection))
+                    string sql = "SELECT * FROM thongtintapbai WHERE user = @user";
+
+                    using (var cmd = new SQLiteCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@sochuy", Properties.Settings.Default.Username);
-                        using (var adapter = new SQLiteDataAdapter(command))
+                        cmd.Parameters.AddWithValue("@user", Properties.Settings.Default.Username);
+
+                        using (var adapter = new SQLiteDataAdapter(cmd))
                         {
-                           adapter.Fill(dt); 
+                            adapter.Fill(dt);
                         }
                     }
                 }
             }
-            catch (SQLiteException ex)
+            catch
             {
                 return null;
             }
+
             return dt;
         }
     }
