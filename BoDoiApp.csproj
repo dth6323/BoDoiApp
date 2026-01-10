@@ -68,6 +68,7 @@
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\ThongTinTepBaiData.cs" />
+    <Compile Include="DataLayer\ToChucBienCheData.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
     <Compile Include="View\DangNhap\DangKy.cs">
