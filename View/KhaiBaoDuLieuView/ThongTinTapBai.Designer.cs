@@ -35,39 +35,20 @@
             this.txt_m2 = new System.Windows.Forms.TextBox();
             this.txt_m3 = new System.Windows.Forms.TextBox();
             this.txt_m4 = new System.Windows.Forms.TextBox();
-<<<<<<< HEAD
-            this.txt_tl = new System.Windows.Forms.TextBox();
-            this.txt_nam = new System.Windows.Forms.TextBox();
-            this.txt_CHHCKT = new System.Windows.Forms.TextBox();
-            this.txt_ntt = new System.Windows.Forms.TextBox();
-=======
             this.txt_chtd = new System.Windows.Forms.TextBox();
             this.txt_chtdtt = new System.Windows.Forms.TextBox();
->>>>>>> origin/hadz_dev
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-<<<<<<< HEAD
+            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.btn_luu = new System.Windows.Forms.Button();
             this.btn_thoat = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-=======
-            this.label11 = new System.Windows.Forms.Label();
-            this.btn_tiep = new System.Windows.Forms.Button();
-            this.btn_trangtru = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.btn_trove = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
->>>>>>> origin/hadz_dev
             this.SuspendLayout();
             // 
             // txt_tenvankien
@@ -122,47 +103,46 @@
             // 
             // txt_tl
             // 
-<<<<<<< HEAD
-            this.txt_tl.Location = new System.Drawing.Point(337, 297);
-            this.txt_tl.Name = "txt_tl";
-            this.txt_tl.Size = new System.Drawing.Size(42, 20);
-            this.txt_tl.TabIndex = 1;
-            // 
-            // txt_nam
-            // 
-            this.txt_nam.Location = new System.Drawing.Point(484, 297);
-            this.txt_nam.Name = "txt_nam";
-            this.txt_nam.Size = new System.Drawing.Size(38, 20);
-            this.txt_nam.TabIndex = 1;
-            // 
-            // txt_CHHCKT
-            // 
-            this.txt_CHHCKT.Location = new System.Drawing.Point(317, 359);
-            this.txt_CHHCKT.Name = "txt_CHHCKT";
-            this.txt_CHHCKT.Size = new System.Drawing.Size(51, 20);
-            this.txt_CHHCKT.TabIndex = 2;
-            // 
-            // txt_ntt
-            // 
-            this.txt_ntt.Location = new System.Drawing.Point(501, 359);
-            this.txt_ntt.Name = "txt_ntt";
-            this.txt_ntt.Size = new System.Drawing.Size(97, 20);
-            this.txt_ntt.TabIndex = 2;
-            // 
-=======
-            this.txt_chtd.Location = new System.Drawing.Point(208, 344);
+            this.txt_chtd.Location = new System.Drawing.Point(206, 290);
             this.txt_chtd.Name = "txt_chtd";
             this.txt_chtd.Size = new System.Drawing.Size(152, 20);
             this.txt_chtd.TabIndex = 1;
             // 
+            // txt_chhc
+            // 
+            this.txt_chhc.Location = new System.Drawing.Point(206, 329);
+            this.txt_chhc.Name = "txt_chhc";
+            this.txt_chhc.Size = new System.Drawing.Size(152, 20);
+            this.txt_chhc.TabIndex = 1;
+            // 
             // txt_chtdtt
             // 
-            this.txt_chtdtt.Location = new System.Drawing.Point(604, 344);
+            this.txt_chtdtt.Location = new System.Drawing.Point(602, 290);
             this.txt_chtdtt.Name = "txt_chtdtt";
             this.txt_chtdtt.Size = new System.Drawing.Size(152, 20);
             this.txt_chtdtt.TabIndex = 1;
             // 
->>>>>>> origin/hadz_dev
+            // txt_chhctt
+            // 
+            this.txt_chhctt.Location = new System.Drawing.Point(602, 329);
+            this.txt_chhctt.Name = "txt_chhctt";
+            this.txt_chhctt.Size = new System.Drawing.Size(152, 20);
+            this.txt_chhctt.TabIndex = 1;
+            // 
+            // txt_ct
+            // 
+            this.txt_ct.Location = new System.Drawing.Point(244, 405);
+            this.txt_ct.Name = "txt_ct";
+            this.txt_ct.Size = new System.Drawing.Size(178, 20);
+            this.txt_ct.TabIndex = 2;
+            // 
+            // txt_cm
+            // 
+            this.txt_cm.Location = new System.Drawing.Point(554, 405);
+            this.txt_cm.Name = "txt_cm";
+            this.txt_cm.Size = new System.Drawing.Size(178, 20);
+            this.txt_cm.TabIndex = 2;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -170,11 +150,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 3;
-<<<<<<< HEAD
-            this.label1.Text = "Tên văn kiện";
-=======
-            this.label1.Text = "Tên văn kiện";
->>>>>>> origin/hadz_dev
+            this.label1.Text = "Tên đầu bài tập";
             // 
             // label2
             // 
@@ -183,11 +159,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 3;
-<<<<<<< HEAD
-            this.label2.Text = "Vị trí chỉ huy\t";
-=======
-            this.label2.Text = "Vị trí chỉ huy";
->>>>>>> origin/hadz_dev
+            this.label2.Text = "Sở chỉ huy";
             // 
             // label3
             // 
@@ -196,43 +168,48 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 3;
-<<<<<<< HEAD
-            this.label3.Text = "Thời gian\t";
-=======
-            this.label3.Text = "Thời gian";
->>>>>>> origin/hadz_dev
+            this.label3.Text = "Bản đồ tập bài";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-<<<<<<< HEAD
-            this.label4.Location = new System.Drawing.Point(301, 300);
+            this.label4.Location = new System.Drawing.Point(99, 293);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(30, 13);
+            this.label4.Size = new System.Drawing.Size(90, 13);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Tỷ lệ";
-=======
-            this.label4.Location = new System.Drawing.Point(125, 347);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Chỉ huy HC-KT";
->>>>>>> origin/hadz_dev
+            this.label4.Text = "Chỉ huy tiểu đoàn";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(102, 335);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Chỉ huy hậu cần";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-<<<<<<< HEAD
-            this.label6.Location = new System.Drawing.Point(451, 300);
+            this.label6.Location = new System.Drawing.Point(482, 297);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
+            this.label6.Size = new System.Drawing.Size(101, 13);
             this.label6.TabIndex = 6;
-            this.label6.Text = "năm";
+            this.label6.Text = "Chỉ huy tiểu đoàn/tt";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(485, 335);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(95, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Chỉ huy hậu cần/tt";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(363, 332);
+            this.label8.Location = new System.Drawing.Point(423, 377);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(124, 13);
             this.label8.TabIndex = 8;
@@ -241,28 +218,20 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(234, 362);
+            this.label9.Location = new System.Drawing.Point(167, 412);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 13);
+            this.label9.Size = new System.Drawing.Size(47, 13);
             this.label9.TabIndex = 9;
-            this.label9.Text = "Chỉ huy HC-KT\t";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
+            this.label9.Text = "Cấp trên";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(417, 362);
+            this.label10.Location = new System.Drawing.Point(488, 411);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(76, 13);
+            this.label10.Size = new System.Drawing.Size(51, 13);
             this.label10.TabIndex = 10;
-            this.label10.Text = "Người thay thế\t";
-=======
-            this.label6.Location = new System.Drawing.Point(497, 347);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(76, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Người thay thế";
->>>>>>> origin/hadz_dev
+            this.label10.Text = "Cấp mình";
             // 
             // label11
             // 
@@ -279,94 +248,23 @@
             // 
             // btn_tiep
             // 
-<<<<<<< HEAD
-            this.btn_luu.Location = new System.Drawing.Point(294, 425);
+            this.btn_luu.Location = new System.Drawing.Point(318, 471);
             this.btn_luu.Name = "btn_luu";
             this.btn_luu.Size = new System.Drawing.Size(115, 55);
             this.btn_luu.TabIndex = 16;
             this.btn_luu.Text = "Lưu";
             this.btn_luu.UseVisualStyleBackColor = true;
             this.btn_luu.Click += new System.EventHandler(this.btn_luu_Click);
-=======
-            this.btn_tiep.Location = new System.Drawing.Point(722, 404);
-            this.btn_tiep.Name = "btn_tiep";
-            this.btn_tiep.Size = new System.Drawing.Size(115, 55);
-            this.btn_tiep.TabIndex = 16;
-            this.btn_tiep.Text = "Tiếp theo";
-            this.btn_tiep.UseVisualStyleBackColor = true;
-            this.btn_tiep.Click += new System.EventHandler(this.btn_luu_Click);
->>>>>>> origin/hadz_dev
             // 
-            // btn_trangtru
+            // label5
             // 
-<<<<<<< HEAD
-            this.btn_thoat.Location = new System.Drawing.Point(484, 425);
+            this.btn_thoat.Location = new System.Drawing.Point(508, 471);
             this.btn_thoat.Name = "btn_thoat";
             this.btn_thoat.Size = new System.Drawing.Size(114, 55);
             this.btn_thoat.TabIndex = 16;
             this.btn_thoat.Text = "Thoát";
             this.btn_thoat.UseVisualStyleBackColor = true;
             this.btn_thoat.Click += new System.EventHandler(this.btn_thoat_Click);
-=======
-            this.btn_trangtru.Location = new System.Drawing.Point(370, 404);
-            this.btn_trangtru.Name = "btn_trangtru";
-            this.btn_trangtru.Size = new System.Drawing.Size(114, 55);
-            this.btn_trangtru.TabIndex = 16;
-            this.btn_trangtru.Text = "Trang chủ";
-            this.btn_trangtru.UseVisualStyleBackColor = true;
-            this.btn_trangtru.Click += new System.EventHandler(this.btn_thoat_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(304, 292);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(56, 20);
-            this.textBox1.TabIndex = 0;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(493, 292);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(56, 20);
-            this.textBox2.TabIndex = 0;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(270, 295);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(27, 13);
-            this.label12.TabIndex = 3;
-            this.label12.Text = "Tỉ lệ";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(458, 295);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Năm";
-            // 
-            // btn_trove
-            // 
-            this.btn_trove.Location = new System.Drawing.Point(0, 404);
-            this.btn_trove.Name = "btn_trove";
-            this.btn_trove.Size = new System.Drawing.Size(114, 55);
-            this.btn_trove.TabIndex = 16;
-            this.btn_trove.Text = "Trở về";
-            this.btn_trove.UseVisualStyleBackColor = true;
-            this.btn_trove.Click += new System.EventHandler(this.btn_thoat_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(237, 225);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(82, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Mảnh bản chắp";
->>>>>>> origin/hadz_dev
             // 
             // label12
             // 
@@ -381,42 +279,26 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< HEAD
-            this.ClientSize = new System.Drawing.Size(843, 523);
+            this.ClientSize = new System.Drawing.Size(913, 628);
             this.Controls.Add(this.btn_thoat);
             this.Controls.Add(this.btn_luu);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.txt_ntt);
-            this.Controls.Add(this.txt_CHHCKT);
-            this.Controls.Add(this.txt_nam);
-            this.Controls.Add(this.txt_tl);
-=======
-            this.ClientSize = new System.Drawing.Size(838, 459);
-            this.Controls.Add(this.btn_trove);
-            this.Controls.Add(this.btn_trangtru);
-            this.Controls.Add(this.btn_tiep);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.txt_cm);
+            this.Controls.Add(this.txt_ct);
+            this.Controls.Add(this.txt_chhctt);
+            this.Controls.Add(this.txt_chhc);
             this.Controls.Add(this.txt_chtdtt);
             this.Controls.Add(this.txt_chtd);
-            this.Controls.Add(this.textBox2);
->>>>>>> origin/hadz_dev
             this.Controls.Add(this.txt_m4);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txt_m3);
@@ -442,38 +324,23 @@
         private System.Windows.Forms.TextBox txt_m2;
         private System.Windows.Forms.TextBox txt_m3;
         private System.Windows.Forms.TextBox txt_m4;
-<<<<<<< HEAD
-        private System.Windows.Forms.TextBox txt_tl;
-        private System.Windows.Forms.TextBox txt_nam;
-        private System.Windows.Forms.TextBox txt_CHHCKT;
-        private System.Windows.Forms.TextBox txt_ntt;
-=======
         private System.Windows.Forms.TextBox txt_chtd;
+        private System.Windows.Forms.TextBox txt_chhc;
         private System.Windows.Forms.TextBox txt_chtdtt;
->>>>>>> origin/hadz_dev
+        private System.Windows.Forms.TextBox txt_chhctt;
+        private System.Windows.Forms.TextBox txt_ct;
+        private System.Windows.Forms.TextBox txt_cm;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-<<<<<<< HEAD
+        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btn_luu;
         private System.Windows.Forms.Button btn_thoat;
-        private System.Windows.Forms.Label label12;
-=======
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button btn_tiep;
-        private System.Windows.Forms.Button btn_trangtru;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button btn_trove;
-        private System.Windows.Forms.Label label5;
->>>>>>> origin/hadz_dev
     }
 }
