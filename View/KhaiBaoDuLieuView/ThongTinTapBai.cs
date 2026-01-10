@@ -17,6 +17,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     {
         ThongTinTapBaiData thongTinTapBai = new ThongTinTapBaiData();
         bool isAddingNew = true;
+        int currentId = 0;
         public ThongTinTapBai()
         {
             InitializeComponent();
@@ -30,69 +31,73 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void ThongTinTapBai_Load(object sender, EventArgs e)
         {
             DataTable dt = thongTinTapBai.LayThongTin();
-            if (dt.Rows.Count > 0)
+
+            if (dt != null && dt.Rows.Count > 0)
             {
                 isAddingNew = false;
                 DataRow row = dt.Rows[0];
-                txt_tdbt.Text = row["tendaubai"]?.ToString() ?? "";
-                txt_sch.Text = row["sochuy"]?.ToString() ?? "";
-                txt_bdtb.Text = row["bandotapbai"]?.ToString() ?? "";
+
+                currentId = Convert.ToInt32(row["id"]);
+
+                txt_tenvankien.Text = row["thongtintapbai"]?.ToString() ?? "";
+                txt_vtch.Text = row["vitrichihuy"]?.ToString() ?? "";
+                txt_thoigian.Text = row["thoigian"]?.ToString() ?? "";
+
                 txt_m1.Text = row["manh1"]?.ToString() ?? "";
                 txt_m2.Text = row["manh2"]?.ToString() ?? "";
                 txt_m3.Text = row["manh3"]?.ToString() ?? "";
                 txt_m4.Text = row["manh4"]?.ToString() ?? "";
-                txt_tl.Text = row["chihuyduan"]?.ToString() ?? "";
-                txt_chhc.Text = row["chihuyhaucan"]?.ToString() ?? "";
-                txt_nam.Text = row["chihuyduan_tt"]?.ToString() ?? "";
-                txt_chhctt.Text = row["chihuyhaucan_tt"]?.ToString() ?? "";
-                txt_CHHCKT.Text = row["captren"]?.ToString() ?? "";
-                txt_ntt.Text = row["capminh"]?.ToString() ?? "";
-                // ... các textbox khác tương tự
+
+                txt_tl.Text = row["tyle"]?.ToString() ?? "";
+                txt_nam.Text = row["nam"]?.ToString() ?? "";
+
+                txt_CHHCKT.Text = row["chihuy_hckt"]?.ToString() ?? "";
+                txt_ntt.Text = row["nguoithaythe"]?.ToString() ?? "";
             }
         }
 
         private void btn_luu_Click(object sender, EventArgs e)
-        {    // Khởi tạo đối tượng ThongTinTapBai
+        {
+            string thongTinTapBai = txt_tenvankien.Text;
+            string viTriChiHuy = txt_vtch.Text;
+            string thoiGian = txt_thoigian.Text;
 
-            // Lấy dữ liệu từ các TextBox (cho phép trống)
-            string tenDauBai = txt_tdbt.Text ?? "";
-            string soChuy = txt_sch.Text ?? "";
-            string banDoTapBai = txt_bdtb.Text ?? "";
-            string manh1 = txt_m1.Text ?? "";
-            string manh2 = txt_m2.Text ?? "";
-            string manh3 = txt_m3.Text ?? "";
-            string manh4 = txt_m4.Text ?? "";
-            string chiHuyTieuDoan = txt_tl.Text ?? "";
-            string chiHuyHauCan = txt_chhc.Text ?? "";
-            string chiHuyTieuDoanTT = txt_nam.Text ?? "";
-            string chiHuyHauCanTT = txt_chhctt.Text ?? "";
-            string capTren = txt_CHHCKT.Text ?? "";
-            string capMinh = txt_ntt.Text ?? "";
+            string manh1 = txt_m1.Text;
+            string manh2 = txt_m2.Text;
+            string manh3 = txt_m3.Text;
+            string manh4 = txt_m4.Text;
+
+            string tyLe = txt_tl.Text;
+            string nam = txt_nam.Text;
+
+            string chiHuyHCKT = txt_CHHCKT.Text;
+            string nguoiThayThe = txt_ntt.Text;
 
             bool result;
 
-            // Kiểm tra nếu tất cả TextBox đều trống thì thêm mới, ngược lại thì cập nhật
-            if (isAddingNew==true)
+            if (isAddingNew)
             {
-                // Thêm mới thông tin
-                result = thongTinTapBai.ThemThongTin(tenDauBai, soChuy, banDoTapBai, manh1, manh2, manh3, manh4,
-                    chiHuyTieuDoan, chiHuyHauCan, chiHuyTieuDoanTT, chiHuyHauCanTT, capTren, capMinh);
+                result = this.thongTinTapBai.ThemThongTin(
+                    thongTinTapBai, viTriChiHuy, thoiGian,
+                    manh1, manh2, manh3, manh4,
+                    tyLe, nam, chiHuyHCKT, nguoiThayThe
+                );
+
                 if (result)
-                {
-                    MessageBox.Show("Thêm thông tin thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    MessageBox.Show("Thêm thông tin thành công!", "Thành công");
 
                 isAddingNew = false;
             }
             else
             {
-                // Cập nhật thông tin dựa trên User
-                result = thongTinTapBai.CapNhatThongTin(tenDauBai, soChuy, banDoTapBai, manh1, manh2, manh3, manh4,
-                    chiHuyTieuDoan, chiHuyHauCan, chiHuyTieuDoanTT, chiHuyHauCanTT, capTren, capMinh);
+                result = this.thongTinTapBai.CapNhatThongTin(
+                    thongTinTapBai, viTriChiHuy, thoiGian,
+                    manh1, manh2, manh3, manh4,
+                    tyLe, nam, chiHuyHCKT, nguoiThayThe
+                );
+
                 if (result)
-                {
-                    MessageBox.Show("Cập nhật thông tin thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    MessageBox.Show("Cập nhật thông tin thành công!", "Thành công");
             }
         }
 

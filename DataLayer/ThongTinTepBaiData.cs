@@ -17,17 +17,17 @@ namespace BoDoiApp.DataLayer
         //  THÊM THÔNG TIN
         // ================================================================
         public bool ThemThongTin(
-            string thongTinTapBai,
-            string viTriChiHuy,
-            string thoiGian,
+            string thongtintapbai,
+            string vitrichihuy,
+            string thoigian,
             string manh1,
             string manh2,
             string manh3,
             string manh4,
-            string tyLe,
+            string tyle,
             string nam,
-            string chiHuyHCKT,
-            string nguoiThayThe
+            string chihuy_hckt,
+            string nguoithaythe
         )
         {
             try
@@ -35,31 +35,28 @@ namespace BoDoiApp.DataLayer
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-
-                    string sql = @"
-                        INSERT INTO thongtintapbai 
-                        (thongtintapbai, vitrichihuy, thoigian, 
-                         manh1, manh2, manh3, manh4,
-                         tyle, nam, chihuy_hckt, nguoithaythe, user)
-                        VALUES
-                        (@thongtintapbai, @vitrichihuy, @thoigian,
-                         @manh1, @manh2, @manh3, @manh4,
-                         @tyle, @nam, @chihuy_hckt, @nguoithaythe, @user)
-                    ";
+                    string sql = @"INSERT INTO thongtintapbai 
+                                (thongtintapbai, vitrichihuy, thoigian,
+                                 manh1, manh2, manh3, manh4,
+                                 tyle, nam, chihuy_hckt, nguoithaythe, user)
+                                VALUES
+                                (@thongtintapbai, @vitrichihuy, @thoigian,
+                                 @manh1, @manh2, @manh3, @manh4,
+                                 @tyle, @nam, @chihuy_hckt, @nguoithaythe, @user)";
 
                     using (var cmd = new SQLiteCommand(sql, connection))
                     {
-                        cmd.Parameters.AddWithValue("@thongtintapbai", thongTinTapBai ?? "");
-                        cmd.Parameters.AddWithValue("@vitrichihuy", viTriChiHuy ?? "");
-                        cmd.Parameters.AddWithValue("@thoigian", thoiGian ?? "");
+                        cmd.Parameters.AddWithValue("@thongtintapbai", thongtintapbai ?? "");
+                        cmd.Parameters.AddWithValue("@vitrichihuy", vitrichihuy ?? "");
+                        cmd.Parameters.AddWithValue("@thoigian", thoigian ?? "");
                         cmd.Parameters.AddWithValue("@manh1", manh1 ?? "");
                         cmd.Parameters.AddWithValue("@manh2", manh2 ?? "");
                         cmd.Parameters.AddWithValue("@manh3", manh3 ?? "");
                         cmd.Parameters.AddWithValue("@manh4", manh4 ?? "");
-                        cmd.Parameters.AddWithValue("@tyle", tyLe ?? "");
+                        cmd.Parameters.AddWithValue("@tyle", tyle ?? "");
                         cmd.Parameters.AddWithValue("@nam", nam ?? "");
-                        cmd.Parameters.AddWithValue("@chihuy_hckt", chiHuyHCKT ?? "");
-                        cmd.Parameters.AddWithValue("@nguoithaythe", nguoiThayThe ?? "");
+                        cmd.Parameters.AddWithValue("@chihuy_hckt", chihuy_hckt ?? "");
+                        cmd.Parameters.AddWithValue("@nguoithaythe", nguoithaythe ?? "");
                         cmd.Parameters.AddWithValue("@user", Properties.Settings.Default.Username);
 
                         return cmd.ExecuteNonQuery() > 0;
@@ -74,21 +71,20 @@ namespace BoDoiApp.DataLayer
         }
 
         // ================================================================
-        //  CẬP NHẬT THÔNG TIN
+        //  CẬP NHẬT THÔNG TIN THEO USER
         // ================================================================
         public bool CapNhatThongTin(
-            int id,
-            string thongTinTapBai,
-            string viTriChiHuy,
-            string thoiGian,
+            string thongtintapbai,
+            string vitrichihuy,
+            string thoigian,
             string manh1,
             string manh2,
             string manh3,
             string manh4,
-            string tyLe,
+            string tyle,
             string nam,
-            string chiHuyHCKT,
-            string nguoiThayThe
+            string chihuy_hckt,
+            string nguoithaythe
         )
         {
             try
@@ -97,36 +93,34 @@ namespace BoDoiApp.DataLayer
                 {
                     connection.Open();
 
-                    string sql = @"
-                        UPDATE thongtintapbai SET
-                            thongtintapbai = @thongtintapbai,
-                            vitrichihuy = @vitrichihuy,
-                            thoigian = @thoigian,
-                            manh1 = @manh1,
-                            manh2 = @manh2,
-                            manh3 = @manh3,
-                            manh4 = @manh4,
-                            tyle = @tyle,
-                            nam = @nam,
-                            chihuy_hckt = @chihuy_hckt,
-                            nguoithaythe = @nguoithaythe
-                        WHERE id = @id
-                    ";
+                    string sql = @"UPDATE thongtintapbai SET
+                                      thongtintapbai = @thongtintapbai,
+                                      vitrichihuy = @vitrichihuy,
+                                      thoigian = @thoigian,
+                                      manh1 = @manh1,
+                                      manh2 = @manh2,
+                                      manh3 = @manh3,
+                                      manh4 = @manh4,
+                                      tyle = @tyle,
+                                      nam = @nam,
+                                      chihuy_hckt = @chihuy_hckt,
+                                      nguoithaythe = @nguoithaythe
+                                   WHERE user = @user";
 
                     using (var cmd = new SQLiteCommand(sql, connection))
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        cmd.Parameters.AddWithValue("@thongtintapbai", thongTinTapBai ?? "");
-                        cmd.Parameters.AddWithValue("@vitrichihuy", viTriChiHuy ?? "");
-                        cmd.Parameters.AddWithValue("@thoigian", thoiGian ?? "");
+                        cmd.Parameters.AddWithValue("@thongtintapbai", thongtintapbai ?? "");
+                        cmd.Parameters.AddWithValue("@vitrichihuy", vitrichihuy ?? "");
+                        cmd.Parameters.AddWithValue("@thoigian", thoigian ?? "");
                         cmd.Parameters.AddWithValue("@manh1", manh1 ?? "");
                         cmd.Parameters.AddWithValue("@manh2", manh2 ?? "");
                         cmd.Parameters.AddWithValue("@manh3", manh3 ?? "");
                         cmd.Parameters.AddWithValue("@manh4", manh4 ?? "");
-                        cmd.Parameters.AddWithValue("@tyle", tyLe ?? "");
+                        cmd.Parameters.AddWithValue("@tyle", tyle ?? "");
                         cmd.Parameters.AddWithValue("@nam", nam ?? "");
-                        cmd.Parameters.AddWithValue("@chihuy_hckt", chiHuyHCKT ?? "");
-                        cmd.Parameters.AddWithValue("@nguoithaythe", nguoiThayThe ?? "");
+                        cmd.Parameters.AddWithValue("@chihuy_hckt", chihuy_hckt ?? "");
+                        cmd.Parameters.AddWithValue("@nguoithaythe", nguoithaythe ?? "");
+                        cmd.Parameters.AddWithValue("@user", Properties.Settings.Default.Username);
 
                         return cmd.ExecuteNonQuery() > 0;
                     }
@@ -151,7 +145,6 @@ namespace BoDoiApp.DataLayer
                 using (var connection = new SQLiteConnection(connectionString))
                 {
                     connection.Open();
-
                     string sql = "SELECT * FROM thongtintapbai WHERE user = @user";
 
                     using (var cmd = new SQLiteCommand(sql, connection))
@@ -165,8 +158,9 @@ namespace BoDoiApp.DataLayer
                     }
                 }
             }
-            catch
+            catch (SQLiteException ex)
             {
+                MessageBox.Show($"Lỗi lấy thông tin: {ex.Message}");
                 return null;
             }
 

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txt_tdbt = new System.Windows.Forms.TextBox();
-            this.txt_sch = new System.Windows.Forms.TextBox();
-            this.txt_bdtb = new System.Windows.Forms.TextBox();
+            this.txt_tenvankien = new System.Windows.Forms.TextBox();
+            this.txt_vtch = new System.Windows.Forms.TextBox();
+            this.txt_thoigian = new System.Windows.Forms.TextBox();
             this.txt_m1 = new System.Windows.Forms.TextBox();
             this.txt_m2 = new System.Windows.Forms.TextBox();
             this.txt_m3 = new System.Windows.Forms.TextBox();
@@ -53,27 +53,27 @@
             this.label12 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // txt_tdbt
+            // txt_tenvankien
             // 
-            this.txt_tdbt.Location = new System.Drawing.Point(356, 83);
-            this.txt_tdbt.Name = "txt_tdbt";
-            this.txt_tdbt.Size = new System.Drawing.Size(213, 20);
-            this.txt_tdbt.TabIndex = 0;
+            this.txt_tenvankien.Location = new System.Drawing.Point(356, 83);
+            this.txt_tenvankien.Name = "txt_tenvankien";
+            this.txt_tenvankien.Size = new System.Drawing.Size(213, 20);
+            this.txt_tenvankien.TabIndex = 0;
             // 
-            // txt_sch
+            // txt_vtch
             // 
-            this.txt_sch.Location = new System.Drawing.Point(356, 127);
-            this.txt_sch.Name = "txt_sch";
-            this.txt_sch.Size = new System.Drawing.Size(213, 20);
-            this.txt_sch.TabIndex = 0;
+            this.txt_vtch.Location = new System.Drawing.Point(356, 127);
+            this.txt_vtch.Name = "txt_vtch";
+            this.txt_vtch.Size = new System.Drawing.Size(213, 20);
+            this.txt_vtch.TabIndex = 0;
             // 
-            // txt_bdtb
+            // txt_thoigian
             // 
-            this.txt_bdtb.Location = new System.Drawing.Point(356, 172);
-            this.txt_bdtb.Name = "txt_bdtb";
-            this.txt_bdtb.Size = new System.Drawing.Size(213, 20);
-            this.txt_bdtb.TabIndex = 0;
-            this.txt_bdtb.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.txt_thoigian.Location = new System.Drawing.Point(356, 172);
+            this.txt_thoigian.Name = "txt_thoigian";
+            this.txt_thoigian.Size = new System.Drawing.Size(213, 20);
+            this.txt_thoigian.TabIndex = 0;
+            this.txt_thoigian.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // txt_m1
             // 
@@ -271,9 +271,9 @@
             this.Controls.Add(this.txt_m3);
             this.Controls.Add(this.txt_m2);
             this.Controls.Add(this.txt_m1);
-            this.Controls.Add(this.txt_bdtb);
-            this.Controls.Add(this.txt_sch);
-            this.Controls.Add(this.txt_tdbt);
+            this.Controls.Add(this.txt_thoigian);
+            this.Controls.Add(this.txt_vtch);
+            this.Controls.Add(this.txt_tenvankien);
             this.Name = "ThongTinTapBai";
             this.Text = "ThongTinTapBai";
             this.Load += new System.EventHandler(this.ThongTinTapBai_Load);
@@ -284,9 +284,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txt_tdbt;
-        private System.Windows.Forms.TextBox txt_sch;
-        private System.Windows.Forms.TextBox txt_bdtb;
+        private System.Windows.Forms.TextBox txt_tenvankien;
+        private System.Windows.Forms.TextBox txt_vtch;
+        private System.Windows.Forms.TextBox txt_thoigian;
         private System.Windows.Forms.TextBox txt_m1;
         private System.Windows.Forms.TextBox txt_m2;
         private System.Windows.Forms.TextBox txt_m3;

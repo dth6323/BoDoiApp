@@ -25,7 +25,7 @@ namespace BoDoiApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FormMana.Init();
-            Application.Run(FormMana.Dangnhap);
+            Application.Run(FormMana.ThongTinTapBai);
         }
 
         private static void InitializeDatabase()

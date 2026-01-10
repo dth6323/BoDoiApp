@@ -77,6 +77,24 @@
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormMana.cs" />
+    <Compile Include="View\KhaiBaoDuLieuView\danhGiaTinhHinhTacDongDenHauCanKyThuat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\danhGiaTinhHinhTacDongDenHauCanKyThuat.Designer.cs">
+      <DependentUpon>danhGiaTinhHinhTacDongDenHauCanKyThuat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\duKienKeHoachBaoDamHauCanKyThuat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\duKienKeHoachBaoDamHauCanKyThuat.Designer.cs">
+      <DependentUpon>duKienKeHoachBaoDamHauCanKyThuat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\baoDamVatChatHauCanKyThuat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\baoDamVatChatHauCanKyThuat.Designer.cs">
+      <DependentUpon>baoDamVatChatHauCanKyThuat.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +118,12 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThongTinTapBai.Designer.cs">
       <DependentUpon>ThongTinTapBai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\toChucSuDungLucLuongBoTriHCKT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\toChucSuDungLucLuongBoTriHCKT.Designer.cs">
+      <DependentUpon>toChucSuDungLucLuongBoTriHCKT.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\VatChatHienCoView.cs">
       <SubType>Form</SubType>
@@ -136,6 +160,15 @@
     <EmbeddedResource Include="View\DangNhap\dn.resx">
       <DependentUpon>dn.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\danhGiaTinhHinhTacDongDenHauCanKyThuat.resx">
+      <DependentUpon>danhGiaTinhHinhTacDongDenHauCanKyThuat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\duKienKeHoachBaoDamHauCanKyThuat.resx">
+      <DependentUpon>duKienKeHoachBaoDamHauCanKyThuat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\baoDamVatChatHauCanKyThuat.resx">
+      <DependentUpon>baoDamVatChatHauCanKyThuat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.resx">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
     </EmbeddedResource>
@@ -147,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\ThongTinTapBai.resx">
       <DependentUpon>ThongTinTapBai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\toChucSuDungLucLuongBoTriHCKT.resx">
+      <DependentUpon>toChucSuDungLucLuongBoTriHCKT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\VatChatHienCoView.resx">
       <DependentUpon>VatChatHienCoView.cs</DependentUpon>
