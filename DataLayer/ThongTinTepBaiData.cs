@@ -13,9 +13,9 @@ namespace BoDoiApp.DataLayer
         {
         }
 
-        public bool ThemThongTin(string tendaubai, string sochuy, string bandotapbai,string manh1, string manh2, string manh3, string manh4, string chihuyduan,
-            string chihuyhaucan, string chihuyduan_tt, string chihuytieudoan_tt,
-            string captren, string capminh)
+        public bool ThemThongTin(string tenvankien, string vitrichihuy, string thoigian, string manh1, string manh2, string manh3, string manh4, string tyle,
+            string nam, string chihuy_hckt, string nguoithaythe
+            )
         {
             try
             {
@@ -63,7 +63,6 @@ namespace BoDoiApp.DataLayer
 
 
         public bool CapNhatThongTin(
-    int id,
     string tenvankien,
     string vitrichihuy,
     string thoigian,
@@ -96,9 +95,9 @@ namespace BoDoiApp.DataLayer
                 nguoithaythe = @nguoithaythe
                 WHERE id = @id";
 
-                    using (var cmd = new SQLiteCommand(sql, connection))
+                    using (var command = new SQLiteCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@id", Properties.Settings.Default.Username);
                         command.Parameters.AddWithValue("@tenvankien", tenvankien);
                         command.Parameters.AddWithValue("@vitrichihuy", vitrichihuy);
                         command.Parameters.AddWithValue("@thoigian", thoigian);
@@ -113,7 +112,7 @@ namespace BoDoiApp.DataLayer
                         command.Parameters.AddWithValue("@chihuy_hckt", chihuy_hckt);
                         command.Parameters.AddWithValue("@nguoithaythe", nguoithaythe);
 
-                        return cmd.ExecuteNonQuery() > 0;
+                        return command.ExecuteNonQuery() > 0;
                     }
                 }
             }
@@ -137,7 +136,7 @@ namespace BoDoiApp.DataLayer
 
                     string sql = "SELECT * FROM thongtintapbai WHERE user = @user";
 
-                    using (var cmd = new SQLiteCommand(sql, connection))
+                    using (var command = new SQLiteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@user", Properties.Settings.Default.Username);
 
@@ -150,7 +149,6 @@ namespace BoDoiApp.DataLayer
             }
             catch
             {
-                MessageBox.Show($"Lỗi lấy thông tin: {ex.Message}");
                 return null;
             }
 
@@ -158,3 +156,4 @@ namespace BoDoiApp.DataLayer
         }
 
     }
+}

@@ -25,7 +25,7 @@ namespace BoDoiApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FormMana.Init();
-            Application.Run(FormMana.ThongTinTapBai);
+            Application.Run(FormMana.baodamVatChatHauCanKyThuat);
         }
 
         private static void InitializeDatabase()
@@ -42,9 +42,26 @@ namespace BoDoiApp
                 string sql = "CREATE TABLE IF NOT EXISTS Users (\r\n    Id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    Username TEXT NOT NULL UNIQUE,\r\n    Password TEXT NOT NULL,\r\n    FullName TEXT\r\n);";
                 var command = new SQLiteCommand(sql, connection);
                 command.ExecuteNonQuery();
-                string sql1 = "CREATE TABLE IF NOT EXISTS thongtintepbai (\r\n    Id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    tendaubai TEXT,\r\n    sochuy TEXT,\r\n    bandotapbai TEXT,\r\n    manh1 TEXT,\r\n    manh2 TEXT,\r\n    manh3 TEXT,\r\n    manh4 TEXT,\r\n    chihuyduan TEXT,\r\n    chihuyhaucan TEXT,\r\n    chihuyduan_tt TEXT,\r\n    chihuyhaucan_tt TEXT,\r\n    captren TEXT,\r\n    capminh TEXT,\r\n    User TEXT\r\n);";
+                string sql1 = @"
+                CREATE TABLE IF NOT EXISTS thongtintapbai (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    tenvankien      TEXT,
+                    vitrichihuy     TEXT,
+                    thoigian        TEXT,
+                    manh1           TEXT,
+                    manh2           TEXT,
+                    manh3           TEXT,
+                    manh4           TEXT,
+                    tyle            TEXT,
+                    nam             INTEGER,
+                    chihuy_hckt     TEXT,
+                    nguoithaythe    TEXT,
+                    user            TEXT
+                );";
+
                 var command1 = new SQLiteCommand(sql1, connection);
-                command1.ExecuteNonQuery(); 
+                command1.ExecuteNonQuery();
+
                 string sql2 = "CREATE TABLE IF NOT EXISTS quansochiendau (\r\n    Id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    phienhieudonvi TEXT,\r\n    phdv1 TEXT,\r\n    phdv2 TEXT,\r\n    phdv3 TEXT,\r\n    phdv4 TEXT,\r\n    phdv5 TEXT,\r\n    quansochiendau TEXT,\r\n    qscd1 TEXT,\r\n    qscd2 TEXT,\r\n    qscd3 TEXT,\r\n    qscd4 TEXT,\r\n    qscd5 TEXT,\r\n    User TEXT\r\n)";
                 var command2 = new SQLiteCommand(sql2, connection);
                 command2.ExecuteNonQuery();

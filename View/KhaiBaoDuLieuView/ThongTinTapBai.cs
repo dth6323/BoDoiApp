@@ -47,12 +47,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 txt_m2.Text = row["manh2"]?.ToString() ?? "";
                 txt_m3.Text = row["manh3"]?.ToString() ?? "";
                 txt_m4.Text = row["manh4"]?.ToString() ?? "";
-
-                txt_tl.Text = row["tyle"]?.ToString() ?? "";
-                txt_nam.Text = row["nam"]?.ToString() ?? "";
-
-                txt_CHHCKT.Text = row["chihuy_hckt"]?.ToString() ?? "";
-                txt_ntt.Text = row["nguoithaythe"]?.ToString() ?? "";
+                
             }
         }
 
@@ -66,12 +61,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             string manh2 = txt_m2.Text;
             string manh3 = txt_m3.Text;
             string manh4 = txt_m4.Text;
-
-            string tyLe = txt_tl.Text;
+            string tyle = txt_tyle.Text;
             string nam = txt_nam.Text;
-
-            string chiHuyHCKT = txt_CHHCKT.Text;
-            string nguoiThayThe = txt_ntt.Text;
+            string chiHuyHCKT = txt_chhckt.Text;
+            string nguoiThayThe = txt_nguoithaythe.Text;
 
             bool result;
 
@@ -80,7 +73,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 result = this.thongTinTapBai.ThemThongTin(
                     thongTinTapBai, viTriChiHuy, thoiGian,
                     manh1, manh2, manh3, manh4,
-                    tyLe, nam, chiHuyHCKT, nguoiThayThe
+                    tyle, nam, chiHuyHCKT, nguoiThayThe
                 );
 
                 if (result)
@@ -93,7 +86,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 result = this.thongTinTapBai.CapNhatThongTin(
                     thongTinTapBai, viTriChiHuy, thoiGian,
                     manh1, manh2, manh3, manh4,
-                    tyLe, nam, chiHuyHCKT, nguoiThayThe
+                    tyle, nam, chiHuyHCKT, nguoiThayThe
                 );
 
                 if (result)
@@ -103,13 +96,17 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void btn_thoat_Click(object sender, EventArgs e)
         {
+            if (FormMana.KhaiBaoDuLieu == null)
+            {
+                MessageBox.Show("Form KhaiBaoDuLieu đang NULL");
+                return;
+            }
+
             FormMana.KhaiBaoDuLieu.Show();
             this.Hide();
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
 
-        }
+
     }
 }
