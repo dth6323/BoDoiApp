@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,13 +49,13 @@ namespace BoDoiApp.DataLayer
         {
             try
             {
-                using (var connection = new SQLiteConnection(connectionString))
+                using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
                     string sql = @"INSERT INTO QuyDinhDuTruTieuThuVoSung 
                                    (UserId,vcId, QuyDinhDuTru, PhaiCo0400N, PhaiCSCD, TieuThuGDCB, TieuThuGDCD)
                                    VALUES (@UserId,@vcId, @duTru, @co0400, @cscd, @gdcb, @gdcd)";
-                    using (var command = new SQLiteCommand(sql, connection))
+                    using (var command = new SqliteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@UserId", Properties.Settings.Default.Username);
                         command.Parameters.AddWithValue("@vcId", vcId);
@@ -68,7 +68,7 @@ namespace BoDoiApp.DataLayer
                     }
                 }
             }
-            catch (SQLiteException ex)
+            catch (SqliteException ex)
             {
                 MessageBox.Show($"Lỗi thêm Quy định vật chất: {ex.Message}\nCode: {ex.ErrorCode}");
                 return false;
@@ -79,7 +79,7 @@ namespace BoDoiApp.DataLayer
         {
             try
             {
-                using (var connection = new SQLiteConnection(connectionString))
+                using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
                     string sql = @"UPDATE QuyDinhDuTruTieuThuVoSung 
@@ -89,7 +89,7 @@ namespace BoDoiApp.DataLayer
                                        TieuThuGDCB = @gdcb,
                                        TieuThuGDCD = @gdcd
                                    WHERE vcId = @vcId and UserId = @id";
-                    using (var command = new SQLiteCommand(sql, connection))
+                    using (var command = new SqliteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@vcId", vcId);
                         command.Parameters.AddWithValue("@id", Properties.Settings.Default.Username);
@@ -102,7 +102,7 @@ namespace BoDoiApp.DataLayer
                     }
                 }
             }
-            catch (SQLiteException ex)
+            catch (SqliteException ex)
             {
                 MessageBox.Show($"Lỗi cập nhật Quy định vật chất: {ex.Message}");
                 return false;
@@ -114,21 +114,21 @@ namespace BoDoiApp.DataLayer
             DataTable dt = new DataTable();
             try
             {
-                using (var connection = new SQLiteConnection(connectionString))
+                using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
                     string sql = "SELECT * FROM QuyDinhDuTruTieuThuVoSung WHERE UserId = @UserId";
-                    using (var command = new SQLiteCommand(sql, connection))
+                    using (var command = new SqliteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@UserId", Properties.Settings.Default.Username);
-                        using (var adapter = new SQLiteDataAdapter(command))
+                        using (var reader = command.ExecuteReader())
                         {
-                            adapter.Fill(dt);
+                            dt.Load(reader);
                         }
                     }
                 }
             }
-            catch (SQLiteException ex)
+            catch (SqliteException ex)
             {
                 MessageBox.Show($"Lỗi lấy dữ liệu Quy định vật chất: {ex.Message}");
                 return null;

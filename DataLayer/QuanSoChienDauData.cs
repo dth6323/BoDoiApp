@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +22,7 @@ namespace BoDoiApp.DataLayer
         {
             try
             {
-                using (var connection = new SQLiteConnection(connectionString))
+                using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
                     string sql = @"INSERT INTO quansochiendau (phienhieudonvi, phdv1, phdv2, phdv3, phdv4, phdcv5,
@@ -30,7 +30,7 @@ namespace BoDoiApp.DataLayer
                                   VALUES (@phienhieudonvi, @phdv1, @phdv2, @phdv3, @phdv4, @phdv5,
                                   @quansochiendau, @qscd1, @qscd2, @qscd3, @qscd4,@qscd5, @User)";
 
-                    using (var command = new SQLiteCommand(sql, connection))
+                    using (var command = new SqliteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@phienhieudonvi", phienhieudonvi ?? "");
                         command.Parameters.AddWithValue("@phdv1", phdv1 ?? "");
@@ -49,7 +49,7 @@ namespace BoDoiApp.DataLayer
                     }
                 }
             }
-            catch (SQLiteException ex)
+            catch (SqliteException ex)
             {
                 MessageBox.Show($"Đã xảy ra lỗi khi thêm thông tin: {ex.Message}\nError Code: {ex.ErrorCode}");
                 return false;
@@ -61,7 +61,7 @@ namespace BoDoiApp.DataLayer
         {
             try
             {
-                using (var connection = new SQLiteConnection(connectionString))
+                using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
                     string sql = @"UPDATE quansochiendau 
@@ -79,7 +79,7 @@ namespace BoDoiApp.DataLayer
                                       scd5 = @qscd5
                                   WHERE  User = @User";
 
-                    using (var command = new SQLiteCommand(sql, connection))
+                    using (var command = new SqliteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@phienhieudonvi", phienhieudonvi ?? "");
                         command.Parameters.AddWithValue("@phdv1", phdv1 ?? "");
@@ -98,7 +98,7 @@ namespace BoDoiApp.DataLayer
                     }
                 }
             }
-            catch (SQLiteException ex)
+            catch (SqliteException ex)
             {
                 MessageBox.Show($"Đã xảy ra lỗi khi cập nhật thông tin: {ex.Message}");
                 return false;
@@ -108,28 +108,32 @@ namespace BoDoiApp.DataLayer
         public DataTable LayThongTin()
         {
             DataTable dt = new DataTable();
+
             try
             {
-                using (var connection = new SQLiteConnection(connectionString))
+                using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
+
                     string sql = "SELECT * FROM quansochiendau WHERE User = @User";
 
-                    using (var command = new SQLiteCommand(sql, connection))
+                    using (var command = new SqliteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
-                        using (var adapter = new SQLiteDataAdapter(command))
+
+                        using (var reader = command.ExecuteReader())
                         {
-                            adapter.Fill(dt);
+                            dt.Load(reader); // ✅ TƯƠNG ĐƯƠNG adapter.Fill(dt)
                         }
                     }
                 }
             }
-            catch (SQLiteException ex)
+            catch (SqliteException ex)
             {
                 MessageBox.Show($"Đã xảy ra lỗi khi lấy thông tin: {ex.Message}");
                 return null;
             }
+
             return dt;
         }
     }
