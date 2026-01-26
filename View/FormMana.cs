@@ -1,11 +1,6 @@
 ﻿using BoDoiApp.form;
 using BoDoiApp.View.DangNhap;
 using BoDoiApp.View.KhaiBaoDuLieuView;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BoDoiApp.View
 {
@@ -18,9 +13,13 @@ namespace BoDoiApp.View
         public static ThongTinTapBai ThongTinTapBai { get; set; }
         public static QuanSoChienDau QuanSoChienDau { get; set; }
         public static VatChatHienCoView VatChatHienCo { get; set; }
+        public static ChuYeu ChuYeu { get; set; }
+        public static ThuYeu ThuYeu { get; set; }
         public static QuyDinhDuTruTieuThuBoSungVatChat QuyDinhDuTruTieuThuBoSung { get; set; }
+        public static VuKhiTrangBi VuKhiTrangBi { get; set; }
         public static void Init()
         {
+            ThuYeu = new ThuYeu();
             QuyDinhDuTruTieuThuBoSung = new QuyDinhDuTruTieuThuBoSungVatChat();
             Formmain = new Form1();
             Dangnhap = new dn();
@@ -28,7 +27,9 @@ namespace BoDoiApp.View
             KhaiBaoDuLieu = new KhaiBaoDuLieu();
             ThongTinTapBai = new ThongTinTapBai();
             QuanSoChienDau = new QuanSoChienDau();
+            ChuYeu = new ChuYeu();
             VatChatHienCo = new VatChatHienCoView();
+            VuKhiTrangBi = new VuKhiTrangBi();
         }
     }
 }

@@ -1,12 +1,6 @@
-﻿using BoDoiApp.form;
-using BoDoiApp.View;
-using BoDoiApp.View.KhaiBaoDuLieuView;
+﻿using BoDoiApp.View;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BoDoiApp
@@ -26,15 +20,12 @@ namespace BoDoiApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FormMana.Init();
-            Application.Run(FormMana.Dangnhap);
+            Application.Run(FormMana.VuKhiTrangBi);
         }
 
         private static void InitializeDatabase()
         {
-            if (!File.Exists("schema.sql"))
-            {
-                throw new FileNotFoundException("Không tìm thấy file schema.sql");
-            }
+
 
             using (var connection = new SQLiteConnection(connectionString))
             {
@@ -55,6 +46,25 @@ namespace BoDoiApp
                 string sql4 = "CREATE TABLE IF NOT EXISTS QuyDinhDuTruTieuThuVoSung (\r\n    ID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    UserId TEXT NOT NULL,\r\n    vcId INTEGER NOT NULL,\r\n    QuyDinhDuTru REAL,\r\n    PhaiCo0400N REAL,\r\n    PhaiCSCD REAL,\r\n    TieuThuGDCB REAL,\r\n    TieuThuGDCD REAL\r\n);";
                 var command4 = new SQLiteCommand(sql4, connection);
                 command4.ExecuteNonQuery();
+                var sql5 = @"CREATE TABLE IF NOT EXISTS trangkithuat (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    quan_so TEXT NOT NULL, 
+                    sn TEXT NULL, 
+                    tl TEXT NULL, 
+                    trl TEXT NULL, 
+                    dl TEXT NULL, 
+                    b41_m79 TEXT NULL, 
+                    luu_dan TEXT NULL, 
+                    coi_60 TEXT NULL, 
+                    coi_82 TEXT NULL, 
+                    coi_100 TEXT NULL, 
+                    pct_spg9 TEXT NULL, 
+                    phao_pk_127 TEXT NULL, 
+                    User TEXT NULL, 
+                    option TEXT NOT NULL
+                );";
+                var command5 = new SQLiteCommand(sql5, connection);
+                command5.ExecuteNonQuery();
                 connection.Close();
             }
         }
