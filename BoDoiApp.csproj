@@ -132,7 +132,6 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ChuYeu.Designer.cs">
       <DependentUpon>ChuYeu.cs</DependentUpon>
-
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.cs">
       <SubType>Form</SubType>
@@ -169,6 +168,18 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoSung.Designer.cs">
       <DependentUpon>TiepNhanBoSung.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\TinhHinhTacDong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\TinhHinhTacDong.Designer.cs">
+      <DependentUpon>TinhHinhTacDong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\ToChucSuDungBoTri.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\ToChucSuDungBoTri.Designer.cs">
+      <DependentUpon>ToChucSuDungBoTri.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\VatChatHienCoView.cs">
       <SubType>Form</SubType>
@@ -234,6 +245,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\TiepNhanBoSung.resx">
       <DependentUpon>TiepNhanBoSung.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\TinhHinhTacDong.resx">
+      <DependentUpon>TinhHinhTacDong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\ToChucSuDungBoTri.resx">
+      <DependentUpon>ToChucSuDungBoTri.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\VatChatHienCoView.resx">
       <DependentUpon>VatChatHienCoView.cs</DependentUpon>
