@@ -1,12 +1,6 @@
-﻿using BoDoiApp.form;
-using BoDoiApp.View;
-using BoDoiApp.View.KhaiBaoDuLieuView;
+﻿using BoDoiApp.View;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BoDoiApp
@@ -14,7 +8,7 @@ namespace BoDoiApp
     internal static class Program
     {
 
-        private const string connectionString = "Data Source=data.db;Version=3;";
+        private const string connectionString = "Data Source=data2.db;Version=3;";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -25,15 +19,12 @@ namespace BoDoiApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FormMana.Init();
-            Application.Run(FormMana.ThongTinTapBai);
+            Application.Run(FormMana.VuKhiTrangBi);
         }
 
         private static void InitializeDatabase()
         {
-            if (!File.Exists("D:\\code2\\schema.sql"))
-            {
-                throw new FileNotFoundException("Không tìm thấy file schema.sql");
-            }
+
 
             using (var connection = new SQLiteConnection(connectionString))
             {
@@ -54,9 +45,25 @@ namespace BoDoiApp
                 string sql4 = "CREATE TABLE IF NOT EXISTS QuyDinhDuTruTieuThuVoSung (\r\n    ID INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    UserId TEXT NOT NULL,\r\n    vcId INTEGER NOT NULL,\r\n    QuyDinhDuTru REAL,\r\n    PhaiCo0400N REAL,\r\n    PhaiCSCD REAL,\r\n    TieuThuGDCB REAL,\r\n    TieuThuGDCD REAL\r\n);";
                 var command4 = new SQLiteCommand(sql4, connection);
                 command4.ExecuteNonQuery();
-                string sql5 = "CREATE TABLE tochucbienche (\r\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    tieudoan TEXT,\r\n    tieudoan_qs_tbkt TEXT,\r\n    huong_chu_yeu TEXT,\r\n    phong_ngu_phia_sau TEXT,\r\n    bo_phan TEXT,\r\n    bo_phan_qs_tbkt TEXT,\r\n    luc_luong_con_lai TEXT,\r\n    loai_huong TEXT,          -- từ popup\r\n    user TEXT\r\n);\r\n";
+                var sql5 = @"CREATE TABLE IF NOT EXISTS trangkithuat (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    quan_so TEXT NOT NULL, 
+                    sn TEXT NULL, 
+                    tl TEXT NULL, 
+                    trl TEXT NULL, 
+                    dl TEXT NULL, 
+                    b41_m79 TEXT NULL, 
+                    luu_dan TEXT NULL, 
+                    coi_60 TEXT NULL, 
+                    coi_82 TEXT NULL, 
+                    coi_100 TEXT NULL, 
+                    pct_spg9 TEXT NULL, 
+                    phao_pk_127 TEXT NULL, 
+                    User TEXT NULL, 
+                    option TEXT NOT NULL
+                );";
                 var command5 = new SQLiteCommand(sql5, connection);
-                command4.ExecuteNonQuery();
+                command5.ExecuteNonQuery();
                 connection.Close();
             }
         }

@@ -26,7 +26,22 @@ namespace BoDoiApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            CenterButton();
+        }
 
+        private void CenterButton()
+        {
+            // Assuming the FlowLayoutPanel is named 'flowLayoutPanel1'
+            if (flowLayoutPanel1 != null)
+            {
+                flowLayoutPanel1.Left = (this.ClientSize.Width - flowLayoutPanel1.Width) / 2;
+                flowLayoutPanel1.Top = (this.ClientSize.Height - flowLayoutPanel1.Height) / 2;
+            }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            CenterButton();
         }
     }
 }
