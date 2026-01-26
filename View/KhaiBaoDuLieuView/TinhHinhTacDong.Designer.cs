@@ -61,7 +61,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(103, 52);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Lưu";
+            this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
@@ -79,7 +79,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(103, 52);
             this.button3.TabIndex = 0;
-            this.button3.Text = "Thoát";
+            this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // label1
