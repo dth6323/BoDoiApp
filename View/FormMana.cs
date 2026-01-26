@@ -6,6 +6,7 @@ namespace BoDoiApp.View
 {
     public static class FormMana
     {
+        public static BaoDamVuKhi BaoDamVuKhi { get; set; }
         public static Form1 Formmain { get; set; }
         public static dn Dangnhap { get; set; }
         public static DangKy Dangky { get; set; }
@@ -19,6 +20,7 @@ namespace BoDoiApp.View
         public static VuKhiTrangBi VuKhiTrangBi { get; set; }
         public static void Init()
         {
+            BaoDamVuKhi = new BaoDamVuKhi();
             ThuYeu = new ThuYeu();
             QuyDinhDuTruTieuThuBoSung = new QuyDinhDuTruTieuThuBoSungVatChat();
             Formmain = new Form1();

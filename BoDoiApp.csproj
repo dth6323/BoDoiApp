@@ -121,6 +121,12 @@
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormMana.cs" />
+    <Compile Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.Designer.cs">
+      <DependentUpon>BaoDamVuKhi.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\BienChe.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,11 +139,23 @@
     <Compile Include="View\KhaiBaoDuLieuView\ChuYeu.Designer.cs">
       <DependentUpon>ChuYeu.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\DanVatChatVatTu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\DanVatChatVatTu.Designer.cs">
+      <DependentUpon>DanVatChatVatTu.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.Designer.cs">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.Designer.cs">
+      <DependentUpon>PhanCapVatLieu.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\QuanSoChienDau.cs">
       <SubType>Form</SubType>
@@ -168,6 +186,12 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoSung.Designer.cs">
       <DependentUpon>TiepNhanBoSung.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoXungV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoXungV.Designer.cs">
+      <DependentUpon>TiepNhanBoXungV.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TinhHinhTacDong.cs">
       <SubType>Form</SubType>
@@ -222,14 +246,23 @@
     <EmbeddedResource Include="View\DangNhap\dn.resx">
       <DependentUpon>dn.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.resx">
+      <DependentUpon>BaoDamVuKhi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\BienChe.resx">
       <DependentUpon>BienChe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\ChuYeu.resx">
       <DependentUpon>ChuYeu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\DanVatChatVatTu.resx">
+      <DependentUpon>DanVatChatVatTu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.resx">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.resx">
+      <DependentUpon>PhanCapVatLieu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\QuanSoChienDau.resx">
       <DependentUpon>QuanSoChienDau.cs</DependentUpon>
@@ -245,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\TiepNhanBoSung.resx">
       <DependentUpon>TiepNhanBoSung.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\TiepNhanBoXungV.resx">
+      <DependentUpon>TiepNhanBoXungV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\TinhHinhTacDong.resx">
       <DependentUpon>TinhHinhTacDong.cs</DependentUpon>
