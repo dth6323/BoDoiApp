@@ -28,24 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txt_tdbt = new System.Windows.Forms.TextBox();
-            this.txt_sch = new System.Windows.Forms.TextBox();
-            this.txt_bdtb = new System.Windows.Forms.TextBox();
+            this.txt_tenvankien = new System.Windows.Forms.TextBox();
+            this.txt_vtch = new System.Windows.Forms.TextBox();
+            this.txt_thoigian = new System.Windows.Forms.TextBox();
             this.txt_m1 = new System.Windows.Forms.TextBox();
             this.txt_m2 = new System.Windows.Forms.TextBox();
             this.txt_m3 = new System.Windows.Forms.TextBox();
             this.txt_m4 = new System.Windows.Forms.TextBox();
             this.txt_chtd = new System.Windows.Forms.TextBox();
-            this.txt_chhc = new System.Windows.Forms.TextBox();
             this.txt_chtdtt = new System.Windows.Forms.TextBox();
-            this.txt_chhctt = new System.Windows.Forms.TextBox();
-            this.txt_ct = new System.Windows.Forms.TextBox();
-            this.txt_cm = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -56,57 +51,57 @@
             this.btn_thoat = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // txt_tdbt
+            // txt_tenvankien
             // 
-            this.txt_tdbt.Location = new System.Drawing.Point(356, 83);
-            this.txt_tdbt.Name = "txt_tdbt";
-            this.txt_tdbt.Size = new System.Drawing.Size(213, 20);
-            this.txt_tdbt.TabIndex = 0;
+            this.txt_tenvankien.Location = new System.Drawing.Point(356, 83);
+            this.txt_tenvankien.Name = "txt_tenvankien";
+            this.txt_tenvankien.Size = new System.Drawing.Size(213, 20);
+            this.txt_tenvankien.TabIndex = 0;
             // 
-            // txt_sch
+            // txt_vtch
             // 
-            this.txt_sch.Location = new System.Drawing.Point(356, 127);
-            this.txt_sch.Name = "txt_sch";
-            this.txt_sch.Size = new System.Drawing.Size(213, 20);
-            this.txt_sch.TabIndex = 0;
+            this.txt_vtch.Location = new System.Drawing.Point(356, 127);
+            this.txt_vtch.Name = "txt_vtch";
+            this.txt_vtch.Size = new System.Drawing.Size(213, 20);
+            this.txt_vtch.TabIndex = 0;
             // 
-            // txt_bdtb
+            // txt_thoigian
             // 
-            this.txt_bdtb.Location = new System.Drawing.Point(356, 172);
-            this.txt_bdtb.Name = "txt_bdtb";
-            this.txt_bdtb.Size = new System.Drawing.Size(213, 20);
-            this.txt_bdtb.TabIndex = 0;
-            this.txt_bdtb.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.txt_thoigian.Location = new System.Drawing.Point(356, 172);
+            this.txt_thoigian.Name = "txt_thoigian";
+            this.txt_thoigian.Size = new System.Drawing.Size(213, 20);
+            this.txt_thoigian.TabIndex = 0;
+            this.txt_thoigian.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // txt_m1
             // 
-            this.txt_m1.Location = new System.Drawing.Point(366, 218);
+            this.txt_m1.Location = new System.Drawing.Point(351, 225);
             this.txt_m1.Name = "txt_m1";
             this.txt_m1.Size = new System.Drawing.Size(56, 20);
             this.txt_m1.TabIndex = 0;
             // 
             // txt_m2
             // 
-            this.txt_m2.Location = new System.Drawing.Point(428, 218);
+            this.txt_m2.Location = new System.Drawing.Point(413, 225);
             this.txt_m2.Name = "txt_m2";
             this.txt_m2.Size = new System.Drawing.Size(56, 20);
             this.txt_m2.TabIndex = 0;
             // 
             // txt_m3
             // 
-            this.txt_m3.Location = new System.Drawing.Point(366, 244);
+            this.txt_m3.Location = new System.Drawing.Point(351, 251);
             this.txt_m3.Name = "txt_m3";
             this.txt_m3.Size = new System.Drawing.Size(56, 20);
             this.txt_m3.TabIndex = 0;
             // 
             // txt_m4
             // 
-            this.txt_m4.Location = new System.Drawing.Point(428, 244);
+            this.txt_m4.Location = new System.Drawing.Point(413, 251);
             this.txt_m4.Name = "txt_m4";
             this.txt_m4.Size = new System.Drawing.Size(56, 20);
             this.txt_m4.TabIndex = 0;
             // 
-            // txt_chtd
+            // txt_tl
             // 
             this.txt_chtd.Location = new System.Drawing.Point(206, 290);
             this.txt_chtd.Name = "txt_chtd";
@@ -153,7 +148,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(246, 86);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
+            this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Tên đầu bài tập";
             // 
@@ -162,7 +157,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(246, 134);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Sở chỉ huy";
             // 
@@ -171,7 +166,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(246, 179);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Bản đồ tập bài";
             // 
@@ -251,7 +246,7 @@
             this.label11.Text = "Thông tin tập bài";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btn_luu
+            // btn_tiep
             // 
             this.btn_luu.Location = new System.Drawing.Point(318, 471);
             this.btn_luu.Name = "btn_luu";
@@ -261,7 +256,7 @@
             this.btn_luu.UseVisualStyleBackColor = true;
             this.btn_luu.Click += new System.EventHandler(this.btn_luu_Click);
             // 
-            // btn_thoat
+            // label5
             // 
             this.btn_thoat.Location = new System.Drawing.Point(508, 471);
             this.btn_thoat.Name = "btn_thoat";
@@ -270,6 +265,15 @@
             this.btn_thoat.Text = "Thoát";
             this.btn_thoat.UseVisualStyleBackColor = true;
             this.btn_thoat.Click += new System.EventHandler(this.btn_thoat_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(246, 225);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(82, 13);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Mảnh bản chắp\t";
             // 
             // ThongTinTapBai
             // 
@@ -296,12 +300,13 @@
             this.Controls.Add(this.txt_chtdtt);
             this.Controls.Add(this.txt_chtd);
             this.Controls.Add(this.txt_m4);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txt_m3);
             this.Controls.Add(this.txt_m2);
             this.Controls.Add(this.txt_m1);
-            this.Controls.Add(this.txt_bdtb);
-            this.Controls.Add(this.txt_sch);
-            this.Controls.Add(this.txt_tdbt);
+            this.Controls.Add(this.txt_thoigian);
+            this.Controls.Add(this.txt_vtch);
+            this.Controls.Add(this.txt_tenvankien);
             this.Name = "ThongTinTapBai";
             this.Text = "ThongTinTapBai";
             this.Load += new System.EventHandler(this.ThongTinTapBai_Load);
@@ -312,9 +317,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txt_tdbt;
-        private System.Windows.Forms.TextBox txt_sch;
-        private System.Windows.Forms.TextBox txt_bdtb;
+        private System.Windows.Forms.TextBox txt_tenvankien;
+        private System.Windows.Forms.TextBox txt_vtch;
+        private System.Windows.Forms.TextBox txt_thoigian;
         private System.Windows.Forms.TextBox txt_m1;
         private System.Windows.Forms.TextBox txt_m2;
         private System.Windows.Forms.TextBox txt_m3;
@@ -329,7 +334,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
