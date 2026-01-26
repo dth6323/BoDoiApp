@@ -14,7 +14,8 @@ namespace BoDoiApp
     internal static class Program
     {
 
-        private const string connectionString = "Data Source=data.db;Version=3;";
+
+        private const string connectionString = "Data Source=data2.db;Version=3;";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
