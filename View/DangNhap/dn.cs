@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.form
 {
-    public partial class dn : Form
+    public partial class dn : UserControl
     {
         private readonly User u = new User();
         public dn()
