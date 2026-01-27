@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
-    public partial class KhaiBaoDuLieu : Form
+    public partial class KhaiBaoDuLieu : UserControl
     {
         public KhaiBaoDuLieu()
         {

@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.View;
+using BoDoiApp.View.KhaiBaoDuLieuView;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace BoDoiApp
 {
-    public partial class Form1 : Form
+    public partial class Form1 : UserControl
     {
         public Form1()
         {
@@ -20,8 +21,7 @@ namespace BoDoiApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FormMana.KhaiBaoDuLieu.Show();
-            this.Hide();
+           NavigationService.Navigate(new KhaiBaoDuLieu());
         }
 
         private void Form1_Load(object sender, EventArgs e)
