@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.IO;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
@@ -13,7 +14,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void VuKhiTrangBi_Load(object sender, EventArgs e)
         {
             // Load the Excel file and select sheet 3 (index 2)
-            reoGridControl1.Load(@"D:\document\Thaiha\BoDoiApp\Resources\Sheet\Book1.xlsx");
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var filePath = Path.Combine(baseDir, "Resources", "Sheet", "Book1.xlsx");
+
+            reoGridControl1.Load(filePath);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[2];
             
             // Configure anchoring for responsive layout

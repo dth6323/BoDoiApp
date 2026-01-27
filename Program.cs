@@ -1,4 +1,7 @@
 ﻿using BoDoiApp.View;
+using BoDoiApp.View.VIBaoDamSinhHoat;
+using BoDoiApp.View.VIIBaoDamQuanY;
+using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
 using System.Data.SQLite;
 using System.Windows.Forms;
@@ -20,7 +23,7 @@ namespace BoDoiApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FormMana.Init();
-            Application.Run(FormMana.VuKhiTrangBi);
+            Application.Run(new _1BaoDuongSuaChua());
         }
 
         private static void InitializeDatabase()

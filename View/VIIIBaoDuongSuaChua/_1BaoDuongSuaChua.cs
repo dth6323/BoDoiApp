@@ -1,0 +1,181 @@
+﻿using BoDoiApp.View.VIIBaoDamQuanY;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace BoDoiApp.View.VIIIBaoDuongSuaChua
+{
+    public partial class _1BaoDuongSuaChua : Form
+    {
+        private float currentFontSize = 11f;
+
+        public _1BaoDuongSuaChua()
+        {
+            InitializeComponent();
+            this.FormClosed += (s, args) => Application.Exit();
+        }
+
+        private void _1BaoDuongSuaChua_Load(object sender, EventArgs args)
+        {
+            // ===== FORM CONFIG =====
+            this.Text = "Phần mềm hỗ trợ tập bài bảo đảm hậu cần";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Size = new Size(1200, 500);
+            this.MinimumSize = new Size(900, 400);
+            this.AutoScaleMode = AutoScaleMode.None;
+
+            // ===== MAIN LAYOUT =====
+            TableLayoutPanel layout = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                RowCount = 3,
+                ColumnCount = 1
+            };
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
+            this.Controls.Add(layout);
+
+            // ===== TITLE =====
+            Label lblTitle = new Label
+            {
+                Text = "PHẦN MỀM HỖ TRỢ TẬP BÀI BẢO ĐẢM HẬU CẦN, KỸ THUẬT TIỂU ĐOÀN BỘ BINH CHIẾN ĐẤU",
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(255, 242, 204),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Times New Roman", 12, FontStyle.Bold)
+            };
+            layout.Controls.Add(lblTitle, 0, 0);
+
+            // ===== CONTENT PANEL =====
+            Panel pnlMain = new Panel
+            {
+                Dock = DockStyle.Fill,
+                BorderStyle = BorderStyle.FixedSingle
+            };
+            layout.Controls.Add(pnlMain, 0, 1);
+
+            // ===== HEADER =====
+            Label lblHeader = new Label
+            {
+                Text = "VIII. Bảo dưỡng, sửa chữa",
+                Dock = DockStyle.Top,
+                Height = 35,
+                BackColor = Color.FromArgb(198, 224, 180),
+                Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+
+            Label lblContent = new Label
+            {
+                Text = "1. Bảo dưỡng",
+                Dock = DockStyle.Top,
+                Height = 30,
+                Font = new Font("Times New Roman", 11),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+
+            // ===== TEXTBOX =====
+            TextBox txtInput = new TextBox
+            {
+                Multiline = true,
+                Dock = DockStyle.Fill,
+                Font = new Font("Times New Roman", 11),
+                ScrollBars = ScrollBars.Vertical,
+                Text = "(Học viên nhập văn bản)"
+            };
+
+            // ===== PANEL MŨI TÊN TRÁI =====
+            Panel pnlArrowLeft = new Panel
+            {
+                Dock = DockStyle.Right,
+                Width = 60
+            };
+
+            Button btnBackForm = new Button
+            {
+                Text = "▶",
+                Dock = DockStyle.Fill,
+                Font = new Font("Segoe UI", 18, FontStyle.Bold)
+            };
+
+            btnBackForm.Click += (s, args2) =>
+            {
+                new _1BaoDamQuanY().Show(); // form trước
+                this.Hide();
+            };
+
+            pnlArrowLeft.Controls.Add(btnBackForm);
+
+            // ===== ADD CONTROLS (THỨ TỰ QUAN TRỌNG) =====
+            pnlMain.Controls.Add(txtInput);
+            pnlMain.Controls.Add(lblContent);
+            pnlMain.Controls.Add(lblHeader);
+            pnlMain.Controls.Add(pnlArrowLeft);
+
+            // ===== BOTTOM BUTTONS =====
+            TableLayoutPanel pnlButton = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 3
+            };
+            pnlButton.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            pnlButton.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34));
+            pnlButton.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            layout.Controls.Add(pnlButton, 0, 2);
+
+            Button btnBack = new Button
+            {
+                Text = "Trở về",
+                BackColor = Color.FromArgb(252, 213, 180),
+                Anchor = AnchorStyles.Left
+            };
+
+            Button btnHome = new Button
+            {
+                Text = "Trang\nchủ",
+                BackColor = Color.Yellow,
+                Anchor = AnchorStyles.None
+            };
+
+            Button btnSave = new Button
+            {
+                Text = "Lưu",
+                BackColor = Color.FromArgb(189, 215, 238),
+                Anchor = AnchorStyles.Right
+            };
+
+            pnlButton.Controls.Add(btnBack, 0, 0);
+            pnlButton.Controls.Add(btnHome, 1, 0);
+            pnlButton.Controls.Add(btnSave, 2, 0);
+        }
+
+        // ===== ZOOM CTRL + / CTRL - =====
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.Add))
+            {
+                currentFontSize++;
+                UpdateFontRecursive(this);
+                return true;
+            }
+
+            if (keyData == (Keys.Control | Keys.Subtract))
+            {
+                if (currentFontSize > 8)
+                    currentFontSize--;
+                UpdateFontRecursive(this);
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void UpdateFontRecursive(Control control)
+        {
+            control.Font = new Font("Times New Roman", currentFontSize, control.Font.Style);
+            foreach (Control child in control.Controls)
+                UpdateFontRecursive(child);
+        }
+    }
+}
