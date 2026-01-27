@@ -23,7 +23,7 @@ namespace BoDoiApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             FormMana.Init();
-            Application.Run(new _1BaoDuongSuaChua());
+            Application.Run(FormMana.BaoDamVuKhi);
         }
 
         private static void InitializeDatabase()
