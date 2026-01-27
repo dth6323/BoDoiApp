@@ -8,20 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BoDoiApp.View.KhaiBaoDuLieuView
+namespace BoDoiApp.View.VIIBaoDamQuanY
 {
-    public partial class PhanCapVatLieu : UserControl
+    public partial class _2CanDoi : UserControl
     {
-        private const string EXCEL_PATH = @"D:\document\Thaiha\BoDoiApp\Resources\Sheet\Book1.xlsx";
-        public PhanCapVatLieu()
+        public _2CanDoi()
         {
             InitializeComponent();
-        }
-
-        private void PhanCapVatLieu_Load(object sender, EventArgs e)
-        {
-            reoGridControl1.Load(EXCEL_PATH);
-            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[4];
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,7 +29,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button3_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new TiepNhanBoXungV());
+            NavigationService.Navigate(new _3YDinh());
         }
     }
 }

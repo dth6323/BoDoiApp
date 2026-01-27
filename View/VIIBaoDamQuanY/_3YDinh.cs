@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BoDoiApp.View.KhaiBaoDuLieuView
+namespace BoDoiApp.View.VIIBaoDamQuanY
 {
-    public partial class TinhHinhTacDong : UserControl
+    public partial class _3YDinh : UserControl
     {
-        public TinhHinhTacDong()
+        public _3YDinh()
         {
             InitializeComponent();
         }

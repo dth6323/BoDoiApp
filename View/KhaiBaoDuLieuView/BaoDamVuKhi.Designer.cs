@@ -65,6 +65,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -74,6 +75,7 @@
             this.button2.TabIndex = 0;
             this.button2.Text = "Trang chủ";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -81,8 +83,9 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(90, 45);
             this.button3.TabIndex = 0;
-            this.button3.Text = "Lưu";
+            this.button3.Text = "Tiếp Theo";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label3
             // 
@@ -134,14 +137,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1093, 494);
             this.Controls.Add(this.reoGridControl1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "BaoDamVuKhi";
-            this.Text = "BaoDamVuKhi";
+            this.Size = new System.Drawing.Size(1093, 494);
             this.Load += new System.EventHandler(this.BaoDamVuKhi_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

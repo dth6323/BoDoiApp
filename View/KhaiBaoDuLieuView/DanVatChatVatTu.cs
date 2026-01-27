@@ -23,5 +23,20 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[3];
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Form1());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new PhanCapVatLieu());
+        }
     }
 }
