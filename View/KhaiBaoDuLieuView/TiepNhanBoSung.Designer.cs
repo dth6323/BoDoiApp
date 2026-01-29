@@ -85,53 +85,55 @@
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 402);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 397);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 48);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 53);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(8, 8);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(91, 32);
+            this.button1.Size = new System.Drawing.Size(91, 37);
             this.button1.TabIndex = 0;
             this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(372, 8);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(91, 32);
+            this.button2.Size = new System.Drawing.Size(91, 37);
             this.button2.TabIndex = 0;
             this.button2.Text = "Trang chủ";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(702, 8);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(90, 32);
+            this.button3.Size = new System.Drawing.Size(90, 37);
             this.button3.TabIndex = 0;
             this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // TiepNhanBoSung
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "TiepNhanBoSung";
-            this.Text = "TiepNhanBoXung";
+            this.Size = new System.Drawing.Size(800, 450);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

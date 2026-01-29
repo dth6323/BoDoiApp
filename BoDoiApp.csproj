@@ -122,7 +122,7 @@
     </Compile>
     <Compile Include="View\FormMana.cs" />
     <Compile Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.Designer.cs">
       <DependentUpon>BaoDamVuKhi.cs</DependentUpon>
@@ -152,7 +152,7 @@
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.Designer.cs">
       <DependentUpon>PhanCapVatLieu.cs</DependentUpon>
@@ -182,25 +182,25 @@
       <DependentUpon>ThuYeu.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoSung.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoSung.Designer.cs">
       <DependentUpon>TiepNhanBoSung.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoXungV.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TiepNhanBoXungV.Designer.cs">
       <DependentUpon>TiepNhanBoXungV.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TinhHinhTacDong.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\TinhHinhTacDong.Designer.cs">
       <DependentUpon>TinhHinhTacDong.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ToChucSuDungBoTri.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ToChucSuDungBoTri.Designer.cs">
       <DependentUpon>ToChucSuDungBoTri.cs</DependentUpon>
@@ -231,7 +231,6 @@
     </Compile>
     <Compile Include="View\DangNhap\dn.cs">
       <SubType>UserControl</SubType>
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\DangNhap\dn.Designer.cs">
       <DependentUpon>dn.cs</DependentUpon>
@@ -261,6 +260,18 @@
     </Compile>
     <Compile Include="View\VIIBaoDamQuanY\_1BaoDamQuanY.Designer.cs">
       <DependentUpon>_1BaoDamQuanY.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\_2CanDoi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\_2CanDoi.Designer.cs">
+      <DependentUpon>_2CanDoi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\_3YDinh.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\_3YDinh.Designer.cs">
+      <DependentUpon>_3YDinh.cs</DependentUpon>
     </Compile>
     <Compile Include="View\VIIIBaoDuongSuaChua\_1BaoDuongSuaChua.cs">
       <SubType>Form</SubType>
@@ -355,6 +366,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIBaoDamQuanY\_1BaoDamQuanY.resx">
       <DependentUpon>_1BaoDamQuanY.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VIIBaoDamQuanY\_2CanDoi.resx">
+      <DependentUpon>_2CanDoi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VIIBaoDamQuanY\_3YDinh.resx">
+      <DependentUpon>_3YDinh.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\_1BaoDuongSuaChua.resx">
       <DependentUpon>_1BaoDuongSuaChua.cs</DependentUpon>
