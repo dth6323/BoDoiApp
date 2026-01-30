@@ -14,7 +14,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
     public partial class ThuYeu : UserControl
     {
-        private const string EXCEL_PATH = @"D:\document\Thaiha\BoDoiApp\Resources\Sheet\Book1.xlsx";
+        private static readonly string BaseDir =
+    AppDomain.CurrentDomain.BaseDirectory;
+
+        private static readonly string EXCEL_PATH =
+            Path.Combine(BaseDir, "Resources", "Sheet", "Book1.xlsx");
         public ThuYeu()
         {
             InitializeComponent();
