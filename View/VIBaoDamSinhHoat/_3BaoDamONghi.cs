@@ -4,23 +4,19 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.View.VIBaoDamSinhHoat
 {
-    public partial class _3BaoDamONghi : Form
+    public partial class _3BaoDamONghi : UserControl
     {
         private float currentFontSize = 11f;
 
         public _3BaoDamONghi()
         {
             InitializeComponent();
-            this.FormClosed += (s, e) => Application.Exit();
+            this.Load += _3BaoDamONghi_Load;
         }
 
         private void _3BaoDamONghi_Load(object sender, EventArgs e)
         {
-            // ===== FORM CONFIG =====
-            this.Text = "Phần mềm hỗ trợ tập bài bảo đảm hậu cần";
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.Size = new Size(1200, 500);
-            this.MinimumSize = new Size(900, 400);
+            this.Dock = DockStyle.Fill;
             this.AutoScaleMode = AutoScaleMode.None;
 
             // ===== MAIN LAYOUT =====
@@ -61,7 +57,8 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Dock = DockStyle.Top,
                 Height = 35,
                 BackColor = Color.FromArgb(217, 225, 242),
-                Font = new Font("Times New Roman", 12, FontStyle.Bold)
+                Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleLeft
             };
 
             Label lblContent = new Label
@@ -69,7 +66,8 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Text = "3. Bảo đảm ở, ngủ nghỉ",
                 Dock = DockStyle.Top,
                 Height = 30,
-                Font = new Font("Times New Roman", 11)
+                Font = new Font("Times New Roman", 11),
+                TextAlign = ContentAlignment.MiddleLeft
             };
 
             // ===== TEXTBOX =====
@@ -82,7 +80,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Text = "(Học viên nhập văn bản)"
             };
 
-            // ===== PANEL MŨI TÊN TRÁI =====
+            // ===== ARROW LEFT =====
             Panel pnlArrowLeft = new Panel
             {
                 Dock = DockStyle.Left,
@@ -97,8 +95,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             };
             btnPrev.Click += (s, e2) =>
             {
-                new _2BaoDamMac().Show();
-                this.Hide();
+                NavigationService.Back();
             };
             pnlArrowLeft.Controls.Add(btnPrev);
 
@@ -124,12 +121,17 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Text = "Trở về",
                 Anchor = AnchorStyles.Left
             };
+            btnBack.Click += (s, e2) => NavigationService.Back();
 
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
                 BackColor = Color.Yellow,
                 Anchor = AnchorStyles.None
+            };
+            btnHome.Click += (s, e2) =>
+            {
+                //NavigationService.Navigate(new HomeView());
             };
 
             Button btnSave = new Button
@@ -143,7 +145,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             pnlButton.Controls.Add(btnSave, 2, 0);
         }
 
-        // ===== ZOOM CTRL + / CTRL - =====
+        // ===== ZOOM CTRL + / - =====
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Add))

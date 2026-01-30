@@ -31,5 +31,10 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
         {
             NavigationService.Navigate(new _3YDinh());
         }
+
+        private void _2CanDoi_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

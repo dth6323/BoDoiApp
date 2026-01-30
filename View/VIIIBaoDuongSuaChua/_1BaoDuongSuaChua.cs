@@ -1,27 +1,22 @@
-﻿using BoDoiApp.View.VIIBaoDamQuanY;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 {
-    public partial class _1BaoDuongSuaChua : Form
+    public partial class _1BaoDuongSuaChua : UserControl
     {
         private float currentFontSize = 11f;
 
         public _1BaoDuongSuaChua()
         {
             InitializeComponent();
-            this.FormClosed += (s, args) => Application.Exit();
+            this.Load += _1BaoDuongSuaChua_Load;
         }
 
-        private void _1BaoDuongSuaChua_Load(object sender, EventArgs args)
+        private void _1BaoDuongSuaChua_Load(object sender, EventArgs e)
         {
-            // ===== FORM CONFIG =====
-            this.Text = "Phần mềm hỗ trợ tập bài bảo đảm hậu cần";
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.Size = new Size(1200, 500);
-            this.MinimumSize = new Size(900, 400);
+            this.Dock = DockStyle.Fill;
             this.AutoScaleMode = AutoScaleMode.None;
 
             // ===== MAIN LAYOUT =====
@@ -85,33 +80,30 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 Text = "(Học viên nhập văn bản)"
             };
 
-            // ===== PANEL MŨI TÊN TRÁI =====
-            Panel pnlArrowLeft = new Panel
+            // ===== ARROW RIGHT (QUAY LẠI PHẦN TRƯỚC) =====
+            Panel pnlArrowRight = new Panel
             {
                 Dock = DockStyle.Right,
                 Width = 60
             };
 
-            Button btnBackForm = new Button
+            Button btnPrev = new Button
             {
                 Text = "▶",
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 18, FontStyle.Bold)
             };
-
-            btnBackForm.Click += (s, args2) =>
+            btnPrev.Click += (s, e2) =>
             {
-                new _1BaoDamQuanY().Show(); // form trước
-                this.Hide();
+                NavigationService.Navigate(new _2SuaChua());
             };
+            pnlArrowRight.Controls.Add(btnPrev);
 
-            pnlArrowLeft.Controls.Add(btnBackForm);
-
-            // ===== ADD CONTROLS (THỨ TỰ QUAN TRỌNG) =====
+            // ===== ADD CONTROLS =====
             pnlMain.Controls.Add(txtInput);
             pnlMain.Controls.Add(lblContent);
             pnlMain.Controls.Add(lblHeader);
-            pnlMain.Controls.Add(pnlArrowLeft);
+            pnlMain.Controls.Add(pnlArrowRight);
 
             // ===== BOTTOM BUTTONS =====
             TableLayoutPanel pnlButton = new TableLayoutPanel
@@ -130,12 +122,17 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 BackColor = Color.FromArgb(252, 213, 180),
                 Anchor = AnchorStyles.Left
             };
+            btnBack.Click += (s, e2) => NavigationService.Back();
 
             Button btnHome = new Button
             {
                 Text = "Trang\nchủ",
                 BackColor = Color.Yellow,
                 Anchor = AnchorStyles.None
+            };
+            btnHome.Click += (s, e2) =>
+            {
+                //NavigationService.Navigate(new HomeView());
             };
 
             Button btnSave = new Button
@@ -150,7 +147,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             pnlButton.Controls.Add(btnSave, 2, 0);
         }
 
-        // ===== ZOOM CTRL + / CTRL - =====
+        // ===== ZOOM CTRL + / - =====
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Add))
