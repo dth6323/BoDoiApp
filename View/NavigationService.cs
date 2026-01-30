@@ -35,6 +35,7 @@ namespace BoDoiApp.View
                 return;
 
             _history.Pop();
+            _history.Peek().Visible = true;
             _mainForm.ShowView(_history.Peek());
         }
     }

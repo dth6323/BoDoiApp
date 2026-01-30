@@ -43,18 +43,18 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.07595F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.77215F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.02532F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.17323F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.76378F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 433);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 659);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1093, 61);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 61);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // button1
@@ -69,7 +69,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(507, 8);
+            this.button2.Location = new System.Drawing.Point(593, 8);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 45);
             this.button2.TabIndex = 0;
@@ -79,7 +79,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(959, 8);
+            this.button3.Location = new System.Drawing.Point(1153, 8);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(90, 45);
             this.button3.TabIndex = 0;
@@ -109,11 +109,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(233, 14);
+            this.label1.Location = new System.Drawing.Point(478, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(328, 20);
             this.label1.TabIndex = 5;
             this.label1.Text = "Dự kiến kế hoạch bảo đảm hậu cần - kỹ thuật";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // reoGridControl1
             // 
@@ -129,7 +130,7 @@
             this.reoGridControl1.SheetTabVisible = true;
             this.reoGridControl1.SheetTabWidth = 60;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(1041, 263);
+            this.reoGridControl1.Size = new System.Drawing.Size(1173, 459);
             this.reoGridControl1.TabIndex = 10;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
@@ -143,7 +144,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "BaoDamVuKhi";
-            this.Size = new System.Drawing.Size(1093, 494);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.Load += new System.EventHandler(this.BaoDamVuKhi_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
