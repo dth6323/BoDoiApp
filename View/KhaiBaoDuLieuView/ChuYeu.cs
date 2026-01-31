@@ -9,7 +9,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
     public partial class ChuYeu : UserControl
     {
-        private const string EXCEL_PATH = @"D:\document\Thaiha\BoDoiApp\Resources\Sheet\Book1.xlsx";
+        private static readonly string BaseDir =
+    AppDomain.CurrentDomain.BaseDirectory;
+
+        private static readonly string EXCEL_PATH =
+            Path.Combine(BaseDir, "Resources", "Sheet", "Book1.xlsx");
         private string BoPhan = "chu yeu";
         public ChuYeu(string boPhan)
         {
