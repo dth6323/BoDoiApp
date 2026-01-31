@@ -7,14 +7,18 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
     public partial class  _3CanDoiVaYdinhBaoDam : UserControl
     {
         private float currentFontSize = 11f;
-
         public _3CanDoiVaYdinhBaoDam()
+        {
+            InitializeComponent();
+            this.Load += _3CanDoiVaYdinhBaoDam_Load;
+        }
+        public void _3CanDoiVaYdinhBaoDam_Load(object sender, EventArgs e)
         {
             Dock = DockStyle.Fill;
             AutoScaleMode = AutoScaleMode.None;
             BuildUI();
         }
-
+        
         private void BuildUI()
         {
             Controls.Clear();
