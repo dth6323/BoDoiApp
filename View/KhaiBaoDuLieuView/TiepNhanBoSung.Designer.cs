@@ -42,7 +42,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(233, 28);
+            this.label1.Location = new System.Drawing.Point(489, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(328, 20);
             this.label1.TabIndex = 0;
@@ -71,7 +71,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(44, 132);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(710, 234);
+            this.richTextBox1.Size = new System.Drawing.Size(1170, 459);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
             // 
@@ -85,12 +85,12 @@
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 397);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 667);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 53);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 53);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // button1
@@ -105,7 +105,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(372, 8);
+            this.button2.Location = new System.Drawing.Point(593, 8);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 37);
             this.button2.TabIndex = 0;
@@ -115,7 +115,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(702, 8);
+            this.button3.Location = new System.Drawing.Point(1124, 8);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(90, 37);
             this.button3.TabIndex = 0;
@@ -133,7 +133,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "TiepNhanBoSung";
-            this.Size = new System.Drawing.Size(800, 450);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

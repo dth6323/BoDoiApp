@@ -37,5 +37,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             NavigationService.Navigate(new TiepNhanBoSung());
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

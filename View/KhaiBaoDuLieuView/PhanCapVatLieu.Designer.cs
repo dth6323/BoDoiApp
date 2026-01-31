@@ -42,7 +42,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(450, 8);
+            this.label1.Location = new System.Drawing.Point(514, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(328, 20);
             this.label1.TabIndex = 17;
@@ -60,7 +60,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1043, 8);
+            this.button3.Location = new System.Drawing.Point(1151, 8);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(90, 45);
             this.button3.TabIndex = 0;
@@ -70,7 +70,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(537, 8);
+            this.button2.Location = new System.Drawing.Point(592, 8);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 45);
             this.button2.TabIndex = 0;
@@ -98,12 +98,12 @@
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 430);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 659);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1160, 61);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 61);
             this.tableLayoutPanel1.TabIndex = 20;
             // 
             // reoGridControl1
@@ -111,7 +111,7 @@
             this.reoGridControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.reoGridControl1.ColumnHeaderContextMenuStrip = null;
             this.reoGridControl1.LeadHeaderContextMenuStrip = null;
-            this.reoGridControl1.Location = new System.Drawing.Point(80, 116);
+            this.reoGridControl1.Location = new System.Drawing.Point(64, 116);
             this.reoGridControl1.Name = "reoGridControl1";
             this.reoGridControl1.RowHeaderContextMenuStrip = null;
             this.reoGridControl1.Script = null;
@@ -120,7 +120,7 @@
             this.reoGridControl1.SheetTabVisible = true;
             this.reoGridControl1.SheetTabWidth = 60;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(1041, 263);
+            this.reoGridControl1.Size = new System.Drawing.Size(1158, 520);
             this.reoGridControl1.TabIndex = 21;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
@@ -143,7 +143,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "PhanCapVatLieu";
-            this.Size = new System.Drawing.Size(1160, 491);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.Load += new System.EventHandler(this.PhanCapVatLieu_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

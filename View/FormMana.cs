@@ -29,7 +29,7 @@ namespace BoDoiApp.View
             KhaiBaoDuLieu = new KhaiBaoDuLieu();
             ThongTinTapBai = new ThongTinTapBai();
             QuanSoChienDau = new QuanSoChienDau();
-            ChuYeu = new ChuYeu();
+            //ChuYeu = new ChuYeu();
             VatChatHienCo = new VatChatHienCoView();
             VuKhiTrangBi = new VuKhiTrangBi();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,17 +12,12 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
-    public partial class ThuYeu : Form
+    public partial class ThuYeu : UserControl
     {
         private const string EXCEL_PATH = @"D:\document\Thaiha\BoDoiApp\Resources\Sheet\Book1.xlsx";
         public ThuYeu()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void ThuYeu_Load(object sender, EventArgs e)
@@ -42,6 +38,21 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 MessageBox.Show("Lỗi khi tải file Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Form1());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ChuYeuData.UpdateHangLoat(reoGridControl1, "thu yeu");
         }
     }
 }

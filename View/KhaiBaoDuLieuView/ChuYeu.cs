@@ -1,16 +1,19 @@
 ﻿using BoDoiApp.DataLayer;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
-    public partial class ChuYeu : Form
+    public partial class ChuYeu : UserControl
     {
         private const string EXCEL_PATH = @"D:\document\Thaiha\BoDoiApp\Resources\Sheet\Book1.xlsx";
-        public ChuYeu()
+        private string BoPhan = "chu yeu";
+        public ChuYeu(string boPhan)
         {
+            BoPhan = boPhan;
             InitializeComponent();
         }
 
@@ -39,8 +42,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var res = new ChuYeuData();
-            res.ThemHangLoat(reoGridControl1,"chu yeu");
+            ChuYeuData.ThemHangLoat(reoGridControl1, BoPhan);
         }
 
         private void LoadDataWithUser()
