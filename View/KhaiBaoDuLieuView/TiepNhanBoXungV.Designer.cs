@@ -49,11 +49,11 @@
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 433);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 662);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1160, 58);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 58);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // button1
@@ -89,7 +89,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(66, 119);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1001, 283);
+            this.richTextBox1.Size = new System.Drawing.Size(1154, 502);
             this.richTextBox1.TabIndex = 6;
             this.richTextBox1.Text = "";
             // 
@@ -106,7 +106,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(427, 21);
+            this.label1.Location = new System.Drawing.Point(487, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(328, 20);
             this.label1.TabIndex = 5;
@@ -131,7 +131,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "TiepNhanBoXungV";
-            this.Size = new System.Drawing.Size(1160, 491);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -50,12 +50,12 @@
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 430);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 603);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1160, 61);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1258, 61);
             this.tableLayoutPanel1.TabIndex = 14;
             // 
             // button1
@@ -70,7 +70,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(537, 8);
+            this.button2.Location = new System.Drawing.Point(582, 8);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 45);
             this.button2.TabIndex = 0;
@@ -80,7 +80,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1044, 8);
+            this.button3.Location = new System.Drawing.Point(1132, 8);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(90, 45);
             this.button3.TabIndex = 0;
@@ -102,7 +102,7 @@
             this.reoGridControl1.SheetTabVisible = true;
             this.reoGridControl1.SheetTabWidth = 60;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(1041, 263);
+            this.reoGridControl1.Size = new System.Drawing.Size(1130, 442);
             this.reoGridControl1.TabIndex = 15;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
@@ -128,7 +128,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(399, 16);
+            this.label1.Location = new System.Drawing.Point(495, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(328, 20);
             this.label1.TabIndex = 11;
@@ -147,7 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1160, 491);
+            this.ClientSize = new System.Drawing.Size(1258, 664);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.reoGridControl1);

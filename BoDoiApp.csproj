@@ -128,19 +128,19 @@
       <DependentUpon>BaoDamVuKhi.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\BienChe.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\BienChe.Designer.cs">
       <DependentUpon>BienChe.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ChuYeu.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ChuYeu.Designer.cs">
       <DependentUpon>ChuYeu.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\DanVatChatVatTu.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\DanVatChatVatTu.Designer.cs">
       <DependentUpon>DanVatChatVatTu.cs</DependentUpon>
@@ -176,7 +176,7 @@
       <DependentUpon>ThongTinTapBai.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThuYeu.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThuYeu.Designer.cs">
       <DependentUpon>ThuYeu.cs</DependentUpon>

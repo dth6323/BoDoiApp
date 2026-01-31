@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
-    public partial class DanVatChatVatTu : Form
+    public partial class DanVatChatVatTu : UserControl
     {
         private const string EXCEL_PATH = @"D:\document\Thaiha\BoDoiApp\Resources\Sheet\Book1.xlsx";
         public DanVatChatVatTu()

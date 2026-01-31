@@ -1,4 +1,6 @@
 ﻿using BoDoiApp.form;
+using BoDoiApp.View.KhaiBaoDuLieuView;
+using BoDoiApp.View.VIIBaoDamQuanY;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +19,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(new ThuYeu());
         }
 
         public void ShowView(UserControl view)
@@ -25,6 +27,11 @@ namespace BoDoiApp.View
             panel1.Controls.Clear();
             view.Dock = DockStyle.Fill;
             panel1.Controls.Add(view);
+        }
+
+        private void panel1_Resize(object sender, EventArgs e)
+        {
+            
         }
     }
 }
