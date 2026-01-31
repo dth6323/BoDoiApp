@@ -121,6 +121,18 @@
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormMana.cs" />
+    <Compile Include="View\IXCongTacVanTai\_1DuongVanTai.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\_1DuongVanTai.Designer.cs">
+      <DependentUpon>_1DuongVanTai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.Designer.cs">
+      <DependentUpon>_2DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -306,6 +318,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\DangNhap\dn.resx">
       <DependentUpon>dn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\_1DuongVanTai.resx">
+      <DependentUpon>_1DuongVanTai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.resx">
+      <DependentUpon>_2DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.resx">
       <DependentUpon>BaoDamVuKhi.cs</DependentUpon>

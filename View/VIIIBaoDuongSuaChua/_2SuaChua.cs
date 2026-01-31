@@ -84,6 +84,10 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 Size = new Size(60, 140),
                 Anchor = AnchorStyles.Right
             };
+            btnNext.Click += (s, e2) =>
+            {
+                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+            };
             content.Controls.Add(btnNext);
 
             content.Resize += (s, e2) =>

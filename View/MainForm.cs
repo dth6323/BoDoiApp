@@ -1,6 +1,8 @@
 ﻿using BoDoiApp.form;
 using BoDoiApp.View.KhaiBaoDuLieuView;
+using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
+using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +21,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new ThuYeu());
+            NavigationService.Navigate(new _1DuongVanTai());
         }
 
         public void ShowView(UserControl view)
@@ -32,6 +34,11 @@ namespace BoDoiApp.View
         private void panel1_Resize(object sender, EventArgs e)
         {
             
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
