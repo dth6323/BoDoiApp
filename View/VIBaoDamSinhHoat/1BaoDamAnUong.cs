@@ -146,20 +146,21 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
         }
 
         // ===== ZOOM CTRL + / - =====
+        private float zoomFactor = 1.0f;
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Add))
             {
-                currentFontSize++;
-                UpdateFontRecursive(this);
+                zoomFactor += 0.1f;
+                this.Scale(new SizeF(1.1f, 1.1f));
                 return true;
             }
 
             if (keyData == (Keys.Control | Keys.Subtract))
             {
-                if (currentFontSize > 8)
-                    currentFontSize--;
-                UpdateFontRecursive(this);
+                zoomFactor -= 0.1f;
+                this.Scale(new SizeF(0.9f, 0.9f));
                 return true;
             }
 

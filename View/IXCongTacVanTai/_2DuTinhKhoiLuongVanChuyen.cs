@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.View.IXCongTacVanTai;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -145,6 +146,10 @@ namespace BoDoiApp.View.VICongTacVanTai
                 BackColor = Color.White
             };
             btnPrev.FlatAppearance.BorderSize = 0;
+            btnPrev.Click += (s, e2) =>
+            {
+                NavigationService.Navigate(new _1DuongVanTai());
+            };
             pnlContent.Controls.Add(btnPrev, 0, 0);
 
             /* ================= FORM CONTENT ================= */
@@ -183,6 +188,10 @@ namespace BoDoiApp.View.VICongTacVanTai
                 BackColor = Color.White
             };
             btnNext.FlatAppearance.BorderSize = 0;
+            btnNext.Click += (s, e2) =>
+            {
+                NavigationService.Navigate(new _3CanDoi());
+            };
             pnlContent.Controls.Add(btnNext, 2, 0);
 
             /* ================= BOTTOM BUTTONS ================= */
@@ -335,20 +344,21 @@ namespace BoDoiApp.View.VICongTacVanTai
         }
 
         /* ===== ZOOM CTRL + / - ===== */
+        private float zoomFactor = 1.0f;
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Add))
             {
-                currentFontSize++;
-                UpdateFontRecursive(this);
+                zoomFactor += 0.1f;
+                this.Scale(new SizeF(1.1f, 1.1f));
                 return true;
             }
 
             if (keyData == (Keys.Control | Keys.Subtract))
             {
-                if (currentFontSize > 8)
-                    currentFontSize--;
-                UpdateFontRecursive(this);
+                zoomFactor -= 0.1f;
+                this.Scale(new SizeF(0.9f, 0.9f));
                 return true;
             }
 
@@ -361,5 +371,6 @@ namespace BoDoiApp.View.VICongTacVanTai
             foreach (Control child in control.Controls)
                 UpdateFontRecursive(child);
         }
+
     }
 }

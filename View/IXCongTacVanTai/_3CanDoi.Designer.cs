@@ -1,6 +1,6 @@
-﻿namespace BoDoiApp.View.VICongTacVanTai
+﻿namespace BoDoiApp.View.IXCongTacVanTai
 {
-    partial class _1DuongVanTai
+    partial class _3CanDoi
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,13 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // _1DuongVanTai
+            // _3CanDoi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "_1DuongVanTai";
-            this.Size = new System.Drawing.Size(1031, 542);
-            this.Load += new System.EventHandler(this._1DuongVanTai_Load);
+            this.Name = "_3CanDoi";
+            this.Load += new System.EventHandler(this._3CanDoi_Load);
             this.ResumeLayout(false);
 
         }

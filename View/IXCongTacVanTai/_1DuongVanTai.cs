@@ -13,7 +13,16 @@ namespace BoDoiApp.View.VICongTacVanTai
             InitializeComponent();
             this.Load += _1DuongVanTai_Load;
         }
-
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (this.Visible)
+            {
+                // Reset zoom khi quay lại
+                currentFontSize = 11f;
+                UpdateFontRecursive(this);
+            }
+        }
         private void _1DuongVanTai_Load(object sender, EventArgs e)
         {
             this.Dock = DockStyle.Fill;
@@ -169,20 +178,21 @@ namespace BoDoiApp.View.VICongTacVanTai
         }
 
         /* ===== ZOOM CTRL + / - ===== */
+        private float zoomFactor = 1.0f;
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Add))
             {
-                currentFontSize++;
-                UpdateFontRecursive(this);
+                zoomFactor += 0.1f;
+                this.Scale(new SizeF(1.1f, 1.1f));
                 return true;
             }
 
             if (keyData == (Keys.Control | Keys.Subtract))
             {
-                if (currentFontSize > 8)
-                    currentFontSize--;
-                UpdateFontRecursive(this);
+                zoomFactor -= 0.1f;
+                this.Scale(new SizeF(0.9f, 0.9f));
                 return true;
             }
 

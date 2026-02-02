@@ -26,5 +26,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             NavigationService.Navigate(new Form1());
         }
+
+        private void TiepNhanBoXungV_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

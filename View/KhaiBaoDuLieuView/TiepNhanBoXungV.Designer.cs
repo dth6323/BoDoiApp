@@ -42,25 +42,27 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 488F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 558F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 434F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 496F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 208F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 662);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 530);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 58);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1138, 46);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Location = new System.Drawing.Point(3, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 52);
+            this.button1.Size = new System.Drawing.Size(92, 42);
             this.button1.TabIndex = 0;
             this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = true;
@@ -68,9 +70,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(491, 3);
+            this.button2.Location = new System.Drawing.Point(437, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(103, 52);
+            this.button2.Size = new System.Drawing.Size(92, 42);
             this.button2.TabIndex = 0;
             this.button2.Text = "Trang Chủ";
             this.button2.UseVisualStyleBackColor = true;
@@ -78,18 +81,20 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1049, 3);
+            this.button3.Location = new System.Drawing.Point(933, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(103, 52);
+            this.button3.Size = new System.Drawing.Size(92, 42);
             this.button3.TabIndex = 0;
             this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(66, 119);
+            this.richTextBox1.Location = new System.Drawing.Point(59, 95);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1154, 502);
+            this.richTextBox1.Size = new System.Drawing.Size(1026, 402);
             this.richTextBox1.TabIndex = 6;
             this.richTextBox1.Text = "";
             // 
@@ -97,41 +102,43 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(62, 55);
+            this.label2.Location = new System.Drawing.Point(55, 44);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(404, 20);
+            this.label2.Size = new System.Drawing.Size(368, 17);
             this.label2.TabIndex = 4;
             this.label2.Text = "V. Bảo đảm đạn, vật chất hậu cần, vật tư kỹ thuật";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(487, 20);
+            this.label1.Location = new System.Drawing.Point(433, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(328, 20);
+            this.label1.Size = new System.Drawing.Size(272, 16);
             this.label1.TabIndex = 5;
             this.label1.Text = "Dự kiến kế hoạch bảo đảm hậu cần - kỹ thuật";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(73, 88);
+            this.label3.Location = new System.Drawing.Point(65, 70);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(206, 20);
+            this.label3.Size = new System.Drawing.Size(168, 16);
             this.label3.TabIndex = 7;
             this.label3.Text = "3. Ý định tiếp nhận, bổ sung";
             // 
             // TiepNhanBoXungV
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "TiepNhanBoXungV";
-            this.Size = new System.Drawing.Size(1280, 720);
+            this.Size = new System.Drawing.Size(1138, 576);
+            this.Load += new System.EventHandler(this.TiepNhanBoXungV_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
