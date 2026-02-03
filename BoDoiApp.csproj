@@ -114,6 +114,18 @@
     <Compile Include="DataLayer\ToChucBienCheData.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
+    <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.Designer.cs">
+      <DependentUpon>_1DukienTinhHuong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Baovehaucankythuat\_2BienPhap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Baovehaucankythuat\_2BienPhap.Designer.cs">
+      <DependentUpon>_2BienPhap.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\DangNhap\DangKy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -316,6 +328,18 @@
     <Compile Include="View\VIIIBaoDuongSuaChua\_3CanDoiVaYdinhBaoDam.Designer.cs">
       <DependentUpon>_3CanDoiVaYdinhBaoDam.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\XIHauCanKyThuat\_1ChiHuyHauCanKyThuat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\XIHauCanKyThuat\_1ChiHuyHauCanKyThuat.Designer.cs">
+      <DependentUpon>_1ChiHuyHauCanKyThuat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\XIHauCanKyThuat\_2KetLuanVaDeNghi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\XIHauCanKyThuat\_2KetLuanVaDeNghi.Designer.cs">
+      <DependentUpon>_2KetLuanVaDeNghi.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -325,6 +349,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\Baovehaucankythuat\_1DukienTinhHuong.resx">
+      <DependentUpon>_1DukienTinhHuong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Baovehaucankythuat\_2BienPhap.resx">
+      <DependentUpon>_2BienPhap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\DangNhap\DangKy.resx">
       <DependentUpon>DangKy.cs</DependentUpon>
     </EmbeddedResource>
@@ -423,6 +453,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\_3CanDoiVaYdinhBaoDam.resx">
       <DependentUpon>_3CanDoiVaYdinhBaoDam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\XIHauCanKyThuat\_1ChiHuyHauCanKyThuat.resx">
+      <DependentUpon>_1ChiHuyHauCanKyThuat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\XIHauCanKyThuat\_2KetLuanVaDeNghi.resx">
+      <DependentUpon>_2KetLuanVaDeNghi.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
