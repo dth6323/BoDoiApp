@@ -51,7 +51,7 @@
             this.reoGridControl1.SheetTabVisible = true;
             this.reoGridControl1.SheetTabWidth = 60;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(1219, 351);
+            this.reoGridControl1.Size = new System.Drawing.Size(1280, 637);
             this.reoGridControl1.TabIndex = 0;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
@@ -63,10 +63,11 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(579, 3);
+            this.button2.Location = new System.Drawing.Point(1069, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(130, 49);
             this.button2.TabIndex = 1;
@@ -76,12 +77,13 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1069, 3);
+            this.button3.Location = new System.Drawing.Point(579, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(130, 49);
             this.button3.TabIndex = 2;
-            this.button3.Text = "Tiếp theo";
+            this.button3.Text = "Trang chủ";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -90,15 +92,15 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 490F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button3, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button2, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 544);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 656);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1219, 55);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 64);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // ChuYeu
@@ -108,7 +110,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.reoGridControl1);
             this.Name = "ChuYeu";
-            this.Size = new System.Drawing.Size(1219, 599);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.Load += new System.EventHandler(this.ChuYeu_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

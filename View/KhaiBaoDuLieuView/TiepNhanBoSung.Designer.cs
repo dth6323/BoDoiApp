@@ -79,8 +79,8 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.07595F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.77215F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.02532F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.03937F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.897637F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
@@ -115,9 +115,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1124, 8);
+            this.button3.Location = new System.Drawing.Point(1164, 8);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(90, 37);
+            this.button3.Size = new System.Drawing.Size(98, 37);
             this.button3.TabIndex = 0;
             this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
@@ -134,6 +134,7 @@
             this.Controls.Add(this.label1);
             this.Name = "TiepNhanBoSung";
             this.Size = new System.Drawing.Size(1280, 720);
+            this.Load += new System.EventHandler(this.TiepNhanBoSung_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

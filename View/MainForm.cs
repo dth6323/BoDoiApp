@@ -19,7 +19,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new ThuYeu());
+            NavigationService.Navigate(new DanVatChatVatTu());
         }
 
         public void ShowView(UserControl view)

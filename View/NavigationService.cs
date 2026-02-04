@@ -34,9 +34,19 @@ namespace BoDoiApp.View
             if (_history.Count <= 1)
                 return;
 
-            _history.Pop();
-            _history.Peek().Visible = true;
-            _mainForm.ShowView(_history.Peek());
+            // Remove current view
+            var current = _history.Pop();
+
+            // Remove from MainForm controls
+            _mainForm.Controls.Remove(current);
+
+            // Dispose to free memory
+            current.Dispose();
+
+            // Show previous view
+            var previous = _history.Peek();
+            previous.Visible = true;
+            _mainForm.ShowView(previous);
         }
     }
 }

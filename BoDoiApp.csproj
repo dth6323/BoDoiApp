@@ -110,10 +110,12 @@
     <Compile Include="DataLayer\ChuYeuData.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
+    <Compile Include="DataLayer\RichTextBoxData.cs" />
     <Compile Include="DataLayer\ThongTinTepBaiData.cs" />
     <Compile Include="DataLayer\ToChucBienCheData.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
+    <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\DangNhap\DangKy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +123,12 @@
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormMana.cs" />
+    <Compile Include="View\KeHoach1\_1DanhGia.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\KeHoach1\_1DanhGia.Designer.cs">
+      <DependentUpon>_1DanhGia.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -300,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\DangNhap\dn.resx">
       <DependentUpon>dn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KeHoach1\_1DanhGia.resx">
+      <DependentUpon>_1DanhGia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\BaoDamVuKhi.resx">
       <DependentUpon>BaoDamVuKhi.cs</DependentUpon>

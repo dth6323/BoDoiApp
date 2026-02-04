@@ -1,7 +1,9 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
 
@@ -30,12 +32,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
             try
             {
-                if(Properties.Settings.Default.Username == "123")
+
+                reoGridControl1.Load(EXCEL_PATH);
+                reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[0];
+                if (IsDataExists(BoPhan))
                 {
                     LoadDataWithUser();
-                }else
-                {
-                    reoGridControl1.Load(EXCEL_PATH);
                 }
             }
             catch (Exception ex)
@@ -44,9 +46,32 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
         }
 
+        private bool IsDataExists(string boPhan)
+        {
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+                string sql = "SELECT COUNT(*) FROM trangkithuat WHERE User = @User AND option = @Option";
+                using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
+                    command.Parameters.AddWithValue("@Option", boPhan);
+                    long count = (long)command.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
-            ChuYeuData.ThemHangLoat(reoGridControl1, BoPhan);
+            if (IsDataExists(BoPhan))
+            {
+                ChuYeuData.UpdateHangLoat(reoGridControl1, BoPhan);
+            }
+            else
+            {
+                ChuYeuData.ThemHangLoat(reoGridControl1, BoPhan);
+            }
         }
 
         private void LoadDataWithUser()
@@ -62,7 +87,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@User", "123");
-                        command.Parameters.AddWithValue("@Option", "chu yeu");
+                        command.Parameters.AddWithValue("@Option", BoPhan);
                         using (var reader = command.ExecuteReader())
                         {
                             var ws = reoGridControl1.CurrentWorksheet;
@@ -94,6 +119,16 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Form1());
         }
     }
 }

@@ -42,18 +42,18 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 488F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 558F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 588F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 557F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 135F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 482);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 662);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1170, 58);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 58);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // button1
@@ -68,7 +68,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(491, 3);
+            this.button2.Location = new System.Drawing.Point(591, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(103, 52);
             this.button2.TabIndex = 0;
@@ -78,12 +78,13 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1049, 3);
+            this.button3.Location = new System.Drawing.Point(1148, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(103, 52);
             this.button3.TabIndex = 0;
             this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label3
             // 
@@ -98,7 +99,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(66, 108);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1001, 284);
+            this.richTextBox1.Size = new System.Drawing.Size(1138, 476);
             this.richTextBox1.TabIndex = 11;
             this.richTextBox1.Text = "";
             // 
@@ -131,7 +132,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "_3YDinh";
-            this.Size = new System.Drawing.Size(1170, 540);
+            this.Size = new System.Drawing.Size(1280, 720);
+            this.Load += new System.EventHandler(this._3YDinh_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

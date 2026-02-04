@@ -10,12 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BoDoiApp.View.KhaiBaoDuLieuView
+namespace BoDoiApp.View.KeHoach1
 {
-    public partial class TiepNhanBoSung : UserControl
+    public partial class _1DanhGia : UserControl
     {
         private RichTextBoxData dataLayer = new RichTextBoxData();
-        public TiepNhanBoSung()
+        public _1DanhGia()
         {
             InitializeComponent();
         }
@@ -23,34 +23,35 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void button1_Click(object sender, EventArgs e)
         {
             NavigationService.Back();
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Form1());
+
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             var content = richTextBox1.Text;
             var dataLayer = new RichTextBoxData();
-            if(dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "TiepNhanBoSung") == string.Empty)
+            if (dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "KeHoachDanhGia") == string.Empty)
             {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, "TiepNhanBoSung");
+                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, "KeHoachDanhGia");
                 return;
             }
-            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, content, "TiepNhanBoSung");
+            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, content, "KeHoachDanhGia");
         }
 
-        private void TiepNhanBoSung_Load(object sender, EventArgs e)
+        private void _1DanhGia_Load(object sender, EventArgs e)
         {
-            var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "TiepNhanBoSung");
-            if(content == string.Empty)
+            var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "KeHoachDanhGia");
+            if (content == string.Empty)
             {
                 return;
             }
             richTextBox1.Text = content;
         }
-
     }
 }

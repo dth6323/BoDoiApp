@@ -35,9 +35,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.textboxToChuc = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.textBoxSuDung = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +46,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 611F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 542F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
@@ -86,6 +86,7 @@
             this.button3.TabIndex = 0;
             this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label2
             // 
@@ -115,13 +116,13 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "1. Tổ chức, sử dụng lực lượng";
             // 
-            // richTextBox1
+            // textboxToChuc
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(69, 143);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1136, 187);
-            this.richTextBox1.TabIndex = 5;
-            this.richTextBox1.Text = "";
+            this.textboxToChuc.Location = new System.Drawing.Point(69, 143);
+            this.textboxToChuc.Name = "textboxToChuc";
+            this.textboxToChuc.Size = new System.Drawing.Size(1136, 187);
+            this.textboxToChuc.TabIndex = 5;
+            this.textboxToChuc.Text = "";
             // 
             // label4
             // 
@@ -132,27 +133,28 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "2. Bố trí hậu cần - kỹ thuật";
             // 
-            // richTextBox2
+            // textBoxSuDung
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(69, 414);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(1136, 195);
-            this.richTextBox2.TabIndex = 5;
-            this.richTextBox2.Text = "";
+            this.textBoxSuDung.Location = new System.Drawing.Point(69, 414);
+            this.textBoxSuDung.Name = "textBoxSuDung";
+            this.textBoxSuDung.Size = new System.Drawing.Size(1136, 195);
+            this.textBoxSuDung.TabIndex = 5;
+            this.textBoxSuDung.Text = "";
             // 
             // ToChucSuDungBoTri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.richTextBox2);
+            this.Controls.Add(this.textBoxSuDung);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.textboxToChuc);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ToChucSuDungBoTri";
             this.Size = new System.Drawing.Size(1280, 720);
+            this.Load += new System.EventHandler(this.ToChucSuDungBoTri_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -168,8 +170,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox textboxToChuc;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.RichTextBox textBoxSuDung;
     }
 }

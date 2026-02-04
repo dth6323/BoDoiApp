@@ -64,6 +64,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Tiểu đoàn";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -73,6 +74,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "Bộ phận";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label2
             // 
@@ -108,7 +110,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(622, 479);
+            this.textBox5.Location = new System.Drawing.Point(652, 476);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(110, 26);
             this.textBox5.TabIndex = 3;
@@ -116,7 +118,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(489, 481);
+            this.label4.Location = new System.Drawing.Point(512, 478);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(127, 20);
             this.label4.TabIndex = 4;
@@ -148,12 +150,12 @@
             this.tableLayoutPanel1.Controls.Add(this.button4, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button5, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 590);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 654);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1258, 74);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 66);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // button3
@@ -164,6 +166,7 @@
             this.button3.TabIndex = 0;
             this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -201,7 +204,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Name = "BienChe";
-            this.Size = new System.Drawing.Size(1258, 664);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.Load += new System.EventHandler(this.BienChe_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
