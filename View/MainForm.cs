@@ -1,6 +1,10 @@
 ﻿using BoDoiApp.form;
+using BoDoiApp.View.Baovehaucankythuat;
 using BoDoiApp.View.KhaiBaoDuLieuView;
+using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
+using BoDoiApp.View.VIIIBaoDuongSuaChua;
+using BoDoiApp.View.XIHauCanKyThuat;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +36,11 @@ namespace BoDoiApp.View
         private void panel1_Resize(object sender, EventArgs e)
         {
             
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

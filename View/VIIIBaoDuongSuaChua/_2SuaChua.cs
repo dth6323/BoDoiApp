@@ -4,35 +4,31 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 {
-    public partial class _2SuaChua : Form
+    public partial class _2SuaChua : UserControl
     {
         private float currentFontSize = 11f;
 
         public _2SuaChua()
         {
             InitializeComponent();
-            this.FormClosed += (s, e) => Application.Exit();
+            Dock = DockStyle.Fill;
             Load += _2SuaChua_Load;
         }
 
         private void _2SuaChua_Load(object sender, EventArgs e)
         {
-            // ===== FORM =====
-            Text = "Phần mềm hỗ trợ tập bài bảo đảm hậu cần";
-            StartPosition = FormStartPosition.CenterScreen;
-            Size = new Size(1200, 520);
-            MinimumSize = new Size(900, 420);
+            Controls.Clear();
             AutoScaleMode = AutoScaleMode.None;
 
-            // ===== ROOT =====
+            // ===== ROOT (1280x720 theo MainForm) =====
             TableLayoutPanel root = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 RowCount = 3
             };
-            root.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
+            root.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
             root.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-            root.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
+            root.RowStyles.Add(new RowStyle(SizeType.Absolute, 70));
             Controls.Add(root);
 
             // ===== TITLE =====
@@ -41,7 +37,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 Text = "PHẦN MỀM HỖ TRỢ TẬP BÀI BẢO ĐẢM HẬU CẦN, KỸ THUẬT TIỂU ĐOÀN BỘ BINH CHIẾN ĐẤU",
                 Dock = DockStyle.Fill,
                 BackColor = Color.FromArgb(255, 242, 204),
-                Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                Font = new Font("Times New Roman", 13, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter
             }, 0, 0);
 
@@ -53,7 +49,6 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             };
             root.Controls.Add(main, 0, 1);
 
-            // ===== HEADER =====
             main.Controls.Add(MakeHeader("VIII. Bảo dưỡng, sửa chữa", true));
             main.Controls.Add(MakeHeader("2. Sửa chữa", false));
             main.Controls.Add(MakeHeader("a. Dự kiến tỷ lệ vũ khí trang bị kỹ thuật hư hỏng", false));
@@ -64,7 +59,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 
             // ===== TABLE =====
             TableLayoutPanel table = CreateTable();
-            table.Location = new Point(80, 90);
+            table.Location = new Point(120, 100);
             content.Controls.Add(table);
 
             // ===== LEFT ARROW =====
@@ -72,13 +67,12 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             {
                 Text = "◀",
                 Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                Size = new Size(60, 120),
-                Location = new Point(10, 200)
+                Size = new Size(60, 140),
+                Location = new Point(20, 250)
             };
             btnPrev.Click += (s, e2) =>
             {
-                new _1BaoDuongSuaChua().Show();
-                Hide();
+                NavigationService.Navigate(new _1BaoDuongSuaChua());
             };
             content.Controls.Add(btnPrev);
 
@@ -87,18 +81,18 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             {
                 Text = "▶",
                 Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                Size = new Size(60, 120),
-                Anchor = AnchorStyles.Right,
-                Location = new Point(content.Width - 70, 200)
+                Size = new Size(60, 140),
+                Anchor = AnchorStyles.Right
             };
             btnNext.Click += (s, e2) =>
             {
-                MessageBox.Show("Sang mục tiếp theo (chưa tạo)");
+                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
             };
             content.Controls.Add(btnNext);
+
             content.Resize += (s, e2) =>
             {
-                btnNext.Left = content.Width - 70;
+                btnNext.Location = new Point(content.Width - 80, 250);
             };
 
             // ===== BOTTOM =====
@@ -139,31 +133,29 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
         {
             TableLayoutPanel tbl = new TableLayoutPanel
             {
-                Size = new Size(900, 250),
+                Size = new Size(1000, 260),
                 ColumnCount = 10,
                 RowCount = 7,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
             };
 
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50));  // TT
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120)); // Loại
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90));  // SL
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 110)); // %
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50));
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 140));
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120));
             for (int i = 0; i < 6; i++)
                 tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 6));
 
-            // Header
             AddHeader(tbl, "TT", 0, 0, 1, 2);
             AddHeader(tbl, "Loại VKTBKT", 1, 0, 1, 2);
             AddHeader(tbl, "Số lượng", 2, 0, 1, 2);
-            AddHeader(tbl, "Dự kiến tỷ lệ hư hỏng", 3, 0, 1, 2);
+            AddHeader(tbl, "Tỷ lệ (%)", 3, 0, 1, 2);
             AddHeader(tbl, "Tổng số TBKT hư hỏng", 4, 0, 6, 1);
 
             string[] sub = { "Nhẹ", "Vừa", "Nặng", "Hủy", "+", "" };
             for (int i = 0; i < 6; i++)
                 AddHeader(tbl, sub[i], 4 + i, 1, 1, 1);
 
-            // Data
             AddRow(tbl, 2, "1", "SMPK 12,7", "9", "8", "1", "0", "0", "0", "1");
             AddRow(tbl, 3, "2", "SPG-9", "9", "10", "1", "0", "0", "0", "1");
             AddRow(tbl, 4, "3", "Súng ngắn", "36", "4", "1", "0", "0", "0", "1");
@@ -206,13 +198,13 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             {
                 Text = text,
                 Dock = DockStyle.Top,
-                Height = 30,
+                Height = 32,
                 Font = new Font("Times New Roman", 12, FontStyle.Bold),
                 BackColor = green ? Color.FromArgb(198, 224, 180) : Color.Transparent
             };
         }
 
-        // ===== ZOOM =====
+        // ===== ZOOM CTRL =====
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Add))

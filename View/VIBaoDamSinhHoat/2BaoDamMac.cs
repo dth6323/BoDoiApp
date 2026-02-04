@@ -4,23 +4,19 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.View.VIBaoDamSinhHoat
 {
-    public partial class _2BaoDamMac : Form
+    public partial class _2BaoDamMac : UserControl
     {
         private float currentFontSize = 11f;
 
         public _2BaoDamMac()
         {
             InitializeComponent();
-            this.FormClosed += (s, args) => Application.Exit();
+            this.Load += _2BaoDamMac_Load;
         }
 
-        private void _2BaoDamMac_Load(object sender, EventArgs args)
+        private void _2BaoDamMac_Load(object sender, EventArgs e)
         {
-            // ===== FORM CONFIG =====
-            this.Text = "Phần mềm hỗ trợ tập bài bảo đảm hậu cần";
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.Size = new Size(1200, 500);
-            this.MinimumSize = new Size(900, 400);
+            this.Dock = DockStyle.Fill;
             this.AutoScaleMode = AutoScaleMode.None;
 
             // ===== MAIN LAYOUT =====
@@ -61,7 +57,8 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Dock = DockStyle.Top,
                 Height = 35,
                 BackColor = Color.FromArgb(217, 225, 242),
-                Font = new Font("Times New Roman", 12, FontStyle.Bold)
+                Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleLeft
             };
 
             Label lblContent = new Label
@@ -72,7 +69,6 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Font = new Font("Times New Roman", 11)
             };
 
-            // ===== TEXTBOX =====
             TextBox txtInput = new TextBox
             {
                 Multiline = true,
@@ -81,7 +77,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 ScrollBars = ScrollBars.Vertical
             };
 
-            // ===== PANEL MŨI TÊN TRÁI =====
+            // ===== ARROW LEFT =====
             Panel pnlArrowLeft = new Panel
             {
                 Dock = DockStyle.Left,
@@ -94,14 +90,13 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 18, FontStyle.Bold)
             };
-            btnPrev.Click += (s, args2) =>
+            btnPrev.Click += (s, e2) =>
             {
-                new _1BaoDamAnUong().Show();
-                this.Hide();
+                NavigationService.Navigate(new _1BaoDamAnUong());
             };
             pnlArrowLeft.Controls.Add(btnPrev);
 
-            // ===== PANEL MŨI TÊN PHẢI =====
+            // ===== ARROW RIGHT =====
             Panel pnlArrowRight = new Panel
             {
                 Dock = DockStyle.Right,
@@ -114,14 +109,13 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 18, FontStyle.Bold)
             };
-            btnNext.Click += (s, args2) =>
+            btnNext.Click += (s, e2) =>
             {
-                new _3BaoDamONghi().Show();
-                this.Hide();
+               NavigationService.Navigate(new _3BaoDamONghi());
             };
             pnlArrowRight.Controls.Add(btnNext);
 
-            // ===== ADD CONTROLS (ĐÚNG THỨ TỰ) =====
+            // ===== ADD CONTROLS =====
             pnlMain.Controls.Add(txtInput);
             pnlMain.Controls.Add(lblContent);
             pnlMain.Controls.Add(lblHeader);
@@ -144,12 +138,17 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Text = "Trở về",
                 Anchor = AnchorStyles.Left
             };
+            btnBack.Click += (s, e2) => NavigationService.Back();
 
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
                 BackColor = Color.Yellow,
                 Anchor = AnchorStyles.None
+            };
+            btnHome.Click += (s, e2) =>
+            {
+               // NavigationService.Navigate(new HomeView());
             };
 
             Button btnSave = new Button
@@ -163,7 +162,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             pnlButton.Controls.Add(btnSave, 2, 0);
         }
 
-        // ===== ZOOM CTRL + / CTRL - =====
+        // ===== ZOOM CTRL + / - =====
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == (Keys.Control | Keys.Add))

@@ -1,6 +1,6 @@
-﻿namespace BoDoiApp.View
+﻿namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 {
-    partial class MainForm
+    partial class _3CanDoiVaYdinhBaoDam
     {
         /// <summary>
         /// Required designer variable.
@@ -28,36 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // panel1
-            // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1127, 587);
-            this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            this.panel1.Resize += new System.EventHandler(this.panel1_Resize);
-            // 
-            // MainForm
+            // _3CanDoiVaYdinhBaoDam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1127, 587);
-            this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainForm";
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "_3CanDoiVaYdinhBaoDam";
+            this.Text = "_3CanDoiVaYdinhBaoDam";
+            this.Load += new System.EventHandler(this._3CanDoiVaYdinhBaoDam_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
     }
 }
