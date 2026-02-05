@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +8,9 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
     public partial class _3BaoDamONghi : UserControl
     {
         private float currentFontSize = 11f;
+        private readonly BaoDamSinhHoatData dataLayer = new BaoDamSinhHoatData();
+        private const string SectionKey = "BaoDamSinhHoat_ONghi";
+        private TextBox txtInput;
 
         public _3BaoDamONghi()
         {
@@ -71,13 +75,12 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             };
 
             // ===== TEXTBOX =====
-            TextBox txtInput = new TextBox
+             txtInput = new TextBox
             {
                 Multiline = true,
                 Dock = DockStyle.Fill,
                 Font = new Font("Times New Roman", 11),
-                ScrollBars = ScrollBars.Vertical,
-                Text = "(Học viên nhập văn bản)"
+                ScrollBars = ScrollBars.Vertical
             };
 
             // ===== ARROW LEFT =====
@@ -140,9 +143,31 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Anchor = AnchorStyles.Right
             };
 
+            btnSave.Click += (s, e2) =>
+            {
+                var content = txtInput.Text;
+                var existing = dataLayer.LayThongTin(SectionKey);
+                if (string.IsNullOrWhiteSpace(existing))
+                {
+                    dataLayer.ThemThongTin(content, SectionKey);
+                    return;
+                }
+                dataLayer.CapNhatThongTin(content, SectionKey);
+            };
+
             pnlButton.Controls.Add(btnBack, 0, 0);
             pnlButton.Controls.Add(btnHome, 1, 0);
             pnlButton.Controls.Add(btnSave, 2, 0);
+
+            var savedContent = dataLayer.LayThongTin(SectionKey);
+            if (!string.IsNullOrWhiteSpace(savedContent))
+            {
+                txtInput.Text = savedContent;
+            }
+            else
+            {
+                txtInput.Text = "(Học viên nhập văn bản)";
+            }
         }
 
         // ===== ZOOM CTRL + / - =====

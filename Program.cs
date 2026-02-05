@@ -12,7 +12,7 @@ namespace BoDoiApp
     {
 
 
-        private const string connectionString = "Data Source=data2.db;Version=3;";
+        private const string connectionString = "Data Source=data.db;Version=3;";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -68,6 +68,14 @@ namespace BoDoiApp
                 );";
                 var command5 = new SQLiteCommand(sql5, connection);
                 command5.ExecuteNonQuery();
+                var sql6 = @"CREATE TABLE IF NOT EXISTS baodamsinhhoat (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    noidung TEXT,
+                    loai TEXT,
+                    User TEXT
+                );";
+                var command6 = new SQLiteCommand(sql6, connection);
+                command6.ExecuteNonQuery();
                 connection.Close();
             }
         }

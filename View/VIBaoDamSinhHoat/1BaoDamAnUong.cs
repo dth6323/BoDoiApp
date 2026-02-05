@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +8,9 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
     public partial class _1BaoDamAnUong : UserControl
     {
         private float currentFontSize = 11f;
+        private readonly BaoDamSinhHoatData dataLayer = new BaoDamSinhHoatData();
+        private const string SectionKey = "BaoDamSinhHoat_AnUong";
+        private TextBox txtInput;
 
         public _1BaoDamAnUong()
         {
@@ -70,7 +74,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 TextAlign = ContentAlignment.MiddleLeft
             };
 
-            TextBox txtInput = new TextBox
+            txtInput = new TextBox
             {
                 Multiline = true,
                 Dock = DockStyle.Fill,
@@ -139,10 +143,25 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Text = "Lưu",
                 Anchor = AnchorStyles.Right
             };
-
+            btnSave.Click += (s, e2) =>
+            {
+                var content = txtInput.Text;
+                var existing = dataLayer.LayThongTin(SectionKey);
+                if (string.IsNullOrWhiteSpace(existing))
+                {
+                    dataLayer.ThemThongTin(content, SectionKey);
+                    return;
+                }
+                dataLayer.CapNhatThongTin(content, SectionKey);
+            };
             pnlButton.Controls.Add(btnBack, 0, 0);
             pnlButton.Controls.Add(btnHome, 1, 0);
             pnlButton.Controls.Add(btnSave, 2, 0);
+            var savedContent = dataLayer.LayThongTin(SectionKey);
+            if (!string.IsNullOrWhiteSpace(savedContent))
+            {
+                txtInput.Text = savedContent;
+            }
         }
 
         // ===== ZOOM CTRL + / - =====
