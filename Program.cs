@@ -76,6 +76,14 @@ namespace BoDoiApp
                 );";
                 var command6 = new SQLiteCommand(sql6, connection);
                 command6.ExecuteNonQuery();
+                var sql7 = @"CREATE TABLE IF NOT EXISTS baoduongsuachua (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    noidung TEXT,
+                    loai TEXT,
+                    User TEXT
+                );";
+                var command7 = new SQLiteCommand(sql7, connection);
+                command7.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

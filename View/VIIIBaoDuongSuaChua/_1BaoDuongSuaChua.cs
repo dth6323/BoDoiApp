@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +8,10 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
     public partial class _1BaoDuongSuaChua : UserControl
     {
         private float currentFontSize = 11f;
+
+        private readonly BaoDuongSuaChuaData dataLayer = new BaoDuongSuaChuaData();
+        private const string SectionKey = "BaoDuongSuaChua_1";
+        private TextBox txtInput;
 
         public _1BaoDuongSuaChua()
         {
@@ -18,6 +23,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
         {
             this.Dock = DockStyle.Fill;
             this.AutoScaleMode = AutoScaleMode.None;
+            this.Controls.Clear();
 
             // ===== MAIN LAYOUT =====
             TableLayoutPanel layout = new TableLayoutPanel
@@ -71,33 +77,39 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             };
 
             // ===== TEXTBOX =====
-            TextBox txtInput = new TextBox
+            txtInput = new TextBox
             {
                 Multiline = true,
                 Dock = DockStyle.Fill,
                 Font = new Font("Times New Roman", 11),
-                ScrollBars = ScrollBars.Vertical,
-                Text = "(Học viên nhập văn bản)"
+                ScrollBars = ScrollBars.Vertical
             };
 
-            // ===== ARROW RIGHT (QUAY LẠI PHẦN TRƯỚC) =====
+            // ===== LOAD DATA =====
+            var savedContent = dataLayer.LayThongTin(SectionKey);
+            if (!string.IsNullOrWhiteSpace(savedContent))
+            {
+                txtInput.Text = savedContent;
+            }
+
+            // ===== ARROW RIGHT =====
             Panel pnlArrowRight = new Panel
             {
                 Dock = DockStyle.Right,
                 Width = 60
             };
 
-            Button btnPrev = new Button
+            Button btnNext = new Button
             {
                 Text = "▶",
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 18, FontStyle.Bold)
             };
-            btnPrev.Click += (s, e2) =>
+            btnNext.Click += (s, e2) =>
             {
                 NavigationService.Navigate(new _2SuaChua());
             };
-            pnlArrowRight.Controls.Add(btnPrev);
+            pnlArrowRight.Controls.Add(btnNext);
 
             // ===== ADD CONTROLS =====
             pnlMain.Controls.Add(txtInput);
@@ -130,16 +142,19 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 BackColor = Color.Yellow,
                 Anchor = AnchorStyles.None
             };
-            btnHome.Click += (s, e2) =>
-            {
-                //NavigationService.Navigate(new HomeView());
-            };
 
             Button btnSave = new Button
             {
                 Text = "Lưu",
                 BackColor = Color.FromArgb(189, 215, 238),
                 Anchor = AnchorStyles.Right
+            };
+            btnSave.Click += (s, e2) =>
+            {
+                if (dataLayer.TonTai(SectionKey))
+                    dataLayer.CapNhatThongTin(txtInput.Text, SectionKey);
+                else
+                    dataLayer.ThemThongTin(txtInput.Text, SectionKey);
             };
 
             pnlButton.Controls.Add(btnBack, 0, 0);

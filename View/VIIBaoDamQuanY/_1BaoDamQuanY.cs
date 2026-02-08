@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +8,10 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
     public partial class _1BaoDamQuanY : UserControl
     {
         private float currentFontSize = 11f;
+
+        private readonly BaoDamQuanYData dataLayer = new BaoDamQuanYData();
+        private const string SectionKey = "BaoDamQuanY_1";
+        private TextBox txtInput;
 
         public _1BaoDamQuanY()
         {
@@ -41,7 +46,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
                 TextAlign = ContentAlignment.MiddleCenter
             }, 0, 0);
 
-            // ===== MAIN WRAPPER =====
+            // ===== MAIN =====
             TableLayoutPanel main = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -71,13 +76,22 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             table.Dock = DockStyle.Fill;
             content.Controls.Add(table, 0, 2);
 
-            content.Controls.Add(new TextBox
+            // ===== TEXT INPUT (LƯU + LOAD) =====
+            txtInput = new TextBox
             {
                 Multiline = true,
                 Dock = DockStyle.Fill,
                 Font = new Font("Times New Roman", 11),
                 ScrollBars = ScrollBars.Vertical
-            }, 0, 3);
+            };
+            content.Controls.Add(txtInput, 0, 3);
+
+            // ===== LOAD DATA =====
+            var savedContent = dataLayer.LayThongTin(SectionKey);
+            if (!string.IsNullOrWhiteSpace(savedContent))
+            {
+                txtInput.Text = savedContent;
+            }
 
             // ===== ARROW =====
             Button btnNext = new Button
@@ -103,7 +117,24 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             bottom.Controls.Add(new Button { Text = "Trở về", Anchor = AnchorStyles.Left }, 0, 0);
             bottom.Controls.Add(new Button { Text = "Trang chủ", BackColor = Color.Yellow }, 1, 0);
-            bottom.Controls.Add(new Button { Text = "Lưu", Anchor = AnchorStyles.Right }, 2, 0);
+
+            Button btnSave = new Button
+            {
+                Text = "Lưu",
+                Anchor = AnchorStyles.Right
+            };
+            btnSave.Click += (s, e2) =>
+            {
+                var contentText = txtInput.Text;
+                var existing = dataLayer.LayThongTin(SectionKey);
+
+                if (string.IsNullOrWhiteSpace(existing))
+                    dataLayer.ThemThongTin(contentText, SectionKey);
+                else
+                    dataLayer.CapNhatThongTin(contentText, SectionKey);
+            };
+
+            bottom.Controls.Add(btnSave, 2, 0);
         }
 
         // ===== TABLE =====
@@ -127,7 +158,6 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             for (int i = 0; i < 4; i++)
                 tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
 
-            // Header row 1
             tbl.Controls.Add(MakeHeader("TT"), 0, 0);
             tbl.Controls.Add(MakeHeader("Nội dung"), 1, 0);
             tbl.Controls.Add(MakeHeader("Quân số"), 2, 0);
@@ -138,7 +168,6 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             tbl.Controls.Add(MakeHeader("BB"), 7, 0);
             tbl.Controls.Add(MakeHeader("BB"), 8, 0);
 
-            // Header row 2
             tbl.Controls.Add(MakeHeader("%QS"), 3, 1);
             tbl.Controls.Add(MakeHeader("Số người"), 4, 1);
             tbl.Controls.Add(MakeHeader("%QS"), 5, 1);
