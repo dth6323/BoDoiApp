@@ -258,6 +258,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\Main\FormBaoDamHauCan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Main\FormBaoDamHauCan.Designer.cs">
+      <DependentUpon>FormBaoDamHauCan.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -402,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Main\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Main\FormBaoDamHauCan.resx">
+      <DependentUpon>FormBaoDamHauCan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.resx">
       <DependentUpon>1BaoDamAnUong.cs</DependentUpon>

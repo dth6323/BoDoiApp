@@ -1,6 +1,7 @@
 ﻿using BoDoiApp.form;
 using BoDoiApp.View.Baovehaucankythuat;
 using BoDoiApp.View.KhaiBaoDuLieuView;
+using BoDoiApp.View.Main;
 using BoDoiApp.View.VIBaoDamSinhHoat;
 using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
@@ -23,7 +24,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new dn());
+            NavigationService.Navigate(new FormBaoDamHauCan());
         }
 
         public void ShowView(UserControl view)

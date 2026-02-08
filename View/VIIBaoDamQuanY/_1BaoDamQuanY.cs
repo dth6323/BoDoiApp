@@ -4,24 +4,20 @@ using System.Windows.Forms;
 
 namespace BoDoiApp.View.VIIBaoDamQuanY
 {
-    public partial class _1BaoDamQuanY : Form
+    public partial class _1BaoDamQuanY : UserControl
     {
         private float currentFontSize = 11f;
 
         public _1BaoDamQuanY()
         {
             InitializeComponent();
-            this.FormClosed += (s, e) => Application.Exit();
-            Load += _1BaoDamQuanY_Load;
+            Dock = DockStyle.Fill;
+            AutoScaleMode = AutoScaleMode.None;
         }
 
         private void _1BaoDamQuanY_Load(object sender, EventArgs e)
         {
-            Text = "Phần mềm hỗ trợ tập bài bảo đảm hậu cần";
-            StartPosition = FormStartPosition.CenterScreen;
-            Size = new Size(1300, 550);
-            MinimumSize = new Size(1000, 450);
-            AutoScaleMode = AutoScaleMode.None;
+            Controls.Clear();
 
             // ===== ROOT =====
             TableLayoutPanel root = new TableLayoutPanel
@@ -62,10 +58,10 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
                 RowCount = 4,
                 ColumnCount = 1
             };
-            content.RowStyles.Add(new RowStyle(SizeType.Absolute, 35)); // header
-            content.RowStyles.Add(new RowStyle(SizeType.Absolute, 30)); // sub
-            content.RowStyles.Add(new RowStyle(SizeType.Absolute, 220)); // table
-            content.RowStyles.Add(new RowStyle(SizeType.Percent, 100)); // text
+            content.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
+            content.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            content.RowStyles.Add(new RowStyle(SizeType.Absolute, 220));
+            content.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             main.Controls.Add(content, 0, 0);
 
             content.Controls.Add(CreateHeader("VII. Bảo đảm quân y", 35), 0, 0);
@@ -90,7 +86,8 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 18, FontStyle.Bold)
             };
-            btnNext.Click += (s, e2) => MessageBox.Show("Sang mục VII.2 (chưa tạo)");
+            btnNext.Click += (s, e2) =>
+                MessageBox.Show("Sang mục VII.2 (chưa tạo)");
             main.Controls.Add(btnNext, 1, 0);
 
             // ===== BOTTOM =====
@@ -108,7 +105,6 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             bottom.Controls.Add(new Button { Text = "Trang chủ", BackColor = Color.Yellow }, 1, 0);
             bottom.Controls.Add(new Button { Text = "Lưu", Anchor = AnchorStyles.Right }, 2, 0);
         }
-
 
         // ===== TABLE =====
         TableLayoutPanel CreateTable()
@@ -130,6 +126,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
             for (int i = 0; i < 4; i++)
                 tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
+
             // Header row 1
             tbl.Controls.Add(MakeHeader("TT"), 0, 0);
             tbl.Controls.Add(MakeHeader("Nội dung"), 1, 0);
@@ -149,7 +146,6 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             tbl.Controls.Add(MakeHeader("%QS"), 7, 1);
             tbl.Controls.Add(MakeHeader("Số người"), 8, 1);
 
-            // Data rows
             AddRow(tbl, 2, "1", "Toàn trận");
             AddRow(tbl, 3, "", "Hướng chủ yếu");
             AddRow(tbl, 4, "", "Hướng thứ yếu");
