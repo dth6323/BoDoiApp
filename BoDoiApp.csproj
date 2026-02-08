@@ -282,6 +282,30 @@
     <Compile Include="View\VIBaoDamSinhHoat\_3BaoDamONghi.Designer.cs">
       <DependentUpon>_3BaoDamONghi.cs</DependentUpon>
     </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_1DuongVanTai.cs">
+		  <SubType>UserControl</SubType>
+	  </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_1DuongVanTai.Designer.cs">
+		  <DependentUpon>_1DuongVanTai.cs</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.cs">
+		  <SubType>UserControl</SubType>
+	  </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.Designer.cs">
+		  <DependentUpon>_2DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_3CanDoi.cs">
+		  <SubType>UserControl</SubType>
+	  </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_3CanDoi.Designer.cs">
+		  <DependentUpon>_3CanDoi.cs</DependentUpon>
+	  </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_4YdinhVanChuyen.cs">
+		  <SubType>UserControl</SubType>
+	  </Compile>
+	  <Compile Include="View\IXCongTacVanTai\_4YdinhVanChuyen.Designer.cs">
+		  <DependentUpon>_4YdinhVanChuyen.cs</DependentUpon>
+	  </Compile>
     <Compile Include="View\VIIBaoDamQuanY\_1BaoDamQuanY.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -430,6 +454,18 @@
     <EmbeddedResource Include="View\VIIBaoDamQuanY\_3YDinh.resx">
       <DependentUpon>_3YDinh.cs</DependentUpon>
     </EmbeddedResource>
+	  <EmbeddedResource Include="View\IXCongTacVanTai\_1DuongVanTai.resx">
+		  <DependentUpon>_1DuongVanTai.cs</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.resx">
+		  <DependentUpon>_2DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="View\IXCongTacVanTai\_3CanDoi.resx">
+		  <DependentUpon>_3CanDoi.cs</DependentUpon>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="View\IXCongTacVanTai\_4YdinhVanChuyen.resx">
+		  <DependentUpon>_4YdinhVanChuyen.cs</DependentUpon>
+	  </EmbeddedResource>
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\_1BaoDuongSuaChua.resx">
       <DependentUpon>_1BaoDuongSuaChua.cs</DependentUpon>
     </EmbeddedResource>

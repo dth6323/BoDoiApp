@@ -43,5 +43,10 @@ namespace BoDoiApp
         {
             //CenterButton();
         }
+
+        private void btn_dkkhbdhckt_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
