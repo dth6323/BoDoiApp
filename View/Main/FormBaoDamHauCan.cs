@@ -1,14 +1,11 @@
-﻿using BoDoiApp.View.KhaiBaoDuLieuView;
+﻿using BoDoiApp.View.Baovehaucankythuat;
+using BoDoiApp.View.KhaiBaoDuLieuView;
+using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
+using BoDoiApp.View.XIHauCanKyThuat;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.Main
@@ -18,6 +15,7 @@ namespace BoDoiApp.View.Main
         public FormBaoDamHauCan()
         {
             InitializeComponent();
+            this.Load += FormBaoDamHauCan_Load;
         }
 
         private void FormBaoDamHauCan_Load(object sender, EventArgs e)
@@ -55,63 +53,91 @@ namespace BoDoiApp.View.Main
             };
             layout.Controls.Add(pnlMain, 0, 1);
 
-            // ===== BUTTON LIST =====
-            string[] titles =
+            // ===== FLOW MENU (CĂN GIỮA) =====
+            FlowLayoutPanel pnlMenu = new FlowLayoutPanel
             {
-                "Dự kiến kế hoạch bảo đảm hậu cần - kỹ thuật",
+                Dock = DockStyle.Fill,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoScroll = true
+            };
+            pnlMain.Controls.Add(pnlMenu);
+
+            // ===== HEADER (KHÔNG CLICK) =====
+            Label lblHeader = new Label
+            {
+                Text = "Dự kiến kế hoạch bảo đảm hậu cần - kỹ thuật",
+                Width = 820,
+                Height = 35,
+                BackColor = Color.FromArgb(255, 242, 204),
+                Font = new Font("Times New Roman", 12, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Margin = new Padding(0, 10, 0, 10)
+            };
+            pnlMenu.Controls.Add(lblHeader);
+
+            // ===== MENU BUTTONS =====
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "I. Đánh giá tình hình tác động đến hậu cần - kỹ thuật",
+                "I_DANH_GIA",
+                Color.FromArgb(226, 239, 218)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "II. Nhiệm vụ",
+                "II_NHIEM_VU",
+                Color.FromArgb(221, 235, 247)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "III. Tổ chức, sử dụng lực lượng, bố trí hậu cần - kỹ thuật",
+                "III_TO_CHUC",
+                Color.FromArgb(242, 220, 219)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "IV. Bảo đảm vũ khí trang bị kỹ thuật",
+                "IV_VU_KHI",
+                Color.FromArgb(217, 225, 242)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "V. Bảo đảm đạn, vật chất hậu cần, vật tư kỹ thuật",
+                "V_VAT_CHAT",
+                Color.FromArgb(255, 229, 204)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "VI. Bảo đảm sinh hoạt",
+                "VI_SINH_HOAT",
+                Color.FromArgb(226, 239, 218)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "VII. Bảo đảm quân y",
+                "VII_QUAN_Y",
+                Color.FromArgb(222, 235, 247)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "VIII. Bảo dưỡng, sửa chữa",
+                "VIII_BAO_DUONG",
+                Color.FromArgb(242, 220, 219)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "IX. Công tác vận tải",
+                "IX_VAN_TAI",
+                Color.FromArgb(221, 235, 247)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "X. Bảo vệ hậu cần - kỹ thuật",
+                "X_BAO_VE",
+                Color.FromArgb(217, 225, 242)));
+
+            pnlMenu.Controls.Add(CreateMenuButton(
                 "XI. Chỉ huy hậu cần - kỹ thuật",
-                "Kết luận, đề nghị"
-            };
+                "XI_CHI_HUY",
+                Color.FromArgb(255, 229, 204)));
 
-            Color[] colors =
-            {
-                Color.FromArgb(255, 242, 204),
-                Color.FromArgb(226, 239, 218),
-                Color.FromArgb(221, 235, 247),
-                Color.FromArgb(242, 220, 219),
-                Color.FromArgb(217, 225, 242),
-                Color.FromArgb(255, 229, 204),
-                Color.FromArgb(226, 239, 218),
-                Color.FromArgb(222, 235, 247),
-                Color.FromArgb(242, 220, 219),
-                Color.FromArgb(221, 235, 247),
-                Color.FromArgb(217, 225, 242),
-                Color.FromArgb(255, 229, 204),
-                Color.Gold
-            };
+            pnlMenu.Controls.Add(CreateMenuButton(
+                "Kết luận, đề nghị",
+                "KET_LUAN",
+                Color.Gold));
 
-            int top = 10;
-
-            for (int i = 0; i < titles.Length; i++)
-            {
-                Button btn = new Button
-                {
-                    Text = titles[i],
-                    Left = 20,
-                    Top = top,
-                    Width = 780,
-                    Height = 28,
-                    BackColor = colors[i],
-                    Font = new Font("Times New Roman", 11),
-                    TextAlign = ContentAlignment.MiddleLeft,
-                    FlatStyle = FlatStyle.Flat
-                };
-
-                pnlMain.Controls.Add(btn);
-                top += 30;
-            }
-
-            // ===== BOTTOM BUTTONS =====
+            // ===== BOTTOM =====
             TableLayoutPanel pnlBottom = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -122,11 +148,7 @@ namespace BoDoiApp.View.Main
             pnlBottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             layout.Controls.Add(pnlBottom, 0, 2);
 
-            Button btnBack = new Button
-            {
-                Text = "Trở về",
-                Anchor = AnchorStyles.Left
-            };
+            Button btnBack = new Button { Text = "Trở về", Anchor = AnchorStyles.Left };
             btnBack.Click += (s, e2) => NavigationService.Back();
 
             Button btnHome = new Button
@@ -135,21 +157,36 @@ namespace BoDoiApp.View.Main
                 BackColor = Color.Yellow,
                 Anchor = AnchorStyles.None
             };
-            btnHome.Click += (s, e2) =>
-            {
-                // NavigationService.Navigate(new HomeView());
-            };
 
-            Button btnBottomSave = new Button
-            {
-                Text = "Lưu",
-                Anchor = AnchorStyles.Right
-            };
+            Button btnSave = new Button { Text = "Lưu", Anchor = AnchorStyles.Right };
 
             pnlBottom.Controls.Add(btnBack, 0, 0);
             pnlBottom.Controls.Add(btnHome, 1, 0);
-            pnlBottom.Controls.Add(btnBottomSave, 2, 0);
+            pnlBottom.Controls.Add(btnSave, 2, 0);
         }
+
+        // ===== TẠO BUTTON MENU =====
+        private Button CreateMenuButton(string text, string tag, Color color)
+        {
+            Button btn = new Button
+            {
+                Text = text,
+                Tag = tag,
+                Width = 820,
+                Height = 30,
+                BackColor = color,
+                Font = new Font("Times New Roman", 11),
+                TextAlign = ContentAlignment.MiddleCenter,
+                FlatStyle = FlatStyle.Flat,
+                Anchor = AnchorStyles.None,
+                Margin = new Padding(0, 3, 0, 3)
+            };
+
+            btn.Click += MenuButton_Click;
+            return btn;
+        }
+
+        // ===== EVENT CHUNG =====
         private void MenuButton_Click(object sender, EventArgs e)
         {
             var btn = sender as Button;
@@ -179,9 +216,7 @@ namespace BoDoiApp.View.Main
                     break;
 
                 case "VI_SINH_HOAT":
-                    NavigationService.Navigate(
-                        new View.VIBaoDamSinhHoat._1BaoDamAnUong()
-                    );
+                    NavigationService.Navigate(new View.VIBaoDamSinhHoat._1BaoDamAnUong());
                     break;
 
                 case "VII_QUAN_Y":
@@ -189,27 +224,21 @@ namespace BoDoiApp.View.Main
                     break;
 
                 case "VIII_BAO_DUONG":
-                    NavigationService.Navigate(new _BaoDuongSuaChua());
+                    NavigationService.Navigate(new _1BaoDuongSuaChua());
                     break;
 
                 case "IX_VAN_TAI":
-                    NavigationService.Navigate(new _CongTacVanTai());
+                    NavigationService.Navigate(new _1DuongVanTai());
                     break;
 
                 case "X_BAO_VE":
-                    NavigationService.Navigate(new _BaoVeHauCan());
+                    NavigationService.Navigate(new _1DukienTinhHuong());
                     break;
 
                 case "XI_CHI_HUY":
-                    NavigationService.Navigate(new _ChiHuyHauCan());
-                    break;
-
-                case "KET_LUAN":
-                    NavigationService.Navigate(new _KetLuanDeNghi());
+                    NavigationService.Navigate(new _1ChiHuyHauCanKyThuat());
                     break;
             }
         }
-
     }
-
 }

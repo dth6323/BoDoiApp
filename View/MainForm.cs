@@ -24,7 +24,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new FormBaoDamHauCan());
+            NavigationService.Navigate(new dn());
         }
 
         public void ShowView(UserControl view)

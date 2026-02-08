@@ -1,5 +1,6 @@
 ﻿using BoDoiApp.View;
 using BoDoiApp.View.KhaiBaoDuLieuView;
+using BoDoiApp.View.Main;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,7 +47,7 @@ namespace BoDoiApp
 
         private void btn_dkkhbdhckt_Click(object sender, EventArgs e)
         {
-
+            NavigationService.Navigate(new FormBaoDamHauCan());
         }
     }
 }
