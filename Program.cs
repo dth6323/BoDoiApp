@@ -78,6 +78,8 @@ namespace BoDoiApp
                 command6.ExecuteNonQuery();
                 connection.Close();
             }
+            var richTextBoxData = new DataLayer.RichTextBoxData();
+            richTextBoxData.CreatTable();
         }
     }
 }

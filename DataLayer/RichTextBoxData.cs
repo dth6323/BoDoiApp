@@ -9,6 +9,23 @@ namespace BoDoiApp.DataLayer
 {
     public class RichTextBoxData
     {
+        public void CreatTable ()
+        {
+            string sql = @"CREATE TABLE IF NOT EXISTS RichTextBoxData (
+                           Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                           UserId TEXT NOT NULL,
+                           Section TEXT NOT NULL,
+                           Content TEXT
+                       )";
+            using (var connection = new System.Data.SQLite.SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+                using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
         public void AddData(string userId,string content,string section)
         {
             string sql = @"INSERT INTO RichTextBoxData (UserId, Section, Content) 

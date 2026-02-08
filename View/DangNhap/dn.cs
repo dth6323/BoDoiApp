@@ -100,7 +100,7 @@
             this.lblUsername.AutoSize = true;
             this.lblUsername.Location = new System.Drawing.Point(3, 40);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(81, 13);
+            this.lblUsername.Size = new System.Drawing.Size(116, 20);
             this.lblUsername.TabIndex = 1;
             this.lblUsername.Text = "Tên đăng nhập";
             this.lblUsername.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -110,7 +110,7 @@
             this.txt_username.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txt_username.Location = new System.Drawing.Point(143, 43);
             this.txt_username.Name = "txt_username";
-            this.txt_username.Size = new System.Drawing.Size(232, 20);
+            this.txt_username.Size = new System.Drawing.Size(232, 26);
             this.txt_username.TabIndex = 2;
             // 
             // lblPassword
@@ -118,7 +118,7 @@
             this.lblPassword.AutoSize = true;
             this.lblPassword.Location = new System.Drawing.Point(3, 80);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(52, 13);
+            this.lblPassword.Size = new System.Drawing.Size(75, 20);
             this.lblPassword.TabIndex = 3;
             this.lblPassword.Text = "Mật khẩu";
             this.lblPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -129,7 +129,7 @@
             this.txt_password.Location = new System.Drawing.Point(143, 83);
             this.txt_password.Name = "txt_password";
             this.txt_password.PasswordChar = '●';
-            this.txt_password.Size = new System.Drawing.Size(232, 20);
+            this.txt_password.Size = new System.Drawing.Size(232, 26);
             this.txt_password.TabIndex = 4;
             // 
             // btn_dn
