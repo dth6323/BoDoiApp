@@ -15,7 +15,6 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
         public _2BaoDamMac()
         {
             InitializeComponent();
-            this.Load += _2BaoDamMac_Load;
         }
 
         private void _2BaoDamMac_Load(object sender, EventArgs e)

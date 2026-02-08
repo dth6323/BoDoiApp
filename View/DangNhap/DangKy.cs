@@ -1,42 +1,80 @@
 ﻿using BoDoiApp.DataLayer;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.DangNhap
 {
-    public partial class DangKy : Form
+    public partial class DangKy : UserControl
     {
-        private readonly User u = new User();
+        private readonly User _user;
+
         public DangKy()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DangKy_Load(object sender, EventArgs e)
-        {
-
+            _user = new User();
         }
 
         private void btn_reg_Click(object sender, EventArgs e)
         {
-            string tenDangNhap = txt_username.Text;
-            string matKhau = txt_password.Text;
-            string ten = txt_name.Text;
-            u.Register(tenDangNhap, matKhau, ten);
-            FormMana.Dangnhap.Show();
-            this.Hide();
+            string username = txt_username.Text.Trim();
+            string fullName = txt_fullname.Text.Trim();
+            string password = txt_password.Text;
+            string rePassword = txt_repassword.Text;
+
+            if (string.IsNullOrEmpty(username) ||
+                string.IsNullOrEmpty(fullName) ||
+                string.IsNullOrEmpty(password) ||
+                string.IsNullOrEmpty(rePassword))
+            {
+                MessageBox.Show(
+                    "Vui lòng nhập đầy đủ thông tin!",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            if (password != rePassword)
+            {
+                MessageBox.Show(
+                    "Mật khẩu nhập lại không khớp!",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                txt_repassword.Focus();
+                return;
+            }
+
+            try
+            {
+                // Register(username, password, fullName)
+                _user.Register(username, password, fullName);
+
+                MessageBox.Show(
+                    "Đăng ký thành công!",
+                    "Thông báo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                NavigationService.Navigate(new form.dn());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Đăng ký thất bại: {ex.Message}",
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new form.dn());
         }
     }
 }

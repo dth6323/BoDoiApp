@@ -130,7 +130,7 @@
       <DependentUpon>_2BienPhap.cs</DependentUpon>
     </Compile>
     <Compile Include="View\DangNhap\DangKy.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\DangNhap\DangKy.Designer.cs">
       <DependentUpon>DangKy.cs</DependentUpon>

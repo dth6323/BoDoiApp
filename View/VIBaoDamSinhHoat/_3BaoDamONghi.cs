@@ -15,7 +15,6 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
         public _3BaoDamONghi()
         {
             InitializeComponent();
-            this.Load += _3BaoDamONghi_Load;
         }
 
         private void _3BaoDamONghi_Load(object sender, EventArgs e)

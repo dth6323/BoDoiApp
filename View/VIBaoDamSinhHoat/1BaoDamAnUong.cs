@@ -1,6 +1,7 @@
 ﻿using BoDoiApp.DataLayer;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.VIBaoDamSinhHoat
@@ -15,13 +16,11 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
         public _1BaoDamAnUong()
         {
             InitializeComponent();
-            this.Load += _1BaoDamAnUong_Load;
         }
 
         private void _1BaoDamAnUong_Load(object sender, EventArgs e)
         {
             this.Dock = DockStyle.Fill;
-            this.AutoScaleMode = AutoScaleMode.None;
 
             // ===== MAIN LAYOUT =====
             TableLayoutPanel layout = new TableLayoutPanel
@@ -145,14 +144,14 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             };
             btnSave.Click += (s, e2) =>
             {
-                var content = txtInput.Text;
+                var txt = pnlMain.Controls.OfType<TextBox>().FirstOrDefault();
                 var existing = dataLayer.LayThongTin(SectionKey);
                 if (string.IsNullOrWhiteSpace(existing))
                 {
-                    dataLayer.ThemThongTin(content, SectionKey);
+                    dataLayer.ThemThongTin(txt.Text, SectionKey);
                     return;
                 }
-                dataLayer.CapNhatThongTin(content, SectionKey);
+                dataLayer.CapNhatThongTin(txt.Text, SectionKey);
             };
             pnlButton.Controls.Add(btnBack, 0, 0);
             pnlButton.Controls.Add(btnHome, 1, 0);
@@ -171,26 +170,29 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
         {
             if (keyData == (Keys.Control | Keys.Add))
             {
-                zoomFactor += 0.1f;
-                this.Scale(new SizeF(1.1f, 1.1f));
+                ZoomText(1);
                 return true;
             }
 
             if (keyData == (Keys.Control | Keys.Subtract))
             {
-                zoomFactor -= 0.1f;
-                this.Scale(new SizeF(0.9f, 0.9f));
+                ZoomText(-1);
                 return true;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void UpdateFontRecursive(Control control)
+        private void ZoomText(float delta)
         {
-            control.Font = new Font("Times New Roman", currentFontSize, control.Font.Style);
-            foreach (Control child in control.Controls)
-                UpdateFontRecursive(child);
+            currentFontSize = Math.Max(8, currentFontSize + delta);
+            txtInput.Font = new Font(
+                txtInput.Font.FontFamily,
+                currentFontSize,
+                txtInput.Font.Style
+            );
         }
+
+
     }
 }
