@@ -83,15 +83,15 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             string sql = @"CREATE TABLE IF NOT EXISTS ""4_1_ChiTieu"" (
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
     UserId NVARCHAR(10) NOT NULL,
-    LoaiTBKT TEXT NOT NULL,
-    DVT TEXT NOT NULL,
-    NhuCau INTEGER NOT NULL,
-    HienCo_Plus INTEGER NOT NULL,
-    HienCo_Kbd INTEGER NOT NULL,
-    HienCo_Kt INTEGER NOT NULL,
-    HienCo_SoTot INTEGER NOT NULL,
-    PCTQD INTEGER NOT NULL,
-    BoSung INTEGER NOT NULL
+    LoaiTBKT TEXT  NULL,
+    DVT TEXT  NULL,
+    NhuCau INTEGER  NULL,
+    HienCo_Plus INTEGER  NULL,
+    HienCo_Kbd INTEGER  NULL,
+    HienCo_Kt INTEGER  NULL,
+    HienCo_SoTot INTEGER  NULL,
+    PCTQD INTEGER  NULL,
+    BoSung INTEGER  NULL
 );";
             using (var connection = new SQLiteConnection(ConnectioString))
             {
@@ -222,7 +222,8 @@ VALUES
                         catch
                         {
                             transaction.Rollback();
-                            throw;
+                            MessageBox.Show("Lỗi khi cập nhập dữ liệu hãy đảm bảo tất cả các ô đều được nhập dữ liệu");
+                            return; 
                         }
                     }
                 }

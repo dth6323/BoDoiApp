@@ -46,6 +46,7 @@ namespace BoDoiApp.View.KeHoach1
 
         private void _1DanhGia_Load(object sender, EventArgs e)
         {
+            label3.BackColor = Color.FromArgb(255, 242, 204);
             var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "KeHoachDanhGia");
             if (content == string.Empty)
             {
@@ -53,5 +54,6 @@ namespace BoDoiApp.View.KeHoach1
             }
             richTextBox1.Text = content;
         }
+
     }
 }

@@ -185,9 +185,9 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 string sql = @"CREATE TABLE IF NOT EXISTS VatChat (
         Id INTEGER PRIMARY KEY AUTOINCREMENT,
         UserId TEXT NOT NULL,
-        TT INTEGER NOT NULL,
-        LoaiVatChat TEXT NOT NULL,
-        DVT TEXT NOT NULL,
+        TT INTEGER  NULL,
+        LoaiVatChat TEXT  NULL,
+        DVT TEXT  NULL,
 
         PC_TDQ_KhoD INTEGER DEFAULT 0,
         PC_TDQ_DonVi INTEGER DEFAULT 0,

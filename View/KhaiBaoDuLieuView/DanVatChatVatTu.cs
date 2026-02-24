@@ -107,11 +107,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 string sql = @"CREATE TABLE IF NOT EXISTS ""5_1_VatTu"" (
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
     UserId TEXT NOT NULL,
-    Loai TEXT NOT NULL,
-    DVT TEXT NOT NULL,
-    QUYDINH INTEGER NOT NULL,
-    HIENCO INTEGER NOT NULL,
-    BOSUNG INTEGER NOT NULL
+    Loai TEXT  NULL,
+    DVT TEXT  NULL,
+    QUYDINH INTEGER  NULL,
+    HIENCO INTEGER  NULL,
+    BOSUNG INTEGER  NULL
 );";
                 var command = new SQLiteCommand(sql, connection);
                 command.ExecuteNonQuery();
