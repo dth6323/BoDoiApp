@@ -1,12 +1,21 @@
-﻿using System;
-using System.Drawing;
+﻿using BoDoiApp.DataLayer;
+using System;
+using System.Data.SQLite;
+using System.IO;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 
 namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 {
     public partial class _2SuaChua : UserControl
     {
-        private float currentFontSize = 11f;
+        private static readonly string BaseDir =
+            AppDomain.CurrentDomain.BaseDirectory;
+
+        private static readonly string EXCEL_PATH =
+            Path.Combine(BaseDir, "Resources", "Sheet", "Book2.xlsx");
+
+        private ReoGridControl reoGridControl1;
 
         public _2SuaChua()
         {
@@ -20,7 +29,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Controls.Clear();
             AutoScaleMode = AutoScaleMode.None;
 
-            // ===== ROOT (1280x720 theo MainForm) =====
+            // ===== ROOT =====
             TableLayoutPanel root = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -34,66 +43,25 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             // ===== TITLE =====
             root.Controls.Add(new Label
             {
-                Text = "PHẦN MỀM HỖ TRỢ TẬP BÀI BẢO ĐẢM HẬU CẦN, KỸ THUẬT TIỂU ĐOÀN BỘ BINH CHIẾN ĐẤU",
+                Text = "PHẦN SỬA CHỮA",
                 Dock = DockStyle.Fill,
-                BackColor = Color.FromArgb(255, 242, 204),
-                Font = new Font("Times New Roman", 13, FontStyle.Bold),
-                TextAlign = ContentAlignment.MiddleCenter
+                BackColor = System.Drawing.Color.FromArgb(255, 242, 204),
+                Font = new System.Drawing.Font("Times New Roman", 13, System.Drawing.FontStyle.Bold),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             }, 0, 0);
 
             // ===== MAIN =====
-            Panel main = new Panel
-            {
-                Dock = DockStyle.Fill,
-                BorderStyle = BorderStyle.FixedSingle
-            };
+            Panel main = new Panel { Dock = DockStyle.Fill };
             root.Controls.Add(main, 0, 1);
 
-            main.Controls.Add(MakeHeader("VIII. Bảo dưỡng, sửa chữa", true));
-            main.Controls.Add(MakeHeader("2. Sửa chữa", false));
-            main.Controls.Add(MakeHeader("a. Dự kiến tỷ lệ vũ khí trang bị kỹ thuật hư hỏng", false));
-
-            // ===== CONTENT =====
-            Panel content = new Panel { Dock = DockStyle.Fill };
-            main.Controls.Add(content);
-
-            // ===== TABLE =====
-            TableLayoutPanel table = CreateTable();
-            table.Location = new Point(120, 100);
-            content.Controls.Add(table);
-
-            // ===== LEFT ARROW =====
-            Button btnPrev = new Button
+            // ===== REOGRID =====
+            reoGridControl1 = new ReoGridControl
             {
-                Text = "◀",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                Size = new Size(60, 140),
-                Location = new Point(20, 250)
+                Dock = DockStyle.Fill
             };
-            btnPrev.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(new _1BaoDuongSuaChua());
-            };
-            content.Controls.Add(btnPrev);
+            main.Controls.Add(reoGridControl1);
 
-            // ===== RIGHT ARROW =====
-            Button btnNext = new Button
-            {
-                Text = "▶",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                Size = new Size(60, 140),
-                Anchor = AnchorStyles.Right
-            };
-            btnNext.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
-            };
-            content.Controls.Add(btnNext);
-
-            content.Resize += (s, e2) =>
-            {
-                btnNext.Location = new Point(content.Width - 80, 250);
-            };
+            LoadExcelAndData();
 
             // ===== BOTTOM =====
             TableLayoutPanel bottom = new TableLayoutPanel
@@ -106,127 +74,84 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             root.Controls.Add(bottom, 0, 2);
 
-            bottom.Controls.Add(new Button
+            // Trở về
+            Button btnBack = new Button { Text = "Trở về" };
+            btnBack.Click += (s, ev) =>
             {
-                Text = "Trở về",
-                BackColor = Color.FromArgb(252, 213, 180),
-                Anchor = AnchorStyles.Left
-            }, 0, 0);
-
-            bottom.Controls.Add(new Button
-            {
-                Text = "Trang\nchủ",
-                BackColor = Color.Yellow,
-                Anchor = AnchorStyles.None
-            }, 1, 0);
-
-            bottom.Controls.Add(new Button
-            {
-                Text = "Lưu",
-                BackColor = Color.FromArgb(189, 215, 238),
-                Anchor = AnchorStyles.Right
-            }, 2, 0);
-        }
-
-        // ===== TABLE =====
-        private TableLayoutPanel CreateTable()
-        {
-            TableLayoutPanel tbl = new TableLayoutPanel
-            {
-                Size = new Size(1000, 260),
-                ColumnCount = 10,
-                RowCount = 7,
-                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
+                NavigationService.Navigate(new _1BaoDuongSuaChua());
             };
+            bottom.Controls.Add(btnBack, 0, 0);
 
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50));
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 140));
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120));
-            for (int i = 0; i < 6; i++)
-                tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 6));
-
-            AddHeader(tbl, "TT", 0, 0, 1, 2);
-            AddHeader(tbl, "Loại VKTBKT", 1, 0, 1, 2);
-            AddHeader(tbl, "Số lượng", 2, 0, 1, 2);
-            AddHeader(tbl, "Tỷ lệ (%)", 3, 0, 1, 2);
-            AddHeader(tbl, "Tổng số TBKT hư hỏng", 4, 0, 6, 1);
-
-            string[] sub = { "Nhẹ", "Vừa", "Nặng", "Hủy", "+", "" };
-            for (int i = 0; i < 6; i++)
-                AddHeader(tbl, sub[i], 4 + i, 1, 1, 1);
-
-            AddRow(tbl, 2, "1", "SMPK 12,7", "9", "8", "1", "0", "0", "0", "1");
-            AddRow(tbl, 3, "2", "SPG-9", "9", "10", "1", "0", "0", "0", "1");
-            AddRow(tbl, 4, "3", "Súng ngắn", "36", "4", "1", "0", "0", "0", "1");
-            AddRow(tbl, 5, "4", "Tiểu liên", "439", "4", "9", "5", "3", "1", "18");
-            AddRow(tbl, 6, "5", "Trung liên", "27", "4", "1", "0", "0", "0", "1");
-
-            return tbl;
-        }
-
-        private void AddHeader(TableLayoutPanel tbl, string text, int col, int row, int colSpan, int rowSpan)
-        {
-            Label lbl = new Label
+            // Trang chủ
+            Button btnHome = new Button { Text = "Trang chủ" };
+            btnHome.Click += (s, ev) =>
             {
-                Text = text,
-                Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Times New Roman", 11, FontStyle.Bold),
-                BackColor = Color.FromArgb(252, 228, 214)
+                NavigationService.Navigate(new Form1());
             };
-            tbl.Controls.Add(lbl, col, row);
-            tbl.SetColumnSpan(lbl, colSpan);
-            tbl.SetRowSpan(lbl, rowSpan);
+            bottom.Controls.Add(btnHome, 1, 0);
+
+            // Lưu
+            Button btnSave = new Button { Text = "Lưu" };
+            btnSave.Click += BtnSave_Click;
+            bottom.Controls.Add(btnSave, 2, 0);
         }
 
-        private void AddRow(TableLayoutPanel tbl, int row, params string[] values)
+        // =============================
+        // LOAD EXCEL + LOAD DATA
+        // =============================
+        private void LoadExcelAndData()
         {
-            for (int i = 0; i < values.Length; i++)
-                tbl.Controls.Add(new Label
-                {
-                    Text = values[i],
-                    Dock = DockStyle.Fill,
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    BackColor = Color.FromArgb(221, 235, 247)
-                }, i, row);
-        }
-
-        private Label MakeHeader(string text, bool green)
-        {
-            return new Label
+            if (!File.Exists(EXCEL_PATH))
             {
-                Text = text,
-                Dock = DockStyle.Top,
-                Height = 32,
-                Font = new Font("Times New Roman", 12, FontStyle.Bold),
-                BackColor = green ? Color.FromArgb(198, 224, 180) : Color.Transparent
-            };
-        }
-
-        // ===== ZOOM CTRL =====
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == (Keys.Control | Keys.Add))
-            {
-                currentFontSize++;
-                UpdateFont(this);
-                return true;
+                MessageBox.Show("Không tìm thấy file Excel");
+                return;
             }
-            if (keyData == (Keys.Control | Keys.Subtract))
+
+            reoGridControl1.Load(EXCEL_PATH);
+
+            // ===== Chọn sheet sửa chữa =====
+            reoGridControl1.CurrentWorksheet =
+                reoGridControl1.Worksheets["SuaChua"];
+
+            var ws = reoGridControl1.CurrentWorksheet;
+
+            // Khóa hàng 1-3
+            for (int row = 0; row < 3; row++)
             {
-                if (currentFontSize > 8) currentFontSize--;
-                UpdateFont(this);
-                return true;
+                for (int col = 0; col < ws.ColumnCount; col++)
+                    ws.Cells[row, col].IsReadOnly = true;
             }
-            return base.ProcessCmdKey(ref msg, keyData);
+
+            // Khóa cột A,B,C
+            for (int col = 0; col <= 2; col++)
+            {
+                for (int row = 0; row < ws.RowCount; row++)
+                    ws.Cells[row, col].IsReadOnly = true;
+            }
+
+            // Khóa cột E-I
+            for (int col = 4; col <= 8; col++)
+            {
+                for (int row = 0; row < ws.RowCount; row++)
+                    ws.Cells[row, col].IsReadOnly = true;
+            }
+            ws.HideColumns(9, ws.ColumnCount - 9);
+
+            // Ẩn dòng 15 trở đi
+            ws.HideRows(14, ws.RowCount - 14);
+
+            // Ẩn sheet tab
+            reoGridControl1.SheetTabVisible = false;
+            // ===== Load dữ liệu DB =====
+            SuaChuaData.LoadAll(reoGridControl1);
         }
 
-        private void UpdateFont(Control c)
+        // =============================
+        // SAVE BUTTON
+        // =============================
+        private void BtnSave_Click(object sender, EventArgs e)
         {
-            c.Font = new Font("Times New Roman", currentFontSize, c.Font.Style);
-            foreach (Control child in c.Controls)
-                UpdateFont(child);
+            SuaChuaData.SaveAll(reoGridControl1);
         }
     }
 }

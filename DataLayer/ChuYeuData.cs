@@ -11,7 +11,7 @@ namespace BoDoiApp.DataLayer
 {
     public static class ChuYeuData
     {
-        private const string connectionString = "Data Source=data2.db;Version=3;";
+        private const string connectionString = "Data Source=data.db;Version=3;";
 
         public static bool ThemThongTin(
             string quanSo,
