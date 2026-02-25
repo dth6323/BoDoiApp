@@ -36,12 +36,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             try
             {
+                reoGridControl1.Load(EXCEL_PATH);
+                reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[1];
                 if(Properties.Settings.Default.Username != null)
                 {
                     LoadDataWithUser();
                 }
-                reoGridControl1.Load(EXCEL_PATH);
-                reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[1];
 
             }
             catch (Exception ex)
@@ -73,11 +73,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             if (IsDataExists("thu yeu"))
             {
 
-                ChuYeuData.UpdateHangLoat(reoGridControl1, "thu yeu");
+                ChuYeuData.UpdateHangLoat(reoGridControl1, "thu yeu",18);
             }
             else
             {
-                ChuYeuData.ThemHangLoat(reoGridControl1, "thu yeu");
+                ChuYeuData.ThemHangLoat(reoGridControl1, "thu yeu",18);
             }
         }
 

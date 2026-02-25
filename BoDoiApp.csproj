@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -107,10 +107,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-	  <Compile Include="DataLayer\BaoDamQuanYData.cs" />
-	  <Compile Include="DataLayer\BaoDamSinhHoatData.cs" />
-	  <Compile Include="DataLayer\BaoDuongSuaChuaData.cs" />
-	  <Compile Include="DataLayer\ChuYeuData.cs" />
+    <Compile Include="DataLayer\BaoDamQuanYData.cs" />
+    <Compile Include="DataLayer\BaoDamSinhHoatData.cs" />
+    <Compile Include="DataLayer\BaoDuongSuaChuaData.cs" />
+    <Compile Include="DataLayer\ChuYeuData.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\RichTextBoxData.cs" />
@@ -363,6 +363,18 @@
     <Compile Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.Designer.cs">
       <DependentUpon>_1ChiTieu.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\_2PhanCap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\_2PhanCap.Designer.cs">
+      <DependentUpon>_2PhanCap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\_3PhanCap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\_3PhanCap.Designer.cs">
+      <DependentUpon>_3PhanCap.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\XIHauCanKyThuat\_1ChiHuyHauCanKyThuat.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -516,6 +528,12 @@
     <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.resx">
       <DependentUpon>_1ChiTieu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\_2PhanCap.resx">
+      <DependentUpon>_2PhanCap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\_3PhanCap.resx">
+      <DependentUpon>_3PhanCap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\XIHauCanKyThuat\_1ChiHuyHauCanKyThuat.resx">
       <DependentUpon>_1ChiHuyHauCanKyThuat.cs</DependentUpon>
     </EmbeddedResource>
@@ -541,7 +559,7 @@
     <Content Include="Resources\Sheet\Book1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	  <None Include="Resources\Sheet\Book2.xlsx" />
+    <None Include="Resources\Sheet\Book2.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

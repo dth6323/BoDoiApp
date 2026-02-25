@@ -71,9 +71,9 @@ namespace BoDoiApp.DataLayer
         }
         
 
-        public static void ThemHangLoat(ReoGridControl data,string option)
+        public static void ThemHangLoat(ReoGridControl data,string option,int endRow)
         {
-            for(int i=6; i <= 16; i++)
+            for(int i=5; i <= endRow; i++)
             {
                 string quanSo = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
                 string sn = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
@@ -141,9 +141,9 @@ namespace BoDoiApp.DataLayer
                 MessageBox.Show($"Đã xảy ra lỗi khi cập nhật thông tin: {ex.Message}\nError Code: {ex.ErrorCode}");
             }
         }
-        public static void UpdateHangLoat(ReoGridControl data, string option)
+        public static void UpdateHangLoat(ReoGridControl data, string option,int endRow)
         {
-            for (int i = 6; i <= 16; i++)
+            for (int i = 5; i <= endRow; i++)
             {
                 string quanSo = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
                 string sn = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();

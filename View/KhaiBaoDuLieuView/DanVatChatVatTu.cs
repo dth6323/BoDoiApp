@@ -65,7 +65,22 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button3_Click(object sender, EventArgs e)
         {
-            SaveData();
+            if (IsDataExist())
+            {
+                var result = MessageBox.Show(
+                    "Dữ liệu đã tồn tại. Bạn có muốn cập nhật lại không?",
+                    "Xác nhận",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    UpdateBulkData();
+                }
+            }
+            else
+            {
+                SaveData();
+            }
             NavigationService.Navigate(new PhanCapVatLieu());
         }
 
