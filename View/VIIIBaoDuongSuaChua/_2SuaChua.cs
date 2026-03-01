@@ -1,6 +1,7 @@
 ﻿using BoDoiApp.DataLayer;
 using System;
 using System.Data.SQLite;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using unvell.ReoGrid;
@@ -64,36 +65,92 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             LoadExcelAndData();
 
             // ===== BOTTOM =====
+            // ===== BOTTOM PANEL =====
             TableLayoutPanel bottom = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                ColumnCount = 3
+                ColumnCount = 4,
+                RowCount = 1
             };
-            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
-            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34));
-            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+
+            // Chia 4 cột đều nhau
+            for (int i = 0; i < 4; i++)
+            {
+                bottom.ColumnStyles.Add(
+                    new ColumnStyle(SizeType.Percent, 25));
+            }
+
             root.Controls.Add(bottom, 0, 2);
 
-            // Trở về
-            Button btnBack = new Button { Text = "Trở về" };
+
+            // ===== NÚT TRỞ VỀ =====
+            Button btnBack = new Button
+            {
+                Text = "Trở về",
+                Anchor = AnchorStyles.Left,
+                AutoSize = true
+            };
+
             btnBack.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new _1BaoDuongSuaChua());
+                NavigationService.Back();
             };
+
             bottom.Controls.Add(btnBack, 0, 0);
 
-            // Trang chủ
-            Button btnHome = new Button { Text = "Trang chủ" };
+
+            // ===== NÚT TRANG CHỦ =====
+            Button btnHome = new Button
+            {
+                Text = "Trang chủ",
+                Anchor = AnchorStyles.Left,
+                AutoSize = true
+            };
+
             btnHome.Click += (s, ev) =>
             {
                 NavigationService.Navigate(new Form1());
             };
+
             bottom.Controls.Add(btnHome, 1, 0);
 
-            // Lưu
-            Button btnSave = new Button { Text = "Lưu" };
+
+            // ===== NÚT LƯU =====
+            Button btnSave = new Button
+            {
+                Text = "Lưu",
+                Anchor = AnchorStyles.Left,
+                AutoSize = true
+            };
+
             btnSave.Click += BtnSave_Click;
+
             bottom.Controls.Add(btnSave, 2, 0);
+
+
+            // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
+            Panel rightPanel = new Panel
+            {
+                Dock = DockStyle.Fill
+            };
+
+            bottom.Controls.Add(rightPanel, 3, 0);
+
+
+            // ===== NÚT TIẾP =====
+            Button btnNext = new Button
+            {
+                Text = "Tiếp",
+                Anchor = AnchorStyles.Right,
+                AutoSize = true
+            };
+
+            btnNext.Click += (s, e2) =>
+            {
+                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+            };
+
+            rightPanel.Controls.Add(btnNext);
         }
 
         // =============================
