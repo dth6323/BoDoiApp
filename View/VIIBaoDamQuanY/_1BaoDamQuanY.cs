@@ -168,39 +168,45 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             var ws = reoGridControl1.CurrentWorksheet;
 
-            // Khóa hàng 1-3
-            for (int row = 0; row < 3; row++)
+            // ===== 1. Khóa toàn bộ sheet =====
+            for (int row = 0; row < ws.RowCount; row++)
             {
                 for (int col = 0; col < ws.ColumnCount; col++)
+                {
                     ws.Cells[row, col].IsReadOnly = true;
+                }
             }
 
-            // Khóa cột A,B,C
-            for (int col = 0; col <= 2; col++)
+            // ===== 2. Mở khóa D5-D12 =====
+            for (int row = 4; row <= 11; row++) // 5 → 12 (index bắt đầu từ 0)
             {
-                for (int row = 0; row < ws.RowCount; row++)
-                    ws.Cells[row, col].IsReadOnly = true;
+                ws.Cells[row, 3].IsReadOnly = false; // Cột D (index 3)
             }
 
-            // Khóa cột E-I
-            for (int col = 4; col <= 8; col++)
+            // ===== 3. Mở khóa F5-F12 =====
+            for (int row = 4; row <= 11; row++)
             {
-                for (int row = 0; row < ws.RowCount; row++)
-                    ws.Cells[row, col].IsReadOnly = true;
+                ws.Cells[row, 5].IsReadOnly = false; // Cột F (index 5)
             }
-            ws.HideColumns(9, ws.ColumnCount - 9);
 
-            // Ẩn dòng 15 trở đi
-            ws.HideRows(14, ws.RowCount - 14);
+            // ===== 4. Mở khóa H5-H12 =====
+            for (int row = 4; row <= 11; row++)
+            {
+                ws.Cells[row, 7].IsReadOnly = false; // Cột H (index 7)
+            }
 
             // Ẩn sheet tab
             reoGridControl1.SheetTabVisible = false;
-            // ===== Load dữ liệu DB =====
-            SuaChuaData.LoadAll(reoGridControl1);
+            ws.HideColumns(10, ws.ColumnCount - 10);
+
+            // Ẩn dòng 15 trở đi
+            ws.HideRows(12, ws.RowCount - 12);
+            // Load dữ liệu DB
+            BaoDamQuanYData.LoadAll(reoGridControl1);
         }
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            SuaChuaData.SaveAll(reoGridControl1);
+            BaoDamQuanYData.SaveAll(reoGridControl1);
         }
     }
 }

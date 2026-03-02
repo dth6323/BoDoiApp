@@ -103,6 +103,20 @@ namespace BoDoiApp
                 );";
                 var command8 = new SQLiteCommand(sql8, connection);
                 command8.ExecuteNonQuery();
+                var sql9 = @"CREATE TABLE IF NOT EXISTS baodam_quany (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    quan_so REAL,
+                    tb_qs REAL,
+                    tb_nguoi REAL,
+                    tbhh_qs REAL,
+                    tbhh_nguoi REAL,
+                    bb_qs REAL,
+                    bb_nguoi REAL,
+                    cong_nguoi REAL,
+                    User TEXT
+                );";
+                var command9 = new SQLiteCommand(sql9, connection);
+                command9.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();
