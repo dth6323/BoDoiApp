@@ -109,7 +109,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@User", "123");
-                        command.Parameters.AddWithValue("@Option", "chu yeu");
+                        command.Parameters.AddWithValue("@Option", "thu yeu");
                         using (var reader = command.ExecuteReader())
                         {
                             var ws = reoGridControl1.CurrentWorksheet;

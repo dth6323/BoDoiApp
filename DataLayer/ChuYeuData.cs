@@ -1,6 +1,7 @@
 ﻿using BoDoiApp.Resources;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -110,7 +111,7 @@ namespace BoDoiApp.DataLayer
             try
             {
                 using (var connection = new SQLiteConnection(connectionString))
-                {
+                {   
                     connection.Open();
                     string sql = @"UPDATE trangkithuat SET 
                                        sn = @sn, tl = @tl, trl = @trl, dl = @dl, b41_m79 = @b41_m79,
@@ -169,43 +170,60 @@ namespace BoDoiApp.DataLayer
             }
         }
 
-        public static int[] SumOfChuYeuData()
+        public static int[] SumOfChuYeuData(string option)
         {
-            const string sql = @"SELECT * FROM v_trangkithuat_summary;";
+
+            string sql = @"
+        SELECT    
+             SUM(CAST(COALESCE(quan_so, 0) AS INTEGER))     AS sum_quan_so,    
+             SUM(CAST(COALESCE(sn, 0) AS INTEGER))          AS sum_sn,    
+             SUM(CAST(COALESCE(tl, 0) AS INTEGER))          AS sum_tl,    
+             SUM(CAST(COALESCE(trl, 0) AS INTEGER))         AS sum_trl,    
+             SUM(CAST(COALESCE(dl, 0) AS INTEGER))          AS sum_dl,    
+             SUM(CAST(COALESCE(b41_m79, 0) AS INTEGER))     AS sum_b41_m79,    
+             SUM(CAST(COALESCE(luu_dan, 0) AS INTEGER))     AS sum_luu_dan,    
+             SUM(CAST(COALESCE(coi_60, 0) AS INTEGER))      AS sum_coi_60,    
+             SUM(CAST(COALESCE(coi_82, 0) AS INTEGER))      AS sum_coi_82,    
+             SUM(CAST(COALESCE(coi_100, 0) AS INTEGER))     AS sum_coi_100,    
+             SUM(CAST(COALESCE(pct_spg9, 0) AS INTEGER))    AS sum_pct_spg9,    
+             SUM(CAST(COALESCE(phao_pk_127, 0) AS INTEGER)) AS sum_phao_pk_127    
+        FROM trangkithuat
+        WHERE ""User"" = @userId
+        AND ""option"" = @option;";
 
             try
             {
                 using (var connection = new SQLiteConnection(connectionString))
                 using (var command = new SQLiteCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@userId", Constants.CURRENT_USER_ID_VALUE);
+                    command.Parameters.AddWithValue("@option", option ?? "");
+
                     connection.Open();
 
                     using (var reader = command.ExecuteReader())
                     {
-                        if (!reader.Read())
-                            return new int[0];
+                        var result = new int[12];
 
-                        int fieldCount = reader.FieldCount;
-                        var result = new int[fieldCount];
-
-                        for (int i = 0; i < fieldCount; i++)
+                        int GetInt32OrZero(int ordinal)
                         {
-                            if (reader.IsDBNull(i))
-                            {
-                                result[i] = 0;
-                                continue;
-                            }
+                            return reader.IsDBNull(ordinal) ? 0 : Convert.ToInt32(reader.GetValue(ordinal));
+                        }
 
-                            object val = reader.GetValue(i);
-
-                            if (val is long l) result[i] = unchecked((int)l);
-                            else if (val is int n) result[i] = n;
-                            else if (val is double d) result[i] = (int)d;
-                            else
-                            {
-                                int parsed;
-                                result[i] = int.TryParse(val.ToString(), out parsed) ? parsed : 0;
-                            }
+                        while (reader.Read())
+                        {
+                            result[0] += GetInt32OrZero(0);   // quan_so
+                            result[1] += GetInt32OrZero(11);  // phao_pk_127
+                            result[2] += GetInt32OrZero(9);   // coi_100
+                            result[3] += GetInt32OrZero(8);   // coi_82
+                            result[4] += GetInt32OrZero(7);   // coi_60
+                            result[5] += GetInt32OrZero(10);  // pct_spg9
+                            result[6] += GetInt32OrZero(5);   // b41_m79
+                            result[7] += GetInt32OrZero(4);   // dl
+                            result[8] += GetInt32OrZero(3);   // trl
+                            result[9] += GetInt32OrZero(2);   // tl
+                            result[10] += GetInt32OrZero(1);  // sn
+                            result[11] += GetInt32OrZero(6);  // luu_dan
                         }
 
                         return result;
@@ -214,13 +232,8 @@ namespace BoDoiApp.DataLayer
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi khi lấy dữ liệu tổng hợp: {ex.Message}\nError Code: {ex.ErrorCode}");
-                return new int[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi khi lấy dữ liệu tổng hợp: {ex.Message}");
-                return new int[0];
+                MessageBox.Show($"Đã xảy ra lỗi khi tính tổng: {ex.Message}\nError Code: {ex.ErrorCode}");
+                return new int[12];
             }
         }
     }
