@@ -67,6 +67,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -76,6 +77,7 @@
             this.button2.TabIndex = 0;
             this.button2.Text = "Trang chủ";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -85,12 +87,13 @@
             this.button3.TabIndex = 0;
             this.button3.Text = "Lưu";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(44, 190);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1170, 401);
+            this.richTextBox1.Size = new System.Drawing.Size(1175, 401);
             this.richTextBox1.TabIndex = 28;
             this.richTextBox1.Text = "";
             // 
@@ -124,7 +127,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1280, 81);
             this.tableLayoutPanel2.TabIndex = 30;
             // 
@@ -152,6 +155,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "_2BienPhapBaoDam";
             this.Size = new System.Drawing.Size(1280, 720);
+            this.Load += new System.EventHandler(this._2BienPhapBaoDam_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

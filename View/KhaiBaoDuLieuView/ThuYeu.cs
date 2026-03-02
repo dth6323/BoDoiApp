@@ -73,11 +73,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             if (IsDataExists("thu yeu"))
             {
 
-                ChuYeuData.UpdateHangLoat(reoGridControl1, "thu yeu",18);
+                ChuYeuData.UpdateHangLoat(reoGridControl1, "thu yeu",17);
             }
             else
             {
-                ChuYeuData.ThemHangLoat(reoGridControl1, "thu yeu",18);
+                ChuYeuData.ThemHangLoat(reoGridControl1, "thu yeu",17);
             }
         }
 

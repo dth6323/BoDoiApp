@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoDoiApp.Resources;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace BoDoiApp.DataLayer
             string luuDan,
             string coi60, string coi82, string coi100,
             string pctSpg9,
-            string phaoPk127,string option)
+            string phaoPk127, string option)
         {
             try
             {
@@ -28,15 +29,15 @@ namespace BoDoiApp.DataLayer
                     connection.Open();
 
                     string sql = @"INSERT INTO trangkithuat 
-                          (quan_so, sn, tl, trl, dl, b41_m79,
-                           luu_dan, coi_60, coi_82, coi_100,
-                           pct_spg9, phao_pk_127,
-                           User, option)
-                           VALUES
-                          (@quan_so, @sn, @tl, @trl, @dl, @b41_m79,
-                           @luu_dan, @coi_60, @coi_82, @coi_100,
-                           @pct_spg9, @phao_pk_127,
-                           @User, @option)";
+                              (quan_so, sn, tl, trl, dl, b41_m79,
+                               luu_dan, coi_60, coi_82, coi_100,
+                               pct_spg9, phao_pk_127,
+                               User, option)
+                               VALUES
+                              (@quan_so, @sn, @tl, @trl, @dl, @b41_m79,
+                               @luu_dan, @coi_60, @coi_82, @coi_100,
+                               @pct_spg9, @phao_pk_127,
+                               @User, @option)";
 
                     using (var command = new SQLiteCommand(sql, connection))
                     {
@@ -69,11 +70,11 @@ namespace BoDoiApp.DataLayer
                 return false;
             }
         }
-        
 
-        public static void ThemHangLoat(ReoGridControl data,string option,int endRow)
+
+        public static void ThemHangLoat(ReoGridControl data, string option, int endRow)
         {
-            for(int i=5; i <= endRow; i++)
+            for (int i = 5; i <= endRow; i++)
             {
                 string quanSo = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
                 string sn = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
@@ -112,10 +113,10 @@ namespace BoDoiApp.DataLayer
                 {
                     connection.Open();
                     string sql = @"UPDATE trangkithuat SET 
-                                   sn = @sn, tl = @tl, trl = @trl, dl = @dl, b41_m79 = @b41_m79,
-                                   luu_dan = @luu_dan, coi_60 = @coi_60, coi_82 = @coi_82, coi_100 = @coi_100,
-                                   pct_spg9 = @pct_spg9, phao_pk_127 = @phao_pk_127
-                                   WHERE quan_so = @quan_so AND User = @User AND option = @option";
+                                       sn = @sn, tl = @tl, trl = @trl, dl = @dl, b41_m79 = @b41_m79,
+                                       luu_dan = @luu_dan, coi_60 = @coi_60, coi_82 = @coi_82, coi_100 = @coi_100,
+                                       pct_spg9 = @pct_spg9, phao_pk_127 = @phao_pk_127
+                                       WHERE quan_so = @quan_so AND User = @User AND option = @option";
                     using (var command = new SQLiteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@quan_so", quanSo ?? "");
@@ -141,7 +142,7 @@ namespace BoDoiApp.DataLayer
                 MessageBox.Show($"Đã xảy ra lỗi khi cập nhật thông tin: {ex.Message}\nError Code: {ex.ErrorCode}");
             }
         }
-        public static void UpdateHangLoat(ReoGridControl data, string option,int endRow)
+        public static void UpdateHangLoat(ReoGridControl data, string option, int endRow)
         {
             for (int i = 5; i <= endRow; i++)
             {
@@ -168,5 +169,59 @@ namespace BoDoiApp.DataLayer
             }
         }
 
+        public static int[] SumOfChuYeuData()
+        {
+            const string sql = @"SELECT * FROM v_trangkithuat_summary;";
+
+            try
+            {
+                using (var connection = new SQLiteConnection(connectionString))
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                            return new int[0];
+
+                        int fieldCount = reader.FieldCount;
+                        var result = new int[fieldCount];
+
+                        for (int i = 0; i < fieldCount; i++)
+                        {
+                            if (reader.IsDBNull(i))
+                            {
+                                result[i] = 0;
+                                continue;
+                            }
+
+                            object val = reader.GetValue(i);
+
+                            if (val is long l) result[i] = unchecked((int)l);
+                            else if (val is int n) result[i] = n;
+                            else if (val is double d) result[i] = (int)d;
+                            else
+                            {
+                                int parsed;
+                                result[i] = int.TryParse(val.ToString(), out parsed) ? parsed : 0;
+                            }
+                        }
+
+                        return result;
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi lấy dữ liệu tổng hợp: {ex.Message}\nError Code: {ex.ErrorCode}");
+                return new int[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi lấy dữ liệu tổng hợp: {ex.Message}");
+                return new int[0];
+            }
+        }
     }
 }

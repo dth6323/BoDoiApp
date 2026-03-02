@@ -45,7 +45,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                     return;
                 }
                 int updated = UpdateBulkDataFromCell(userId);
-                MessageBox.Show($"Lưu dữ liệu hoàn tất.\nĐã thêm mới: {inserted} bản ghi\nĐã cập nhật: {updated} bản ghi", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Lưu dữ liệu hoàn tất.\nĐã thêm mới:  bản ghi\nĐã cập nhật: {updated} bản ghi", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             NavigationService.Navigate(new _3PhanCap());
         }
