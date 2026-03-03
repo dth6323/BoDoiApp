@@ -25,7 +25,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new dn());
+            NavigationService.Navigate(new KeHoachBaoDamQuanY());
         }
 
         public void ShowView(UserControl view)

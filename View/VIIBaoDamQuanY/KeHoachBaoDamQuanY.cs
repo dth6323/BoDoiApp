@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -166,7 +167,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             // ===== Chọn sheet sửa chữa =====
             reoGridControl1.CurrentWorksheet =
-                reoGridControl1.Worksheets["BaoDamQuanY"];
+                reoGridControl1.Worksheets["KeHoachBaoDamQuanY"];
 
             var ws = reoGridControl1.CurrentWorksheet;
 
@@ -199,7 +200,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             // Ẩn sheet tab
             reoGridControl1.SheetTabVisible = false;
-            ws.HideColumns(10, ws.ColumnCount - 10);
+            ws.HideColumns(13, ws.ColumnCount - 13);
 
             // Ẩn dòng 15 trở đi
             ws.HideRows(12, ws.RowCount - 12);

@@ -119,6 +119,7 @@
     <Compile Include="DataLayer\ToChucBienCheData.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
+	<Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
       <SubType>UserControl</SubType>
