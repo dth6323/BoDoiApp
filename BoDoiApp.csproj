@@ -321,6 +321,12 @@
     <Compile Include="View\IXCongTacVanTai\_4YdinhVanChuyen.Designer.cs">
       <DependentUpon>_4YdinhVanChuyen.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\KeHoachBaoDamQuanY.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\KeHoachBaoDamQuanY.Designer.cs">
+      <DependentUpon>KeHoachBaoDamQuanY.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VIIBaoDamQuanY\_1BaoDamQuanY.cs">
       <SubType>UserControl</SubType>
     </Compile>
