@@ -15,7 +15,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
     public partial class _1ChiTieu : UserControl
     {
         private static string Basedir = AppDomain.CurrentDomain.BaseDirectory;
-        private static string EXCEL_PATH = Path.Combine(Basedir, "Resources", "Sheet", "ChiTieu.xlsx");
+        private static string EXCEL_PATH = Path.Combine(Basedir, "Resources", "Sheet", "Book1.xlsx");
         private string UserId = Constants.CURRENT_USER_ID_VALUE;
         public _1ChiTieu()
         {

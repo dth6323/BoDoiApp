@@ -103,7 +103,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             string sql = $"SELECT * FROM trangkithuat WHERE User = @User AND option = @Option";
             try
             {
-                using (var connection = new System.Data.SQLite.SQLiteConnection("Data Source=data2.db;Version=3;"))
+                using (var connection = new System.Data.SQLite.SQLiteConnection("Data Source=data.db;Version=3;"))
                 {
                     connection.Open();
                     using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))

@@ -10,7 +10,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
     public partial class BaoDamVuKhi : UserControl
     {
-        private readonly string ConnectioString = "Data Source=data2.db;Version=3;";
+        private readonly string ConnectioString = "Data Source=data.db;Version=3;";
         private static readonly string BaseDir =
             AppDomain.CurrentDomain.BaseDirectory;
 
