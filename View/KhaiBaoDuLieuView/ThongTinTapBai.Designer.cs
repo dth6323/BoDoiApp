@@ -85,7 +85,6 @@
             this.txt_thoigian.Name = "txt_thoigian";
             this.txt_thoigian.Size = new System.Drawing.Size(213, 20);
             this.txt_thoigian.TabIndex = 0;
-            this.txt_thoigian.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // txt_m1
             // 

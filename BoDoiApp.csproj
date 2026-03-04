@@ -145,6 +145,7 @@
     <Compile Include="DataLayer\BaoDamSinhHoatData.cs" />
     <Compile Include="DataLayer\BaoDuongSuaChuaData.cs" />
     <Compile Include="DataLayer\ChuYeuData.cs" />
+    <Compile Include="DataLayer\KeHoachSuaChua.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\RichTextBoxData.cs" />
@@ -153,7 +154,7 @@
     <Compile Include="DataLayer\ToChucBienCheData.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
-	<Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
+    <Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
       <SubType>UserControl</SubType>
@@ -241,7 +242,7 @@
       <DependentUpon>QuyDinhDuTruTieuThuBoSungVatChat.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThongTinTapBai.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThongTinTapBai.Designer.cs">
       <DependentUpon>ThongTinTapBai.cs</DependentUpon>
@@ -314,6 +315,12 @@
     <Compile Include="View\Main\FormBaoDamHauCan.Designer.cs">
       <DependentUpon>FormBaoDamHauCan.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Main\FormKeHoach.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Main\FormKeHoach.Designer.cs">
+      <DependentUpon>FormKeHoach.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -379,6 +386,12 @@
     </Compile>
     <Compile Include="View\VIIBaoDamQuanY\_3YDinh.Designer.cs">
       <DependentUpon>_3YDinh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.Designer.cs">
+      <DependentUpon>KeHoachSuaChua.cs</DependentUpon>
     </Compile>
     <Compile Include="View\VIIIBaoDuongSuaChua\_1BaoDuongSuaChua.cs">
       <SubType>UserControl</SubType>
@@ -528,6 +541,9 @@
     <EmbeddedResource Include="View\Main\FormBaoDamHauCan.resx">
       <DependentUpon>FormBaoDamHauCan.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\Main\FormKeHoach.resx">
+      <DependentUpon>FormKeHoach.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.resx">
       <DependentUpon>1BaoDamAnUong.cs</DependentUpon>
     </EmbeddedResource>
@@ -557,6 +573,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\IXCongTacVanTai\_4YdinhVanChuyen.resx">
       <DependentUpon>_4YdinhVanChuyen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.resx">
+      <DependentUpon>KeHoachSuaChua.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\_1BaoDuongSuaChua.resx">
       <DependentUpon>_1BaoDuongSuaChua.cs</DependentUpon>
