@@ -57,7 +57,34 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void btn_luu_Click(object sender, EventArgs e)
         {
-            string thongTinTapBaiText = txt_tenvankien.Text;
+            
+        }
+
+        private void btn_thoat_Click(object sender, EventArgs e)
+        {
+            if (FormMana.KhaiBaoDuLieu == null)
+            {
+                MessageBox.Show("Form KhaiBaoDuLieu đang NULL");
+                return;
+            }
+
+            FormMana.KhaiBaoDuLieu.Show();
+            this.Hide();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Form1());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string thongTinTapBai = txt_tenvankien.Text;
             string viTriChiHuy = txt_vtch.Text;
             string thoiGian = txt_thoigian.Text;
 

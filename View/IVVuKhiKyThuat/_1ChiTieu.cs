@@ -43,18 +43,20 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
         {
             reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[7];
+            LoadExcel();
 
         }
 
         private void LoadExcel()
         {
-            LoadSection(13, 23, "Hướng Chủ yếu", UserId);
-            LoadSection(24, 34, "thu yeu", UserId);
-            LoadSection(35, 45, "Phòng ngự phía sau", UserId);
-            LoadSection(46, 56, "LL còn lại", UserId);
+            LoadSumOfAllSection();
+            LoadSection(13, 23, "Hướng Chủ yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+            LoadSection(24, 34, "Hướng Thứ Yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+            LoadSection(35, 45, "Phòng ngự phía sau", UserId, new string[] { "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+            LoadSection(46, 56, "LL còn lại", UserId, new string[] { "phao_pk_127", "coi_100", "pct_spg9", "b41_m79", "tl", "sn", "luu_dan" });
         }
 
-        private int[] SumOfChuYeuData(string option)
+        private int[] SumOfChuYeuData()
         {
 
             string sql = @"
@@ -70,8 +72,8 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
              SUM(CAST(COALESCE(coi_82, 0) AS INTEGER))      AS sum_coi_82,    
              SUM(CAST(COALESCE(coi_100, 0) AS INTEGER))     AS sum_coi_100,    
              SUM(CAST(COALESCE(pct_spg9, 0) AS INTEGER))    AS sum_pct_spg9,    
-             SUM(CAST(COALESCE(phao_pk_127, 0) AS INTEGER)) AS sum_phao_pk_127    
-        FROM trangkithuat;";
+             SUM(CAST(COALESCE(phao_pk_127, 0) AS INTEGER)) AS sum_phao_pk_127                
+        FROM trangkithuat WHERE User = @UserId;";
 
             try
             {
@@ -80,6 +82,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
                 {
                     connection.Open();
 
+                    command.Parameters.AddWithValue("@UserId", UserId);
                     using (var reader = command.ExecuteReader())
                     {
                         int GetInt32OrZero(int ordinal)
@@ -119,44 +122,81 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
         private void LoadSumOfAllSection()
         {
-           
-        }
-
-        private void LoadSection(int rowStart, int rowEnd, string section, string userId)
-        {
-            string sql = $"SELECT Value FROM trangkithuat WHERE User = '{userId}' AND option = '{section}'";
-            string[] columnName = new string[] { "phao_pk_127", "coi_100", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" };
-            using (var connection = new SqlConnection(Constants.CONNECTION_STRING))
+            var arraySum = SumOfChuYeuData();
+            string sql = @"
+        SELECT    
+             option,
+             SUM(CAST(COALESCE(quan_so, 0) AS INTEGER))     AS sum_quan_so,    
+             SUM(CAST(COALESCE(sn, 0) AS INTEGER))          AS sum_sn,    
+             SUM(CAST(COALESCE(tl, 0) AS INTEGER))          AS sum_tl,    
+             SUM(CAST(COALESCE(trl, 0) AS INTEGER))         AS sum_trl,    
+             SUM(CAST(COALESCE(dl, 0) AS INTEGER))          AS sum_dl,    
+             SUM(CAST(COALESCE(b41_m79, 0) AS INTEGER))     AS sum_b41_m79,    
+             SUM(CAST(COALESCE(luu_dan, 0) AS INTEGER))     AS sum_luu_dan,    
+             SUM(CAST(COALESCE(coi_60, 0) AS INTEGER))      AS sum_coi_60,    
+             SUM(CAST(COALESCE(coi_82, 0) AS INTEGER))      AS sum_coi_82,    
+             SUM(CAST(COALESCE(coi_100, 0) AS INTEGER))     AS sum_coi_100,    
+             SUM(CAST(COALESCE(pct_spg9, 0) AS INTEGER))    AS sum_pct_spg9,    
+             SUM(CAST(COALESCE(phao_pk_127, 0) AS INTEGER)) AS sum_phao_pk_127    
+        FROM trangkithuat
+        WHERE User = @UserId AND ll = '1. Trong biên chế'
+        GROUP BY option";
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
                 connection.Open();
-                using (var command = new SqlCommand(sql, connection))
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", UserId);
+                    var reader = command.ExecuteReader();
+                    int index = 2;
+                    string[] columnName = new string[] { "sum_phao_pk_127", "sum_coi_100", "sum_coi_82", "sum_coi_60", "sum_pct_spg9", "sum_b41_m79", "sum_dl", "sum_trl", "sum_tl", "sum_sn", "sum_luu_dan" };
+                    int i = 0;
+                    reader.Read();
+                    foreach (var col in columnName)
+                    {
+                        var value = reader[col]?.ToString() ?? "0";
+                        reoGridControl1.CurrentWorksheet.SetCellData(index, 3, value);
+                        i++;
+                        index++;
+
+                    }
+                    int k = 1;
+                    for (int j = 2; j <= 12; j++)
+                    {
+                        reoGridControl1.CurrentWorksheet.SetCellData(j, 4, arraySum[k++]);
+                    }
+                }
+            }
+        }
+
+        private void LoadSection(int rowStart, int rowEnd, string section, string userId, string[] columnNames)
+        {
+            string sql = $"SELECT * FROM trangkithuat WHERE User = '{userId}' AND option = '{section}' AND ll = '1. Trong biên chế'";
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sql, connection))
                 {
                     var reader = command.ExecuteReader();
-                    int index = 0;
-                    while (reader.Read())
+                    reader.Read();
+
+                    for (int row = rowStart; row <= rowEnd; row++)
                     {
-                        if (index == 1)
+                        int i = 0, j = 0;
+                        var value = reader[columnNames[j++]]?.ToString() ?? "0";
+                        var arraySum = ChuYeuData.SumOfChuYeuData(section);
+                        reoGridControl1.CurrentWorksheet.SetCellData(row, 3, value);
+                        if (i != 0)
                         {
-
-                            for (int row = rowStart; row <= rowEnd; row++)
-                            {
-                                int i = 1, j = 0;
-                                var value = reader[columnName[j++]]?.ToString() ?? "0";
-                                var arraySum = ChuYeuData.SumOfChuYeuData(section);
-                                reoGridControl1.CurrentWorksheet.SetCellData(row, 3, value);
-                                if (i != 0)
-                                {
-                                    reoGridControl1.CurrentWorksheet.SetCellData(row, 4, arraySum[i++]);
-                                }
-                            }
+                            reoGridControl1.CurrentWorksheet.SetCellData(row, 4, arraySum[columnNames[i++]]);
                         }
-                        index++;
                     }
-
                 }
 
             }
+
         }
+
     }
 }
 

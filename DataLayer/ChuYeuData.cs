@@ -16,11 +16,12 @@ namespace BoDoiApp.DataLayer
         private const string connectionString = "Data Source=data.db;Version=3;";
 
         public static bool ThemThongTin(
+            string ll,
             string quanSo,
             string sn, string tl, string trl, string dl, string b41_m79,
             string luuDan,
             string coi60, string coi82, string coi100,
-            string pctSpg9,
+            string pctSpg9,string on,string db,
             string phaoPk127, string option)
         {
             try
@@ -30,20 +31,22 @@ namespace BoDoiApp.DataLayer
                     connection.Open();
 
                     string sql = @"INSERT INTO trangkithuat 
-                              (quan_so, sn, tl, trl, dl, b41_m79,
+                              (ll,quan_so, sn, tl, trl, dl, b41_m79,
                                luu_dan, coi_60, coi_82, coi_100,
-                               pct_spg9, phao_pk_127,
+                               pct_spg9, phao_pk_127,ons,db,
                                User, option)
                                VALUES
-                              (@quan_so, @sn, @tl, @trl, @dl, @b41_m79,
+                              (@ll,@quan_so, @sn, @tl, @trl, @dl, @b41_m79,
                                @luu_dan, @coi_60, @coi_82, @coi_100,
-                               @pct_spg9, @phao_pk_127,
+                               @pct_spg9, @phao_pk_127, @ons, @db, 
                                @User, @option)";
 
                     using (var command = new SQLiteCommand(sql, connection))
                     {
+                        command.Parameters.AddWithValue("@ll", ll ?? "");
                         command.Parameters.AddWithValue("@quan_so", quanSo ?? "");
-
+                        command.Parameters.AddWithValue("@ons",on ?? "");
+                        command.Parameters.AddWithValue("@db",db ?? "");
                         command.Parameters.AddWithValue("@sn", sn ?? "");
                         command.Parameters.AddWithValue("@tl", tl ?? "");
                         command.Parameters.AddWithValue("@trl", trl ?? "");
@@ -77,35 +80,40 @@ namespace BoDoiApp.DataLayer
         {
             for (int i = 5; i <= endRow; i++)
             {
-                string quanSo = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
-                string sn = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
-                string tl = data.CurrentWorksheet.GetCellData(i, 4)?.ToString();
-                string trl = data.CurrentWorksheet.GetCellData(i, 5)?.ToString();
-                string dl = data.CurrentWorksheet.GetCellData(i, 6)?.ToString();
-                string b41_m79 = data.CurrentWorksheet.GetCellData(i, 7)?.ToString();
-                string luuDan = data.CurrentWorksheet.GetCellData(i, 8)?.ToString();
-                string coi60 = data.CurrentWorksheet.GetCellData(i, 9)?.ToString();
-                string coi82 = data.CurrentWorksheet.GetCellData(i, 10)?.ToString();
-                string coi100 = data.CurrentWorksheet.GetCellData(i, 11)?.ToString();
-                string pctSpg9 = data.CurrentWorksheet.GetCellData(i, 12)?.ToString();
-                string phaoPk127 = data.CurrentWorksheet.GetCellData(i, 13)?.ToString();
+                string ll = data.CurrentWorksheet.GetCellData(i,0)?.ToString();
+                string quanSo = data.CurrentWorksheet.GetCellData(i, 1)?.ToString();
+                string sn = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
+                string tl = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
+                string trl = data.CurrentWorksheet.GetCellData(i, 4)?.ToString();
+                string dl = data.CurrentWorksheet.GetCellData(i, 5)?.ToString();
+                string b41_m79 = data.CurrentWorksheet.GetCellData(i, 6)?.ToString();
+                string luuDan = data.CurrentWorksheet.GetCellData(i, 7)?.ToString();
+                string coi60 = data.CurrentWorksheet.GetCellData(i, 8)?.ToString();
+                string coi82 = data.CurrentWorksheet.GetCellData(i, 9)?.ToString();
+                string coi100 = data.CurrentWorksheet.GetCellData(i, 10)?.ToString();
+                string pctSpg9 = data.CurrentWorksheet.GetCellData(i, 11)?.ToString();
+                string phaoPk127 = data.CurrentWorksheet.GetCellData(i, 12)?.ToString();
+                string on = data.CurrentWorksheet.GetCellData(i, 13)?.ToString();
+                string db = data.CurrentWorksheet.GetCellData(i, 14)?.ToString();
                 ThemThongTin(
+                    ll,
                     quanSo,
                     sn, tl, trl, dl, b41_m79,
                     luuDan,
                     coi60, coi82, coi100,
-                    pctSpg9,
+                    pctSpg9,on,db,
                     phaoPk127,
                     option);
             }
         }
 
         private static void UpdateThongTin(
+            string ll,
             string quanSo,
             string sn, string tl, string trl, string dl, string b41_m79,
             string luuDan,
             string coi60, string coi82, string coi100,
-            string pctSpg9,
+            string pctSpg9,string on, string db,
             string phaoPk127, string option)
         {
             try
@@ -114,13 +122,16 @@ namespace BoDoiApp.DataLayer
                 {   
                     connection.Open();
                     string sql = @"UPDATE trangkithuat SET 
-                                       sn = @sn, tl = @tl, trl = @trl, dl = @dl, b41_m79 = @b41_m79,
+                                       quan_so = @quan_so, sn = @sn, tl = @tl, trl = @trl, dl = @dl, b41_m79 = @b41_m79,
                                        luu_dan = @luu_dan, coi_60 = @coi_60, coi_82 = @coi_82, coi_100 = @coi_100,
-                                       pct_spg9 = @pct_spg9, phao_pk_127 = @phao_pk_127
-                                       WHERE quan_so = @quan_so AND User = @User AND option = @option";
+                                       pct_spg9 = @pct_spg9, phao_pk_127 = @phao_pk_127, ons = @ons, db = @db,
+                                       WHERE ll = @ll AND User = @User AND option = @option";
                     using (var command = new SQLiteCommand(sql, connection))
                     {
+                        command.Parameters.AddWithValue("@ll", ll ?? "");
                         command.Parameters.AddWithValue("@quan_so", quanSo ?? "");
+                        command.Parameters.AddWithValue("@ons", on ?? "");
+                        command.Parameters.AddWithValue("@db", db ?? "");
                         command.Parameters.AddWithValue("@sn", sn ?? "");
                         command.Parameters.AddWithValue("@tl", tl ?? "");
                         command.Parameters.AddWithValue("@trl", trl ?? "");
@@ -147,30 +158,34 @@ namespace BoDoiApp.DataLayer
         {
             for (int i = 5; i <= endRow; i++)
             {
-                string quanSo = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
-                string sn = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
-                string tl = data.CurrentWorksheet.GetCellData(i, 4)?.ToString();
-                string trl = data.CurrentWorksheet.GetCellData(i, 5)?.ToString();
-                string dl = data.CurrentWorksheet.GetCellData(i, 6)?.ToString();
-                string b41_m79 = data.CurrentWorksheet.GetCellData(i, 7)?.ToString();
-                string luuDan = data.CurrentWorksheet.GetCellData(i, 8)?.ToString();
-                string coi60 = data.CurrentWorksheet.GetCellData(i, 9)?.ToString();
-                string coi82 = data.CurrentWorksheet.GetCellData(i, 10)?.ToString();
-                string coi100 = data.CurrentWorksheet.GetCellData(i, 11)?.ToString();
-                string pctSpg9 = data.CurrentWorksheet.GetCellData(i, 12)?.ToString();
-                string phaoPk127 = data.CurrentWorksheet.GetCellData(i, 13)?.ToString();
+                string ll = data.CurrentWorksheet.GetCellData(i, 0)?.ToString();
+                string quanSo = data.CurrentWorksheet.GetCellData(i, 1)?.ToString();
+                string sn = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
+                string tl = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
+                string trl = data.CurrentWorksheet.GetCellData(i, 4)?.ToString();
+                string dl = data.CurrentWorksheet.GetCellData(i, 5)?.ToString();
+                string b41_m79 = data.CurrentWorksheet.GetCellData(i, 6)?.ToString();
+                string luuDan = data.CurrentWorksheet.GetCellData(i, 7)?.ToString();
+                string coi60 = data.CurrentWorksheet.GetCellData(i, 8)?.ToString();
+                string coi82 = data.CurrentWorksheet.GetCellData(i, 9)?.ToString();
+                string coi100 = data.CurrentWorksheet.GetCellData(i, 10)?.ToString();
+                string pctSpg9 = data.CurrentWorksheet.GetCellData(i, 11)?.ToString();
+                string phaoPk127 = data.CurrentWorksheet.GetCellData(i, 12)?.ToString();
+                string on = data.CurrentWorksheet.GetCellData(i, 13)?.ToString();
+                string db = data.CurrentWorksheet.GetCellData(i, 14)?.ToString();
                 UpdateThongTin(
+                    ll,
                     quanSo,
                     sn, tl, trl, dl, b41_m79,
                     luuDan,
                     coi60, coi82, coi100,
-                    pctSpg9,
+                    pctSpg9,on,db,
                     phaoPk127,
                     option);
             }
         }
 
-        public static int[] SumOfChuYeuData(string option)
+        public static Dictionary<string,int> SumOfChuYeuData(string option)
         {
 
             string sql = @"
@@ -203,27 +218,32 @@ namespace BoDoiApp.DataLayer
 
                     using (var reader = command.ExecuteReader())
                     {
-                        var result = new int[12];
-
-                        int GetInt32OrZero(int ordinal)
+                        var result = new Dictionary<string, int>
                         {
-                            return reader.IsDBNull(ordinal) ? 0 : Convert.ToInt32(reader.GetValue(ordinal));
-                        }
+                            { "sum_quan_so", 0 },
+                            { "sum_sn", 0 },
+                            { "sum_tl", 0 },
+                            { "sum_trl", 0 },
+                            { "sum_dl", 0 },
+                            { "sum_b41_m79", 0 },
+                            { "sum_luu_dan", 0 },
+                            { "sum_coi_60", 0 },
+                            { "sum_coi_82", 0 },
+                            { "sum_coi_100", 0 },
+                            { "sum_pct_spg9", 0 },
+                            { "sum_phao_pk_127", 0 }
+                        };
 
                         while (reader.Read())
                         {
-                            result[0] += GetInt32OrZero(0);   // quan_so
-                            result[1] += GetInt32OrZero(11);  // phao_pk_127
-                            result[2] += GetInt32OrZero(9);   // coi_100
-                            result[3] += GetInt32OrZero(8);   // coi_82
-                            result[4] += GetInt32OrZero(7);   // coi_60
-                            result[5] += GetInt32OrZero(10);  // pct_spg9
-                            result[6] += GetInt32OrZero(5);   // b41_m79
-                            result[7] += GetInt32OrZero(4);   // dl
-                            result[8] += GetInt32OrZero(3);   // trl
-                            result[9] += GetInt32OrZero(2);   // tl
-                            result[10] += GetInt32OrZero(1);  // sn
-                            result[11] += GetInt32OrZero(6);  // luu_dan
+                            foreach (var key in result.Keys.ToList())
+                            {
+                                var value = reader[key]?.ToString() ?? "0";
+                                if (int.TryParse(value, out int intValue))
+                                {
+                                    result[key] = intValue;
+                                }
+                            }
                         }
 
                         return result;
@@ -233,7 +253,7 @@ namespace BoDoiApp.DataLayer
             catch (SQLiteException ex)
             {
                 MessageBox.Show($"Đã xảy ra lỗi khi tính tổng: {ex.Message}\nError Code: {ex.ErrorCode}");
-                return new int[12];
+                return new Dictionary<string, int>();
             }
         }
     }
