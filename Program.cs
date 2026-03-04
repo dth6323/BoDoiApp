@@ -51,6 +51,7 @@ namespace BoDoiApp
                 command4.ExecuteNonQuery();
                 var sql5 = @"CREATE TABLE IF NOT EXISTS trangkithuat (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ll TEXT NOT NULL,
                     quan_so TEXT NOT NULL, 
                     sn TEXT NULL, 
                     tl TEXT NULL, 
@@ -62,7 +63,9 @@ namespace BoDoiApp
                     coi_82 TEXT NULL, 
                     coi_100 TEXT NULL, 
                     pct_spg9 TEXT NULL, 
-                    phao_pk_127 TEXT NULL, 
+                    phao_pk_127 TEXT NULL,
+                    ons TEXT NULL,
+                    db TEXT NULL,
                     User TEXT NULL, 
                     option TEXT NOT NULL
                 );";

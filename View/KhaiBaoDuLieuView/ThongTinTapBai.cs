@@ -13,7 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
-    public partial class ThongTinTapBai : Form
+    public partial class ThongTinTapBai : UserControl
     {
         ThongTinTapBaiData thongTinTapBai = new ThongTinTapBaiData();
         bool isAddingNew = true;
@@ -52,6 +52,33 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         }
 
         private void btn_luu_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btn_thoat_Click(object sender, EventArgs e)
+        {
+            if (FormMana.KhaiBaoDuLieu == null)
+            {
+                MessageBox.Show("Form KhaiBaoDuLieu đang NULL");
+                return;
+            }
+
+            FormMana.KhaiBaoDuLieu.Show();
+            this.Hide();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Form1());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
         {
             string thongTinTapBai = txt_tenvankien.Text;
             string viTriChiHuy = txt_vtch.Text;
@@ -92,21 +119,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 if (result)
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thành công");
             }
+            NavigationService.Navigate(new BienChe());
         }
-
-        private void btn_thoat_Click(object sender, EventArgs e)
-        {
-            if (FormMana.KhaiBaoDuLieu == null)
-            {
-                MessageBox.Show("Form KhaiBaoDuLieu đang NULL");
-                return;
-            }
-
-            FormMana.KhaiBaoDuLieu.Show();
-            this.Hide();
-        }
-
-
-
     }
 }

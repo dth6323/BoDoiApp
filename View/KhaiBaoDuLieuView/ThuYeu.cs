@@ -99,7 +99,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void LoadDataWithUser()
         {
             reoGridControl1.Load(EXCEL_PATH);
-
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[1];
             string sql = $"SELECT * FROM trangkithuat WHERE User = @User AND option = @Option";
             try
             {
@@ -117,6 +117,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             int row = startRow;
                             while (reader.Read())
                             {
+                                ws.SetCellData(row, 0, reader["ll"]?.ToString());
                                 ws.SetCellData(row, 1, reader["quan_so"]?.ToString());
                                 ws.SetCellData(row, 2, reader["sn"]?.ToString());
                                 ws.SetCellData(row, 3, reader["tl"]?.ToString());

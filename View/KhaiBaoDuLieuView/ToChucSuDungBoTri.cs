@@ -21,10 +21,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(textBoxSuDung.Text == string.Empty || textboxToChuc.Text == string.Empty)
+            if(textBoxSuDung.Text != string.Empty || textboxToChuc.Text != string.Empty)
             {
-                MessageBox.Show("Bạn có chắc muốn rồi đi?", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if(MessageBox.Show("Bạn có chắc muốn rồi đi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                    return;
             }
             NavigationService.Back();
         }

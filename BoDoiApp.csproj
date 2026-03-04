@@ -139,6 +139,7 @@
     <Compile Include="DataLayer\BaoDamSinhHoatData.cs" />
     <Compile Include="DataLayer\BaoDuongSuaChuaData.cs" />
     <Compile Include="DataLayer\ChuYeuData.cs" />
+    <Compile Include="DataLayer\DanData.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\RichTextBoxData.cs" />
@@ -233,7 +234,7 @@
       <DependentUpon>QuyDinhDuTruTieuThuBoSungVatChat.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThongTinTapBai.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThongTinTapBai.Designer.cs">
       <DependentUpon>ThongTinTapBai.cs</DependentUpon>
@@ -384,6 +385,12 @@
     </Compile>
     <Compile Include="View\VIIIBaoDuongSuaChua\_3CanDoiVaYdinhBaoDam.Designer.cs">
       <DependentUpon>_3CanDoiVaYdinhBaoDam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\Dan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\Dan.Designer.cs">
+      <DependentUpon>Dan.cs</DependentUpon>
     </Compile>
     <Compile Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.cs">
       <SubType>UserControl</SubType>
@@ -553,6 +560,9 @@
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\_3CanDoiVaYdinhBaoDam.resx">
       <DependentUpon>_3CanDoiVaYdinhBaoDam.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\Dan.resx">
+      <DependentUpon>Dan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.resx">
       <DependentUpon>_1ChiTieu.cs</DependentUpon>
     </EmbeddedResource>
@@ -574,7 +584,6 @@
     <EmbeddedResource Include="View\IIIToChucSuDung\_2BoTri.resx">
       <DependentUpon>_2BoTri.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="BoDoiApp_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -589,6 +598,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Sheet\Book2.xlsx" />
+    <None Include="Resources\Sheet\Dan.xlsx" />
+    <None Include="Resources\Sheet\QS.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

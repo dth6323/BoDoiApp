@@ -56,12 +56,11 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             var userName = Properties.Settings.Default.Username;
             if (string.IsNullOrWhiteSpace(userName))
                 return;
-
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[4];
             var sheet = reoGridControl1?.CurrentWorksheet;
             if (sheet == null)
                 throw new InvalidOperationException("Current worksheet is not available.");
 
-            // Column mapping (0-based). Keep consistent with Save/Update methods.
             const int COL_TT = 0;
             const int COL_LOAIVATCHAT = 1;
             const int COL_DVT = 2;

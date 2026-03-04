@@ -41,16 +41,15 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 13F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(853, 468);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 720);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // flowLayoutPanel1
@@ -59,26 +58,28 @@
             this.flowLayoutPanel1.Controls.Add(this.btn_kbdl);
             this.flowLayoutPanel1.Controls.Add(this.btn_dkkhbdhckt);
             this.flowLayoutPanel1.Controls.Add(this.btn_khbdhckt);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(137, 152);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(373, 234);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(579, 163);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(534, 251);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // btn_kbdl
             // 
-            this.btn_kbdl.Location = new System.Drawing.Point(3, 3);
+            this.btn_kbdl.Location = new System.Drawing.Point(4, 5);
+            this.btn_kbdl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_kbdl.Name = "btn_kbdl";
-            this.btn_kbdl.Size = new System.Drawing.Size(102, 144);
+            this.btn_kbdl.Size = new System.Drawing.Size(153, 222);
             this.btn_kbdl.TabIndex = 0;
             this.btn_kbdl.Text = "Khai báo dữ liệu";
             this.btn_kbdl.UseVisualStyleBackColor = true;
+            this.btn_kbdl.Click += new System.EventHandler(this.btn_kbdl_Click);
             // 
             // btn_dkkhbdhckt
             // 
-            this.btn_dkkhbdhckt.Location = new System.Drawing.Point(111, 3);
+            this.btn_dkkhbdhckt.Location = new System.Drawing.Point(165, 5);
+            this.btn_dkkhbdhckt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_dkkhbdhckt.Name = "btn_dkkhbdhckt";
-            this.btn_dkkhbdhckt.Size = new System.Drawing.Size(116, 144);
+            this.btn_dkkhbdhckt.Size = new System.Drawing.Size(174, 222);
             this.btn_dkkhbdhckt.TabIndex = 0;
             this.btn_dkkhbdhckt.Text = "Dự kiến kế hoạch bảo đảm hậu cần, kỹ thuật";
             this.btn_dkkhbdhckt.UseVisualStyleBackColor = true;
@@ -86,20 +87,22 @@
             // 
             // btn_khbdhckt
             // 
-            this.btn_khbdhckt.Location = new System.Drawing.Point(233, 3);
+            this.btn_khbdhckt.Location = new System.Drawing.Point(347, 5);
+            this.btn_khbdhckt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_khbdhckt.Name = "btn_khbdhckt";
-            this.btn_khbdhckt.Size = new System.Drawing.Size(115, 144);
+            this.btn_khbdhckt.Size = new System.Drawing.Size(172, 222);
             this.btn_khbdhckt.TabIndex = 0;
             this.btn_khbdhckt.Text = "Kế hoạch bảo đảm hậu cần kỹ thuật";
             this.btn_khbdhckt.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
-            this.Size = new System.Drawing.Size(853, 468);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
