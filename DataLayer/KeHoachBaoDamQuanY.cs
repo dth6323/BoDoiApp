@@ -9,7 +9,7 @@ using unvell.ReoGrid;
 
 namespace BoDoiApp.DataLayer
 {
-    internal class BaoDamQuanYData
+    internal class KeHoachBaoDamQuanY
     {
         private const string connectionString = "Data Source=data.db;Version=3;";
         private static double GetDouble(object value)
@@ -32,7 +32,7 @@ namespace BoDoiApp.DataLayer
                     try
                     {
                         // Xóa dữ liệu cũ theo user
-                        string deleteSql = "DELETE FROM baodam_quany WHERE User=@User";
+                        string deleteSql = "DELETE FROM kehoach_baodam_quany WHERE User=@User";
                         using (var deleteCmd = new SQLiteCommand(deleteSql, connection, transaction))
                         {
                             deleteCmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
@@ -41,12 +41,12 @@ namespace BoDoiApp.DataLayer
 
                         var ws = grid.CurrentWorksheet;
 
-                        string insertSql = @"INSERT INTO baodam_quany
+                        string insertSql = @"INSERT INTO kehoach_baodam_quany
                 (quan_so, tb_qs, tb_nguoi, tbhh_qs, tbhh_nguoi,
-                 bb_qs, bb_nguoi, cong_nguoi, User)
+                 bb_qs, bb_nguoi, cong_nguoi, cang_bo, tu_di, tong, User)
                 VALUES
                 (@quan_so, @tb_qs, @tb_nguoi, @tbhh_qs, @tbhh_nguoi,
-                 @bb_qs, @bb_nguoi, @cong_nguoi, @User)";
+                 @bb_qs, @bb_nguoi, @cong_nguoi,@cang_bo,@tu_di,@tong, @User)";
 
                         using (var cmd = new SQLiteCommand(insertSql, connection, transaction))
                         {
@@ -58,6 +58,9 @@ namespace BoDoiApp.DataLayer
                             cmd.Parameters.Add("@bb_qs", System.Data.DbType.Double);
                             cmd.Parameters.Add("@bb_nguoi", System.Data.DbType.Double);
                             cmd.Parameters.Add("@cong_nguoi", System.Data.DbType.Double);
+                            cmd.Parameters.Add("@cang_bo", System.Data.DbType.Double);
+                            cmd.Parameters.Add("@tu_di", System.Data.DbType.Double);
+                            cmd.Parameters.Add("@tong", System.Data.DbType.Double);
                             cmd.Parameters.Add("@User", System.Data.DbType.String);
 
                             // Dòng 4 → 12 (index 3 → 11)
@@ -71,6 +74,9 @@ namespace BoDoiApp.DataLayer
                                 cmd.Parameters["@bb_qs"].Value = GetDouble(ws.GetCellData(row, 7));
                                 cmd.Parameters["@bb_nguoi"].Value = GetDouble(ws.GetCellData(row, 8));
                                 cmd.Parameters["@cong_nguoi"].Value = GetDouble(ws.GetCellData(row, 9));
+                                cmd.Parameters["@cang_bo"].Value = GetDouble(ws.GetCellData(row, 10));
+                                cmd.Parameters["@tu_di"].Value = GetDouble(ws.GetCellData(row, 10));
+                                cmd.Parameters["@tong"].Value = GetDouble(ws.GetCellData(row, 11));
                                 cmd.Parameters["@User"].Value = Properties.Settings.Default.Username;
 
                                 cmd.ExecuteNonQuery();
@@ -94,7 +100,7 @@ namespace BoDoiApp.DataLayer
             {
                 connection.Open();
 
-                string sql = "SELECT * FROM baodam_quany WHERE User=@User";
+                string sql = "SELECT * FROM kehoach_baodam_quany WHERE User=@User";
 
                 using (var cmd = new SQLiteCommand(sql, connection))
                 {
@@ -115,6 +121,9 @@ namespace BoDoiApp.DataLayer
                             ws.SetCellData(row, 7, reader["bb_qs"]);
                             ws.SetCellData(row, 8, reader["bb_nguoi"]);
                             ws.SetCellData(row, 9, reader["cong_nguoi"]);
+                            ws.SetCellData(row, 10, reader["cang_bo"]);
+                            ws.SetCellData(row, 11, reader["tu_di"]);
+                            ws.SetCellData(row, 12, reader["tong"]);
 
                             row++;
                         }

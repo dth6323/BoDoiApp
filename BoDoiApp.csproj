@@ -61,7 +61,13 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML, Version=0.105.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
@@ -143,10 +149,12 @@
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\RichTextBoxData.cs" />
+    <Compile Include="DataLayer\SuaChuaData.cs" />
     <Compile Include="DataLayer\ThongTinTepBaiData.cs" />
     <Compile Include="DataLayer\ToChucBienCheData.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
+	<Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
       <SubType>UserControl</SubType>
@@ -348,6 +356,12 @@
     </Compile>
     <Compile Include="View\IXCongTacVanTai\_4YdinhVanChuyen.Designer.cs">
       <DependentUpon>_4YdinhVanChuyen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\KeHoachBaoDamQuanY.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VIIBaoDamQuanY\KeHoachBaoDamQuanY.Designer.cs">
+      <DependentUpon>KeHoachBaoDamQuanY.cs</DependentUpon>
     </Compile>
     <Compile Include="View\VIIBaoDamQuanY\_1BaoDamQuanY.cs">
       <SubType>UserControl</SubType>
@@ -585,6 +599,7 @@
       <DependentUpon>_2BoTri.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -600,6 +615,9 @@
     <None Include="Resources\Sheet\Book2.xlsx" />
     <None Include="Resources\Sheet\Dan.xlsx" />
     <None Include="Resources\Sheet\QS.xlsx" />
+    <Content Include="Resources\Sheet\Book2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

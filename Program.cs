@@ -4,6 +4,7 @@ using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
 using System.Data.SQLite;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace BoDoiApp
@@ -16,9 +17,15 @@ namespace BoDoiApp
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// 
+        [DllImport("kernel32.dll")]
+        static extern bool AllocConsole();
         [STAThread]
         static void Main()
         {
+            AllocConsole(); // mở console
+
+            Console.WriteLine("Console đã mở!");
             InitializeDatabase();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -87,6 +94,49 @@ namespace BoDoiApp
                 );";
                 var command7 = new SQLiteCommand(sql7, connection);
                 command7.ExecuteNonQuery();
+                var sql8 = @"CREATE TABLE IF NOT EXISTS suachua_tbkt (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ty_le_hu_hong REAL DEFAULT 0, 
+                    nhe INTEGER DEFAULT 0,
+                    vua INTEGER DEFAULT 0,
+                    nang INTEGER DEFAULT 0,
+                    huy INTEGER DEFAULT 0,
+                    cong INTEGER DEFAULT 0, 
+                    User TEXT NOT NULL
+                );";
+                var command8 = new SQLiteCommand(sql8, connection);
+                command8.ExecuteNonQuery();
+                var sql9 = @"CREATE TABLE IF NOT EXISTS baodam_quany (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    quan_so REAL,
+                    tb_qs REAL,
+                    tb_nguoi REAL,
+                    tbhh_qs REAL,
+                    tbhh_nguoi REAL,
+                    bb_qs REAL,
+                    bb_nguoi REAL,
+                    cong_nguoi REAL,
+                    User TEXT
+                );";
+                var command9 = new SQLiteCommand(sql9, connection);
+                command9.ExecuteNonQuery();
+                var sql10 = @"CREATE TABLE IF NOT EXISTS kehoach_baodam_quany (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    quan_so REAL,
+                    tb_qs REAL,
+                    tb_nguoi REAL,
+                    tbhh_qs REAL,
+                    tbhh_nguoi REAL,
+                    bb_qs REAL,
+                    bb_nguoi REAL,
+                    cong_nguoi REAL,
+                    cang_bo REAL,
+                    tu_di REAL,
+                    tong REAL,
+                    User TEXT
+                );";
+                var command10 = new SQLiteCommand(sql10, connection);
+                command10.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

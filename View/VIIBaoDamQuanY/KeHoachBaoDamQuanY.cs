@@ -1,14 +1,20 @@
 ﻿using BoDoiApp.DataLayer;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.ReoGrid;
 
 namespace BoDoiApp.View.VIIBaoDamQuanY
 {
-    public partial class _1BaoDamQuanY : UserControl
+    public partial class KeHoachBaoDamQuanY : UserControl
     {
         private static readonly string BaseDir =
             AppDomain.CurrentDomain.BaseDirectory;
@@ -17,15 +23,12 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             Path.Combine(BaseDir, "Resources", "Sheet", "Book2.xlsx");
 
         private ReoGridControl reoGridControl1;
-
-        public _1BaoDamQuanY()
+        public KeHoachBaoDamQuanY()
         {
             InitializeComponent();
-            Dock = DockStyle.Fill;
-            Load += _1BaoDamQuanY_Load;
         }
 
-        private void _1BaoDamQuanY_Load(object sender, EventArgs e)
+        private void KeHoachBaoDamQuanY_Load(object sender, EventArgs e)
         {
             Controls.Clear();
             AutoScaleMode = AutoScaleMode.None;
@@ -164,7 +167,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             // ===== Chọn sheet sửa chữa =====
             reoGridControl1.CurrentWorksheet =
-                reoGridControl1.Worksheets["BaoDamQuanY"];
+                reoGridControl1.Worksheets["KeHoachBaoDamQuanY"];
 
             var ws = reoGridControl1.CurrentWorksheet;
 
@@ -197,7 +200,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             // Ẩn sheet tab
             reoGridControl1.SheetTabVisible = false;
-            ws.HideColumns(10, ws.ColumnCount - 10);
+            ws.HideColumns(13, ws.ColumnCount - 13);
 
             // Ẩn dòng 15 trở đi
             ws.HideRows(12, ws.RowCount - 12);
