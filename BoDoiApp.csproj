@@ -187,6 +187,12 @@
     <Compile Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.Designer.cs">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\IXCongTacVanTai\KeHoach9_2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\KeHoach9_2.Designer.cs">
+      <DependentUpon>KeHoach9_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\KeHoach1\_1DanhGia.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -480,6 +486,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.resx">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\KeHoach9_2.resx">
+      <DependentUpon>KeHoach9_2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KeHoach1\_1DanhGia.resx">
       <DependentUpon>_1DanhGia.cs</DependentUpon>

@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.ReoGrid;
 
-namespace BoDoiApp.View.VIIIBaoDuongSuaChua
+namespace BoDoiApp.View.IXCongTacVanTai
 {
-    public partial class KeHoachSuaChua : UserControl
+    public partial class KeHoach9_2 : UserControl
     {
         private static readonly string BaseDir =
             AppDomain.CurrentDomain.BaseDirectory;
@@ -22,15 +23,14 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Path.Combine(BaseDir, "Resources", "Sheet", "Book2.xlsx");
 
         private ReoGridControl reoGridControl1;
-        public KeHoachSuaChua()
+        public KeHoach9_2()
         {
             InitializeComponent();
-            Dock = DockStyle.Fill;
         }
 
-        private void KeHoachSuaChua_Load(object sender, EventArgs e)
+        private void KeHoach9_2_Load(object sender, EventArgs e)
         {
-             
+
             Controls.Clear();
             AutoScaleMode = AutoScaleMode.None;
 
@@ -91,7 +91,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.None,
+                Anchor = AnchorStyles.Left,
                 AutoSize = true
             };
 
@@ -107,7 +107,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
-                Anchor = AnchorStyles.None,
+                Anchor = AnchorStyles.Left,
                 AutoSize = true
             };
 
@@ -123,7 +123,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Button btnSave = new Button
             {
                 Text = "Lưu",
-                Anchor = AnchorStyles.None,
+                Anchor = AnchorStyles.Left,
                 AutoSize = true
             };
 
@@ -133,20 +133,28 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 
 
             // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
+            Panel rightPanel = new Panel
+            {
+                Dock = DockStyle.Fill
+            };
+
+            bottom.Controls.Add(rightPanel, 3, 0);
 
 
             // ===== NÚT TIẾP =====
             Button btnTiep = new Button();
             btnTiep.Text = "Tiếp";
-            btnTiep.Anchor =  AnchorStyles.None;
-            btnTiep.AutoSize=true;
+            btnTiep.Size = new Size(100, 30);
+            btnTiep.Location = new Point(this.ClientSize.Width - 120, this.ClientSize.Height - 50);
+            btnTiep.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
 
             btnTiep.Click += (s, e2) =>
             {
                 NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
             };
 
-            bottom.Controls.Add(btnTiep);
+            rightPanel.Controls.Add(btnTiep);
         }
 
         // =============================
@@ -164,7 +172,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 
             // ===== Chọn sheet sửa chữa =====
             reoGridControl1.CurrentWorksheet =
-                reoGridControl1.Worksheets["KeHoachSuaChua"];
+                reoGridControl1.Worksheets["KeHoach9.2"];
 
             var ws = reoGridControl1.CurrentWorksheet;
 

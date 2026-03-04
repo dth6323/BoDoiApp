@@ -161,6 +161,10 @@ namespace BoDoiApp
                 );";
                 var command11 = new SQLiteCommand(sql11, connection);
                 command11.ExecuteNonQuery();
+                //var sql12 = @"
+                //";
+                //var command12 = new SQLiteCommand(sql12, connection);
+                //command12.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

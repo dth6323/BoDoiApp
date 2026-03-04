@@ -25,6 +25,7 @@ namespace BoDoiApp.DataLayer
         {
             grid.Focus();
             Application.DoEvents();
+
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
@@ -33,8 +34,8 @@ namespace BoDoiApp.DataLayer
                 {
                     try
                     {
-                        // Xóa dữ liệu cũ theo user
-                        string deleteSql = "DELETE FROM kehoach_suachua_tbkt WHERE User=@User";
+                        // Xóa dữ liệu cũ theo User
+                        string deleteSql = "DELETE FROM kehoachsuachua WHERE User=@User";
                         using (var deleteCmd = new SQLiteCommand(deleteSql, connection, transaction))
                         {
                             deleteCmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
@@ -43,23 +44,25 @@ namespace BoDoiApp.DataLayer
 
                         var ws = grid.CurrentWorksheet;
 
-                        string insertSql = @"INSERT INTO kehoach_suachua_tbkt
-                        (ty_le_hu_hong, nhe, vua, nang, huy, cong, User)
-                        VALUES
-                        (@ty_le, @nhe, @vua, @nang, @huy, @cong, @User)";
+                        string insertSql = @"
+                INSERT INTO kehoachsuachua (
+                    loai_tbkt, so_luong, ty_le_hu_hong,
+                    tong_nhe, tong_vua, tong_nang, tong_huy, tong_cong,
+                    kha_nhe, kha_vua, kha_cong,
+                    con_nhe, con_vua, con_nang, con_huy, con_cong,
+                    User
+                )
+                VALUES (
+                    @loai, @soluong, @tyle,
+                    @tong_nhe, @tong_vua, @tong_nang, @tong_huy, @tong_cong,
+                    @kha_nhe, @kha_vua, @kha_cong,
+                    @con_nhe, @con_vua, @con_nang, @con_huy, @con_cong,
+                    @User
+                )";
 
                         using (var cmd = new SQLiteCommand(insertSql, connection, transaction))
                         {
-                            // Tạo parameter trước
-                            cmd.Parameters.Add("@ty_le", System.Data.DbType.Double);
-                            cmd.Parameters.Add("@nhe", System.Data.DbType.Double);
-                            cmd.Parameters.Add("@vua", System.Data.DbType.Double);
-                            cmd.Parameters.Add("@nang", System.Data.DbType.Double);
-                            cmd.Parameters.Add("@huy", System.Data.DbType.Double);
-                            cmd.Parameters.Add("@cong", System.Data.DbType.Double);
-                            cmd.Parameters.Add("@User", System.Data.DbType.String);
-
-                            int row = 3; // dòng đầu dữ liệu (theo ảnh của bạn)
+                            int row = 4; // dòng bắt đầu dữ liệu thực tế (theo ảnh)
 
                             while (true)
                             {
@@ -67,13 +70,33 @@ namespace BoDoiApp.DataLayer
                                 if (string.IsNullOrWhiteSpace(loai))
                                     break;
 
-                                cmd.Parameters["@ty_le"].Value = GetDouble(ws.GetCellData(row, 2));
-                                cmd.Parameters["@nhe"].Value = GetDouble(ws.GetCellData(row, 3));
-                                cmd.Parameters["@vua"].Value = GetDouble(ws.GetCellData(row, 4));
-                                cmd.Parameters["@nang"].Value = GetDouble(ws.GetCellData(row, 5));
-                                cmd.Parameters["@huy"].Value = GetDouble(ws.GetCellData(row, 6));
-                                cmd.Parameters["@cong"].Value = GetDouble(ws.GetCellData(row, 7));
-                                cmd.Parameters["@User"].Value = Properties.Settings.Default.Username;
+                                cmd.Parameters.Clear();
+
+                                cmd.Parameters.AddWithValue("@loai", loai);
+                                cmd.Parameters.AddWithValue("@soluong", GetDouble(ws.GetCellData(row, 2)));
+                                cmd.Parameters.AddWithValue("@tyle", GetDouble(ws.GetCellData(row, 3)));
+
+                                // Tổng số hư hỏng
+                                cmd.Parameters.AddWithValue("@tong_nhe", GetDouble(ws.GetCellData(row, 4)));
+                                cmd.Parameters.AddWithValue("@tong_vua", GetDouble(ws.GetCellData(row, 5)));
+                                cmd.Parameters.AddWithValue("@tong_nang", GetDouble(ws.GetCellData(row, 6)));
+                                cmd.Parameters.AddWithValue("@tong_huy", GetDouble(ws.GetCellData(row, 7)));
+                                cmd.Parameters.AddWithValue("@tong_cong", GetDouble(ws.GetCellData(row, 8)));
+
+                                // Khả năng sửa chữa
+                                cmd.Parameters.AddWithValue("@kha_nhe", GetDouble(ws.GetCellData(row, 9)));
+                                cmd.Parameters.AddWithValue("@kha_vua", GetDouble(ws.GetCellData(row, 10)));
+                                cmd.Parameters.AddWithValue("@kha_cong", GetDouble(ws.GetCellData(row, 11)));
+
+                                // Còn lại
+                                cmd.Parameters.AddWithValue("@con_nhe", GetDouble(ws.GetCellData(row, 12)));
+                                cmd.Parameters.AddWithValue("@con_vua", GetDouble(ws.GetCellData(row, 13)));
+                                cmd.Parameters.AddWithValue("@con_nang", GetDouble(ws.GetCellData(row, 14)));
+                                cmd.Parameters.AddWithValue("@con_huy", GetDouble(ws.GetCellData(row, 15)));
+                                cmd.Parameters.AddWithValue("@con_cong", GetDouble(ws.GetCellData(row, 16)));
+
+                                cmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
+
                                 cmd.ExecuteNonQuery();
                                 row++;
                             }
@@ -96,7 +119,7 @@ namespace BoDoiApp.DataLayer
             {
                 connection.Open();
 
-                string sql = "SELECT * FROM kehoach_suachua_tbkt WHERE User=@User";
+                string sql = "SELECT * FROM kehoachsuachua WHERE User=@User";
 
                 using (var cmd = new SQLiteCommand(sql, connection))
                 {
@@ -105,16 +128,30 @@ namespace BoDoiApp.DataLayer
                     using (var reader = cmd.ExecuteReader())
                     {
                         var ws = grid.CurrentWorksheet;
-                        int row = 3;
+                        int row = 4;
 
                         while (reader.Read())
                         {
-                            ws.SetCellData(row, 2, reader["ty_le_hu_hong"]);
-                            ws.SetCellData(row, 3, reader["nhe"]);
-                            ws.SetCellData(row, 4, reader["vua"]);
-                            ws.SetCellData(row, 5, reader["nang"]);
-                            ws.SetCellData(row, 6, reader["huy"]);
-                            ws.SetCellData(row, 7, reader["cong"]);
+                            ws.SetCellData(row, 1, reader["loai_tbkt"]);
+                            ws.SetCellData(row, 2, reader["so_luong"]);
+                            ws.SetCellData(row, 3, reader["ty_le_hu_hong"]);
+
+                            ws.SetCellData(row, 4, reader["tong_nhe"]);
+                            ws.SetCellData(row, 5, reader["tong_vua"]);
+                            ws.SetCellData(row, 6, reader["tong_nang"]);
+                            ws.SetCellData(row, 7, reader["tong_huy"]);
+                            ws.SetCellData(row, 8, reader["tong_cong"]);
+
+                            ws.SetCellData(row, 9, reader["kha_nhe"]);
+                            ws.SetCellData(row, 10, reader["kha_vua"]);
+                            ws.SetCellData(row, 11, reader["kha_cong"]);
+
+                            ws.SetCellData(row, 12, reader["con_nhe"]);
+                            ws.SetCellData(row, 13, reader["con_vua"]);
+                            ws.SetCellData(row, 14, reader["con_nang"]);
+                            ws.SetCellData(row, 15, reader["con_huy"]);
+                            ws.SetCellData(row, 16, reader["con_cong"]);
+
                             row++;
                         }
                     }
