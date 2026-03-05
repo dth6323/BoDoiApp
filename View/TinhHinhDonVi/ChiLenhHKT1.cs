@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.DataLayer.KhaiBao;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
 using System.Collections.Generic;
@@ -12,23 +13,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.ReoGrid;
 
-namespace BoDoiApp.View.VIIBaoDamQuanY
+namespace BoDoiApp.View.TinhHinhDonVi
 {
-    public partial class KeHoachBaoDamQuanY : UserControl
+    public partial class ChiLenhHKT1 : UserControl
     {
         private static readonly string BaseDir =
             AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book3.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "TinhHinhDonVi.xlsx");
 
         private ReoGridControl reoGridControl1;
-        public KeHoachBaoDamQuanY()
+        public ChiLenhHKT1()
         {
             InitializeComponent();
         }
 
-        private void KeHoachBaoDamQuanY_Load(object sender, EventArgs e)
+        private void ChiLenhHKT1_Load(object sender, EventArgs e)
         {
             Controls.Clear();
             AutoScaleMode = AutoScaleMode.None;
@@ -167,7 +168,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             // ===== Chọn sheet sửa chữa =====
             reoGridControl1.CurrentWorksheet =
-                reoGridControl1.Worksheets["KeHoachBaoDamQuanY"];
+                reoGridControl1.Worksheets["ChiLenhHCKT"];
 
             var ws = reoGridControl1.CurrentWorksheet;
 
@@ -180,36 +181,36 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
                 }
             }
 
-            // ===== 2. Mở khóa D5-D12 =====
-            for (int row = 4; row <= 11; row++) // 5 → 12 (index bắt đầu từ 0)
-            {
-                ws.Cells[row, 3].IsReadOnly = false; // Cột D (index 3)
-            }
+            // ===== 2. Danh sách dòng được phép sửa =====
+            List<int> editableRows = new List<int>();
 
-            // ===== 3. Mở khóa F5-F12 =====
-            for (int row = 4; row <= 11; row++)
-            {
-                ws.Cells[row, 5].IsReadOnly = false; // Cột F (index 5)
-            }
+            editableRows.AddRange(Enumerable.Range(3, 10)); // 5-14
+            editableRows.AddRange(Enumerable.Range(15, 5)); // 17-21
+            editableRows.AddRange(Enumerable.Range(21, 4)); // 23-26
+            editableRows.Add(26); // 28
+            editableRows.Add(27); // 29
 
-            // ===== 4. Mở khóa H5-H12 =====
-            for (int row = 4; row <= 11; row++)
+            // ===== 3. Mở khóa cột E -> H =====
+            foreach (var row in editableRows)
             {
-                ws.Cells[row, 7].IsReadOnly = false; // Cột H (index 7)
+                for (int col = 4; col <= 7; col++) // E-H
+                {
+                    ws.Cells[row, col].IsReadOnly = false;
+                }
             }
 
             // Ẩn sheet tab
             reoGridControl1.SheetTabVisible = false;
-            ws.HideColumns(13, ws.ColumnCount - 13);
+            ws.HideColumns(8, ws.ColumnCount - 8);
 
             // Ẩn dòng 15 trở đi
-            ws.HideRows(12, ws.RowCount - 12);
+            ws.HideRows(28, ws.RowCount - 28);
             // Load dữ liệu DB
-            BaoDamQuanYData.LoadAll(reoGridControl1);
+            ChiLenhHKT1Data.LoadAll(reoGridControl1);
         }
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            BaoDamQuanYData.SaveAll(reoGridControl1);
+            ChiLenhHKT1Data.SaveAll(reoGridControl1);
         }
     }
 }
