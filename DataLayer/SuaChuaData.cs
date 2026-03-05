@@ -40,12 +40,13 @@ namespace BoDoiApp.DataLayer
                         var ws = grid.CurrentWorksheet;
 
                         string insertSql = @"INSERT INTO suachua_tbkt
-                        (ty_le_hu_hong, nhe, vua, nang, huy, cong, User)
+                        (sl, ty_le_hu_hong, nhe, vua, nang, huy, cong, User)
                         VALUES
-                        (@ty_le, @nhe, @vua, @nang, @huy, @cong, @User)";
+                        (@sl, @ty_le, @nhe, @vua, @nang, @huy, @cong, @User)";
 
                         using (var cmd = new SQLiteCommand(insertSql, connection, transaction))
                         {
+                            cmd.Parameters.AddWithValue("@sl", System.Data.DbType.Double);
                             // Tạo parameter trước
                             cmd.Parameters.Add("@ty_le", System.Data.DbType.Double);
                             cmd.Parameters.Add("@nhe", System.Data.DbType.Double);
@@ -62,7 +63,7 @@ namespace BoDoiApp.DataLayer
                                 var loai = ws.GetCellData(row, 1)?.ToString();
                                 if (string.IsNullOrWhiteSpace(loai))
                                     break;
-
+                                cmd.Parameters["@sl"].Value = GetDouble(ws.GetCellData(row, 1));
                                 cmd.Parameters["@ty_le"].Value = GetDouble(ws.GetCellData(row, 2));
                                 cmd.Parameters["@nhe"].Value = GetDouble(ws.GetCellData(row, 3));
                                 cmd.Parameters["@vua"].Value = GetDouble(ws.GetCellData(row, 4));
@@ -105,6 +106,7 @@ namespace BoDoiApp.DataLayer
 
                         while (reader.Read())
                         {
+                            ws.SetCellData(row, 1, reader["sl"]);
                             ws.SetCellData(row, 2, reader["ty_le_hu_hong"]);
                             ws.SetCellData(row, 3, reader["nhe"]);
                             ws.SetCellData(row, 4, reader["vua"]);

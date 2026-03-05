@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using BoDoiApp.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +25,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
 
         private void _1DukienTinhHuong_Load(object sender, EventArgs e)
         {
+            var dataLayer = new RichTextBoxData();
             Controls.Clear();
             AutoScaleMode = AutoScaleMode.None;
 
@@ -103,6 +106,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
             btnNext.Click += (s, e2) =>
             {
                 NavigationService.Navigate(new _2BienPhap());
+                Savedata(txt.Text);
             };
             content.Controls.Add(btnNext, 2, 0);
 
@@ -178,6 +182,12 @@ namespace BoDoiApp.View.Baovehaucankythuat
             c.Font = new Font("Times New Roman", currentFontSize, c.Font.Style);
             foreach (Control child in c.Controls)
                 UpdateFont(child);
+        }
+
+        private void Savedata(string content)
+        {
+            var dataLayer = new RichTextBoxData();
+            dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, "X_DuKien");
         }
     }
 }

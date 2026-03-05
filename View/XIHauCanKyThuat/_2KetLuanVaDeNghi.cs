@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using BoDoiApp.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -116,12 +118,14 @@ namespace BoDoiApp.View.XIHauCanKyThuat
             box.Controls.Add(inner);
 
             // 1. Kết luận
+            var txt1 = MakeRichText();
             inner.Controls.Add(MakeSectionLabel("1. Kết luận"), 0, 0);
-            inner.Controls.Add(MakeRichText(), 0, 1);
+            inner.Controls.Add(txt1, 0, 1);
 
             // 2. Đề nghị
+            var txt2 = MakeRichText();
             inner.Controls.Add(MakeSectionLabel("2. Đề nghị"), 0, 2);
-            inner.Controls.Add(MakeRichText(), 0, 3);
+            inner.Controls.Add(txt2, 0, 3);
 
             // ===== BOTTOM =====
             TableLayoutPanel bottom = new TableLayoutPanel
@@ -136,7 +140,13 @@ namespace BoDoiApp.View.XIHauCanKyThuat
 
             bottom.Controls.Add(MakeBottomButton("Trở về", Color.FromArgb(252, 213, 180), DockStyle.Left), 0, 0);
             bottom.Controls.Add(MakeBottomButton("Trang\nchủ", Color.Yellow, DockStyle.Fill), 1, 0);
-            bottom.Controls.Add(MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right), 2, 0);
+            var btn = MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right);
+            btn.Click += (s, e1) =>
+            {
+                SaveData(txt1.Text, "XI_Ketluan");
+                SaveData(txt2.Text, "XI_Denghi");
+            };
+            bottom.Controls.Add(btn, 2, 0);
         }
 
         private Label MakeSectionLabel(string text)
@@ -195,6 +205,12 @@ namespace BoDoiApp.View.XIHauCanKyThuat
             c.Font = new Font("Times New Roman", currentFontSize, c.Font.Style);
             foreach (Control child in c.Controls)
                 UpdateFont(child);
+        }
+
+        private void SaveData(string content,string option)
+        {
+            var dataLayer = new RichTextBoxData();
+            dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, option);
         }
     }
 }

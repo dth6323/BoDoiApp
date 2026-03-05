@@ -192,13 +192,49 @@ namespace BoDoiApp.Export
                 data["{{45}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh") ?? "";
                 data["{{46}}"] = dataLayer6.LayThongTin("BaoDuongSuaChua_1");
 
+                var cmd9 = new SQLiteCommand("SELECT * FROM suachua_tbkt WHERE User = @UserId", connection);
+                cmd9.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
 
+                using (var reader = cmd9.ExecuteReader())
+                {
+                    int i = 1;
+                    while (reader.Read())
+                    {
+                        data["{{sl" + i + "}}"] = reader["sl"]?.ToString() ?? "";
+                        data["{{tl" + i + "}}"] = reader["ty_le_hu_hong"]?.ToString() ?? "";
+                        data["{{n" + i + "}}"] = reader["nhe"]?.ToString() ?? "";
+                        data["{{v" + i + "}}"] = reader["vua"]?.ToString() ?? "";
+                        data["{{ng" + i + "}}"] = reader["nang"]?.ToString() ?? "";
+                        data["{{h" + i + "}}"] = reader["huy"]?.ToString() ?? "";
+                        data["{{p" + i + "}}"] = reader["cong"]?.ToString() ?? "";
+                        i++;
+                    }
+                }
+                var cmd10 = new SQLiteCommand("SELECT * FROM du_tinh_khoi_luong WHERE UserId = @UserID", connection);
+                cmd10.Parameters.AddWithValue("@UserID", Constants.CURRENT_USER_ID_VALUE);
+
+                using (var reader = cmd10.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        data["{{47}}"] = reader["KhoiLuongToanTran"]?.ToString();
+                        data["{{48}}"] = reader["VCHCToanTran"]?.ToString();
+                        data["{{49}}"] = reader["KhoiLuongGiaiDoanChuanBi"]?.ToString();
+                        data["{{50}}"] = reader["VCHCChuanBi"]?.ToString();
+                        data["{{51}}"] = reader["VCKTChuanBi"]?.ToString();
+                        data["{{52}}"] = reader["KhoiLuongGiaiDoanChienDau"]?.ToString();
+                        data["{{53}}"] = reader["VCHCChienDau"]?.ToString();
+                        data["{{54}}"] = reader["VCKTChienDau"]?.ToString();
+
+                    }
+                }
+
+
+
+                ExportFromTemplate(template, output, data);
+
+                MessageBox.Show("Xuất file thành công!");
             }
-
-
-            ExportFromTemplate(template, output, data);
-
-            MessageBox.Show("Xuất file thành công!");
         }
 
         public void ExportFromTemplate(

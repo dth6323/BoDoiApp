@@ -201,5 +201,7 @@ namespace BoDoiApp.View.XIHauCanKyThuat
             foreach (Control child in c.Controls)
                 UpdateFont(child);
         }
+
+        
     }
 }
