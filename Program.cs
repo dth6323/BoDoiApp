@@ -96,6 +96,7 @@ namespace BoDoiApp
                 command7.ExecuteNonQuery();
                 var sql8 = @"CREATE TABLE IF NOT EXISTS suachua_tbkt (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    sl INTEGER DEFAULT 0,
                     ty_le_hu_hong REAL DEFAULT 0, 
                     nhe INTEGER DEFAULT 0,
                     vua INTEGER DEFAULT 0,

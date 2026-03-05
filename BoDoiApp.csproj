@@ -447,6 +447,12 @@
     <Compile Include="View\VVatChatHauCanKyThuat2\Dan.Designer.cs">
       <DependentUpon>Dan.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\NhuCauDan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\NhuCauDan.Designer.cs">
+      <DependentUpon>NhuCauDan.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -635,6 +641,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\Dan.resx">
       <DependentUpon>Dan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\NhuCauDan.resx">
+      <DependentUpon>NhuCauDan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.resx">
       <DependentUpon>_1ChiTieu.cs</DependentUpon>

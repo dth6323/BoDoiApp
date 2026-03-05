@@ -19,6 +19,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
         private string UserId = Constants.CURRENT_USER_ID_VALUE;
         public _1ChiTieu()
         {
+            CreateDatabase();
             InitializeComponent();
         }
 
@@ -35,8 +36,19 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
         private void button3_Click(object sender, System.EventArgs e)
         {
-
-            NavigationService.Navigate(new _2BienPhapBaoDam());
+            if(MessageBox.Show("Bạn có chắc muốn chuyển sang phần Biện Pháp Bảo Đảm không? Dữ liệu hiện tại sẽ được lưu lại.", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if (IsDataExists())
+                {
+                    UpdateData();
+                }else
+                {
+                    InsertData();
+                }
+            }
+                
+                
+                NavigationService.Navigate(new _2BienPhapBaoDam());
         }
 
         private void _1ChiTieu_Load(object sender, System.EventArgs e)
@@ -46,14 +58,37 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
             LoadExcel();
 
         }
+        private bool IsDataExists()
+        {
+            string sql = "SELECT COUNT(*) FROM tbkt_supply_plan WHERE userId = @UserId";
+
+            try
+            {
+                using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+                {
+                    connection.Open();
+                    using (var command = new SQLiteCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@UserId", UserId);
+                        long count = (long)command.ExecuteScalar();
+                        return count > 0;
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi kiểm tra dữ liệu: {ex.Message}\nError Code: {ex.ErrorCode}", "Lỗi SQLite", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
 
         private void LoadExcel()
         {
             LoadSumOfAllSection();
-            LoadSection(13, 23, "Hướng Chủ yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
-            LoadSection(24, 34, "Hướng Thứ Yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
-            LoadSection(35, 45, "Phòng ngự phía sau", UserId, new string[] { "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
-            LoadSection(46, 56, "LL còn lại", UserId, new string[] { "phao_pk_127", "coi_100", "pct_spg9", "b41_m79", "tl", "sn", "luu_dan" });
+            LoadSection(13, 22, "Hướng Chủ Yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+            LoadSection(23, 32, "Hướng Thứ Yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+            LoadSection(33, 39, "Phòng ngự phía sau", UserId, new string[] { "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+            LoadSection(40, 46, "LL còn lại", UserId, new string[] { "phao_pk_127", "coi_100", "pct_spg9", "b41_m79", "tl", "sn", "luu_dan" });
         }
 
         private int[] SumOfChuYeuData()
@@ -169,33 +204,258 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
             }
         }
 
+        // Fix for CS1503: Argument 2: cannot convert from 'out object' to 'out int'
+        // Change the declaration of sumVal from 'object' to 'int' in LoadSection
+
         private void LoadSection(int rowStart, int rowEnd, string section, string userId, string[] columnNames)
         {
-            string sql = $"SELECT * FROM trangkithuat WHERE User = '{userId}' AND option = '{section}' AND ll = '1. Trong biên chế'";
-            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            try
+            {
+                string sql = "SELECT * FROM trangkithuat WHERE User = @UserId AND option = @Section AND ll = '1. Trong biên chế'";
+
+                using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    connection.Open();
+
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@Section", section);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        var arraySum = ChuYeuData.SumOfChuYeuData(section);
+                        if (!reader.Read())
+                        {
+                            // No rows found => fill with zeros to avoid exceptions and keep UI stable.
+                            for (int row = rowStart; row <= rowEnd; row++)
+                            {
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 3, "0");
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 4, "0");
+                            }
+                            return;
+                        }
+
+                        // Compute sums once per section (was recomputed inside the loop).
+
+                        int maxRows = Math.Min(rowEnd - rowStart + 1, columnNames.Length);
+                        for (int idx = 0; idx < maxRows; idx++)
+                        {
+                            int row = rowStart + idx;
+                            string col = columnNames[idx];
+                            if (row == 7 || row == 8 || row == 9 || row == 10) continue;
+
+                            var value = reader[col] != null ? reader[col].ToString() : "0";
+                            if (string.IsNullOrWhiteSpace(value)) value = "0";
+
+                            reoGridControl1.CurrentWorksheet.SetCellData(row, 3, value);
+
+                            int sumVal;
+                            if (arraySum != null && arraySum.TryGetValue("sum_" +col, out sumVal))
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 4, sumVal.ToString());
+                            else
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 4, "0");
+                        }
+
+                        // If there are more template rows than columns => pad with zeros.
+                        for (int row = rowStart + maxRows; row <= rowEnd; row++)
+                        {
+                            reoGridControl1.CurrentWorksheet.SetCellData(row, 3, "0");
+                            reoGridControl1.CurrentWorksheet.SetCellData(row, 4, "0");
+                        }
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show(
+                    $"Đã xảy ra lỗi khi tải dữ liệu '{section}': {ex.Message}\nError Code: {ex.ErrorCode}",
+                    "Lỗi SQLite",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Đã xảy ra lỗi khi tải dữ liệu '{section}': {ex.Message}",
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void CreateDatabase()
+        {
+            string sql = @"CREATE TABLE IF NOT EXISTS tbkt_supply_plan (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userId TEXT NOT NULL,
+    ten_tbkt TEXT,
+    don_vi_tinh TEXT,
+    nhu_cau INTEGER,
+    hien_co_tong_so INTEGER,
+    hien_co_so_tot INTEGER,
+    hien_co_kbq INTEGER,
+    hien_co_kt INTEGER,
+    phai_co_truoc_cd INTEGER,
+    bo_sung_so_luong INTEGER,
+    bo_sung_thoi_gian TEXT,
+    bo_sung_dia_diem TEXT,
+    bo_sung_phuong_thuc TEXT
+);";        
+            using(var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
                 connection.Open();
                 using (var command = new SQLiteCommand(sql, connection))
                 {
-                    var reader = command.ExecuteReader();
-                    reader.Read();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
 
-                    for (int row = rowStart; row <= rowEnd; row++)
+        private void InsertData()
+        {
+            string sql = @"INSERT INTO tbkt_supply_plan 
+                (userId, ten_tbkt, don_vi_tinh, nhu_cau, hien_co_tong_so, hien_co_so_tot, 
+                 hien_co_kbq, hien_co_kt, phai_co_truoc_cd, bo_sung_so_luong, 
+                 bo_sung_thoi_gian, bo_sung_dia_diem, bo_sung_phuong_thuc) 
+                VALUES 
+                (@UserId, @TenTbkt, @DonViTinh, @NhuCau, @HienCoTongSo, @HienCoSoTot, 
+                 @HienCoKbq, @HienCoKt, @PhaiCoTruocCd, @BoSungSoLuong, 
+                 @BoSungThoiGian, @BoSungDiaDiem, @BoSungPhuongThuc)";
+
+            try
+            {
+                using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+                {
+                    connection.Open();
+
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        int i = 0, j = 0;
-                        var value = reader[columnNames[j++]]?.ToString() ?? "0";
-                        var arraySum = ChuYeuData.SumOfChuYeuData(section);
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 3, value);
-                        if (i != 0)
+                        try
                         {
-                            reoGridControl1.CurrentWorksheet.SetCellData(row, 4, arraySum[columnNames[i++]]);
+                            for (int row = 2; row <= 46; row++)
+                            {
+                                using (var command = new SQLiteCommand(sql, connection, transaction))
+                                {
+                                    command.Parameters.AddWithValue("@UserId", UserId);
+                                    command.Parameters.AddWithValue("@TenTbkt", reoGridControl1.CurrentWorksheet.GetCellData(row, 1)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@DonViTinh", reoGridControl1.CurrentWorksheet.GetCellData(row, 2)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@NhuCau", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 3)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoTongSo", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 4)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoSoTot", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 5)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoKbq", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 6)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoKt", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 7)?.ToString()));
+                                    command.Parameters.AddWithValue("@PhaiCoTruocCd", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 8)?.ToString()));
+                                    command.Parameters.AddWithValue("@BoSungSoLuong", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 9)?.ToString()));
+                                    command.Parameters.AddWithValue("@BoSungThoiGian", reoGridControl1.CurrentWorksheet.GetCellData(row, 10)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@BoSungDiaDiem", reoGridControl1.CurrentWorksheet.GetCellData(row, 11)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@BoSungPhuongThuc", reoGridControl1.CurrentWorksheet.GetCellData(row, 12)?.ToString() ?? "");
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+
+                            transaction.Commit();
+                            MessageBox.Show("Dữ liệu đã được lưu thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            throw;
                         }
                     }
                 }
-
             }
-
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi lưu dữ liệu: {ex.Message}\nError Code: {ex.ErrorCode}", "Lỗi SQLite", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private int ParseIntOrZero(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return 0;
+
+            return int.TryParse(value, out int result) ? result : 0;
+        }
+        private void UpdateData()
+        {
+            string sql = @"UPDATE tbkt_supply_plan 
+                    SET ten_tbkt = @TenTbkt, 
+                        don_vi_tinh = @DonViTinh, 
+                        nhu_cau = @NhuCau, 
+                        hien_co_tong_so = @HienCoTongSo, 
+                        hien_co_so_tot = @HienCoSoTot, 
+                        hien_co_kbq = @HienCoKbq, 
+                        hien_co_kt = @HienCoKt, 
+                        phai_co_truoc_cd = @PhaiCoTruocCd, 
+                        bo_sung_so_luong = @BoSungSoLuong, 
+                        bo_sung_thoi_gian = @BoSungThoiGian, 
+                        bo_sung_dia_diem = @BoSungDiaDiem, 
+                        bo_sung_phuong_thuc = @BoSungPhuongThuc
+                    WHERE userId = @UserId AND id = @Id";
+
+            try
+            {
+                using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+                {
+                    connection.Open();
+
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            for (int row = 2; row <= 46; row++)
+                            {
+                                // Calculate the ID based on row position (assuming sequential IDs starting from 1)
+                                int recordId = row - 1;
+
+                                using (var command = new SQLiteCommand(sql, connection, transaction))
+                                {
+                                    command.Parameters.AddWithValue("@UserId", UserId);
+                                    command.Parameters.AddWithValue("@Id", recordId);
+                                    command.Parameters.AddWithValue("@TenTbkt", reoGridControl1.CurrentWorksheet.GetCellData(row, 1)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@DonViTinh", reoGridControl1.CurrentWorksheet.GetCellData(row, 2)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@NhuCau", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 3)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoTongSo", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 4)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoSoTot", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 5)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoKbq", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 6)?.ToString()));
+                                    command.Parameters.AddWithValue("@HienCoKt", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 7)?.ToString()));
+                                    command.Parameters.AddWithValue("@PhaiCoTruocCd", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 8)?.ToString()));
+                                    command.Parameters.AddWithValue("@BoSungSoLuong", ParseIntOrZero(reoGridControl1.CurrentWorksheet.GetCellData(row, 9)?.ToString()));
+                                    command.Parameters.AddWithValue("@BoSungThoiGian", reoGridControl1.CurrentWorksheet.GetCellData(row, 10)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@BoSungDiaDiem", reoGridControl1.CurrentWorksheet.GetCellData(row, 11)?.ToString() ?? "");
+                                    command.Parameters.AddWithValue("@BoSungPhuongThuc", reoGridControl1.CurrentWorksheet.GetCellData(row, 12)?.ToString() ?? "");
+
+                                    command.ExecuteNonQuery();
+                                }
+                            }
+
+                            transaction.Commit();
+                            MessageBox.Show("Dữ liệu đã được cập nhật thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi cập nhật dữ liệu: {ex.Message}\nError Code: {ex.ErrorCode}", "Lỗi SQLite", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
     }
 }

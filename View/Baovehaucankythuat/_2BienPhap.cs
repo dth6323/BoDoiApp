@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BoDoiApp.DataLayer;
+using BoDoiApp.Resources;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -111,7 +113,12 @@ namespace BoDoiApp.View.Baovehaucankythuat
 
             bottom.Controls.Add(MakeBottomButton("Trở về", Color.FromArgb(252, 213, 180), DockStyle.Left), 0, 0);
             bottom.Controls.Add(MakeBottomButton("Trang\nchủ", Color.Yellow, DockStyle.Fill), 1, 0);
-            bottom.Controls.Add(MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right), 2, 0);
+            var btn = MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right);
+            btn.Click += (s2, e2) =>
+            {
+                Savedata(txt.Text);
+            };
+                bottom.Controls.Add(btn, 2, 0);
         }
 
         private Label MakeHeader(string text)
@@ -133,7 +140,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
                 BackColor = color,
                 Dock = dock,
                 Width = 100,
-                Height = 40
+                Height = 40,
             };
         }
 
@@ -160,6 +167,11 @@ namespace BoDoiApp.View.Baovehaucankythuat
             c.Font = new Font("Times New Roman", currentFontSize, c.Font.Style);
             foreach (Control child in c.Controls)
                 UpdateFont(child);
+        }
+        private void Savedata(string content)
+        {
+            var dataLayer = new RichTextBoxData();
+            dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, "X_BienPhap");
         }
     }
 }

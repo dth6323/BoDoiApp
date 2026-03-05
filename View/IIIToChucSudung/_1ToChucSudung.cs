@@ -14,6 +14,8 @@ namespace BoDoiApp.View.IIIToChucSudung
 {
     public partial class _1ToChucSudung : UserControl
     {
+        private string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
+        private string ExcelFilePath => System.IO.Path.Combine(BaseDir, "Resources", "Book1.xlsx");
         public _1ToChucSudung()
         {
             InitializeComponent();
@@ -89,7 +91,7 @@ namespace BoDoiApp.View.IIIToChucSudung
         private void _1ToChucSudung_Load(object sender, EventArgs e)
         {
             CreateTable();
-
+            reoGridControl1.Load(ExcelFilePath);
             // Ensure we are on the expected sheet.
             if (reoGridControl1 != null && reoGridControl1.Worksheets != null && reoGridControl1.Worksheets.Count > 6)
             {
@@ -127,7 +129,6 @@ namespace BoDoiApp.View.IIIToChucSudung
             const int COL_QS_SQ = 2;
             const int COL_QS_QNCN = 3;
             const int COL_QS_HSQ_BS = 4;
-            const int COL_QS_PLUS = 5;
             const int COL_VK_VUKHI = 6;
             const int COL_VK_XEMAY = 7;
             const int COL_VK_TBK = 8;
@@ -172,7 +173,6 @@ ORDER BY TT ASC;";
                         sheet.SetCellData(row, COL_QS_SQ, reader["QS_SQ"] == DBNull.Value ? 0 : Convert.ToInt32(reader["QS_SQ"]));
                         sheet.SetCellData(row, COL_QS_QNCN, reader["QS_QNCN"] == DBNull.Value ? 0 : Convert.ToInt32(reader["QS_QNCN"]));
                         sheet.SetCellData(row, COL_QS_HSQ_BS, reader["QS_HSQ_BS"] == DBNull.Value ? 0 : Convert.ToInt32(reader["QS_HSQ_BS"]));
-                        sheet.SetCellData(row, COL_QS_PLUS, reader["QS_Plus"] == DBNull.Value ? 0 : Convert.ToInt32(reader["QS_Plus"]));
 
                         sheet.SetCellData(row, COL_VK_VUKHI, reader["VK_VuKhi"] == DBNull.Value ? 0 : Convert.ToInt32(reader["VK_VuKhi"]));
                         sheet.SetCellData(row, COL_VK_XEMAY, reader["VK_XeMay"] == DBNull.Value ? 0 : Convert.ToInt32(reader["VK_XeMay"]));

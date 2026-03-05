@@ -1,5 +1,7 @@
-﻿using BoDoiApp.View.IXCongTacVanTai;
+﻿using BoDoiApp.Resources;
+using BoDoiApp.View.IXCongTacVanTai;
 using System;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,10 +11,16 @@ namespace BoDoiApp.View.VICongTacVanTai
     {
         private float currentFontSize = 11f;
 
+        // TextBox references for data binding
+        private TextBox txtKhoiLuongToanTran, txtVCHCToanTran, txtVCKTToanTran;
+        private TextBox txtKhoiLuongChuanBi, txtVCHCChuanBi, txtVCKTChuanBi;
+        private TextBox txtKhoiLuongChienDau, txtVCHCChienDau, txtVCKTChienDau;
+
         public _2DuTinhKhoiLuongVanChuyen()
         {
             InitializeComponent();
             this.Load += _2DuTinhKhoiLuongVanChuyen_Load;
+            CreateDatabase();
         }
 
         private void _2DuTinhKhoiLuongVanChuyen_Load(object sender, EventArgs e)
@@ -167,15 +175,24 @@ namespace BoDoiApp.View.VICongTacVanTai
             int spacing = 35;
 
             // Row 1: Khối lượng vận chuyển toàn trận
-            CreateFormRow(pnlForm, "Khối lượng vận chuyển toàn trận:", yPos, labelWidth, textBoxWidth);
+            var textBoxes1 = CreateFormRow(pnlForm, "Khối lượng vận chuyển toàn trận:", yPos, labelWidth, textBoxWidth);
+            txtKhoiLuongToanTran = textBoxes1[0];
+            txtVCHCToanTran = textBoxes1[1];
+            txtVCKTToanTran = textBoxes1[2];
             yPos += spacing;
 
             // Row 2: Giai đoạn chuẩn bị
-            CreateFormRow(pnlForm, "+ Giai đoạn chuẩn bị:", yPos, labelWidth, textBoxWidth);
+            var textBoxes2 = CreateFormRow(pnlForm, "+ Giai đoạn chuẩn bị:", yPos, labelWidth, textBoxWidth);
+            txtKhoiLuongChuanBi = textBoxes2[0];
+            txtVCHCChuanBi = textBoxes2[1];
+            txtVCKTChuanBi = textBoxes2[2];
             yPos += spacing;
 
             // Row 3: Giai đoạn chiến đấu
-            CreateFormRow(pnlForm, "+ Giai đoạn chiến đấu:", yPos, labelWidth, textBoxWidth);
+            var textBoxes3 = CreateFormRow(pnlForm, "+ Giai đoạn chiến đấu:", yPos, labelWidth, textBoxWidth);
+            txtKhoiLuongChienDau = textBoxes3[0];
+            txtVCHCChienDau = textBoxes3[1];
+            txtVCKTChienDau = textBoxes3[2];
 
             /* ================= RIGHT ARROW ================= */
             Button btnNext = new Button
@@ -231,6 +248,35 @@ namespace BoDoiApp.View.VICongTacVanTai
                 Font = new Font("Times New Roman", 11),
                 BackColor = Color.FromArgb(173, 216, 230)
             };
+            btnSave.Click += (s, e3) =>
+            {
+                    try
+                    {
+                        // Parse values from textboxes, default to 0 if empty or invalid
+                        double khoiLuongToanTran = double.TryParse(txtKhoiLuongToanTran.Text, out double val1) ? val1 : 0;
+                        double khoiLuongChuanBi = double.TryParse(txtKhoiLuongChuanBi.Text, out double val2) ? val2 : 0;
+                        double khoiLuongChienDau = double.TryParse(txtKhoiLuongChienDau.Text, out double val3) ? val3 : 0;
+
+                        double vchcToanTran = double.TryParse(txtVCHCToanTran.Text, out double val4) ? val4 : 0;
+                        double vchcChuanBi = double.TryParse(txtVCHCChuanBi.Text, out double val5) ? val5 : 0;
+                        double vchcChienDau = double.TryParse(txtVCHCChienDau.Text, out double val6) ? val6 : 0;
+
+                        double vcktToanTran = double.TryParse(txtVCKTToanTran.Text, out double val7) ? val7 : 0;
+                        double vcktChuanBi = double.TryParse(txtVCKTChuanBi.Text, out double val8) ? val8 : 0;
+                        double vcktChienDau = double.TryParse(txtVCKTChienDau.Text, out double val9) ? val9 : 0;
+
+                        SaveAllData(Constants.CURRENT_USER_ID_VALUE,
+                            khoiLuongToanTran, khoiLuongChuanBi, khoiLuongChienDau,
+                            vchcToanTran, vchcChuanBi, vchcChienDau,
+                            vcktToanTran, vcktChuanBi, vcktChienDau);
+
+                        MessageBox.Show("Lưu dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi lưu dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
+            };
 
             Panel pnlLeft = new Panel { Dock = DockStyle.Fill };
             btnBack.Location = new Point(10, 10);
@@ -249,9 +295,12 @@ namespace BoDoiApp.View.VICongTacVanTai
             pnlButton.Controls.Add(pnlRight, 2, 0);
 
             layout.Controls.Add(pnlButton, 0, 3);
+
+            // Load data after all controls are created
+            LoadData();
         }
 
-        private void CreateFormRow(Panel parent, string labelText, int yPos, int labelWidth, int textBoxWidth)
+        private TextBox[] CreateFormRow(Panel parent, string labelText, int yPos, int labelWidth, int textBoxWidth)
         {
             // Label
             Label lbl = new Label
@@ -341,6 +390,8 @@ namespace BoDoiApp.View.VICongTacVanTai
                 TextAlign = HorizontalAlignment.Center
             };
             parent.Controls.Add(txt3);
+
+            return new TextBox[] { txt1, txt2, txt3 };
         }
 
         /* ===== ZOOM CTRL + / - ===== */
@@ -372,5 +423,124 @@ namespace BoDoiApp.View.VICongTacVanTai
                 UpdateFontRecursive(child);
         }
 
+        private void CreateDatabase()
+        {
+            string sql = @"CREATE TABLE IF NOT EXISTS du_tinh_khoi_luong (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                UserId TEXT NOT NULL,
+                KhoiLuongToanTran REAL NULL,
+                KhoiLuongGiaiDoanChuanBi REAL NULL,
+                KhoiLuongGiaiDoanChienDau REAL NULL,
+                VCHCToanTran REAL NULL,
+                VCHCChuanBi REAL NULL,
+                VCHCChienDau REAL NULL,
+                VCKTToanTran REAL NULL,
+                VCKTChuanBi REAL NULL,
+                VCKTChienDau REAL NULL
+            );";
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void LoadData()
+        {
+            string sql = "SELECT * FROM du_tinh_khoi_luong WHERE UserId = @UserId LIMIT 1;";
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Row 1: Toàn trận
+                            txtKhoiLuongToanTran.Text = reader["KhoiLuongToanTran"] != DBNull.Value
+                                ? reader["KhoiLuongToanTran"].ToString() : "";
+                            txtVCHCToanTran.Text = reader["VCHCToanTran"] != DBNull.Value
+                                ? reader["VCHCToanTran"].ToString() : "";
+                            txtVCKTToanTran.Text = reader["VCKTToanTran"] != DBNull.Value
+                                ? reader["VCKTToanTran"].ToString() : "";
+
+                            // Row 2: Chuẩn bị
+                            txtKhoiLuongChuanBi.Text = reader["KhoiLuongGiaiDoanChuanBi"] != DBNull.Value
+                                ? reader["KhoiLuongGiaiDoanChuanBi"].ToString() : "";
+                            txtVCHCChuanBi.Text = reader["VCHCChuanBi"] != DBNull.Value
+                                ? reader["VCHCChuanBi"].ToString() : "";
+                            txtVCKTChuanBi.Text = reader["VCKTChuanBi"] != DBNull.Value
+                                ? reader["VCKTChuanBi"].ToString() : "";
+
+                            // Row 3: Chiến đấu
+                            txtKhoiLuongChienDau.Text = reader["KhoiLuongGiaiDoanChienDau"] != DBNull.Value
+                                ? reader["KhoiLuongGiaiDoanChienDau"].ToString() : "";
+                            txtVCHCChienDau.Text = reader["VCHCChienDau"] != DBNull.Value
+                                ? reader["VCHCChienDau"].ToString() : "";
+                            txtVCKTChienDau.Text = reader["VCKTChienDau"] != DBNull.Value
+                                ? reader["VCKTChienDau"].ToString() : "";
+                        }
+                    }
+                }
+            }
+        }
+        private void SaveAllData(string userId, double khoiLuongToanTran, double khoiLuongChuanBi, double khoiLuongChienDau,
+            double vchcToanTran, double vchcChuanBi, double vchcChienDau,
+            double vcktToanTran, double vcktChuanBi, double vcktChienDau)
+        {
+            string checkSql = "SELECT COUNT(*) FROM du_tinh_khoi_luong WHERE UserId = @UserId;";
+            string insertSql = @"INSERT INTO du_tinh_khoi_luong 
+                (UserId, KhoiLuongToanTran, KhoiLuongGiaiDoanChuanBi, KhoiLuongGiaiDoanChienDau, 
+                 VCHCToanTran, VCHCChuanBi, VCHCChienDau, VCKTToanTran, VCKTChuanBi, VCKTChienDau)
+                VALUES (@UserId, @KhoiLuongToanTran, @KhoiLuongChuanBi, @KhoiLuongChienDau,
+                        @VCHCToanTran, @VCHCChuanBi, @VCHCChienDau, @VCKTToanTran, @VCKTChuanBi, @VCKTChienDau);";
+            string updateSql = @"UPDATE du_tinh_khoi_luong SET 
+                KhoiLuongToanTran = @KhoiLuongToanTran,
+                KhoiLuongGiaiDoanChuanBi = @KhoiLuongChuanBi,
+                KhoiLuongGiaiDoanChienDau = @KhoiLuongChienDau,
+                VCHCToanTran = @VCHCToanTran,
+                VCHCChuanBi = @VCHCChuanBi,
+                VCHCChienDau = @VCHCChienDau,
+                VCKTToanTran = @VCKTToanTran,
+                VCKTChuanBi = @VCKTChuanBi,
+                VCKTChienDau = @VCKTChienDau
+                WHERE UserId = @UserId;";
+
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+
+                // Check if record exists
+                bool exists = false;
+                using (var checkCommand = new SQLiteCommand(checkSql, connection))
+                {
+                    checkCommand.Parameters.AddWithValue("@UserId", userId);
+                    exists = Convert.ToInt32(checkCommand.ExecuteScalar()) > 0;
+                }
+
+                // Insert or Update
+                string sql = exists ? updateSql : insertSql;
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@KhoiLuongToanTran", khoiLuongToanTran);
+                    command.Parameters.AddWithValue("@KhoiLuongChuanBi", khoiLuongChuanBi);
+                    command.Parameters.AddWithValue("@KhoiLuongChienDau", khoiLuongChienDau);
+                    command.Parameters.AddWithValue("@VCHCToanTran", vchcToanTran);
+                    command.Parameters.AddWithValue("@VCHCChuanBi", vchcChuanBi);
+                    command.Parameters.AddWithValue("@VCHCChienDau", vchcChienDau);
+                    command.Parameters.AddWithValue("@VCKTToanTran", vcktToanTran);
+                    command.Parameters.AddWithValue("@VCKTChuanBi", vcktChuanBi);
+                    command.Parameters.AddWithValue("@VCKTChienDau", vcktChienDau);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
