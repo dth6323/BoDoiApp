@@ -26,7 +26,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new ChuYeu("Hướng Chủ Yếu"));
+            NavigationService.Navigate(new _1BaoDamQuanY());
         }
 
         public void ShowView(UserControl view)

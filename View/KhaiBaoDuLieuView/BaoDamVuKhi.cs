@@ -10,7 +10,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
     public partial class BaoDamVuKhi : UserControl
     {
-        private readonly string ConnectioString = "Data Source=data2.db;Version=3;";
+        private readonly string ConnectioString = "Data Source=data.db;Version=3;";
         private static readonly string BaseDir =
             AppDomain.CurrentDomain.BaseDirectory;
 
@@ -246,6 +246,11 @@ VALUES
                     int currentRow = startRow;
                     while (reader.Read())
                     {
+                        if(currentRow == 5 || currentRow == 6 || currentRow == 9)
+                        {
+                            currentRow++;
+                            continue;
+                        }
                         reoGridControl1.CurrentWorksheet.SetCellData(currentRow, 0, reader["LoaiTBKT"].ToString());
                         reoGridControl1.CurrentWorksheet.SetCellData(currentRow, 1, reader["DVT"].ToString());
                         reoGridControl1.CurrentWorksheet.SetCellData(currentRow, 2, reader["NhuCau"].ToString());

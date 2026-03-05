@@ -67,10 +67,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 {
                     LoadDataWithUser();
                 }
-                else
-                {
-
-                }
             }
             catch (Exception ex)
             {
@@ -111,12 +107,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void LoadDataWithUser()
         {
-            reoGridControl1.Load(EXCEL_PATH);
-
             string sql = $"SELECT * FROM trangkithuat WHERE User = @User AND option = @Option";
             try
             {
-                using (var connection = new System.Data.SQLite.SQLiteConnection("Data Source=data2.db;Version=3;"))
+                using (var connection = new System.Data.SQLite.SQLiteConnection("Data Source=data.db;Version=3;"))
                 {
                     connection.Open();
                     using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))
@@ -130,6 +124,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             int row = startRow;
                             while (reader.Read())
                             {
+                                if(row == 5 || row == 7 || row == 16)
+                                {
+                                    row++;
+                                    continue;
+                                }
                                 ws.SetCellData(row, 0, reader["ll"]?.ToString());
                                 ws.SetCellData(row, 1, reader["quan_so"]?.ToString());
                                 ws.SetCellData(row, 2, reader["sn"]?.ToString());

@@ -21,7 +21,7 @@ namespace BoDoiApp.DataLayer
             string sn, string tl, string trl, string dl, string b41_m79,
             string luuDan,
             string coi60, string coi82, string coi100,
-            string pctSpg9,string on,string db,
+            string pctSpg9, string on, string db,
             string phaoPk127, string option)
         {
             try
@@ -45,8 +45,8 @@ namespace BoDoiApp.DataLayer
                     {
                         command.Parameters.AddWithValue("@ll", ll ?? "");
                         command.Parameters.AddWithValue("@quan_so", quanSo ?? "");
-                        command.Parameters.AddWithValue("@ons",on ?? "");
-                        command.Parameters.AddWithValue("@db",db ?? "");
+                        command.Parameters.AddWithValue("@ons", on ?? "");
+                        command.Parameters.AddWithValue("@db", db ?? "");
                         command.Parameters.AddWithValue("@sn", sn ?? "");
                         command.Parameters.AddWithValue("@tl", tl ?? "");
                         command.Parameters.AddWithValue("@trl", trl ?? "");
@@ -80,7 +80,7 @@ namespace BoDoiApp.DataLayer
         {
             for (int i = 5; i <= endRow; i++)
             {
-                string ll = data.CurrentWorksheet.GetCellData(i,0)?.ToString();
+                string ll = data.CurrentWorksheet.GetCellData(i, 0)?.ToString();
                 string quanSo = data.CurrentWorksheet.GetCellData(i, 1)?.ToString();
                 string sn = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
                 string tl = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
@@ -101,7 +101,7 @@ namespace BoDoiApp.DataLayer
                     sn, tl, trl, dl, b41_m79,
                     luuDan,
                     coi60, coi82, coi100,
-                    pctSpg9,on,db,
+                    pctSpg9, on, db,
                     phaoPk127,
                     option);
             }
@@ -113,13 +113,13 @@ namespace BoDoiApp.DataLayer
             string sn, string tl, string trl, string dl, string b41_m79,
             string luuDan,
             string coi60, string coi82, string coi100,
-            string pctSpg9,string on, string db,
+            string pctSpg9, string on, string db,
             string phaoPk127, string option)
         {
             try
             {
                 using (var connection = new SQLiteConnection(connectionString))
-                {   
+                {
                     connection.Open();
                     string sql = @"UPDATE trangkithuat SET 
                                        quan_so = @quan_so, sn = @sn, tl = @tl, trl = @trl, dl = @dl, b41_m79 = @b41_m79,
@@ -179,74 +179,59 @@ namespace BoDoiApp.DataLayer
                     sn, tl, trl, dl, b41_m79,
                     luuDan,
                     coi60, coi82, coi100,
-                    pctSpg9,on,db,
+                    pctSpg9, on, db,
                     phaoPk127,
                     option);
             }
         }
 
-        public static Dictionary<string,int> SumOfChuYeuData(string option)
+        public static Dictionary<string, int> SumOfChuYeuData(string option)
         {
-
             string sql = @"
-        SELECT    
-             SUM(CAST(COALESCE(quan_so, 0) AS INTEGER))     AS sum_quan_so,    
-             SUM(CAST(COALESCE(sn, 0) AS INTEGER))          AS sum_sn,    
-             SUM(CAST(COALESCE(tl, 0) AS INTEGER))          AS sum_tl,    
-             SUM(CAST(COALESCE(trl, 0) AS INTEGER))         AS sum_trl,    
-             SUM(CAST(COALESCE(dl, 0) AS INTEGER))          AS sum_dl,    
-             SUM(CAST(COALESCE(b41_m79, 0) AS INTEGER))     AS sum_b41_m79,    
-             SUM(CAST(COALESCE(luu_dan, 0) AS INTEGER))     AS sum_luu_dan,    
-             SUM(CAST(COALESCE(coi_60, 0) AS INTEGER))      AS sum_coi_60,    
-             SUM(CAST(COALESCE(coi_82, 0) AS INTEGER))      AS sum_coi_82,    
-             SUM(CAST(COALESCE(coi_100, 0) AS INTEGER))     AS sum_coi_100,    
-             SUM(CAST(COALESCE(pct_spg9, 0) AS INTEGER))    AS sum_pct_spg9,    
-             SUM(CAST(COALESCE(phao_pk_127, 0) AS INTEGER)) AS sum_phao_pk_127    
-        FROM trangkithuat
-        WHERE ""User"" = @userId
-        AND ""option"" = @option;";
+                SELECT
+                    SUM(CAST(COALESCE(quan_so, 0) AS INTEGER))     AS sum_quan_so,
+                    SUM(CAST(COALESCE(sn, 0) AS INTEGER))          AS sum_sn,
+                    SUM(CAST(COALESCE(tl, 0) AS INTEGER))          AS sum_tl,
+                    SUM(CAST(COALESCE(trl, 0) AS INTEGER))         AS sum_trl,
+                    SUM(CAST(COALESCE(dl, 0) AS INTEGER))          AS sum_dl,
+                    SUM(CAST(COALESCE(b41_m79, 0) AS INTEGER))     AS sum_b41_m79,
+                    SUM(CAST(COALESCE(luu_dan, 0) AS INTEGER))     AS sum_luu_dan,
+                    SUM(CAST(COALESCE(coi_60, 0) AS INTEGER))      AS sum_coi_60,
+                    SUM(CAST(COALESCE(coi_82, 0) AS INTEGER))      AS sum_coi_82,
+                    SUM(CAST(COALESCE(coi_100, 0) AS INTEGER))     AS sum_coi_100,
+                    SUM(CAST(COALESCE(pct_spg9, 0) AS INTEGER))    AS sum_pct_spg9,
+                    SUM(CAST(COALESCE(phao_pk_127, 0) AS INTEGER)) AS sum_phao_pk_127
+                FROM trangkithuat
+                WHERE User = @user
+                AND option = @option";
 
             try
             {
                 using (var connection = new SQLiteConnection(connectionString))
-                using (var command = new SQLiteCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@userId", Constants.CURRENT_USER_ID_VALUE);
-                    command.Parameters.AddWithValue("@option", option ?? "");
-
-                    connection.Open();
-
-                    using (var reader = command.ExecuteReader())
+                    using (var command = new SQLiteCommand(sql, connection))
                     {
-                        var result = new Dictionary<string, int>
-                        {
-                            { "sum_quan_so", 0 },
-                            { "sum_sn", 0 },
-                            { "sum_tl", 0 },
-                            { "sum_trl", 0 },
-                            { "sum_dl", 0 },
-                            { "sum_b41_m79", 0 },
-                            { "sum_luu_dan", 0 },
-                            { "sum_coi_60", 0 },
-                            { "sum_coi_82", 0 },
-                            { "sum_coi_100", 0 },
-                            { "sum_pct_spg9", 0 },
-                            { "sum_phao_pk_127", 0 }
-                        };
+                        command.Parameters.AddWithValue("@user", Constants.CURRENT_USER_ID_VALUE);
+                        command.Parameters.AddWithValue("@option", option);
 
-                        while (reader.Read())
+                        connection.Open();
+
+                        using (var reader = command.ExecuteReader())
                         {
-                            foreach (var key in result.Keys.ToList())
+                            var result = new Dictionary<string, int>();
+
+                            if (reader.Read())
                             {
-                                var value = reader[key]?.ToString() ?? "0";
-                                if (int.TryParse(value, out int intValue))
+                                for (int i = 0; i < reader.FieldCount; i++)
                                 {
-                                    result[key] = intValue;
+                                    var test = reader["sum_quan_so"].ToString();
+                                    result[reader.GetName(i)] =
+                                        reader.IsDBNull(i) ? 0 : Convert.ToInt32(reader.GetValue(i));
                                 }
                             }
-                        }
 
-                        return result;
+                            return result;
+                        }
                     }
                 }
             }

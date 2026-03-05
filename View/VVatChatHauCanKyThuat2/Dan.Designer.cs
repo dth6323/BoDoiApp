@@ -56,7 +56,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(528, 93);
+            this.label1.Location = new System.Drawing.Point(492, 93);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(404, 25);
             this.label1.TabIndex = 30;
@@ -88,6 +88,7 @@
             this.button3.TabIndex = 0;
             this.button3.Text = "Tiếp Theo";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -158,7 +159,7 @@
             this.reoGridControl1.SheetTabVisible = true;
             this.reoGridControl1.SheetTabWidth = 60;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(1163, 442);
+            this.reoGridControl1.Size = new System.Drawing.Size(1177, 442);
             this.reoGridControl1.TabIndex = 33;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
