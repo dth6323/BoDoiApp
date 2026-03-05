@@ -156,10 +156,7 @@
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
     <Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
-<<<<<<< HEAD
-=======
     <Compile Include="Export\Export.cs" />
->>>>>>> 6b66463fe674d51059bbae954d6d05565512f9da
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
       <SubType>UserControl</SubType>

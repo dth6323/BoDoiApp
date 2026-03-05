@@ -1,15 +1,19 @@
 ﻿using BoDoiApp.View;
 using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.Main;
+using DocumentFormat.OpenXml.Packaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DocumentFormat.OpenXml.Wordprocessing;
+using BoDoiApp.Export;
 
 namespace BoDoiApp
 {
@@ -24,6 +28,10 @@ namespace BoDoiApp
         {
            NavigationService.Navigate(new KhaiBaoDuLieu());
         }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var export = new WordExporter();
+            export.ExportWord();        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -50,9 +58,16 @@ namespace BoDoiApp
             NavigationService.Navigate(new FormBaoDamHauCan());
         }
 
+        private void btn_khbdhckt_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new FormKeHoach());
+
+        }
+
         private void btn_kbdl_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new ThongTinTapBai());
         }
+        
     }
 }

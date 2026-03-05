@@ -119,10 +119,39 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
                 }
             }
         }
+        private void LoadData()
+        {
+            string sql = "SELECT * FROM CanDoi WHERE UserId = @UserId LIMIT 1;";
 
+            using (var connection = new System.Data.SQLite.SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            txtQYdTu.Text = reader["QYDTu"]?.ToString();
+                            txtQYdDen.Text = reader["QYDDen"]?.ToString();
+                            txtDYeTu.Text = reader["QYETu"]?.ToString();
+                            txtQYeDen.Text = reader["QYEDen"]?.ToString();
+                            txtYteTu.Text = reader["TramYTeTu"]?.ToString();
+                            txtYteDen.Text = reader["TramYTeDen"]?.ToString();
+                            txtTongTu.Text = reader["TongTu"]?.ToString();
+                            txtTongDen.Text = reader["TongDen"]?.ToString();
+                        }
+                    }
+                }
+            }
+        }
         private void _2CanDoi_Load(object sender, EventArgs e)
         {
             CreateTable();
+            LoadData();
         }
     }
 }

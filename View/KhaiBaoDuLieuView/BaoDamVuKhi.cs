@@ -104,7 +104,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void SaveData()
         {
-            for (int i = 2; i <= 7; i++)
+            for (int i = 2; i <= 6; i++)
             {
                 string loai = reoGridControl1.CurrentWorksheet.GetCellData(i, 0)?.ToString();
                 string dvt = reoGridControl1.CurrentWorksheet.GetCellData(i, 1)?.ToString();
@@ -178,7 +178,7 @@ VALUES
                     {
                         try
                         {
-                            for (int i = 2; i <= 7; i++)
+                            for (int i = 2; i <= 6; i++)
                             {
                                 string loai = reoGridControl1.CurrentWorksheet.GetCellData(i, 0)?.ToString();
                                 string dvt = reoGridControl1.CurrentWorksheet.GetCellData(i, 1)?.ToString();
