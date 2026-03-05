@@ -33,6 +33,7 @@
             this.btn_kbdl = new System.Windows.Forms.Button();
             this.btn_dkkhbdhckt = new System.Windows.Forms.Button();
             this.btn_khbdhckt = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +60,7 @@
             this.flowLayoutPanel1.Controls.Add(this.btn_kbdl);
             this.flowLayoutPanel1.Controls.Add(this.btn_dkkhbdhckt);
             this.flowLayoutPanel1.Controls.Add(this.btn_khbdhckt);
+            this.flowLayoutPanel1.Controls.Add(this.button5);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(182, 187);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -68,7 +70,7 @@
             // btn_kbdl
             // 
             this.btn_kbdl.Location = new System.Drawing.Point(4, 4);
-            this.btn_kbdl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_kbdl.Margin = new System.Windows.Forms.Padding(4);
             this.btn_kbdl.Name = "btn_kbdl";
             this.btn_kbdl.Size = new System.Drawing.Size(136, 177);
             this.btn_kbdl.TabIndex = 0;
@@ -79,7 +81,7 @@
             // btn_dkkhbdhckt
             // 
             this.btn_dkkhbdhckt.Location = new System.Drawing.Point(148, 4);
-            this.btn_dkkhbdhckt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_dkkhbdhckt.Margin = new System.Windows.Forms.Padding(4);
             this.btn_dkkhbdhckt.Name = "btn_dkkhbdhckt";
             this.btn_dkkhbdhckt.Size = new System.Drawing.Size(155, 177);
             this.btn_dkkhbdhckt.TabIndex = 0;
@@ -90,7 +92,7 @@
             // btn_khbdhckt
             // 
             this.btn_khbdhckt.Location = new System.Drawing.Point(311, 4);
-            this.btn_khbdhckt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_khbdhckt.Margin = new System.Windows.Forms.Padding(4);
             this.btn_khbdhckt.Name = "btn_khbdhckt";
             this.btn_khbdhckt.Size = new System.Drawing.Size(153, 177);
             this.btn_khbdhckt.TabIndex = 0;
@@ -98,12 +100,23 @@
             this.btn_khbdhckt.UseVisualStyleBackColor = true;
             this.btn_khbdhckt.Click += new System.EventHandler(this.btn_khbdhckt_Click);
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(472, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(153, 177);
+            this.button5.TabIndex = 0;
+            this.button5.Text = "Xuất báo cáo dự kiến kế hoạch";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Size = new System.Drawing.Size(1137, 576);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -121,6 +134,7 @@
         private System.Windows.Forms.Button btn_kbdl;
         private System.Windows.Forms.Button btn_dkkhbdhckt;
         private System.Windows.Forms.Button btn_khbdhckt;
+        private System.Windows.Forms.Button button5;
     }
 }
 

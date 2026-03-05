@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
@@ -18,23 +19,69 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     {
         private static readonly string BaseDir =
     AppDomain.CurrentDomain.BaseDirectory;
+        private const string connectionString = "Data Source=data.db;Version=3;";
 
         private static readonly string EXCEL_PATH =
             Path.Combine(BaseDir, "Resources", "Sheet", "Book1.xlsx");
+        
         public PhanCapVatLieu()
         {
-            CreateTable();
             InitializeComponent();
         }
+        public static void LoadAll(ReoGridControl grid)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
 
+                string sql = @"
+                    SELECT
+                        TT,
+                        LoaiVatChat,
+                        DVT,
+                        PC_TDQ_KhoD,
+                        PC_TDQ_DonVi,
+                        PC_TDQ_Plus,
+                        PC_SCD_KhoD,
+                        PC_SCD_DonVi,
+                        PC_SCD_Plus
+                    FROM VatChat
+                    WHERE UserId = @UserName
+                    ORDER BY TT ASC;";
+
+                using (var cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@UserName", Properties.Settings.Default.Username);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var ws = grid.CurrentWorksheet;
+                        int row = 2;
+
+                        while (reader.Read() && row <= 12)
+                        {
+                            ws.SetCellData(row, 1, reader["LoaiVatChat"]);
+                            ws.SetCellData(row, 2, reader["DVT"]);
+                            ws.SetCellData(row, 3, reader["PC_TDQ_KhoD"]);
+                            ws.SetCellData(row, 4, reader["PC_TDQ_DonVi"]);
+                            ws.SetCellData(row, 5, reader["PC_TDQ_Plus"]);
+                            ws.SetCellData(row, 6, reader["PC_SCD_KhoD"]);
+                            ws.SetCellData(row, 7, reader["PC_SCD_DonVi"]);
+                            ws.SetCellData(row, 8, reader["PC_SCD_Plus"]);
+
+                            row++;
+                        }
+                    }
+                }
+            }
+        }
         private void PhanCapVatLieu_Load(object sender, EventArgs e)
         {
             reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[4];
-            if (IsDataExist())
-            {
-                LoadDataFromDatabase();
-            }
+           
+                LoadAll(this.reoGridControl1);
+            
         }
 
        
@@ -74,25 +121,23 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                     connection.Open();
 
                     command.CommandText = @"
-        SELECT
-            vc.TT,
-            vc.LoaiVatChat,
-            vc.DVT,
-            vc.PC_TDQ_KhoD,
-            vc.PC_TDQ_DonVi,
-            vc.PC_TDQ_Plus,
-            vc.PC_SCD_KhoD,
-            vc.PC_SCD_DonVi,
-            vc.PC_SCD_Plus
-        FROM VatChat vc
-        INNER JOIN Users u ON u.Id = vc.UserId
-        WHERE u.UserName = @UserName
-        ORDER BY vc.TT ASC;";
+                    SELECT
+                        TT,
+                        LoaiVatChat,
+                        DVT,
+                        PC_TDQ_KhoD,
+                        PC_TDQ_DonVi,
+                        PC_TDQ_Plus,
+                        PC_SCD_KhoD,
+                        PC_SCD_DonVi,
+                        PC_SCD_Plus
+                    FROM VatChat
+                    WHERE UserId = @UserName
+                    ORDER BY TT ASC;";
 
                     command.Parameters.AddWithValue("@UserName", userName.Trim());
                     adapter.Fill(dt);
                 }
-
                 if (dt.Rows.Count == 0)
                     return;
 
@@ -153,7 +198,6 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private bool IsDataExist()
         {
-            // Checks whether VatChat has any rows for the current user (by username)
             string userName = Properties.Settings.Default.Username;
             if (string.IsNullOrWhiteSpace(userName)) return false;
 
@@ -162,15 +206,14 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
                 connection.Open();
 
-                // Assumes UserId in VatChat maps to Users.Id, and Users has UserName.
                 command.CommandText = @"
         SELECT EXISTS(
-        SELECT 1
-        FROM VatChat vc
-        INNER JOIN Users u ON u.Id = vc.UserId
-        WHERE u.UserName = @UserName
-        LIMIT 1
+            SELECT 1
+            FROM VatChat
+            WHERE UserId = @UserName
+            LIMIT 1
         );";
+
                 command.Parameters.AddWithValue("@UserName", userName.Trim());
 
                 object result = command.ExecuteScalar();
@@ -254,12 +297,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private int SaveDataFromReoGridToVatChat(string userId, int startRow = 2)
         {
-            if (userId == null) throw new ArgumentOutOfRangeException(nameof(userId));
+            var sheet = reoGridControl1.CurrentWorksheet;
 
-            var sheet = reoGridControl1?.CurrentWorksheet;
-            if (sheet == null) throw new InvalidOperationException("Current worksheet is not available.");
-
-            // Column mapping (0-based). Adjust if your sheet layout differs.
             const int COL_TT = 0;
             const int COL_LOAIVATCHAT = 1;
             const int COL_DVT = 2;
@@ -274,55 +313,65 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             int inserted = 0;
 
-            // Fallback scan range (kept conservative). Change to match your sheet.
-            int maxRowsToScan = Math.Max(0, sheet.RowCount);
-            if (maxRowsToScan <= 0) maxRowsToScan = 2000;
-
-            try
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
-                for (int r = startRow; r < maxRowsToScan; r++)
+                connection.Open();
+
+                using (var tx = connection.BeginTransaction())
+                using (var command = connection.CreateCommand())
                 {
-                    string loaiVatChat = GetCellString(sheet, r, COL_LOAIVATCHAT);
-                    string dvt = GetCellString(sheet, r, COL_DVT);
+                    command.Transaction = tx;
 
-                    if (string.IsNullOrWhiteSpace(loaiVatChat) && string.IsNullOrWhiteSpace(dvt))
-                        continue; // ignore empty rows
+                    command.CommandText = @"
+                        INSERT INTO VatChat
+                        (UserId, TT, LoaiVatChat, DVT,
+                         PC_TDQ_KhoD, PC_TDQ_DonVi, PC_TDQ_Plus,
+                         PC_SCD_KhoD, PC_SCD_DonVi, PC_SCD_Plus)
+                        VALUES
+                        (@UserId,@TT,@LoaiVatChat,@DVT,
+                         @PC_TDQ_KhoD,@PC_TDQ_DonVi,@PC_TDQ_Plus,
+                         @PC_SCD_KhoD,@PC_SCD_DonVi,@PC_SCD_Plus);";
 
-                    if (string.IsNullOrWhiteSpace(loaiVatChat) || string.IsNullOrWhiteSpace(dvt))
-                        continue; // enforce required fields for AddVatChat
+                    command.Parameters.Add("@UserId", DbType.String);
+                    command.Parameters.Add("@TT", DbType.Int32);
+                    command.Parameters.Add("@LoaiVatChat", DbType.String);
+                    command.Parameters.Add("@DVT", DbType.String);
 
-                    int tt = GetCellInt(sheet, r, COL_TT);
+                    command.Parameters.Add("@PC_TDQ_KhoD", DbType.Int32);
+                    command.Parameters.Add("@PC_TDQ_DonVi", DbType.Int32);
+                    command.Parameters.Add("@PC_TDQ_Plus", DbType.Int32);
 
-                    int pcTdqKhoD = GetCellInt(sheet, r, COL_PC_TDQ_KHOD);
-                    int pcTdqDonVi = GetCellInt(sheet, r, COL_PC_TDQ_DONVI);
-                    int pcTdqPlus = GetCellInt(sheet, r, COL_PC_TDQ_PLUS);
+                    command.Parameters.Add("@PC_SCD_KhoD", DbType.Int32);
+                    command.Parameters.Add("@PC_SCD_DonVi", DbType.Int32);
+                    command.Parameters.Add("@PC_SCD_Plus", DbType.Int32);
 
-                    int pcScdKhoD = GetCellInt(sheet, r, COL_PC_SCD_KHOD);
-                    int pcScdDonVi = GetCellInt(sheet, r, COL_PC_SCD_DONVI);
-                    int pcScdPlus = GetCellInt(sheet, r, COL_PC_SCD_PLUS);
+                    for (int r = startRow; r < 13; r++)
+                    {
+                        string loai = GetCellString(sheet, r, COL_LOAIVATCHAT);
+                        string dvt = GetCellString(sheet, r, COL_DVT);
 
-                    long id = AddVatChat(
-                        userId,
-                        tt,
-                        loaiVatChat,
-                        dvt,
-                        pcTdqKhoD,
-                        pcTdqDonVi,
-                        pcTdqPlus,
-                        pcScdKhoD,
-                        pcScdDonVi,
-                        pcScdPlus);
+                        command.Parameters["@UserId"].Value = userId;
+                        command.Parameters["@TT"].Value = GetCellInt(sheet, r, COL_TT);
+                        command.Parameters["@LoaiVatChat"].Value = loai ?? "";
+                        command.Parameters["@DVT"].Value = dvt ?? "";
 
-                    if (id > 0) inserted++;
+                        command.Parameters["@PC_TDQ_KhoD"].Value = GetCellInt(sheet, r, COL_PC_TDQ_KHOD);
+                        command.Parameters["@PC_TDQ_DonVi"].Value = GetCellInt(sheet, r, COL_PC_TDQ_DONVI);
+                        command.Parameters["@PC_TDQ_Plus"].Value = GetCellInt(sheet, r, COL_PC_TDQ_PLUS);
+
+                        command.Parameters["@PC_SCD_KhoD"].Value = GetCellInt(sheet, r, COL_PC_SCD_KHOD);
+                        command.Parameters["@PC_SCD_DonVi"].Value = GetCellInt(sheet, r, COL_PC_SCD_DONVI);
+                        command.Parameters["@PC_SCD_Plus"].Value = GetCellInt(sheet, r, COL_PC_SCD_PLUS);
+
+                        command.ExecuteNonQuery();
+                        inserted++;
+                    }
+
+                    tx.Commit();
                 }
+            }
 
-                return inserted;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Save data failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return inserted;
-            }
+            return inserted;
         }
 
         private static string GetCellString(unvell.ReoGrid.Worksheet sheet, int row, int col)
@@ -412,7 +461,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         command.Parameters.Add("@UserId", DbType.Int32);
                         command.Parameters.Add("@TT", DbType.Int32);
 
-                        for (int r = startRow; r < maxRowsToScan; r++)
+                        for (int r = startRow; r < 13; r++)
                         {
                             string loaiVatChat = GetCellString(sheet, r, COL_LOAIVATCHAT);
                             string dvt = GetCellString(sheet, r, COL_DVT);

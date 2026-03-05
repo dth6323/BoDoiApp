@@ -156,6 +156,7 @@
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
     <Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
+    <Compile Include="Export\Export.cs" />
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
       <SubType>UserControl</SubType>
@@ -229,6 +230,12 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.Designer.cs">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\NhiemVu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\NhiemVu.Designer.cs">
+      <DependentUpon>NhiemVu.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.cs">
       <SubType>UserControl</SubType>
@@ -514,6 +521,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.resx">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\NhiemVu.resx">
+      <DependentUpon>NhiemVu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.resx">
       <DependentUpon>PhanCapVatLieu.cs</DependentUpon>

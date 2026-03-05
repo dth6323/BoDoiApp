@@ -171,6 +171,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             AddData(Constants.CURRENT_USER_ID_VALUE, textboxToChuc.Text, textBoxSuDung.Text);
 
         }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

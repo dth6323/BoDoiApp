@@ -221,7 +221,7 @@ namespace BoDoiApp.View.Main
                     break;
 
                 case "II_NHIEM_VU":
-                    NavigationService.Navigate(new TinhHinhTacDong());
+                    NavigationService.Navigate(new NhiemVu());
                     break;
 
                 case "III_TO_CHUC":

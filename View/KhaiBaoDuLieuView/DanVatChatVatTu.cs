@@ -160,29 +160,26 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             var worksheet = reoGridControl1.CurrentWorksheet;
             int rowCount = worksheet.RowCount;
+
             for (int row = 1; row < rowCount; row++)
             {
                 var loai = worksheet.GetCellData(row, 0)?.ToString();
                 var dvt = worksheet.GetCellData(row, 1)?.ToString();
-                var quydinhObj = worksheet.GetCellData(row, 2);
-                var hiencoObj = worksheet.GetCellData(row, 3);
-                var bosungObj = worksheet.GetCellData(row, 4);
-                if (string.IsNullOrWhiteSpace(loai) || string.IsNullOrWhiteSpace(dvt) ||
-                    quydinhObj == null || hiencoObj == null || bosungObj == null)
-                {
-                    continue; // Skip empty or incomplete rows
-                }
-                if (int.TryParse(quydinhObj.ToString(), out int quydinh) &&
-                    int.TryParse(hiencoObj.ToString(), out int hienco) &&
-                    int.TryParse(bosungObj.ToString(), out int bosung))
-                {
-                    AddData(loai, dvt, quydinh, hienco, bosung);
-                }
-                else
-                {
-                    MessageBox.Show($"Dữ liệu không hợp lệ ở dòng {row + 1}. Vui lòng kiểm tra lại.");
-                }
+
+                if (string.IsNullOrWhiteSpace(loai) || string.IsNullOrWhiteSpace(dvt))
+                    continue;
+
+                int quydinh = 0;
+                int hienco = 0;
+                int bosung = 0;
+
+                int.TryParse(worksheet.GetCellData(row, 2)?.ToString(), out quydinh);
+                int.TryParse(worksheet.GetCellData(row, 3)?.ToString(), out hienco);
+                int.TryParse(worksheet.GetCellData(row, 4)?.ToString(), out bosung);
+
+                AddData(loai, dvt, quydinh, hienco, bosung);
             }
+
             MessageBox.Show("Dữ liệu đã được lưu thành công.");
         }
         private void UpdateBulkData()
@@ -202,31 +199,31 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         var worksheet = reoGridControl1.CurrentWorksheet;
                         int rowCount = worksheet.RowCount;
                         for (int row = 1; row < rowCount; row++)
-                        {
-                            var loai = worksheet.GetCellData(row, 0)?.ToString();
-                            var dvt = worksheet.GetCellData(row, 1)?.ToString();
-                            var quydinhObj = worksheet.GetCellData(row, 2);
-                            var hiencoObj = worksheet.GetCellData(row, 3);
-                            var bosungObj = worksheet.GetCellData(row, 4);
-                            if (string.IsNullOrWhiteSpace(loai) || string.IsNullOrWhiteSpace(dvt) ||
-                                quydinhObj == null || hiencoObj == null || bosungObj == null)
-                            {
-                                continue; // Skip empty or incomplete rows
-                            }
-                            if (int.TryParse(quydinhObj.ToString(), out int quydinh) &&
-                                int.TryParse(hiencoObj.ToString(), out int hienco) &&
-                                int.TryParse(bosungObj.ToString(), out int bosung))
-                            {
-                                command.Parameters.Clear();
-                                command.Parameters.AddWithValue("@UserId", Properties.Settings.Default.Username);
-                                command.Parameters.AddWithValue("@Loai", loai);
-                                command.Parameters.AddWithValue("@DVT", dvt);
-                                command.Parameters.AddWithValue("@QUYDINH", quydinh);
-                                command.Parameters.AddWithValue("@HIENCO", hienco);
-                                command.Parameters.AddWithValue("@BOSUNG", bosung);
-                                command.ExecuteNonQuery();
-                            }
-                        }
+{
+    var loai = worksheet.GetCellData(row, 0)?.ToString();
+    var dvt = worksheet.GetCellData(row, 1)?.ToString();
+
+    if (string.IsNullOrWhiteSpace(loai) || string.IsNullOrWhiteSpace(dvt))
+        continue;
+
+    int quydinh = 0;
+    int hienco = 0;
+    int bosung = 0;
+
+    int.TryParse(worksheet.GetCellData(row, 2)?.ToString(), out quydinh);
+    int.TryParse(worksheet.GetCellData(row, 3)?.ToString(), out hienco);
+    int.TryParse(worksheet.GetCellData(row, 4)?.ToString(), out bosung);
+
+    command.Parameters.Clear();
+    command.Parameters.AddWithValue("@UserId", Properties.Settings.Default.Username);
+    command.Parameters.AddWithValue("@Loai", loai);
+    command.Parameters.AddWithValue("@DVT", dvt);
+    command.Parameters.AddWithValue("@QUYDINH", quydinh);
+    command.Parameters.AddWithValue("@HIENCO", hienco);
+    command.Parameters.AddWithValue("@BOSUNG", bosung);
+
+    command.ExecuteNonQuery();
+}
                         transaction.Commit();
                     }
                 }
