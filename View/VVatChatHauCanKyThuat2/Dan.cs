@@ -79,6 +79,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             {
                 DanData.UpdateHangLoat(reoGridControl1, rows, Section);
             }
+
         }
     }
 }

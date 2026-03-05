@@ -137,6 +137,37 @@ namespace BoDoiApp
                 );";
                 var command10 = new SQLiteCommand(sql10, connection);
                 command10.ExecuteNonQuery();
+                var sql11 = @"CREATE TABLE IF NOT EXISTS kehoach_suachua_tbkt (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                    loai_tbkt TEXT,
+
+                    ty_le_hu_hong REAL,
+
+                    tong_nhe REAL,
+                    tong_vua REAL,
+                    tong_nang REAL,
+                    tong_huy REAL,
+                    tong_cong REAL,
+
+                    kha_nang_nhe REAL,
+                    kha_nang_vua REAL,
+                    kha_nang_cong REAL,
+
+                    con_lai_nhe REAL,
+                    con_lai_vua REAL,
+                    con_lai_nang REAL,
+                    con_lai_huy REAL,
+                    con_lai_cong REAL,
+
+                    User TEXT
+                );";
+                var command11 = new SQLiteCommand(sql11, connection);
+                command11.ExecuteNonQuery();
+                //var sql12 = @"
+                //";
+                //var command12 = new SQLiteCommand(sql12, connection);
+                //command12.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

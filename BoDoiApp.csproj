@@ -146,6 +146,7 @@
     <Compile Include="DataLayer\BaoDuongSuaChuaData.cs" />
     <Compile Include="DataLayer\ChuYeuData.cs" />
     <Compile Include="DataLayer\DanData.cs" />
+    <Compile Include="DataLayer\KeHoachSuaChua.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\RichTextBoxData.cs" />
@@ -155,6 +156,10 @@
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
     <Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Export\Export.cs" />
+>>>>>>> 6b66463fe674d51059bbae954d6d05565512f9da
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
       <SubType>UserControl</SubType>
@@ -186,6 +191,12 @@
     </Compile>
     <Compile Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.Designer.cs">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\KeHoach9_2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\KeHoach9_2.Designer.cs">
+      <DependentUpon>KeHoach9_2.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KeHoach1\_1DanhGia.cs">
       <SubType>UserControl</SubType>
@@ -222,6 +233,12 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.Designer.cs">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\NhiemVu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\KhaiBaoDuLieuView\NhiemVu.Designer.cs">
+      <DependentUpon>NhiemVu.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.cs">
       <SubType>UserControl</SubType>
@@ -315,6 +332,12 @@
     <Compile Include="View\Main\FormBaoDamHauCan.Designer.cs">
       <DependentUpon>FormBaoDamHauCan.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Main\FormKeHoach.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Main\FormKeHoach.Designer.cs">
+      <DependentUpon>FormKeHoach.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -380,6 +403,12 @@
     </Compile>
     <Compile Include="View\VIIBaoDamQuanY\_3YDinh.Designer.cs">
       <DependentUpon>_3YDinh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.Designer.cs">
+      <DependentUpon>KeHoachSuaChua.cs</DependentUpon>
     </Compile>
     <Compile Include="View\VIIIBaoDuongSuaChua\_1BaoDuongSuaChua.cs">
       <SubType>UserControl</SubType>
@@ -481,6 +510,9 @@
     <EmbeddedResource Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.resx">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\KeHoach9_2.resx">
+      <DependentUpon>KeHoach9_2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\KeHoach1\_1DanhGia.resx">
       <DependentUpon>_1DanhGia.cs</DependentUpon>
     </EmbeddedResource>
@@ -498,6 +530,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.resx">
       <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\KhaiBaoDuLieuView\NhiemVu.resx">
+      <DependentUpon>NhiemVu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.resx">
       <DependentUpon>PhanCapVatLieu.cs</DependentUpon>
@@ -541,6 +576,9 @@
     <EmbeddedResource Include="View\Main\FormBaoDamHauCan.resx">
       <DependentUpon>FormBaoDamHauCan.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\Main\FormKeHoach.resx">
+      <DependentUpon>FormKeHoach.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.resx">
       <DependentUpon>1BaoDamAnUong.cs</DependentUpon>
     </EmbeddedResource>
@@ -570,6 +608,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\IXCongTacVanTai\_4YdinhVanChuyen.resx">
       <DependentUpon>_4YdinhVanChuyen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.resx">
+      <DependentUpon>KeHoachSuaChua.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\_1BaoDuongSuaChua.resx">
       <DependentUpon>_1BaoDuongSuaChua.cs</DependentUpon>
@@ -630,6 +671,9 @@
     <Content Include="Resources\Sheet\Book2.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\word\word1.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
