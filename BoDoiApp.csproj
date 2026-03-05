@@ -148,6 +148,7 @@
     <Compile Include="DataLayer\DanData.cs" />
     <Compile Include="DataLayer\KeHoachSuaChua.cs" />
     <Compile Include="DataLayer\KhaiBao\ChiLenhHKT1.cs" />
+    <Compile Include="DataLayer\KhaiBao\PhanCapVatLieuData.cs" />
     <Compile Include="DataLayer\KhaiBao\TinhHinhVc.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />

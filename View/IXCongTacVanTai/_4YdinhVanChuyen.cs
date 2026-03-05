@@ -6,7 +6,6 @@ namespace BoDoiApp.View.IXCongTacVanTai
 {
     public partial class _4YdinhVanChuyen : UserControl
     {
-        private float currentFontSize = 11f;
         private float zoomFactor = 1.0f;
 
         public _4YdinhVanChuyen()

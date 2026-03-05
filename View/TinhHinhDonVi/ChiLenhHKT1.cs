@@ -184,11 +184,11 @@ namespace BoDoiApp.View.TinhHinhDonVi
             // ===== 2. Danh sách dòng được phép sửa =====
             List<int> editableRows = new List<int>();
 
-            editableRows.AddRange(Enumerable.Range(3, 10)); // 5-14
-            editableRows.AddRange(Enumerable.Range(15, 5)); // 17-21
-            editableRows.AddRange(Enumerable.Range(21, 4)); // 23-26
-            editableRows.Add(26); // 28
-            editableRows.Add(27); // 29
+            editableRows.AddRange(Enumerable.Range(4, 10)); // 5-14
+            editableRows.AddRange(Enumerable.Range(16, 5)); // 17-21
+            editableRows.AddRange(Enumerable.Range(22, 4)); // 23-26
+            editableRows.Add(27); // 28
+            editableRows.Add(28); // 29
 
             // ===== 3. Mở khóa cột E -> H =====
             foreach (var row in editableRows)
@@ -198,13 +198,21 @@ namespace BoDoiApp.View.TinhHinhDonVi
                     ws.Cells[row, col].IsReadOnly = false;
                 }
             }
+            List<int> colCEditableRows = new List<int>();
 
+            colCEditableRows.AddRange(Enumerable.Range(30, 5)); // 31-35
+            colCEditableRows.AddRange(Enumerable.Range(36, 4)); // 37-40
+
+            foreach (var row in colCEditableRows)
+            {
+                ws.Cells[row, 2].IsReadOnly = false; // C = index 2
+            }
             // Ẩn sheet tab
             reoGridControl1.SheetTabVisible = false;
             ws.HideColumns(8, ws.ColumnCount - 8);
 
             // Ẩn dòng 15 trở đi
-            ws.HideRows(28, ws.RowCount - 28);
+            ws.HideRows(40, ws.RowCount - 40);
             // Load dữ liệu DB
             ChiLenhHKT1Data.LoadAll(reoGridControl1);
         }

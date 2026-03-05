@@ -1,10 +1,12 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.DataLayer.KhaiBao;
 using BoDoiApp.form;
 using BoDoiApp.View.Baovehaucankythuat;
 using BoDoiApp.View.IIIToChucSudung;
 using BoDoiApp.View.IXCongTacVanTai;
 using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.Main;
+using BoDoiApp.View.TinhHinhDonVi;
 using BoDoiApp.View.VIBaoDamSinhHoat;
 using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
@@ -27,7 +29,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new dn());
+            NavigationService.Navigate(new ChiLenhHKT1());
         }
 
         public void ShowView(UserControl view)
@@ -43,6 +45,11 @@ namespace BoDoiApp.View
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
         }
