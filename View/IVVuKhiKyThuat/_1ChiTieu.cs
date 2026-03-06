@@ -456,7 +456,10 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
             }
         }
 
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
     }
 }
 

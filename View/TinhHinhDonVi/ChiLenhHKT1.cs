@@ -132,29 +132,19 @@ namespace BoDoiApp.View.TinhHinhDonVi
             bottom.Controls.Add(btnSave, 2, 0);
 
 
-            // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
-            Panel rightPanel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
-
-            bottom.Controls.Add(rightPanel, 3, 0);
-
-
-            // ===== NÚT TIẾP =====
             Button btnNext = new Button
             {
                 Text = "Tiếp",
-                Anchor = AnchorStyles.Right,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
+
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+                NavigationService.Navigate(new Form1());
             };
-
-            rightPanel.Controls.Add(btnNext);
+            bottom.Controls.Add(btnNext, 3, 0);
         }
         private void LoadExcelAndData()
         {

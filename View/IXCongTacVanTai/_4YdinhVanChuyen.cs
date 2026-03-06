@@ -1,12 +1,17 @@
-﻿using System;
+﻿using BoDoiApp.Resources;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
+using BoDoiApp.DataLayer;
 
 namespace BoDoiApp.View.IXCongTacVanTai
 {
     public partial class _4YdinhVanChuyen : UserControl
     {
         private float zoomFactor = 1.0f;
+        private TextBox txtYdinh;
+        private readonly RichTextBoxData _dataLayer = new RichTextBoxData();
+        private const string SECTION = "IX_4_YdinhVanChuyen";
 
         public _4YdinhVanChuyen()
         {
@@ -19,6 +24,9 @@ namespace BoDoiApp.View.IXCongTacVanTai
             Dock = DockStyle.Fill;
             AutoScaleMode = AutoScaleMode.None;
             Controls.Clear();
+
+            // Đảm bảo bảng tồn tại
+            _dataLayer.CreatTable();
 
             /* ================= ROOT ================= */
             var root = new TableLayoutPanel
@@ -137,16 +145,18 @@ namespace BoDoiApp.View.IXCongTacVanTai
             }, 0, 1);
 
             /* ===== TEXT AREA ===== */
-            var txtYdinh = new TextBox
+            txtYdinh = new TextBox
             {
                 Dock = DockStyle.Fill,
                 Multiline = true,
                 Font = new Font("Times New Roman", 11),
-                Text = "(Học viên nhập văn bản)",
                 Margin = new Padding(20, 10, 20, 20),
                 ScrollBars = ScrollBars.Vertical
             };
             contentLayout.Controls.Add(txtYdinh, 0, 2);
+
+            // Load dữ liệu đã lưu
+            LoadData();
 
             /* ================= RIGHT EMPTY ================= */
             mainLayout.Controls.Add(new Panel(), 2, 0);
@@ -162,11 +172,75 @@ namespace BoDoiApp.View.IXCongTacVanTai
             buttons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34));
             buttons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
 
-            buttons.Controls.Add(CreateButton("Trở về", Color.FromArgb(255, 200, 150)), 0, 0);
-            buttons.Controls.Add(CreateButton("Trang\nchủ", Color.Yellow, true), 1, 0);
-            buttons.Controls.Add(CreateButton("Lưu", Color.FromArgb(173, 216, 230)), 2, 0);
+            var btnTroVe = CreateButton("Trở về", Color.FromArgb(255, 200, 150));
+            var btnTrangChu = CreateButton("Trang\nchủ", Color.Yellow, true);
+            var btnLuu = CreateButton("Lưu", Color.FromArgb(173, 216, 230));
+
+            // Gán sự kiện cho nút Lưu
+            // Lấy Button thực sự bên trong Panel wrapper
+            var btnLuuPanel = btnLuu as Panel;
+            if (btnLuuPanel != null)
+            {
+                foreach (Control ctrl in btnLuuPanel.Controls)
+                {
+                    if (ctrl is Button btn)
+                    {
+                        btn.Click += BtnLuu_Click;
+                        break;
+                    }
+                }
+            }
+
+            buttons.Controls.Add(btnTroVe, 0, 0);
+            buttons.Controls.Add(btnTrangChu, 1, 0);
+            buttons.Controls.Add(btnLuu, 2, 0);
 
             root.Controls.Add(buttons, 0, 3);
+        }
+
+        /* ================= SAVE / LOAD ================= */
+        private void LoadData()
+        {
+            try
+            {
+                string userId = Constants.CURRENT_USER_ID_VALUE; // hoặc cách lấy userId của bạn
+                string content = _dataLayer.LoadDataFromDatabase(userId, SECTION);
+
+                if (!string.IsNullOrEmpty(content))
+                    txtYdinh.Text = content;
+                else
+                    txtYdinh.Text = "(Học viên nhập văn bản)";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnLuu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string userId = Constants.CURRENT_USER_ID_VALUE; // hoặc cách lấy userId của bạn
+                string content = txtYdinh.Text;
+
+                // Kiểm tra đã có dữ liệu chưa để quyết định Insert hay Update
+                string existing = _dataLayer.LoadDataFromDatabase(userId, SECTION);
+
+                if (string.IsNullOrEmpty(existing))
+                    _dataLayer.AddData(userId, content, SECTION);
+                else
+                    _dataLayer.UpdateData(userId, content, SECTION);
+
+                MessageBox.Show("Lưu thành công!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu dữ liệu: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /* ================= COMMON ================= */

@@ -116,7 +116,8 @@ namespace BoDoiApp.View.Main
         "VIII. Bảo dưỡng, sửa chữa",
         "IX. Công tác vận tải",
         "X. Bảo vệ hậu cần - kỹ thuật",
-        "XI. Chỉ huy hậu cần - kỹ thuật"
+        "XI. Chỉ huy hậu cần - kỹ thuật",
+        "Kết luận và đề nghị"
     };
 
             string[] tags =
@@ -131,7 +132,8 @@ namespace BoDoiApp.View.Main
     "VIII_BAO_DUONG",
     "IX_VAN_TAI",
     "X_BAO_VE",
-    "XI_CHI_HUY"
+    "XI_CHI_HUY",
+    "KetLuan"
 };
             Color[] colors =
 {
@@ -146,6 +148,7 @@ namespace BoDoiApp.View.Main
     Color.FromArgb(221,235,247),
     Color.FromArgb(217,225,242),
     Color.FromArgb(255,229,204),
+    Color.FromArgb(226,239,218),
 };
 
             for (int i = 0; i < texts.Length; i++)
@@ -258,6 +261,9 @@ namespace BoDoiApp.View.Main
 
                 case "XI_CHI_HUY":
                     NavigationService.Navigate(new _1ChiHuyHauCanKyThuat());
+                    break;
+                case "KetLuan":
+                    NavigationService.Navigate(new _2KetLuanVaDeNghi());
                     break;
             }
         }

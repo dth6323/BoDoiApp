@@ -87,7 +87,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -103,7 +103,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -119,7 +119,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Button btnSave = new Button
             {
                 Text = "Lưu",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -128,20 +128,12 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             bottom.Controls.Add(btnSave, 2, 0);
 
 
-            // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
-            Panel rightPanel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
-
-            bottom.Controls.Add(rightPanel, 3, 0);
-
 
             // ===== NÚT TIẾP =====
             Button btnNext = new Button
             {
                 Text = "Tiếp",
-                Anchor = AnchorStyles.Right,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -150,7 +142,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
             };
 
-            rightPanel.Controls.Add(btnNext);
+            bottom.Controls.Add(btnNext);
         }
 
         // =============================

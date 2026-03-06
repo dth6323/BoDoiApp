@@ -23,7 +23,7 @@ namespace BoDoiApp.DataLayer
                 {
                     connection.Open();
 
-                    string sql = @"INSERT INTO thongtintapbai 
+                    string sql = @"INSERT INTO thongtintepbai 
                 (tenvankien, vitrichihuy, thoigian, 
                  manh1, manh2, manh3, manh4,
                  tyle, nam, chihuy_hckt, nguoithaythe, user)
@@ -81,7 +81,7 @@ namespace BoDoiApp.DataLayer
                 {
                     connection.Open();
 
-                    string sql = @"UPDATE thongtintapbai SET
+                    string sql = @"UPDATE thongtintepbai SET
                 tenvankien = @tenvankien,
                 vitrichihuy = @vitrichihuy,
                 thoigian = @thoigian,
@@ -93,7 +93,7 @@ namespace BoDoiApp.DataLayer
                 nam = @nam,
                 chihuy_hckt = @chihuy_hckt,
                 nguoithaythe = @nguoithaythe
-                WHERE id = @id";
+                WHERE User = @id";
 
                     using (var command = new SQLiteCommand(sql, connection))
                     {
@@ -134,7 +134,7 @@ namespace BoDoiApp.DataLayer
                 {
                     connection.Open();
 
-                    string sql = "SELECT * FROM thongtintapbai WHERE user = @user";
+                    string sql = "SELECT * FROM thongtintepbai WHERE user = @user";
 
                     using (var command = new SQLiteCommand(sql, connection))
                     {

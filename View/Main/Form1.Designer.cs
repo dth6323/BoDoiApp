@@ -1,16 +1,12 @@
-﻿namespace BoDoiApp
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace BoDoiApp
 {
     partial class Form1
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,119 +18,128 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btn_kbdl = new System.Windows.Forms.Button();
-            this.btn_dkkhbdhckt = new System.Windows.Forms.Button();
-            this.btn_khbdhckt = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 17F));
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1137, 576);
-            this.tableLayoutPanel1.TabIndex = 2;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.flowLayoutPanel1.Controls.Add(this.btn_kbdl);
-            this.flowLayoutPanel1.Controls.Add(this.btn_dkkhbdhckt);
-            this.flowLayoutPanel1.Controls.Add(this.btn_khbdhckt);
-            this.flowLayoutPanel1.Controls.Add(this.button5);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(182, 187);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(772, 201);
-            this.flowLayoutPanel1.TabIndex = 2;
-            // 
-            // btn_kbdl
-            // 
-            this.btn_kbdl.Location = new System.Drawing.Point(4, 4);
-            this.btn_kbdl.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_kbdl.Name = "btn_kbdl";
-            this.btn_kbdl.Size = new System.Drawing.Size(136, 177);
-            this.btn_kbdl.TabIndex = 0;
-            this.btn_kbdl.Text = "Khai báo dữ liệu";
-            this.btn_kbdl.UseVisualStyleBackColor = true;
-            this.btn_kbdl.Click += new System.EventHandler(this.btn_kbdl_Click);
-            // 
-            // btn_dkkhbdhckt
-            // 
-            this.btn_dkkhbdhckt.Location = new System.Drawing.Point(148, 4);
-            this.btn_dkkhbdhckt.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_dkkhbdhckt.Name = "btn_dkkhbdhckt";
-            this.btn_dkkhbdhckt.Size = new System.Drawing.Size(155, 177);
-            this.btn_dkkhbdhckt.TabIndex = 0;
-            this.btn_dkkhbdhckt.Text = "Dự kiến kế hoạch bảo đảm hậu cần, kỹ thuật";
-            this.btn_dkkhbdhckt.UseVisualStyleBackColor = true;
-            this.btn_dkkhbdhckt.Click += new System.EventHandler(this.btn_dkkhbdhckt_Click);
-            // 
-            // btn_khbdhckt
-            // 
-            this.btn_khbdhckt.Location = new System.Drawing.Point(311, 4);
-            this.btn_khbdhckt.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_khbdhckt.Name = "btn_khbdhckt";
-            this.btn_khbdhckt.Size = new System.Drawing.Size(153, 177);
-            this.btn_khbdhckt.TabIndex = 0;
-            this.btn_khbdhckt.Text = "Kế hoạch bảo đảm hậu cần kỹ thuật";
-            this.btn_khbdhckt.UseVisualStyleBackColor = true;
-            this.btn_khbdhckt.Click += new System.EventHandler(this.btn_khbdhckt_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(472, 4);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(153, 177);
-            this.button5.TabIndex = 0;
-            this.button5.Text = "Xuất báo cáo dự kiến kế hoạch";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
-            this.Size = new System.Drawing.Size(1137, 576);
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.ResumeLayout(false);
+            this.root = new TableLayoutPanel();
+            this.buttonGrid = new TableLayoutPanel();
 
+            this.btn_kbdl = new Button();
+            this.btn_dkkhbdhckt = new Button();
+            this.btn_khbdhckt = new Button();
+            this.btn_xuatkh = new Button();
+            this.btn_xuatdukien = new Button();
+            this.btn_thoat = new Button();
+
+            this.root.SuspendLayout();
+            this.buttonGrid.SuspendLayout();
+            this.SuspendLayout();
+
+            // ================= ROOT =================
+            this.root.ColumnCount = 3;
+            this.root.RowCount = 3;
+            this.root.Dock = DockStyle.Fill;
+            this.root.BackColor = Color.WhiteSmoke;
+
+            this.root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            this.root.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            this.root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+
+            this.root.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            this.root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            this.root.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+
+            this.root.Controls.Add(this.buttonGrid, 1, 1);
+
+            // ================= GRID BUTTON =================
+            this.buttonGrid.ColumnCount = 3;
+            this.buttonGrid.RowCount = 2;
+            this.buttonGrid.AutoSize = true;
+            this.buttonGrid.Anchor = AnchorStyles.None;
+            this.buttonGrid.BackColor = Color.White;
+            this.buttonGrid.Padding = new Padding(20);
+
+            this.buttonGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            this.buttonGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            this.buttonGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+
+            this.buttonGrid.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            this.buttonGrid.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+
+            this.buttonGrid.Controls.Add(this.btn_kbdl, 0, 0);
+            this.buttonGrid.Controls.Add(this.btn_dkkhbdhckt, 1, 0);
+            this.buttonGrid.Controls.Add(this.btn_khbdhckt, 2, 0);
+            this.buttonGrid.Controls.Add(this.btn_xuatkh, 0, 1);
+            this.buttonGrid.Controls.Add(this.btn_xuatdukien, 1, 1);
+            this.buttonGrid.Controls.Add(this.btn_thoat, 2, 1);
+
+            // ================= STYLE BUTTON =================
+            Font btnFont = new Font("Segoe UI", 11F, FontStyle.Bold);
+
+            void StyleButton(Button btn, Color color)
+            {
+                btn.Dock = DockStyle.Fill;
+                btn.Margin = new Padding(10);
+                btn.MinimumSize = new Size(160, 100);
+                btn.Font = btnFont;
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderSize = 0;
+                btn.BackColor = color;
+                btn.ForeColor = Color.White;
+                btn.Cursor = Cursors.Hand;
+                btn.TextAlign = ContentAlignment.MiddleCenter;
+            }
+
+            // ===== Button 1 =====
+            this.btn_kbdl.Text = "Khai báo dữ liệu";
+            StyleButton(this.btn_kbdl, Color.FromArgb(52, 152, 219));
+            this.btn_kbdl.Click += new System.EventHandler(this.btn_kbdl_Click);
+
+            // ===== Button 2 =====
+            this.btn_dkkhbdhckt.Text = "Dự kiến kế hoạch\nbảo đảm hậu cần kỹ thuật";
+            StyleButton(this.btn_dkkhbdhckt, Color.FromArgb(46, 204, 113));
+            this.btn_dkkhbdhckt.Click += new System.EventHandler(this.btn_dkkhbdhckt_Click);
+
+            // ===== Button 3 =====
+            this.btn_khbdhckt.Text = "Kế hoạch bảo đảm\nhậu cần kỹ thuật";
+            StyleButton(this.btn_khbdhckt, Color.FromArgb(155, 89, 182));
+            this.btn_khbdhckt.Click += new System.EventHandler(this.btn_khbdhckt_Click);
+
+            // ===== Button 4 =====
+            this.btn_xuatkh.Text = "Xuất báo cáo\nDự kiến";
+            StyleButton(this.btn_xuatkh, Color.FromArgb(231, 76, 60));
+            this.btn_xuatkh.Click += new System.EventHandler(this.button5_Click);
+
+            // ===== Button 5 =====
+            this.btn_xuatdukien.Text = "Xuất báo cáo\nKế hoạch";
+            StyleButton(this.btn_xuatdukien, Color.FromArgb(241, 196, 15));
+            this.btn_xuatdukien.Click += new System.EventHandler(this.btn_xuatbaocaodukien_Click);
+
+            // ===== Button 6 =====
+            this.btn_thoat.Text = "Thông tin người dùng";
+            StyleButton(this.btn_thoat, Color.FromArgb(52, 73, 94));
+            this.btn_thoat.Click += new System.EventHandler(this.btn_thoat_Click);
+
+            // ================= FORM =================
+            this.AutoScaleMode = AutoScaleMode.Dpi;
+            this.Controls.Add(this.root);
+            this.BackColor = Color.White;
+            this.Size = new Size(1137, 576);
+
+            this.root.ResumeLayout(false);
+            this.buttonGrid.ResumeLayout(false);
+            this.ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button btn_kbdl;
-        private System.Windows.Forms.Button btn_dkkhbdhckt;
-        private System.Windows.Forms.Button btn_khbdhckt;
-        private System.Windows.Forms.Button button5;
+        private TableLayoutPanel root;
+        private TableLayoutPanel buttonGrid;
+
+        private Button btn_kbdl;
+        private Button btn_dkkhbdhckt;
+        private Button btn_khbdhckt;
+        private Button btn_xuatkh;
+        private Button btn_xuatdukien;
+        private Button btn_thoat;
     }
 }
-

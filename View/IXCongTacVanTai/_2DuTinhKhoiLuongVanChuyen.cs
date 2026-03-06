@@ -156,7 +156,7 @@ namespace BoDoiApp.View.VICongTacVanTai
             btnPrev.FlatAppearance.BorderSize = 0;
             btnPrev.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _1DuongVanTai());
+                NavigationService.Back();
             };
             pnlContent.Controls.Add(btnPrev, 0, 0);
 

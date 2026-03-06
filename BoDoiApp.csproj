@@ -192,6 +192,18 @@
     <Compile Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.Designer.cs">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuongVanT.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuongVanT.Designer.cs">
+      <DependentUpon>DuongVanT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.Designer.cs">
+      <DependentUpon>DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\IXCongTacVanTai\KeHoach9_2.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -522,6 +534,12 @@
     <EmbeddedResource Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.resx">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\DuongVanT.resx">
+      <DependentUpon>DuongVanT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.resx">
+      <DependentUpon>DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\IXCongTacVanTai\KeHoach9_2.resx">
       <DependentUpon>KeHoach9_2.cs</DependentUpon>
     </EmbeddedResource>
@@ -684,11 +702,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Sheet\Dan.xlsx" />
-    <None Include="Resources\Sheet\QS.xlsx" />
+    <Content Include="Resources\Sheet\QS.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sheet\Book2.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Sheet\TinhHinhDonVi.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sheet\QuanSo.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\word\word1.docx">

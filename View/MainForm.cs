@@ -8,6 +8,7 @@ using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.Main;
 using BoDoiApp.View.TinhHinhDonVi;
 using BoDoiApp.View.VIBaoDamSinhHoat;
+using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using BoDoiApp.View.XIHauCanKyThuat;
@@ -29,7 +30,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new ChiLenhHKT1());
+            NavigationService.Navigate(new dn());
         }
 
         public void ShowView(UserControl view)

@@ -31,7 +31,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             
             reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[3];
-            if(IsDataExist())
+            reoGridControl1.SheetTabVisible = false;
+            if (IsDataExist())
             {
                 LoadDataFromDatabse();
             }
@@ -52,7 +53,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 }
             }
         }
-
+        
         private void button1_Click(object sender, EventArgs e)
         {
             NavigationService.Back();

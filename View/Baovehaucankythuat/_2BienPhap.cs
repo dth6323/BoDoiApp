@@ -10,6 +10,13 @@ namespace BoDoiApp.View.Baovehaucankythuat
     {
         private float currentFontSize = 11f;
 
+        // ===== CONTROLS =====
+        private Button btnPrev;
+        private Button btnBack;
+        private Button btnHome;
+        private Button btnSave;
+        private RichTextBox txt;
+
         public _2BienPhap()
         {
             InitializeComponent();
@@ -69,21 +76,17 @@ namespace BoDoiApp.View.Baovehaucankythuat
             content.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20));
             main.Controls.Add(content, 0, 2);
 
-            // ===== LEFT ARROW =====
-            Button btnPrev = new Button
+            // ===== PREV BUTTON =====
+            btnPrev = new Button
             {
                 Dock = DockStyle.Fill,
                 Text = "◀",
                 Font = new Font("Segoe UI", 22, FontStyle.Bold),
                 ForeColor = Color.Red
             };
-            btnPrev.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(new _1DukienTinhHuong());
-            };
             content.Controls.Add(btnPrev, 0, 0);
 
-            // ===== TEXT BOX =====
+            // ===== TEXT AREA =====
             Panel box = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -92,7 +95,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
             };
             content.Controls.Add(box, 1, 0);
 
-            RichTextBox txt = new RichTextBox
+            txt = new RichTextBox
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Times New Roman", 12),
@@ -111,14 +114,46 @@ namespace BoDoiApp.View.Baovehaucankythuat
             bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             root.Controls.Add(bottom, 0, 2);
 
-            bottom.Controls.Add(MakeBottomButton("Trở về", Color.FromArgb(252, 213, 180), DockStyle.Left), 0, 0);
-            bottom.Controls.Add(MakeBottomButton("Trang\nchủ", Color.Yellow, DockStyle.Fill), 1, 0);
-            var btn = MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right);
-            btn.Click += (s2, e2) =>
-            {
-                Savedata(txt.Text);
-            };
-                bottom.Controls.Add(btn, 2, 0);
+            // ===== BACK =====
+            btnBack = MakeBottomButton("Trở về", Color.FromArgb(252, 213, 180), DockStyle.Left);
+            bottom.Controls.Add(btnBack, 0, 0);
+
+            // ===== HOME =====
+            btnHome = MakeBottomButton("Trang\nchủ", Color.Yellow, DockStyle.Fill);
+            bottom.Controls.Add(btnHome, 1, 0);
+
+            // ===== SAVE =====
+            btnSave = MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right);
+            bottom.Controls.Add(btnSave, 2, 0);
+
+            // ===== EVENTS =====
+            btnPrev.Click += BtnPrev_Click;
+            btnBack.Click += BtnBack_Click;
+            btnHome.Click += BtnHome_Click;
+            btnSave.Click += BtnSave_Click;
+        }
+
+        // ===== EVENTS =====
+
+        private void BtnPrev_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new _1DukienTinhHuong());
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+
+        private void BtnHome_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Form1());
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            Savedata(txt.Text);
+            MessageBox.Show("Đã lưu dữ liệu");
         }
 
         private Label MakeHeader(string text)
@@ -140,7 +175,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
                 BackColor = color,
                 Dock = dock,
                 Width = 100,
-                Height = 40,
+                Height = 40
             };
         }
 
@@ -168,6 +203,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
             foreach (Control child in c.Controls)
                 UpdateFont(child);
         }
+
         private void Savedata(string content)
         {
             var dataLayer = new RichTextBoxData();

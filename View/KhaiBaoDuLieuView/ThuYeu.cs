@@ -20,7 +20,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book1.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "QuanSo.xlsx");
         public ThuYeu()
         {
             InitializeComponent();
@@ -144,5 +144,9 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
         }
 
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
             // ===== TITLE =====
             root.Controls.Add(new Label
             {
-                Text = "PHẦN SỬA CHỮA",
+                Text = "Tình hình vật chất",
                 Dock = DockStyle.Fill,
                 BackColor = System.Drawing.Color.FromArgb(255, 242, 204),
                 Font = new System.Drawing.Font("Times New Roman", 13, System.Drawing.FontStyle.Bold),
@@ -92,7 +92,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -108,7 +108,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -124,7 +124,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
             Button btnSave = new Button
             {
                 Text = "Lưu",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -134,28 +134,22 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
 
             // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
-            Panel rightPanel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
-
-            bottom.Controls.Add(rightPanel, 3, 0);
 
 
             // ===== NÚT TIẾP =====
             Button btnNext = new Button
             {
                 Text = "Tiếp",
-                Anchor = AnchorStyles.Right,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
+
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+                NavigationService.Navigate(new ChiLenhHKT1());
             };
-
-            rightPanel.Controls.Add(btnNext);
+            bottom.Controls.Add(btnNext, 3, 0);
         }
         private void LoadExcelAndData()
         {

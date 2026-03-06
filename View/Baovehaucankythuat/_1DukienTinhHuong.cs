@@ -1,13 +1,7 @@
 ﻿using BoDoiApp.DataLayer;
 using BoDoiApp.Resources;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.Baovehaucankythuat
@@ -15,6 +9,14 @@ namespace BoDoiApp.View.Baovehaucankythuat
     public partial class _1DukienTinhHuong : UserControl
     {
         private float currentFontSize = 11f;
+
+        // ===== BUTTON DECLARE =====
+        private Button btnNext;
+        private Button btnBack;
+        private Button btnHome;
+        private Button btnSave;
+
+        private RichTextBox txt;
 
         public _1DukienTinhHuong()
         {
@@ -25,7 +27,6 @@ namespace BoDoiApp.View.Baovehaucankythuat
 
         private void _1DukienTinhHuong_Load(object sender, EventArgs e)
         {
-            var dataLayer = new RichTextBoxData();
             Controls.Clear();
             AutoScaleMode = AutoScaleMode.None;
 
@@ -75,9 +76,6 @@ namespace BoDoiApp.View.Baovehaucankythuat
             content.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80));
             main.Controls.Add(content, 0, 2);
 
-            // ===== PREV =====
-  
-
             // ===== TEXT AREA =====
             Panel box = new Panel
             {
@@ -87,7 +85,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
             };
             content.Controls.Add(box, 1, 0);
 
-            RichTextBox txt = new RichTextBox
+            txt = new RichTextBox
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Times New Roman", 12),
@@ -95,18 +93,13 @@ namespace BoDoiApp.View.Baovehaucankythuat
             };
             box.Controls.Add(txt);
 
-            // ===== NEXT =====
-            Button btnNext = new Button
+            // ===== NEXT BUTTON =====
+            btnNext = new Button
             {
                 Text = "▶",
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 22, FontStyle.Bold),
                 ForeColor = Color.Red
-            };
-            btnNext.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(new _2BienPhap());
-                Savedata(txt.Text);
             };
             content.Controls.Add(btnNext, 2, 0);
 
@@ -121,31 +114,66 @@ namespace BoDoiApp.View.Baovehaucankythuat
             bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             root.Controls.Add(bottom, 0, 2);
 
-            bottom.Controls.Add(new Button
+            // ===== BACK BUTTON =====
+            btnBack = new Button
             {
                 Text = "Trở về",
                 BackColor = Color.FromArgb(252, 213, 180),
                 Dock = DockStyle.Left,
                 Width = 100
-            }, 0, 0);
+            };
+            bottom.Controls.Add(btnBack, 0, 0);
 
-            bottom.Controls.Add(new Button
+            // ===== HOME BUTTON =====
+            btnHome = new Button
             {
                 Text = "Trang\nchủ",
                 BackColor = Color.Yellow,
                 Dock = DockStyle.Fill,
                 Height = 45
-            }, 1, 0);
+            };
+            bottom.Controls.Add(btnHome, 1, 0);
 
-            bottom.Controls.Add(new Button
+            // ===== SAVE BUTTON =====
+            btnSave = new Button
             {
                 Text = "Lưu",
                 BackColor = Color.FromArgb(189, 215, 238),
                 Dock = DockStyle.Right,
                 Width = 100
-            }, 2, 0);
+            };
+            bottom.Controls.Add(btnSave, 2, 0);
+
+            // ===== ADD EVENT =====
+            btnNext.Click += BtnNext_Click;
+            btnBack.Click += BtnBack_Click;
+            btnHome.Click += BtnHome_Click;
+            btnSave.Click += BtnSave_Click;
         }
 
+        // ===== EVENTS =====
+
+        private void BtnNext_Click(object sender, EventArgs e)
+        {
+            Savedata(txt.Text);
+            NavigationService.Navigate(new _2BienPhap());
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+
+        private void BtnHome_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Form1());
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            Savedata(txt.Text);
+            MessageBox.Show("Đã lưu dữ liệu");
+        }
 
         private Label MakeHeader(string text, bool green)
         {
@@ -159,35 +187,14 @@ namespace BoDoiApp.View.Baovehaucankythuat
             };
         }
 
-        // ===== ZOOM CTRL =====
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == (Keys.Control | Keys.Add))
-            {
-                currentFontSize++;
-                UpdateFont(this);
-                return true;
-            }
-            if (keyData == (Keys.Control | Keys.Subtract))
-            {
-                if (currentFontSize > 8) currentFontSize--;
-                UpdateFont(this);
-                return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        private void UpdateFont(Control c)
-        {
-            c.Font = new Font("Times New Roman", currentFontSize, c.Font.Style);
-            foreach (Control child in c.Controls)
-                UpdateFont(child);
-        }
-
         private void Savedata(string content)
         {
             var dataLayer = new RichTextBoxData();
-            dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, "X_DuKien");
+            dataLayer.SaveOrUpdate(
+                Constants.CURRENT_USER_ID_VALUE,
+                content,
+                "X_DuKien"
+            );
         }
     }
 }
