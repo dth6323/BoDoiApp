@@ -61,7 +61,7 @@ namespace BoDoiApp.DataLayer
                             cmd.Parameters.Add("@User", System.Data.DbType.String);
 
                             // Dòng 4 → 12 (index 3 → 11)
-                            for (int row = 4; row <= 11; row++)
+                            for (int row = 4; row <= 9; row++)
                             {
                                 cmd.Parameters["@quan_so"].Value = GetDouble(ws.GetCellData(row, 2));
                                 cmd.Parameters["@tb_qs"].Value = GetDouble(ws.GetCellData(row, 3));
@@ -105,7 +105,7 @@ namespace BoDoiApp.DataLayer
                         var ws = grid.CurrentWorksheet;
                         int row = 4;
 
-                        while (reader.Read() && row <= 11)
+                        while (reader.Read() && row <= 9)
                         {
                             ws.SetCellData(row, 2, reader["quan_so"]);
                             ws.SetCellData(row, 3, reader["tb_qs"]);

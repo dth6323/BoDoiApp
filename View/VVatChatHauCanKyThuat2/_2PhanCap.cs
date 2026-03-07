@@ -16,6 +16,10 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 {
     public partial class _2PhanCap : UserControl
     {
+        private static readonly HashSet<int> SkipRows = new HashSet<int>
+{
+    1,2,3,4,5,11,16
+};
         private static readonly string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
         private static readonly string EXCEL_PATH =
             Path.Combine(BaseDir, "Resources", "Sheet", "Book1.xlsx");
@@ -140,58 +144,6 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         }
 
         
-        private bool IsDataExist()
-        {
-            // Checks whether VatChat has any rows for the current user (by username)
-            string userName = Properties.Settings.Default.Username;
-            if (string.IsNullOrWhiteSpace(userName)) return false;
-
-            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
-            using (var command = connection.CreateCommand())
-            {
-                connection.Open();
-
-                // Assumes UserId in VatChat maps to Users.Id, and Users has UserName.
-                command.CommandText = @"
-        SELECT EXISTS(
-        SELECT 1
-        FROM VatChat vc
-        INNER JOIN Users u ON u.Id = vc.UserId
-        WHERE u.UserName = @UserName
-        LIMIT 1
-        );";
-                command.Parameters.AddWithValue("@UserName", userName.Trim());
-
-                object result = command.ExecuteScalar();
-                return Convert.ToInt32(result) == 1;
-            }
-        }
-
-        private void CreateTable()
-        {
-            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
-            {
-                string sql = @"CREATE TABLE IF NOT EXISTS VatChat (
-        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-        UserId TEXT NOT NULL,
-        TT INTEGER  NULL,
-        LoaiVatChat TEXT  NULL,
-        DVT TEXT  NULL,
-
-        PC_TDQ_KhoD INTEGER DEFAULT 0,
-        PC_TDQ_DonVi INTEGER DEFAULT 0,
-        PC_TDQ_Plus INTEGER DEFAULT 0,
-
-        PC_SCD_KhoD INTEGER DEFAULT 0,
-        PC_SCD_DonVi INTEGER DEFAULT 0,
-        PC_SCD_Plus INTEGER DEFAULT 0
-    );";
-                connection.Open();
-                var command = new SQLiteCommand(sql, connection);
-                command.ExecuteNonQuery();
-            }
-        }
-
         
 
         
@@ -205,15 +157,32 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         private static int GetCellInt(unvell.ReoGrid.Worksheet sheet, int row, int col)
         {
             var cell = sheet.GetCell(row, col);
-            var data = cell == null ? null : cell.Data;
-            if (data == null) return 0;
+            var data = cell?.Data;
 
-            if (data is int) return (int)data;
-            if (data is long) return unchecked((int)(long)data);
-            if (data is double) return (int)Math.Round((double)data);
+            if (data == null)
+                return 0;
 
-            int v;
-            return int.TryParse(Convert.ToString(data), out v) ? v : 0;
+            if (data is int i)
+                return i;
+
+            if (data is long l)
+                return (int)l;
+
+            if (data is double d)
+                return (int)Math.Round(d);
+
+            var str = Convert.ToString(data).Trim();
+
+            if (string.IsNullOrWhiteSpace(str))
+                return 0;
+
+            // bỏ dấu phẩy và khoảng trắng
+            str = str.Replace(",", "").Replace(" ", "");
+
+            if (int.TryParse(str, out int result))
+                return result;
+
+            return 0;
         }
 
 
@@ -282,8 +251,12 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                         command.Parameters.Add("@UserId", DbType.Int32);
                         command.Parameters.Add("@TT", DbType.Int32);
 
-                        for (int r = startRow; r < maxRowsToScan; r++)
+                        for (int r = 0; r < maxRowsToScan; r++)
                         {
+                            int excelRow = r + 1;
+
+                            if (SkipRows.Contains(excelRow))
+                                continue;
                             string loaiVatChat = GetCellString(sheet, r, COL_LOAIVATCHAT);
                             string dvt = GetCellString(sheet, r, COL_DVT);
 

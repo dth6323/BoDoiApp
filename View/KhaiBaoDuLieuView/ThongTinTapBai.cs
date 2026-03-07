@@ -39,7 +39,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
                 currentId = Convert.ToInt32(row["id"]);
 
-                txt_tenvankien.Text = row["thongtintapbai"]?.ToString() ?? "";
+                txt_tenvankien.Text = row["tenvankien"]?.ToString() ?? "";
                 txt_vtch.Text = row["vitrichihuy"]?.ToString() ?? "";
                 txt_thoigian.Text = row["thoigian"]?.ToString() ?? "";
 
@@ -50,7 +50,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
                 txt_tyle.Text = row["tyle"]?.ToString() ?? "";
                 txt_nam.Text = row["nam"]?.ToString() ?? "";
-                txt_chhckt.Text = row["chihuyhckt"]?.ToString() ?? "";
+                txt_chhckt.Text = row["chihuy_hckt"]?.ToString() ?? "";
                 txt_nguoithaythe.Text = row["nguoithaythe"]?.ToString() ?? "";
             }
         }
@@ -119,7 +119,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             // ===== Nút Trang chủ =====
             btn_trangchu = new Button();
-            btn_trangchu.Text = "🏠 Trang chủ";
+            btn_trangchu.Text = "💾 Lưu";
             btn_trangchu.Width = 130;
             btn_trangchu.Height = 35;
             btn_trangchu.FlatStyle = FlatStyle.Flat;
@@ -178,14 +178,61 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void btn_trangchu_Click(object sender, EventArgs e)
         {
-           // HomeRequested?.Invoke(this, EventArgs.Empty);
-
+            // HomeRequested?.Invoke(this, EventArgs.Empty);
+            SaveData();
         }
 
         private void btn_tieptheo_Click(object sender, EventArgs e)
         {
             // NextRequested?.Invoke(this, EventArgs.Empty);
             NavigationService.Navigate(new BienChe());
+            SaveData();
+        }
+        private bool SaveData()
+        {
+            string thongTinTapBaiText = txt_tenvankien.Text;
+            string viTriChiHuy = txt_vtch.Text;
+            string thoiGian = txt_thoigian.Text;
+
+            string manh1 = txt_m1.Text;
+            string manh2 = txt_m2.Text;
+            string manh3 = txt_m3.Text;
+            string manh4 = txt_m4.Text;
+
+            string tyle = txt_tyle.Text;
+            string nam = txt_nam.Text;
+            string chiHuyHCKT = txt_chhckt.Text;
+            string nguoiThayThe = txt_nguoithaythe.Text;
+
+            bool result;
+
+            if (isAddingNew)
+            {
+                result = thongTinTapBai.ThemThongTin(
+                    thongTinTapBaiText, viTriChiHuy, thoiGian,
+                    manh1, manh2, manh3, manh4,
+                    tyle, nam, chiHuyHCKT, nguoiThayThe
+                );
+
+                if (result)
+                {
+                    MessageBox.Show("Thêm thông tin thành công!", "Thành công");
+                    isAddingNew = false;
+                }
+            }
+            else
+            {
+                result = thongTinTapBai.CapNhatThongTin(
+                    thongTinTapBaiText, viTriChiHuy, thoiGian,
+                    manh1, manh2, manh3, manh4,
+                    tyle, nam, chiHuyHCKT, nguoiThayThe
+                );
+
+                if (result)
+                    MessageBox.Show("Cập nhật thông tin thành công!", "Thành công");
+            }
+
+            return result;
         }
     }
 }

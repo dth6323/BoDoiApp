@@ -44,7 +44,7 @@ namespace BoDoiApp
                 string sql = "CREATE TABLE IF NOT EXISTS Users (\r\n    Id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    Username TEXT NOT NULL UNIQUE,\r\n    Password TEXT NOT NULL,\r\n    FullName TEXT\r\n);";
                 var command = new SQLiteCommand(sql, connection);
                 command.ExecuteNonQuery();
-                string sql1 = "CREATE TABLE IF NOT EXISTS thongtintepbai (\r\n    Id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    tendaubai TEXT,\r\n    sochuy TEXT,\r\n    bandotapbai TEXT,\r\n    manh1 TEXT,\r\n    manh2 TEXT,\r\n    manh3 TEXT,\r\n    manh4 TEXT,\r\n    chihuyduan TEXT,\r\n    chihuyhaucan TEXT,\r\n    chihuyduan_tt TEXT,\r\n    chihuyhaucan_tt TEXT,\r\n    captren TEXT,\r\n    capminh TEXT,\r\n    User TEXT\r\n);";
+                string sql1 = "CREATE TABLE IF NOT EXISTS thongtintepbai (\r\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    tenvankien TEXT,\r\n    vitrichihuy TEXT,\r\n    thoigian TEXT,\r\n    manh1 TEXT,\r\n    manh2 TEXT,\r\n    manh3 TEXT,\r\n    manh4 TEXT,\r\n    tyle TEXT,\r\n    nam TEXT,\r\n    chihuy_hckt TEXT,\r\n    nguoithaythe TEXT\r\n,User TEXT\r\n );";
                 var command1 = new SQLiteCommand(sql1, connection);
                 command1.ExecuteNonQuery(); 
                 string sql2 = "CREATE TABLE IF NOT EXISTS quansochiendau (\r\n    Id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n    phienhieudonvi TEXT,\r\n    phdv1 TEXT,\r\n    phdv2 TEXT,\r\n    phdv3 TEXT,\r\n    phdv4 TEXT,\r\n    phdv5 TEXT,\r\n    quansochiendau TEXT,\r\n    qscd1 TEXT,\r\n    qscd2 TEXT,\r\n    qscd3 TEXT,\r\n    qscd4 TEXT,\r\n    qscd5 TEXT,\r\n    User TEXT\r\n)";
@@ -165,10 +165,78 @@ namespace BoDoiApp
                 );";
                 var command11 = new SQLiteCommand(sql11, connection);
                 command11.ExecuteNonQuery();
-                //var sql12 = @"
-                //";
-                //var command12 = new SQLiteCommand(sql12, connection);
-                //command12.ExecuteNonQuery();
+                var sql12 = @"CREATE TABLE IF NOT EXISTS KhaiBaoTinhHinhVc (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    tt INTEGER,
+
+                    khod REAL,
+                    donVi REAL,
+                    cong REAL,
+                    ghiChu TEXT,
+
+                    User TEXT
+                );";
+                var command12 = new SQLiteCommand(sql12, connection);
+                command12.ExecuteNonQuery();
+                var sql13 = @"CREATE TABLE IF NOT EXISTS ChiLenhHkt1 (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    tt INTEGER,
+
+                    qddc REAL,
+                    pc04n REAL,
+                    pcscd REAL,
+                    gdcb REAL,
+                    gdcd REAL,
+
+                    User TEXT
+                );";
+                var command13 = new SQLiteCommand(sql13, connection);
+                command13.ExecuteNonQuery();
+                var sql14 = @"CREATE TABLE IF NOT EXISTS CanDoi (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserId TEXT NOT NULL,
+    QYDTu TEXT NOT NULL,
+    QYDDen TEXT NOT NULL,
+    QYETu TEXT NOT NULL,
+    QYEDen TEXT NOT NULL,
+    TramYTeTu TEXT NOT NULL,
+    TramYTeDen TEXT NOT NULL,
+    TongTu TEXT NOT NULL,
+    TongDen TEXT NOT NULL
+);";
+                var command14 = new SQLiteCommand(sql14, connection);
+                var sql15 = @"CREATE TABLE IF NOT EXISTS du_tinh_khoi_luong (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                UserId TEXT NOT NULL,
+                KhoiLuongToanTran REAL NULL,
+                KhoiLuongGiaiDoanChuanBi REAL NULL,
+                KhoiLuongGiaiDoanChienDau REAL NULL,
+                VCHCToanTran REAL NULL,
+                VCHCChuanBi REAL NULL,
+                VCHCChienDau REAL NULL,
+                VCKTToanTran REAL NULL,
+                VCKTChuanBi REAL NULL,
+                VCKTChienDau REAL NULL
+            );";
+                var command15 = new SQLiteCommand(sql15, connection);
+                command15.ExecuteNonQuery();
+                var sql16 = @"
+        CREATE TABLE  IF NOT EXISTS candoivt ( Id INTEGER PRIMARY KEY AUTOINCREMENT, UserId TEXT, vtbi_from TEXT, vtbi_to TEXT, vtle_from TEXT, vtle_to TEXT, danquan_from TEXT, danquan_to TEXT, xetho_count TEXT, xetho_from TEXT, xetho_to TEXT, tongkha_from TEXT, tongkha_to TEXT, tong_to TEXT, ketluan TEXT );;";
+                var command16 = new SQLiteCommand(sql16, connection);
+                command16.ExecuteNonQuery();
+                var sql17 = @"
+            CREATE TABLE IF NOT EXISTS chhckt (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                User TEXT NOT NULL,
+
+                lienlac1 TEXT,
+                lienlac2 TEXT,
+
+                moc1 TEXT,
+                moc2 TEXT
+        );";
+                var command17 = new SQLiteCommand(sql17, connection);
+                command17.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

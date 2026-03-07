@@ -23,7 +23,10 @@ namespace BoDoiApp
         {
             InitializeComponent();
         }
-
+        private void btn_xuatbaocaodukien_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Chức năng đang được phát triển. Vui lòng chờ cập nhật sau.");
+        }
         private void button1_Click(object sender, EventArgs e)
         {
            NavigationService.Navigate(new KhaiBaoDuLieu());
@@ -57,7 +60,10 @@ namespace BoDoiApp
         {
             NavigationService.Navigate(new FormBaoDamHauCan());
         }
-
+        private void btn_thoat_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Chức năng đang được phát triển. Vui lòng chờ cập nhật sau.");
+        }
         private void btn_khbdhckt_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new FormKeHoach());

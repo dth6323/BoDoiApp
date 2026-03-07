@@ -61,7 +61,17 @@ namespace BoDoiApp.DataLayer
                             while (true)
                             {
                                 var loai = ws.GetCellData(row, 1)?.ToString();
-                                if (string.IsNullOrWhiteSpace(loai))
+                                var sl = ws.GetCellData(row, 1);
+                                var tyle = ws.GetCellData(row, 2);
+                                var nhe = ws.GetCellData(row, 3);
+                                var vua = ws.GetCellData(row, 4);
+                                var nang = ws.GetCellData(row, 5);
+                                var huy = ws.GetCellData(row, 6);
+                                var cong = ws.GetCellData(row, 7);
+
+                                // Nếu cả dòng trống thì dừng
+                                if (sl == null && tyle == null && nhe == null && vua == null &&
+                                    nang == null && huy == null && cong == null)
                                     break;
                                 cmd.Parameters["@sl"].Value = GetDouble(ws.GetCellData(row, 1));
                                 cmd.Parameters["@ty_le"].Value = GetDouble(ws.GetCellData(row, 2));

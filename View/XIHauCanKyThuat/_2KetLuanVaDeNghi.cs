@@ -82,19 +82,6 @@ namespace BoDoiApp.View.XIHauCanKyThuat
             content.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20));
             main.Controls.Add(content, 0, 1);
 
-            // ===== PREV =====
-            Button btnPrev = new Button
-            {
-                Text = "◀",
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 22, FontStyle.Bold),
-                ForeColor = Color.Red
-            };
-            btnPrev.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(new _1ChiHuyHauCanKyThuat());
-            };
-            content.Controls.Add(btnPrev, 0, 0);
 
             // ===== BOX =====
             Panel box = new Panel
@@ -138,8 +125,23 @@ namespace BoDoiApp.View.XIHauCanKyThuat
             bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             root.Controls.Add(bottom, 0, 2);
 
-            bottom.Controls.Add(MakeBottomButton("Trở về", Color.FromArgb(252, 213, 180), DockStyle.Left), 0, 0);
-            bottom.Controls.Add(MakeBottomButton("Trang\nchủ", Color.Yellow, DockStyle.Fill), 1, 0);
+            // ===== BUTTON TRỞ VỀ =====
+            var btnBack = MakeBottomButton("Trở về", Color.FromArgb(252, 213, 180), DockStyle.Left);
+            btnBack.Click += (s, e1) =>
+            {
+                NavigationService.Back();
+
+            };
+            bottom.Controls.Add(btnBack, 0, 0);
+
+
+            // ===== BUTTON TRANG CHỦ =====
+            var btnHome = MakeBottomButton("Trang\nchủ", Color.Yellow, DockStyle.Fill);
+            btnHome.Click += (s, e1) =>
+            {
+                NavigationService.Navigate(new Form1());
+            };
+            bottom.Controls.Add(btnHome, 1, 0);
             var btn = MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right);
             btn.Click += (s, e1) =>
             {
@@ -207,10 +209,20 @@ namespace BoDoiApp.View.XIHauCanKyThuat
                 UpdateFont(child);
         }
 
-        private void SaveData(string content,string option)
+        private void SaveData(string content, string option)
         {
             var dataLayer = new RichTextBoxData();
-            dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, option);
+
+            bool exist = dataLayer.Exists(Constants.CURRENT_USER_ID_VALUE, option);
+
+            if (exist)
+            {
+                dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, content, option);
+            }
+            else
+            {
+                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, option);
+            }
         }
     }
 }

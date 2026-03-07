@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.View.Baovehaucankythuat;
+using BoDoiApp.View.IXCongTacVanTai;
 using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
@@ -46,11 +47,16 @@ namespace BoDoiApp.View.Main
             layout.Controls.Add(lblTitle, 0, 0);
 
             // ===== CONTENT =====
-            Panel pnlMain = new Panel
+            TableLayoutPanel pnlMain = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                BorderStyle = BorderStyle.FixedSingle
+                ColumnCount = 3
             };
+
+            pnlMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+            pnlMain.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 840)); // vùng menu
+            pnlMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+
             layout.Controls.Add(pnlMain, 0, 1);
 
             // ===== FLOW MENU (CĂN GIỮA) =====
@@ -61,8 +67,7 @@ namespace BoDoiApp.View.Main
                 WrapContents = false,
                 AutoScroll = true
             };
-            pnlMain.Controls.Add(pnlMenu);
-
+            pnlMain.Controls.Add(pnlMenu, 1, 0);
             // ===== HEADER (KHÔNG CLICK) =====
             Label lblHeader = new Label
             {
@@ -172,7 +177,8 @@ namespace BoDoiApp.View.Main
             {
                 Text = text,
                 Tag = tag,
-                Width = 820,
+                Dock = DockStyle.Top,
+                Width = 800,
                 Height = 30,
                 BackColor = color,
                 Font = new Font("Times New Roman", 11),
@@ -228,7 +234,7 @@ namespace BoDoiApp.View.Main
                     break;
 
                 case "IX_VAN_TAI":
-                    NavigationService.Navigate(new _1DuongVanTai());
+                    NavigationService.Navigate(new DuongVanT());
                     break;
 
                 case "X_BAO_VE":
@@ -237,6 +243,9 @@ namespace BoDoiApp.View.Main
 
                 case "XI_CHI_HUY":
                     NavigationService.Navigate(new _1ChiHuyHauCanKyThuat());
+                    break;
+                case "KET_LUAN":
+                    NavigationService.Navigate(new _2KetLuanVaDeNghi());
                     break;
             }
         }

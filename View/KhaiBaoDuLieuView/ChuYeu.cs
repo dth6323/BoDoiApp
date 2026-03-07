@@ -17,7 +17,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "QS.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "QuanSo.xlsx");
         private string BoPhan = "chu yeu";
         private int EndRow = 0;
         public ChuYeu(string boPhan)
@@ -40,13 +40,13 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 reoGridControl1.Load(EXCEL_PATH);
                 switch (BoPhan)
                 {
-                    case "Hướng Chủ Yếu":
+                    case "Hướng Chủ yếu":
                         reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[1];
-                        EndRow = 16;
+                        EndRow = 18;
                         break;
                     case "Hướng Thứ Yếu":
                         reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[2];
-                        EndRow = 11;
+                        EndRow = 10;
                         break;
                     case "Dự bị cơ động":
                         reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[3];
@@ -226,11 +226,16 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                 data[i] = reader.IsDBNull(i) ? 0 : Convert.ToInt32(reader.GetValue(i));
                             }
                             return data;
-                        }
+                        } 
                     }
                 }
                 return new int[15];
             }
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.DataLayer.KhaiBao;
 using BoDoiApp.form;
 using BoDoiApp.View.Baovehaucankythuat;
 using BoDoiApp.View.IIIToChucSudung;
 using BoDoiApp.View.IXCongTacVanTai;
 using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.Main;
+using BoDoiApp.View.TinhHinhDonVi;
 using BoDoiApp.View.VIBaoDamSinhHoat;
+using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using BoDoiApp.View.XIHauCanKyThuat;
@@ -43,6 +46,11 @@ namespace BoDoiApp.View
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
         {
 
         }

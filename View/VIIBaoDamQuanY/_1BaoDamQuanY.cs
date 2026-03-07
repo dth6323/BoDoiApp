@@ -1,6 +1,9 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.Resources;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
+using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -14,10 +17,52 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book2.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "Book3.xlsx");
 
         private ReoGridControl reoGridControl1;
+        private void LoadTrangKiThuatToColumnC()
+        {
+            string userId = Properties.Settings.Default.Username;
 
+            string sql = @"SELECT quan_so, option
+                   FROM trangkithuat
+                   WHERE ll = 'Tổng'
+                   AND User = @UserId";
+
+            var ws = reoGridControl1.CurrentWorksheet;
+
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (var command = new SQLiteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", userId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string option = reader["option"].ToString();
+                            object quanSo = reader["quan_so"];
+
+                            // duyệt các dòng trong sheet
+                            for (int row = 0; row < ws.RowCount; row++)
+                            {
+                                object cellValue = ws.GetCellData(row, 1); // cột B = index 1
+
+                                if (cellValue != null &&
+                                    cellValue.ToString().Trim() == option.Trim())
+                                {
+                                    ws.SetCellData(row, 2, quanSo); // cột C = index 2
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public _1BaoDamQuanY()
         {
             InitializeComponent();
@@ -87,7 +132,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -103,7 +148,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -119,7 +164,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             Button btnSave = new Button
             {
                 Text = "Lưu",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -129,28 +174,23 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
 
             // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
-            Panel rightPanel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
-
-            bottom.Controls.Add(rightPanel, 3, 0);
 
 
             // ===== NÚT TIẾP =====
             Button btnNext = new Button
             {
                 Text = "Tiếp",
-                Anchor = AnchorStyles.Right,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+                NavigationService.Navigate(new _2CanDoi());
             };
 
-            rightPanel.Controls.Add(btnNext);
+            bottom.Controls.Add(btnNext);
+            LoadTrangKiThuatToColumnC();
         }
         private void LoadExcelAndData()
         {
@@ -200,7 +240,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             ws.HideColumns(10, ws.ColumnCount - 10);
 
             // Ẩn dòng 15 trở đi
-            ws.HideRows(12, ws.RowCount - 12);
+            ws.HideRows(10, ws.RowCount - 10);
             // Load dữ liệu DB
             BaoDamQuanYData.LoadAll(reoGridControl1);
         }

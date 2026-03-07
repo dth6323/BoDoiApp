@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.Resources;
+using BoDoiApp.View.TinhHinhDonVi;
 using System;
 using System.Data.SQLite;
 using System.Windows.Forms;
@@ -46,7 +47,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+            NavigationService.Navigate(new TinhHinhVc());
+
         }
 
         private void CreateTable()

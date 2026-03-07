@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace BoDoiApp.Export
@@ -62,7 +63,7 @@ namespace BoDoiApp.Export
 
                 cmd4.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
 
-                int index = 76;
+                int index = 600;
 
                 using (var reader = cmd4.ExecuteReader())
                 {
@@ -192,22 +193,20 @@ namespace BoDoiApp.Export
                 data["{{45}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh") ?? "";
                 data["{{46}}"] = dataLayer6.LayThongTin("BaoDuongSuaChua_1");
 
-                var cmd9 = new SQLiteCommand("SELECT * FROM suachua_tbkt WHERE User = @UserId", connection);
+                var cmd9 = new SQLiteCommand("SELECT sl,ty_le_hu_hong,nhe,vua,nang,huy,cong FROM suachua_tbkt WHERE User = @UserId", connection);
                 cmd9.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
-
                 using (var reader = cmd9.ExecuteReader())
                 {
-                    int i = 1;
+                    int i = 241;
                     while (reader.Read())
                     {
-                        data["{{sl" + i + "}}"] = reader["sl"]?.ToString() ?? "";
-                        data["{{tl" + i + "}}"] = reader["ty_le_hu_hong"]?.ToString() ?? "";
-                        data["{{n" + i + "}}"] = reader["nhe"]?.ToString() ?? "";
-                        data["{{v" + i + "}}"] = reader["vua"]?.ToString() ?? "";
-                        data["{{ng" + i + "}}"] = reader["nang"]?.ToString() ?? "";
-                        data["{{h" + i + "}}"] = reader["huy"]?.ToString() ?? "";
-                        data["{{p" + i + "}}"] = reader["cong"]?.ToString() ?? "";
-                        i++;
+                        data["{{" + i++ + "}}"] = reader["sl"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["ty_le_hu_hong"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["nhe"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["vua"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["nang"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["huy"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["cong"]?.ToString() ?? "";
                     }
                 }
                 var cmd10 = new SQLiteCommand("SELECT * FROM du_tinh_khoi_luong WHERE UserId = @UserID", connection);
@@ -223,13 +222,84 @@ namespace BoDoiApp.Export
                         data["{{50}}"] = reader["VCHCChuanBi"]?.ToString();
                         data["{{51}}"] = reader["VCKTChuanBi"]?.ToString();
                         data["{{52}}"] = reader["KhoiLuongGiaiDoanChienDau"]?.ToString();
-                        data["{{53}}"] = reader["VCHCChienDau"]?.ToString();
-                        data["{{54}}"] = reader["VCKTChienDau"]?.ToString();
+                        data["{{554}}"] = reader["VCHCChienDau"]?.ToString();
+                        data["{{555}}"] = reader["VCKTChienDau"]?.ToString();
 
                     }
                 }
+                data["{{318}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai1") ?? "";
+                data["{{319}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai2") ?? "";
+                data["{{320}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai3") ?? "";
+                data["{{321}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai4") ?? "";
 
 
+                var cmd11 = new SQLiteCommand(
+                    "select vtbi_from,vtbi_to,vtle_from ,vtle_to ,danquan_from ,danquan_to ,xetho_count ,xetho_from,xetho_to,tongkha_from,tongkha_to,ketluan  FROM  candoivt WHERE UserId = @UserId",
+                    connection
+                );
+
+                cmd11.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+
+                using (var reader = cmd11.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        data["{{53}}"] = reader["vtbi_from"]?.ToString() ?? "";
+                        data["{{54}}"] = reader["vtbi_to"]?.ToString() ?? "";
+                        data["{{55}}"] = reader["vtle_from"]?.ToString() ?? "";
+                        data["{{56}}"] = reader["vtle_to"]?.ToString() ?? "";
+                        data["{{57}}"] = reader["danquan_from"]?.ToString() ?? "";
+                        data["{{58}}"] = reader["danquan_to"]?.ToString() ?? "";
+                        data["{{59}}"] = reader["xetho_count"]?.ToString() ?? "";
+                        data["{{60}}"] = reader["xetho_from"]?.ToString() ?? "";
+                        data["{{61}}"] = reader["xetho_to"]?.ToString() ?? "";
+                        data["{{62}}"] = reader["tongkha_from"]?.ToString() ?? "";
+                        data["{{63}}"] = reader["tongkha_to"]?.ToString() ?? "";
+                        data["{{64}}"] = reader["ketluan"]?.ToString() ?? "";
+                    }
+                }
+                data["{{65}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "IX_4_YdinhVanChuyen") ?? "";
+                data["{{66}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "X_DuKien") ?? "";
+                data["{{67}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "X_BienPhap") ?? "";
+                var cmd12 = new SQLiteCommand(
+                    "SELECT chihuy_hckt, nguoithaythe\r\n           FROM thongtintepbai\r\n       WHERE User= @UserId",
+                    connection
+                );
+
+                cmd12.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+
+                using (var reader = cmd12.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        data["{{68}}"] = reader["chihuy_hckt"]?.ToString() ?? "";
+                        data["{{69}}"] = reader["nguoithaythe"]?.ToString() ?? "";
+                    }
+                }
+                var cmd13 = new SQLiteCommand(
+                    @"
+                    SELECT lienlac1,lienlac2,moc1,moc2
+                    FROM chhckt
+                    WHERE User=@User
+                    LIMIT 1",
+                    connection
+                );
+
+                cmd13.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
+
+                using (var reader = cmd13.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        data["{{70}}"] = reader["lienlac1"]?.ToString() ?? "";
+                        data["{{71}}"] = reader["lienlac2"]?.ToString() ?? "";
+                        data["{{72}}"] = reader["moc1"]?.ToString() ?? "";
+                        data["{{73}}"] = reader["moc2"]?.ToString() ?? "";
+                    }
+                }
+
+                data["{{74}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "XI_Ketluan") ?? "";
+                data["{{75}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "XI_Denghi") ?? "";
 
                 ExportFromTemplate(template, output, data);
 
@@ -256,10 +326,14 @@ namespace BoDoiApp.Export
 
                     string combinedText = string.Join("", texts.Select(t => t.Text));
 
+                    // replace theo dictionary
                     foreach (var item in data)
                     {
                         combinedText = combinedText.Replace(item.Key, item.Value ?? "");
                     }
+
+                    // ===== XÓA placeholder chưa replace =====
+                    combinedText = Regex.Replace(combinedText, @"\{\{\d+\}\}", "");
 
                     texts[0].Text = combinedText;
 
@@ -272,5 +346,6 @@ namespace BoDoiApp.Export
                 doc.MainDocumentPart.Document.Save();
             }
         }
+    
+        }
     }
-}

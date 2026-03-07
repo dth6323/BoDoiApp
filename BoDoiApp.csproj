@@ -147,6 +147,9 @@
     <Compile Include="DataLayer\ChuYeuData.cs" />
     <Compile Include="DataLayer\DanData.cs" />
     <Compile Include="DataLayer\KeHoachSuaChua.cs" />
+    <Compile Include="DataLayer\KhaiBao\ChiLenhHKT1.cs" />
+    <Compile Include="DataLayer\KhaiBao\PhanCapVatLieuData.cs" />
+    <Compile Include="DataLayer\KhaiBao\TinhHinhVc.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\RichTextBoxData.cs" />
@@ -188,6 +191,18 @@
     </Compile>
     <Compile Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.Designer.cs">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuongVanT.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuongVanT.Designer.cs">
+      <DependentUpon>DuongVanT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.Designer.cs">
+      <DependentUpon>DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
     </Compile>
     <Compile Include="View\IXCongTacVanTai\KeHoach9_2.cs">
       <SubType>UserControl</SubType>
@@ -334,6 +349,18 @@
     </Compile>
     <Compile Include="View\Main\FormKeHoach.Designer.cs">
       <DependentUpon>FormKeHoach.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TinhHinhDonVi\ChiLenhHKT1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\TinhHinhDonVi\ChiLenhHKT1.Designer.cs">
+      <DependentUpon>ChiLenhHKT1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TinhHinhDonVi\TinhHinhVc.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\TinhHinhDonVi\TinhHinhVc.Designer.cs">
+      <DependentUpon>TinhHinhVc.cs</DependentUpon>
     </Compile>
     <Compile Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.cs">
       <SubType>UserControl</SubType>
@@ -507,6 +534,12 @@
     <EmbeddedResource Include="View\IVVuKhiKyThuat\_2BienPhapBaoDam.resx">
       <DependentUpon>_2BienPhapBaoDam.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\DuongVanT.resx">
+      <DependentUpon>DuongVanT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.resx">
+      <DependentUpon>DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\IXCongTacVanTai\KeHoach9_2.resx">
       <DependentUpon>KeHoach9_2.cs</DependentUpon>
     </EmbeddedResource>
@@ -575,6 +608,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Main\FormKeHoach.resx">
       <DependentUpon>FormKeHoach.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TinhHinhDonVi\ChiLenhHKT1.resx">
+      <DependentUpon>ChiLenhHKT1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TinhHinhDonVi\TinhHinhVc.resx">
+      <DependentUpon>TinhHinhVc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIBaoDamSinhHoat\1BaoDamAnUong.resx">
       <DependentUpon>1BaoDamAnUong.cs</DependentUpon>
@@ -659,13 +698,20 @@
     <Content Include="Resources\Sheet\Book1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	  <Content Include="Resources\Sheet\Dan.xlsx">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="Resources\Sheet\QS.xlsx">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
+    <Content Include="Resources\Sheet\Book3.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Sheet\Dan.xlsx" />
+    <Content Include="Resources\Sheet\QS.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Sheet\Book2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sheet\TinhHinhDonVi.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sheet\QuanSo.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\word\word1.docx">
