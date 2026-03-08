@@ -144,13 +144,6 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Items.AddRange(new object[] {
-            "Hướng Chủ yếu",
-            "Hướng Thứ Yếu",
-            "Phòng ngự phía sau",
-            "CĐ vòng ngoài",
-            "Dự bị cơ động",
-            "LL còn lại"});
             this.comboBox1.Location = new System.Drawing.Point(140, 140);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(150, 21);

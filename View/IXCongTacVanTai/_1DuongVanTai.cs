@@ -192,7 +192,7 @@ namespace BoDoiApp.View.VICongTacVanTai
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _2DuTinhKhoiLuongVanChuyen());
+                NavigationService.Navigate(() => new _2DuTinhKhoiLuongVanChuyen());
             };
 
             pnlContentLayout.Controls.Add(btnNext, 1, 0);
@@ -220,7 +220,7 @@ namespace BoDoiApp.View.VICongTacVanTai
             Button btnHome = new Button { Text = "Trang chủ", BackColor = Color.Yellow, Anchor = AnchorStyles.None, Width = 100 };
             btnHome.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
             Button btnSave = new Button { Text = "Lưu", Anchor = AnchorStyles.Right, Width = 100 };
 

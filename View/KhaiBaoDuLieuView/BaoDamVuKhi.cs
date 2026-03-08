@@ -96,7 +96,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void button2_Click(object sender, EventArgs e)
         {
 
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
         private void LoadTrangKiThuatToColumnC()
         {
@@ -160,7 +160,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 SaveData();
                 MessageBox.Show("Lưu dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            NavigationService.Navigate(new TiepNhanBoSung());
+            NavigationService.Navigate(() => new TiepNhanBoSung());
         }
 
         private void label1_Click(object sender, EventArgs e)

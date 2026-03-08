@@ -29,7 +29,7 @@ namespace BoDoiApp
         }
         private void button1_Click(object sender, EventArgs e)
         {
-           NavigationService.Navigate(new KhaiBaoDuLieu());
+           NavigationService.Navigate(() => new KhaiBaoDuLieu());
         }
         private void button5_Click(object sender, EventArgs e)
         {
@@ -58,7 +58,7 @@ namespace BoDoiApp
 
         private void btn_dkkhbdhckt_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new FormBaoDamHauCan());
+            NavigationService.Navigate(() => new FormBaoDamHauCan());
         }
         private void btn_thoat_Click(object sender, EventArgs e)
         {
@@ -66,13 +66,13 @@ namespace BoDoiApp
         }
         private void btn_khbdhckt_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new FormKeHoach());
+            NavigationService.Navigate(() => new FormKeHoach());
 
         }
 
         private void btn_kbdl_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new ThongTinTapBai());
+            NavigationService.Navigate(() => new ThongTinTapBai());
         }
         
     }

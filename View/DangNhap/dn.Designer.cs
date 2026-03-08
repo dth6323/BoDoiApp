@@ -40,7 +40,7 @@ namespace BoDoiApp.form
                     Properties.Settings.Default.Username = username;
                     Properties.Settings.Default.Save();
 
-                    NavigationService.Navigate(new Form1());
+                    NavigationService.Navigate(() => new Form1());
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace BoDoiApp.form
 
         private void btn_dk_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new DangKy());
+            NavigationService.Navigate(() => new DangKy());
         }
     }
 }

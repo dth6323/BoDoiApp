@@ -113,7 +113,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -142,7 +142,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
             bottom.Controls.Add(btnNext, 3, 0);
         }
@@ -190,8 +190,6 @@ namespace BoDoiApp.View.TinhHinhDonVi
             }
             List<int> colCEditableRows = new List<int>();
 
-            colCEditableRows.AddRange(Enumerable.Range(30, 5)); // 31-35
-            colCEditableRows.AddRange(Enumerable.Range(36, 4)); // 37-40
 
             foreach (var row in colCEditableRows)
             {
@@ -202,7 +200,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
             ws.HideColumns(8, ws.ColumnCount - 8);
 
             // Ẩn dòng 15 trở đi
-            ws.HideRows(40, ws.RowCount - 40);
+            ws.HideRows(29, ws.RowCount - 29);
             // Load dữ liệu DB
             ChiLenhHKT1Data.LoadAll(reoGridControl1);
         }

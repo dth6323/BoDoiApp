@@ -1,52 +1,36 @@
-﻿using System;
+﻿using BoDoiApp.View;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BoDoiApp.View
+public static class NavigationService
 {
-    public static class NavigationService
+    private static MainForm _mainForm;
+    private static Stack<Func<UserControl>> _history = new Stack<Func<UserControl>>();
+
+    public static void Init(MainForm mainForm)
     {
-        private static MainForm _mainForm;
-        private static Stack<UserControl> _history = new Stack<UserControl>();
+        _mainForm = mainForm;
+    }
 
-        public static void Init(MainForm mainForm)
-        {
-            _mainForm = mainForm;
-        }
+    public static void Navigate(Func<UserControl> factory)
+    {
+        var view = factory();
 
-        public static void Navigate(UserControl view)
-        {
-            if (_mainForm == null)
-                throw new InvalidOperationException("NavigationService not initialized");
+        _history.Push(factory);
+        _mainForm.ShowView(view);
+    }
 
-            if (_history.Count > 0)
-                _history.Peek().Visible = false;
+    public static void Back()
+    {
+        if (_history.Count <= 1)
+            return;
 
-            _history.Push(view);
-            _mainForm.ShowView(view);
-        }
+        _history.Pop();
 
-        public static void Back()
-        {
-            if (_history.Count <= 1)
-                return;
+        var factory = _history.Peek();
+        var view = factory();
 
-            // Remove current view
-            var current = _history.Pop();
-
-            // Remove from MainForm controls
-            _mainForm.Controls.Remove(current);
-
-            // Dispose to free memory
-            current.Dispose();
-
-            // Show previous view
-            var previous = _history.Peek();
-            previous.Visible = true;
-            _mainForm.ShowView(previous);
-        }
+        _mainForm.ShowView(view);
     }
 }

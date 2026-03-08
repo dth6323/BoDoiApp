@@ -159,6 +159,7 @@
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VatChatHienCoData.cs" />
     <Compile Include="DataLayer\KeHoachBaoDamQuanY.cs" />
+    <Compile Include="DataLayer\VCHCVTKTDATA.cs" />
     <Compile Include="Export\Export.cs" />
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="View\Baovehaucankythuat\_1DukienTinhHuong.cs">
@@ -465,6 +466,12 @@
     <Compile Include="View\VVatChatHauCanKyThuat2\NhuCauDan.Designer.cs">
       <DependentUpon>NhuCauDan.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\VCHCVTKT.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\VCHCVTKT.Designer.cs">
+      <DependentUpon>VCHCVTKT.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -663,6 +670,9 @@
     <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\NhuCauDan.resx">
       <DependentUpon>NhuCauDan.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\VCHCVTKT.resx">
+      <DependentUpon>VCHCVTKT.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\_1ChiTieu.resx">
       <DependentUpon>_1ChiTieu.cs</DependentUpon>
     </EmbeddedResource>
@@ -701,7 +711,6 @@
     <Content Include="Resources\Sheet\Book3.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Sheet\Dan.xlsx" />
     <Content Include="Resources\Sheet\QS.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -712,6 +721,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Sheet\QuanSo.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sheet\Dan1.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sheet\MasterTable.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sheet\Test.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\word\word1.docx">

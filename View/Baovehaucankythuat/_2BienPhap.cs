@@ -137,7 +137,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
 
         private void BtnPrev_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new _1DukienTinhHuong());
+            NavigationService.Navigate(() => new _1DukienTinhHuong());
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
@@ -147,7 +147,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
 
         private void BtnHome_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void BtnSave_Click(object sender, EventArgs e)

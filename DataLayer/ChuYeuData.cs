@@ -124,7 +124,7 @@ namespace BoDoiApp.DataLayer
                     string sql = @"UPDATE trangkithuat SET 
                                        quan_so = @quan_so, sn = @sn, tl = @tl, trl = @trl, dl = @dl, b41_m79 = @b41_m79,
                                        luu_dan = @luu_dan, coi_60 = @coi_60, coi_82 = @coi_82, coi_100 = @coi_100,
-                                       pct_spg9 = @pct_spg9, phao_pk_127 = @phao_pk_127, ons = @ons, db = @db,
+                                       pct_spg9 = @pct_spg9, phao_pk_127 = @phao_pk_127, ons = @ons, db = @db
                                        WHERE ll = @ll AND User = @User AND option = @option";
                     using (var command = new SQLiteCommand(sql, connection))
                     {

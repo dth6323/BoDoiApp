@@ -237,6 +237,34 @@ namespace BoDoiApp
         );";
                 var command17 = new SQLiteCommand(sql17, connection);
                 command17.ExecuteNonQuery();
+                var sql18 = @"CREATE TABLE IF NOT EXISTS ToChucSuDungLucLuong(
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            UserId TEXT,
+            RowIndex INTEGER,
+            NoiDung TEXT,
+            QS_SQ INTEGER,
+            QS_QNCN INTEGER,
+            QS_HSQ_BS INTEGER,
+            QS_Plus INTEGER,
+            VK_VuKhi INTEGER,
+            VK_XeMay INTEGER,
+            VK_TBKhac INTEGER,
+            HC_KT_QS INTEGER,
+            HC_KT_TB INTEGER,
+            TangCuong_QS INTEGER,
+            TangCuong_TB INTEGER);";
+                var command18 = new SQLiteCommand(sql18, connection);
+                command18.ExecuteNonQuery();
+                var sql19 = @"CREATE TABLE IF NOT EXISTS VCHCVTKT
+(
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Row INTEGER,
+    Col INTEGER,
+    Value REAL,
+    UserId TEXT
+);";
+                var command19 = new SQLiteCommand(sql19, connection);
+                command19.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

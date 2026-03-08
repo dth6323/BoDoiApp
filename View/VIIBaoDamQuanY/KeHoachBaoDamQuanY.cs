@@ -112,7 +112,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -150,7 +150,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+                NavigationService.Navigate(() => new _3CanDoiVaYdinhBaoDam());
             };
 
             rightPanel.Controls.Add(btnNext);
@@ -203,13 +203,13 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             ws.HideColumns(13, ws.ColumnCount - 13);
 
             // Ẩn dòng 15 trở đi
-            ws.HideRows(12, ws.RowCount - 12);
+            ws.HideRows(10, ws.RowCount - 10);
             // Load dữ liệu DB
-            BaoDamQuanYData.LoadAll(reoGridControl1);
+            KeHoachBaoDamQuanYData.LoadAll(reoGridControl1);
         }
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            BaoDamQuanYData.SaveAll(reoGridControl1);
+            KeHoachBaoDamQuanYData.SaveAll(reoGridControl1);
         }
     }
 }

@@ -95,7 +95,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             };
             btnPrev.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _1BaoDamAnUong());
+                NavigationService.Navigate(() => new _1BaoDamAnUong());
             };
             pnlArrowLeft.Controls.Add(btnPrev);
 
@@ -114,7 +114,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             };
             btnNext.Click += (s, e2) =>
             {
-               NavigationService.Navigate(new _3BaoDamONghi());
+               NavigationService.Navigate(() => new _3BaoDamONghi());
             };
             pnlArrowRight.Controls.Add(btnNext);
 

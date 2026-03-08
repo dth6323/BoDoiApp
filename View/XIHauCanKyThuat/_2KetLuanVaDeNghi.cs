@@ -139,7 +139,7 @@ namespace BoDoiApp.View.XIHauCanKyThuat
             var btnHome = MakeBottomButton("Trang\nchủ", Color.Yellow, DockStyle.Fill);
             btnHome.Click += (s, e1) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
             bottom.Controls.Add(btnHome, 1, 0);
             var btn = MakeBottomButton("Lưu", Color.FromArgb(189, 215, 238), DockStyle.Right);

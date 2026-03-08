@@ -109,7 +109,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -139,7 +139,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+                NavigationService.Navigate(() => new _3CanDoiVaYdinhBaoDam());
             };
 
             bottom.Controls.Add(btnNext);

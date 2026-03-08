@@ -97,7 +97,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _2BaoDamMac());
+                NavigationService.Navigate(() => new _2BaoDamMac());
             };
 
             pnlArrowRight.Controls.Add(btnNext);

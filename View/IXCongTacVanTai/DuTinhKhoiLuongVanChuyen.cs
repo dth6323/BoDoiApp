@@ -129,13 +129,13 @@ namespace BoDoiApp.View.IXCongTacVanTai
         private void btnSave_Click_1(object sender, System.EventArgs e)
         {
             SaveDuTinhKhoiLuong();
-            NavigationService.Navigate(new _3CanDoi());
+            NavigationService.Navigate(() => new _3CanDoi());
 
         }
 
         private void btnHome_Click(object sender, System.EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void btnBack_Click(object sender, System.EventArgs e)

@@ -25,7 +25,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             {
                 SaveData();
             }
-            NavigationService.Navigate(new _3YDinh());
+            NavigationService.Navigate(() => new _3YDinh());
         }
         private bool IsDataExist()
         {

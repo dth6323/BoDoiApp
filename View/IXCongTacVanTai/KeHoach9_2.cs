@@ -113,7 +113,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -151,7 +151,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
 
             btnTiep.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _3CanDoiVaYdinhBaoDam());
+                NavigationService.Navigate(() => new _3CanDoiVaYdinhBaoDam());
             };
 
             rightPanel.Controls.Add(btnTiep);

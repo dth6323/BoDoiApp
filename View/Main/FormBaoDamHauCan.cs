@@ -202,50 +202,50 @@ namespace BoDoiApp.View.Main
             switch (btn.Tag.ToString())
             {
                 case "I_DANH_GIA":
-                    NavigationService.Navigate(new TinhHinhTacDong());
+                    NavigationService.Navigate(() => new TinhHinhTacDong());
                     break;
 
                 case "II_NHIEM_VU":
-                    NavigationService.Navigate(new NhiemVu());
+                    NavigationService.Navigate(() => new NhiemVu());
                     break;
 
                 case "III_TO_CHUC":
-                    NavigationService.Navigate(new ToChucSuDungBoTri());
+                    NavigationService.Navigate(() => new ToChucSuDungBoTri());
                     break;
 
                 case "IV_VU_KHI":
-                    NavigationService.Navigate(new BaoDamVuKhi());
+                    NavigationService.Navigate(() => new BaoDamVuKhi());
                     break;
 
                 case "V_VAT_CHAT":
-                    NavigationService.Navigate(new DanVatChatVatTu());
+                    NavigationService.Navigate(() => new DanVatChatVatTu());
                     break;
 
                 case "VI_SINH_HOAT":
-                    NavigationService.Navigate(new View.VIBaoDamSinhHoat._1BaoDamAnUong());
+                    NavigationService.Navigate(() => new View.VIBaoDamSinhHoat._1BaoDamAnUong());
                     break;
 
                 case "VII_QUAN_Y":
-                    NavigationService.Navigate(new _1BaoDamQuanY());
+                    NavigationService.Navigate(() => new _1BaoDamQuanY());
                     break;
 
                 case "VIII_BAO_DUONG":
-                    NavigationService.Navigate(new _1BaoDuongSuaChua());
+                    NavigationService.Navigate(() => new _1BaoDuongSuaChua());
                     break;
 
                 case "IX_VAN_TAI":
-                    NavigationService.Navigate(new DuongVanT());
+                    NavigationService.Navigate(() => new DuongVanT());
                     break;
 
                 case "X_BAO_VE":
-                    NavigationService.Navigate(new _1DukienTinhHuong());
+                    NavigationService.Navigate(() => new _1DukienTinhHuong());
                     break;
 
                 case "XI_CHI_HUY":
-                    NavigationService.Navigate(new _1ChiHuyHauCanKyThuat());
+                    NavigationService.Navigate(() => new _1ChiHuyHauCanKyThuat());
                     break;
                 case "KET_LUAN":
-                    NavigationService.Navigate(new _2KetLuanVaDeNghi());
+                    NavigationService.Navigate(() => new _2KetLuanVaDeNghi());
                     break;
             }
         }

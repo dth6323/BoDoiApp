@@ -12,7 +12,7 @@ namespace BoDoiApp.DataLayer.KhaiBao
 
         private static readonly HashSet<int> SkipRows = new HashSet<int>
 {
-    1,2,3,14,15,21,26,29,35
+    1,2,3,14,15,21,26,29
 };
 
         private static double GetDouble(object value)
@@ -60,25 +60,18 @@ namespace BoDoiApp.DataLayer.KhaiBao
 
                             int tt = 0;
 
-                            for (int row = 1; row <= 39; row++)
+                            for (int row = 1; row <= 28; row++)
                             {
                                 if (SkipRows.Contains(row)) continue;
 
                                 cmd.Parameters["@tt"].Value = tt++;
 
-                                // ===== dòng 30-40 chỉ lưu cột C =====
-                                if (row >= 29 && row <= 39)
-                                {
-                                    cmd.Parameters["@qddc"].Value = GetDouble(ws.GetCellData(row, 2));
-                                }
-                                else
-                                {
                                     cmd.Parameters["@qddc"].Value = GetDouble(ws.GetCellData(row, 3));
                                     cmd.Parameters["@pc04n"].Value = GetDouble(ws.GetCellData(row, 4));
                                     cmd.Parameters["@pcscd"].Value = GetDouble(ws.GetCellData(row, 5));
                                     cmd.Parameters["@gdcb"].Value = GetDouble(ws.GetCellData(row, 6));
                                     cmd.Parameters["@gdcd"].Value = GetDouble(ws.GetCellData(row, 7));
-                                }
+                                
 
                                 cmd.Parameters["@User"].Value = Properties.Settings.Default.Username;
 
@@ -120,18 +113,12 @@ namespace BoDoiApp.DataLayer.KhaiBao
                             while (SkipRows.Contains(row))
                                 row++;
 
-                            if (row >= 29 && row <= 39)
-                            {
-                                ws.SetCellData(row, 2, reader["qddc"]);
-                            }
-                            else
-                            {
                                 ws.SetCellData(row, 3, reader["qddc"]);
                                 ws.SetCellData(row, 4, reader["pc04n"]);
                                 ws.SetCellData(row, 5, reader["pcscd"]);
                                 ws.SetCellData(row, 6, reader["gdcb"]);
                                 ws.SetCellData(row, 7, reader["gdcd"]);
-                            }
+                            
 
                             row++;
                         }

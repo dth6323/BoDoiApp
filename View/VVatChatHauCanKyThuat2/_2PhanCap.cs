@@ -35,7 +35,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                 int updated = UpdateBulkDataFromCell(userId);
                 MessageBox.Show($"Lưu dữ liệu hoàn tất.\nĐã thêm mới:  bản ghi\nĐã cập nhật: {updated} bản ghi", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            NavigationService.Navigate(new _3PhanCap());
+            NavigationService.Navigate(() => new _3PhanCap());
         }
 
 

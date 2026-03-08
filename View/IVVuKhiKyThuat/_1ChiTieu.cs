@@ -30,7 +30,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
         private void button2_Click(object sender, System.EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
 
         }
 
@@ -48,7 +48,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
             }
                 
                 
-                NavigationService.Navigate(new _2BienPhapBaoDam());
+                NavigationService.Navigate(() => new _2BienPhapBaoDam());
         }
 
         private void _1ChiTieu_Load(object sender, System.EventArgs e)

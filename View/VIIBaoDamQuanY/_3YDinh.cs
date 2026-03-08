@@ -27,7 +27,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void _3YDinh_Load(object sender, EventArgs e)

@@ -107,7 +107,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             };
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _2SuaChua());
+                NavigationService.Navigate(() => new _2SuaChua());
             };
             pnlArrowRight.Controls.Add(btnNext);
 

@@ -85,7 +85,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
             var btnBack = CreateArrow("◄");
             btnBack.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new _3CanDoi());
+                NavigationService.Navigate(() => new _3CanDoi());
             };
             mainLayout.Controls.Add(btnBack, 0, 0);
 

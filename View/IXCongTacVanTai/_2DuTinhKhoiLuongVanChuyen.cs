@@ -207,7 +207,7 @@ namespace BoDoiApp.View.VICongTacVanTai
             btnNext.FlatAppearance.BorderSize = 0;
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _3CanDoi());
+                NavigationService.Navigate(() => new _3CanDoi());
             };
             pnlContent.Controls.Add(btnNext, 2, 0);
 

@@ -48,7 +48,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[2];
                         EndRow = 10;
                         break;
-                    case "Dự bị cơ động":
+                    case "Phòng ngự phía sau":
                         reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[3];
                         EndRow = 9;
                         break;
@@ -164,7 +164,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button3_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
         private void LoadForOther()
         {

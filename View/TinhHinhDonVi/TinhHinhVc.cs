@@ -114,7 +114,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -147,7 +147,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new ChiLenhHKT1());
+                NavigationService.Navigate(() => new ChiLenhHKT1());
             };
             bottom.Controls.Add(btnNext, 3, 0);
         }

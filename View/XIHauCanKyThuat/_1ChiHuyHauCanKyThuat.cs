@@ -145,7 +145,7 @@ namespace BoDoiApp.View.XIHauCanKyThuat
             btnHome.Click += (s, e2) =>
             {
 
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
 
 

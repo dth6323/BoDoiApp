@@ -27,7 +27,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void button3_Click(object sender, EventArgs e)

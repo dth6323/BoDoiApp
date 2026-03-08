@@ -59,7 +59,7 @@ namespace BoDoiApp.View.DangNhap
                     MessageBoxIcon.Information
                 );
 
-                NavigationService.Navigate(new form.dn());
+                NavigationService.Navigate(() => new form.dn());
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace BoDoiApp.View.DangNhap
 
         private void btn_back_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new form.dn());
+            NavigationService.Navigate(() => new form.dn());
         }
     }
 }

@@ -25,7 +25,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveVanTai();
-            NavigationService.Navigate(new DuTinhKhoiLuongVanChuyen());
+            NavigationService.Navigate(() => new DuTinhKhoiLuongVanChuyen());
 
         }
         private void SaveVanTai()
@@ -55,7 +55,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
 
         private void btnHome_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void btnBack_Click(object sender, EventArgs e)

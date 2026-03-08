@@ -199,7 +199,7 @@ WHERE UserId = @UserId";
             try
             {
                 SaveAllData(Constants.CURRENT_USER_ID_VALUE);
-                NavigationService.Navigate(new DuTinhKhoiLuongVanChuyen());
+                NavigationService.Navigate(() => new DuTinhKhoiLuongVanChuyen());
             }
             catch (Exception ex)
             {
@@ -215,7 +215,7 @@ WHERE UserId = @UserId";
             try
             {
                 SaveAllData(Constants.CURRENT_USER_ID_VALUE);
-                NavigationService.Navigate(new _4YdinhVanChuyen());
+                NavigationService.Navigate(() => new _4YdinhVanChuyen());
             }
             catch (Exception ex)
             {
@@ -231,7 +231,7 @@ WHERE UserId = @UserId";
             try
             {
                 SaveAllData(Constants.CURRENT_USER_ID_VALUE);
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             }
             catch (Exception ex)
             {

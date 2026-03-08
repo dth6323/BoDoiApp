@@ -185,7 +185,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void btn_tieptheo_Click(object sender, EventArgs e)
         {
             // NextRequested?.Invoke(this, EventArgs.Empty);
-            NavigationService.Navigate(new BienChe());
+            NavigationService.Navigate(() => new BienChe());
             SaveData();
         }
         private bool SaveData()

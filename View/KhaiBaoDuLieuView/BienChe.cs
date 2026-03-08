@@ -12,17 +12,47 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         public BienChe()
         {
             InitializeComponent();
+
+            _isLoaded = false; // Explicitly false before adding items
+
+            this.comboBox1.Items.AddRange(new object[] {
+        "Hướng Chủ yếu",
+        "Hướng Thứ Yếu",
+        "Phòng ngự phía sau",
+        "LL còn lại"
+    });
+
+            _isLoaded = true; // Only true AFTER items are loaded
         }
+
+
+        private bool _isLoaded = false;
 
         private void BienChe_Load(object sender, EventArgs e)
         {
-
         }
+
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string Bophan = comboBox1.SelectedItem?.ToString();
-            NavigationService.Navigate(new ChuYeu(Bophan));
+            if (!_isLoaded)
+                return;
+            if (comboBox1.SelectedItem == null)
+                return;
+
+            string Bophan = comboBox1.SelectedItem.ToString();
+            if (string.IsNullOrWhiteSpace(Bophan))
+                return;
+
+            try
+            {
+                NavigationService.Navigate(() => new ChuYeu(Bophan));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Navigation error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -32,7 +62,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button5_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -42,12 +72,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button1_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new ChuYeu("Tieu Doan"));
+            NavigationService.Navigate(() => new ChuYeu("Tieu Doan"));
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new TinhHinhVc());
+            NavigationService.Navigate(() => new TinhHinhVc());
 
         }
 

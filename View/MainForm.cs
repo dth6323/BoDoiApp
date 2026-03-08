@@ -11,6 +11,7 @@ using BoDoiApp.View.VIBaoDamSinhHoat;
 using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
+using BoDoiApp.View.VVatChatHauCanKyThuat2;
 using BoDoiApp.View.XIHauCanKyThuat;
 using System;
 using System.Collections.Generic;
@@ -30,29 +31,23 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new dn());
+            NavigationService.Navigate(() => new VCHCVTKT());
         }
 
         public void ShowView(UserControl view)
         {
+            // Dispose tất cả control cũ trước khi clear
+            foreach (Control old in panel1.Controls)
+                old.Dispose();
+
             panel1.Controls.Clear();
+
             view.Dock = DockStyle.Fill;
             panel1.Controls.Add(view);
         }
 
-        private void panel1_Resize(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
+        private void panel1_Resize(object sender, EventArgs e) { }
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
+        private void MainForm_Load(object sender, EventArgs e) { }
     }
 }

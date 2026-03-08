@@ -156,7 +156,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
         private void BtnNext_Click(object sender, EventArgs e)
         {
             Savedata(txt.Text);
-            NavigationService.Navigate(new _2BienPhap());
+            NavigationService.Navigate(() => new _2BienPhap());
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
@@ -166,7 +166,7 @@ namespace BoDoiApp.View.Baovehaucankythuat
 
         private void BtnHome_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Form1());
+            NavigationService.Navigate(() => new Form1());
         }
 
         private void BtnSave_Click(object sender, EventArgs e)

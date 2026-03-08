@@ -46,15 +46,18 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
                             string option = reader["option"].ToString();
                             object quanSo = reader["quan_so"];
 
-                            // duyệt các dòng trong sheet
+                            // map DB -> Excel
+                            if (option == "Tieu Doan")
+                                option = "Toàn Trận";
+
                             for (int row = 0; row < ws.RowCount; row++)
                             {
-                                object cellValue = ws.GetCellData(row, 1); // cột B = index 1
+                                object cellValue = ws.GetCellData(row, 1); // cột B
 
                                 if (cellValue != null &&
                                     cellValue.ToString().Trim() == option.Trim())
                                 {
-                                    ws.SetCellData(row, 2, quanSo); // cột C = index 2
+                                    ws.SetCellData(row, 2, quanSo); // cột C
                                     break;
                                 }
                             }
@@ -154,7 +157,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(new Form1());
+                NavigationService.Navigate(() => new Form1());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -186,7 +189,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             btnNext.Click += (s, e2) =>
             {
-                NavigationService.Navigate(new _2CanDoi());
+                NavigationService.Navigate(() => new _2CanDoi());
             };
 
             bottom.Controls.Add(btnNext);
