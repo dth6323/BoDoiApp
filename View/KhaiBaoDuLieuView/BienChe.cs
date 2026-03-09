@@ -85,5 +85,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             
         }
+
+        private void contentPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -45,9 +45,24 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                 }
 
 
+
+                VCHCVTKTDATA.LoadAll(reoGridControl1);
+                reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["QSTBKT"];
+                VCHCVTKTDATA.LoadTrangKiThuat(reoGridControl1);
+                reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["ChiLenhHCKT"];
+                ChiLenhHKT1Data.LoadAllCell(reoGridControl1);
+                reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["PhanCapVCHC"];
+                PhanCapVatLieuData.LoadAllVatChat(reoGridControl1);
+                reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["TinhHinhVC"];
+                TinhHinhVcData.LoadAllCell(reoGridControl1);
                 reoGridControl1.CurrentWorksheet = sheet2;
                 sheet2.Recalculate();
-                reoGridControl1.SheetTabVisible = true;
+                VCHCVTKTDATA.LockSheet(reoGridControl1);
+                sheet2.HideColumns(29, sheet2.ColumnCount - 29);
+
+                // Ẩn từ dòng 82 trở đi
+                sheet2.HideRows(81, sheet2.RowCount - 81);
+                reoGridControl1.SheetTabVisible = false;
             }
             catch (Exception ex)
             {
@@ -59,7 +74,11 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         {
             VCHCVTKTDATA.SaveAll(reoGridControl1);
 
-            NavigationService.Navigate(() => new TiepNhanBoXungV());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(() => new Form1());
         }
     }
 }

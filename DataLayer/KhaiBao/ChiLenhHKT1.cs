@@ -90,7 +90,41 @@ namespace BoDoiApp.DataLayer.KhaiBao
                 }
             }
         }
+        public static void LoadAllCell(ReoGridControl grid)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
 
+                string sql = "SELECT * FROM ChiLenhHkt1 WHERE User=@User ORDER BY tt";
+
+                using (var cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var ws = grid.CurrentWorksheet;
+                        int row = 1;
+
+                        while (reader.Read())
+                        {
+                            while (SkipRows.Contains(row))
+                                row++;
+
+                            ws.SetCellData(row, 3, reader["qddc"]);
+                            ws.SetCellData(row, 4, reader["pc04n"]);
+                            ws.SetCellData(row, 5, reader["pcscd"]);
+                            ws.SetCellData(row, 6, reader["gdcb"]);
+                            ws.SetCellData(row, 7, reader["gdcd"]);
+
+
+                            row++;
+                        }
+                    }
+                }
+            }
+        }
         public static void LoadAll(ReoGridControl grid)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -106,7 +140,7 @@ namespace BoDoiApp.DataLayer.KhaiBao
                     using (var reader = cmd.ExecuteReader())
                     {
                         var ws = grid.CurrentWorksheet;
-                        int row = 0;
+                        int row = 1;
 
                         while (reader.Read())
                         {

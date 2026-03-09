@@ -265,6 +265,26 @@ namespace BoDoiApp
 );";
                 var command19 = new SQLiteCommand(sql19, connection);
                 command19.ExecuteNonQuery();
+                var sql20 = @"CREATE TABLE IF NOT EXISTS VatChat (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserId INTEGER NOT NULL,
+    TT INTEGER,
+
+    LoaiVatChat TEXT,
+    DVT TEXT,
+
+    PC_TDQ_KhoD INTEGER DEFAULT 0,
+    PC_TDQ_DonVi INTEGER DEFAULT 0,
+    PC_TDQ_Plus INTEGER DEFAULT 0,
+
+    PC_SCD_KhoD INTEGER DEFAULT 0,
+    PC_SCD_DonVi INTEGER DEFAULT 0,
+    PC_SCD_Plus INTEGER DEFAULT 0,
+
+    FOREIGN KEY(UserId) REFERENCES Users(Id)
+);";
+                var command20 = new SQLiteCommand(sql20, connection);
+                command20.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

@@ -37,7 +37,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             PhanCapVatLieuData.LoadAll(reoGridControl1);
 
-            reoGridControl1.SheetTabVisible = true;
+            reoGridControl1.SheetTabVisible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -52,7 +52,13 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Lưu dữ liệu
+            var sheet = reoGridControl1.CurrentWorksheet;
+
+            if (sheet != null && sheet.IsEditing)
+            {
+                sheet.EndEdit(null, EndEditReason.NormalFinish);
+            }
+
             PhanCapVatLieuData.SaveAll(reoGridControl1);
 
             NavigationService.Navigate(() => new TiepNhanBoXungV());

@@ -92,7 +92,39 @@ namespace BoDoiApp.DataLayer.KhaiBao
                 }
             }
         }
+        public static void LoadAllCell(ReoGridControl grid)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
 
+                string sql = "SELECT * FROM KhaiBaoTinhHinhVc WHERE User=@User ORDER BY tt";
+
+                using (var cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var ws = grid.CurrentWorksheet;
+                        int row = 0;
+
+                        while (reader.Read())
+                        {
+                            while (SkipRows.Contains(row))
+                                row++;
+
+                            ws.SetCellData(row, 3, reader["khod"]);
+                            ws.SetCellData(row, 4, reader["donVi"]);
+                            ws.SetCellData(row, 5, reader["cong"]);
+                            ws.SetCellData(row, 6, reader["ghiChu"]);
+
+                            row++;
+                        }
+                    }
+                }
+            }
+        }
         public static void LoadAll(ReoGridControl grid)
         {
             using (var connection = new SQLiteConnection(connectionString))

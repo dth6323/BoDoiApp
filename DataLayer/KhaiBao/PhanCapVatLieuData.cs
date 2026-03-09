@@ -111,6 +111,49 @@ namespace BoDoiApp.DataLayer.KhaiBao
             }
         }
 
+        public static void LoadAllVatChat(ReoGridControl grid)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = @"SELECT *
+                       FROM VatChat
+                       WHERE UserId=@User
+                       ORDER BY TT";
+
+                using (var cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var ws = grid.CurrentWorksheet;
+
+                        int index = 0;
+                        int[] rows = { 5, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17 };
+
+                        while (reader.Read())
+                        {
+                            if (index >= rows.Length) break;
+
+                            int row = rows[index];
+
+                            ws.SetCellData(row, 3, reader["PC_TDQ_KhoD"]);   // D
+                            ws.SetCellData(row, 4, reader["PC_TDQ_DonVi"]);  // E
+                            ws.SetCellData(row, 5, reader["PC_TDQ_Plus"]);   // F
+
+                            ws.SetCellData(row, 6, reader["PC_SCD_KhoD"]);   // G
+                            ws.SetCellData(row, 7, reader["PC_SCD_DonVi"]);  // H
+                            ws.SetCellData(row, 8, reader["PC_SCD_Plus"]);   // I
+
+                            index++;
+                        }
+                    }
+                }
+            }
+        }
+
         public static void LoadAll(ReoGridControl grid)
         {
             using (var connection = new SQLiteConnection(connectionString))

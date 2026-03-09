@@ -123,6 +123,7 @@
             this.contentPanel.Padding = new System.Windows.Forms.Padding(40);
             this.contentPanel.Size = new System.Drawing.Size(900, 380);
             this.contentPanel.TabIndex = 0;
+            this.contentPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.contentPanel_Paint);
             // 
             // button1
             // 
@@ -146,7 +147,7 @@
             // 
             this.comboBox1.Location = new System.Drawing.Point(140, 140);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(150, 21);
+            this.comboBox1.Size = new System.Drawing.Size(150, 24);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -178,21 +179,21 @@
             // 
             this.textBox3.Location = new System.Drawing.Point(450, 140);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(80, 20);
+            this.textBox3.Size = new System.Drawing.Size(80, 22);
             this.textBox3.TabIndex = 6;
             // 
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(680, 140);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(80, 20);
+            this.textBox4.Size = new System.Drawing.Size(80, 22);
             this.textBox4.TabIndex = 7;
             // 
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(450, 240);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(80, 20);
+            this.textBox5.Size = new System.Drawing.Size(80, 22);
             this.textBox5.TabIndex = 8;
             // 
             // BienChe

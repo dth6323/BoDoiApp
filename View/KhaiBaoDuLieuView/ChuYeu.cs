@@ -124,7 +124,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             int row = startRow;
                             while (reader.Read())
                             {
-                                if(row == 5 || row == 7 || row == 16)
+                                if (row == 5 || row == 6 || row == 7 || row == 16)
                                 {
                                     row++;
                                     continue;
@@ -168,38 +168,33 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         }
         private void LoadForOther()
         {
-            var tieuDoanData = ArrayData(BoPhan, "dBB");
-            var chuYeuData = ArrayData(BoPhan, "Tổng");
-            var thuYeuData = ArrayData(BoPhan, "Tổng");
-            var duBiData = ArrayData(BoPhan, "Tổng");
+            // ✅ Truyền đúng option cho từng bộ phận
+            var tieuDoanData = ArrayData("Tieu Doan", "dBB");
+            var chuYeuData = ArrayData("Hướng Chủ yếu", "Tổng");
+            var thuYeuData = ArrayData("Hướng Thứ Yếu", "Tổng");
+            var duBiData = ArrayData("Phòng ngự phía sau", "Tổng");
+
             var llConLai = new int[15];
-            for(int i = 0; i < 15; i++)
+            for (int i = 0; i < 15; i++)
             {
                 llConLai[i] = tieuDoanData[i] - chuYeuData[i] - thuYeuData[i] - duBiData[i];
             }
-            string sql = $"SELECT * FROM trangkithuat WHERE User = '{Constants.CURRENT_USER_ID_VALUE}' AND option = 'LL còn lại'";
-            bool flag = false;
-            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
-            {
-                connection.Open();
-                using(var command = new SQLiteCommand(sql, connection))
-                {
-                    flag = command.ExecuteScalar() != null;
 
-                }
-            }
+            bool flag = IsDataExists("LL còn lại");
+
             if (!flag)
             {
-                for(int i =0; i < 15; i++)
+                var ws = reoGridControl1.CurrentWorksheet;
+                // ✅ Ghi vào đúng row tương ứng trong sheet (kiểm tra row nào là dòng tổng)
+                for (int i = 0; i < 15; i++)
                 {
-                    reoGridControl1.CurrentWorksheet.SetCellData(6, i, llConLai[i]);
+                    ws.SetCellData(6, i+1, llConLai[i]); // xác nhận lại row index đúng
                 }
-            }else
+            }
+            else
             {
                 LoadDataWithUser();
             }
-            
-
         }
 
         private int[] ArrayData(string option, string columnName)
@@ -221,9 +216,9 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         if (reader.Read())
                         {
                             int[] data = new int[15];
-                            for (int i = 0; i < 15; i++)
+                            for (int i = 1; i < 16; i++)
                             {
-                                data[i] = reader.IsDBNull(i) ? 0 : Convert.ToInt32(reader.GetValue(i));
+                                data[i-1] = reader.IsDBNull(i) ? 0 : Convert.ToInt32(reader.GetValue(i));
                             }
                             return data;
                         } 
