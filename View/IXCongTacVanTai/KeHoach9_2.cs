@@ -20,7 +20,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
             AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book2.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "test3.xlsx");
 
         private ReoGridControl reoGridControl1;
         public KeHoach9_2()
@@ -172,31 +172,47 @@ namespace BoDoiApp.View.IXCongTacVanTai
 
             // ===== Chọn sheet sửa chữa =====
             reoGridControl1.CurrentWorksheet =
-                reoGridControl1.Worksheets["KeHoach9.2"];
+                reoGridControl1.Worksheets["KhoiLuongVanTai"];
 
             var ws = reoGridControl1.CurrentWorksheet;
-
-            // Khóa hàng 1-3
-            for (int row = 0; row < 3; row++)
+            for (int r = 0; r < ws.RowCount; r++)
             {
-                for (int col = 0; col < ws.ColumnCount; col++)
-                    ws.Cells[row, col].IsReadOnly = true;
+                for (int c = 0; c < ws.ColumnCount; c++)
+                {
+                    ws.Cells[r, c].IsReadOnly = true;
+                }
             }
 
-            // Khóa cột A,B,C
-            for (int col = 0; col <= 2; col++)
+            // =============================
+            // 2. UNLOCK B→L (8→10)
+            // =============================
+            for (int r = 7; r <= 9; r++)       // dòng 8-10
             {
-                for (int row = 0; row < ws.RowCount; row++)
-                    ws.Cells[row, col].IsReadOnly = true;
+                for (int c = 1; c <= 11; c++)  // cột B-L
+                {
+                    ws.Cells[r, c].IsReadOnly = false;
+                }
             }
 
-            // Khóa cột E-I
-            for (int col = 4; col <= 8; col++)
+            // =============================
+            // 3. UNLOCK B→L (12→14)
+            // =============================
+            for (int r = 11; r <= 13; r++)     // dòng 12-14
             {
-                for (int row = 0; row < ws.RowCount; row++)
-                    ws.Cells[row, col].IsReadOnly = true;
+                for (int c = 1; c <= 11; c++)  // cột B-L
+                {
+                    ws.Cells[r, c].IsReadOnly = false;
+                }
             }
-            ws.HideColumns(17, ws.ColumnCount - 17);
+
+            // =============================
+            // 4. UNLOCK M6→M14
+            // =============================
+            for (int r = 5; r <= 13; r++)      // dòng 6-14
+            {
+                ws.Cells[r, 12].IsReadOnly = false; // cột M
+            }
+            ws.HideColumns(13, ws.ColumnCount - 13);
 
             // Ẩn dòng 15 trở đi
             ws.HideRows(14, ws.RowCount - 14);
@@ -204,7 +220,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
             // Ẩn sheet tab
             reoGridControl1.SheetTabVisible = false;
             // ===== Load dữ liệu DB =====
-            SuaChuaData.LoadAll(reoGridControl1);
+            KhoiLuongVanTaiData.LoadAll(reoGridControl1);
         }
 
         // =============================
@@ -212,7 +228,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
         // =============================
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            SuaChuaData.SaveAll(reoGridControl1);
+            KhoiLuongVanTaiData.SaveAll(reoGridControl1);
         }
     }
 }

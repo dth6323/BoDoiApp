@@ -285,6 +285,64 @@ namespace BoDoiApp
 );";
                 var command20 = new SQLiteCommand(sql20, connection);
                 command20.ExecuteNonQuery();
+                var sql21 = @"CREATE TABLE IF NOT EXISTS kehoachsuachua (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    loai_tbkt TEXT,
+    so_luong REAL,
+    ty_le_hu_hong REAL,
+
+    tong_nhe REAL,
+    tong_vua REAL,
+    tong_nang REAL,
+    tong_huy REAL,
+    tong_cong REAL,
+
+    kha_nhe REAL,
+    kha_vua REAL,
+    kha_cong REAL,
+
+    con_nhe REAL,
+    con_vua REAL,
+    con_nang REAL,
+    con_huy REAL,
+    con_cong REAL,
+
+    User TEXT
+);";
+                var command21 = new SQLiteCommand(sql21, connection);
+                command21.ExecuteNonQuery();
+                var sql22 = @"CREATE TABLE  IF NOT EXISTS KhoiLuongVanTai (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    TT INTEGER,
+
+    B REAL,
+    C REAL,
+    D REAL,
+    E REAL,
+    F REAL,
+    G REAL,
+    H REAL,
+    I REAL,
+    J REAL,
+    K REAL,
+    L REAL,
+
+    M TEXT,
+
+    UserId TEXT
+);";
+                var command22 = new SQLiteCommand(sql22, connection);
+                command22.ExecuteNonQuery();
+                var sql23 = @"CREATE TABLE IF NOT EXISTS KeHoachVanChuyen (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Row INTEGER,
+    Col INTEGER,
+    Value TEXT,
+    UserId TEXT
+);";
+                var command23 = new SQLiteCommand(sql23, connection);
+                command23.ExecuteNonQuery();
                 connection.Close();
             }
             var richTextBoxData = new DataLayer.RichTextBoxData();

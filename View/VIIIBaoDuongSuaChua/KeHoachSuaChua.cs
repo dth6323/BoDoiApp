@@ -199,9 +199,9 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             ws.HideRows(12, ws.RowCount - 12);
 
             // Ẩn sheet tab
-            reoGridControl1.SheetTabVisible = true;
+            reoGridControl1.SheetTabVisible = false;
             // ===== Load dữ liệu DB =====
-            SuaChuaData.LoadAll(reoGridControl1);
+            KeHoachSuaChuaData.LoadAll(reoGridControl1);
         }
 
         // =============================
@@ -209,7 +209,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
         // =============================
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            SuaChuaData.SaveAll(reoGridControl1);
+            KeHoachSuaChuaData.SaveAll(reoGridControl1);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace BoDoiApp.DataLayer
 
                         using (var cmd = new SQLiteCommand(insertSql, connection, transaction))
                         {
-                            int row = 4; // dòng bắt đầu dữ liệu thực tế (theo ảnh)
+                            int row = 2; // dòng bắt đầu dữ liệu thực tế (theo ảnh)
 
                             while (true)
                             {
@@ -115,11 +115,22 @@ namespace BoDoiApp.DataLayer
         }
         public static void LoadAll(ReoGridControl grid)
         {
+            var ws = grid.CurrentWorksheet;
+
+            
+
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
 
-                string sql = "SELECT * FROM kehoachsuachua WHERE User=@User";
+                string sql = @"
+        SELECT 
+            ty_le_hu_hong,      -- D
+            kha_nhe,       -- J
+            kha_vua        -- K
+        FROM kehoachsuachua
+        WHERE User=@User
+        LIMIT 10";
 
                 using (var cmd = new SQLiteCommand(sql, connection))
                 {
@@ -127,31 +138,13 @@ namespace BoDoiApp.DataLayer
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        var ws = grid.CurrentWorksheet;
-                        int row = 4;
+                        int row = 2;
 
-                        while (reader.Read())
+                        while (reader.Read() && row <= 11)
                         {
-                            ws.SetCellData(row, 1, reader["loai_tbkt"]);
-                            ws.SetCellData(row, 2, reader["so_luong"]);
-                            ws.SetCellData(row, 3, reader["ty_le_hu_hong"]);
-
-                            ws.SetCellData(row, 4, reader["tong_nhe"]);
-                            ws.SetCellData(row, 5, reader["tong_vua"]);
-                            ws.SetCellData(row, 6, reader["tong_nang"]);
-                            ws.SetCellData(row, 7, reader["tong_huy"]);
-                            ws.SetCellData(row, 8, reader["tong_cong"]);
-
-                            ws.SetCellData(row, 9, reader["kha_nhe"]);
-                            ws.SetCellData(row, 10, reader["kha_vua"]);
-                            ws.SetCellData(row, 11, reader["kha_cong"]);
-
-                            ws.SetCellData(row, 12, reader["con_nhe"]);
-                            ws.SetCellData(row, 13, reader["con_vua"]);
-                            ws.SetCellData(row, 14, reader["con_nang"]);
-                            ws.SetCellData(row, 15, reader["con_huy"]);
-                            ws.SetCellData(row, 16, reader["con_cong"]);
-
+                            ws.SetCellData(row, 3, reader["ty_le_hu_hong"]); // D
+                            ws.SetCellData(row, 9, reader["kha_nhe"]);  // J
+                            ws.SetCellData(row, 10, reader["kha_vua"]); // K
                             row++;
                         }
                     }

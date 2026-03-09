@@ -147,9 +147,11 @@
     <Compile Include="DataLayer\ChuYeuData.cs" />
     <Compile Include="DataLayer\DanData.cs" />
     <Compile Include="DataLayer\KeHoachSuaChua.cs" />
+    <Compile Include="DataLayer\KeHoachVanChuyenData.cs" />
     <Compile Include="DataLayer\KhaiBao\ChiLenhHKT1.cs" />
     <Compile Include="DataLayer\KhaiBao\PhanCapVatLieuData.cs" />
     <Compile Include="DataLayer\KhaiBao\TinhHinhVc.cs" />
+    <Compile Include="DataLayer\KhoiLuongVanTaiData.cs" />
     <Compile Include="DataLayer\QuanSoChienDauData.cs" />
     <Compile Include="DataLayer\QuyDinhDuTruTieuThuBoSungData.cs" />
     <Compile Include="DataLayer\RichTextBoxData.cs" />
@@ -204,6 +206,12 @@
     </Compile>
     <Compile Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.Designer.cs">
       <DependentUpon>DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\KeHoach93.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IXCongTacVanTai\KeHoach93.Designer.cs">
+      <DependentUpon>KeHoach93.cs</DependentUpon>
     </Compile>
     <Compile Include="View\IXCongTacVanTai\KeHoach9_2.cs">
       <SubType>UserControl</SubType>
@@ -547,6 +555,9 @@
     <EmbeddedResource Include="View\IXCongTacVanTai\DuTinhKhoiLuongVanChuyen.resx">
       <DependentUpon>DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\IXCongTacVanTai\KeHoach93.resx">
+      <DependentUpon>KeHoach93.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\IXCongTacVanTai\KeHoach9_2.resx">
       <DependentUpon>KeHoach9_2.cs</DependentUpon>
     </EmbeddedResource>
@@ -736,6 +747,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Sheet\Test2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sheet\test3.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\word\word1.docx">
