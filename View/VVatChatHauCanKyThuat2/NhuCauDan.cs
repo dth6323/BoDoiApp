@@ -1,11 +1,20 @@
 ﻿using BoDoiApp.Resources;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Data.SQLite;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 {
     public partial class NhuCauDan : UserControl
     {
+
+        private static readonly string BaseDir =
+            AppDomain.CurrentDomain.BaseDirectory;
+
+        private static readonly string EXCEL_PATH =
+            Path.Combine(BaseDir, "Resources", "Sheet", "DANTEST.xlsx");
         private string Section { get; set; }
         public NhuCauDan(string section)
         {
@@ -243,13 +252,13 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                         SaveDanSection(Section, 27, 40);
                         break;
                     case "Hướng chủ yếu":
-                        SaveDanSection(Section, 43, 55);
+                        SaveDanSection(Section, 42, 55);
                         break;
                     case "Hướng thứ yếu":
                         SaveDanSection(Section, 57, 70);
                         break;
                     case "BP PNPS":
-                        SaveDanSection(Section, 73, 85);
+                        SaveDanSection(Section, 72, 85);
                         break;
                     case "LL còn lại":
                         SaveDanSection(Section, 87, 100);
@@ -262,40 +271,53 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 
             }
         }
-
         private void NhuCauDan_Load(object sender, System.EventArgs e)
         {
 
-            reoGridControl1.Load(@"D:\Downloads\Đạn.xlsx");
+            reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["Dan"];
             reoGridControl1.CurrentWorksheet.HideColumns(29, 22);
+            var ws = reoGridControl1.CurrentWorksheet;
+            reoGridControl1.SheetTabNewButtonVisible = false;
             switch (Section)
             {
                 case "Toàn d":
                     LoadDanSection(Section,-1,-1, 27, 40);
                     reoGridControl1.CurrentWorksheet.HideRows(42,60);
+
+                    ws.HideColumns(61, ws.ColumnCount - 61);
+
+                    ws.HideRows(41, ws.RowCount - 41);
                     break;
                 case "Hướng chủ yếu":
                     reoGridControl1.CurrentWorksheet.HideRows(27, 14);
                     reoGridControl1.CurrentWorksheet.HideRows(57, 45);
-                    LoadDanSection(Section, -1, -1, 43, 55);
+                    LoadDanSection(Section, -1, -1, 42, 55);
+                    ws.HideColumns(61, ws.ColumnCount - 61);
+                    ws.HideRows(56, ws.RowCount - 56);
                     break;
                 case "Hướng thứ yếu":
                     reoGridControl1.CurrentWorksheet.HideRows(27, 29);
                     reoGridControl1.CurrentWorksheet.HideRows(72, 30);
 
                     LoadDanSection(Section, -1,-1, 57, 70);
+                    ws.HideRows(71, ws.RowCount - 71);
+                    ws.HideColumns(61, ws.ColumnCount - 61);
                     break;
                 case "BP PNPS":
                     reoGridControl1.CurrentWorksheet.HideRows(27,45);
                     reoGridControl1.CurrentWorksheet.HideRows(87, 14);
 
-                    LoadDanSection(Section, -1,-1, 73, 85);
+                    LoadDanSection(Section, -1,-1, 72, 85);
+                    ws.HideRows(86, ws.RowCount - 86);
+                    ws.HideColumns(61, ws.ColumnCount - 61);
                     break;
                 case "LL còn lại":
                     reoGridControl1.CurrentWorksheet.HideRows(27, 60);
 
                     LoadDanSection(Section, -1,-1, 87, 100);
+                    ws.HideRows(101, ws.RowCount - 101);
+                    ws.HideColumns(61, ws.ColumnCount - 61);
                     break;
                 default:
                     MessageBox.Show("Lỗi: Không xác định được phần dữ liệu để lưu.");

@@ -62,5 +62,10 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             NavigationService.Navigate(() => new NhuCauDan("LL còn lại"));
 
         }
+
+        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
