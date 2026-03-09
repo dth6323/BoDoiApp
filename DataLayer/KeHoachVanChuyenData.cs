@@ -98,7 +98,22 @@ namespace BoDoiApp.DataLayer
                 }
             }
         }
+        public static void LockSheet(ReoGridControl grid)
+        {
+            var ws = grid.CurrentWorksheet;
+            if (ws == null) return;
 
+            for (int r = 0; r < ws.RowCount; r++)
+            {
+                for (int c = 0; c < ws.ColumnCount; c++)
+                {
+                    if (IsLoadCell(r, c))
+                        ws.Cells[r, c].IsReadOnly = false;
+                    else
+                        ws.Cells[r, c].IsReadOnly = true;
+                }
+            }
+        }
         // ================= LOAD =================
         public static void LoadAll(ReoGridControl grid)
         {

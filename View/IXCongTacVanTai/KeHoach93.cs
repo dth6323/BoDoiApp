@@ -62,6 +62,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
                     MessageBox.Show("Không tìm thấy sheet tên 'VCHCVTKT'!");
                     return;
                 }
+                KeHoachVanChuyenData.LockSheet(reoGridControl1);
                 sheet2.HideColumns(13, sheet2.ColumnCount - 13);
 
                 // Ẩn từ dòng 82 trở đi
