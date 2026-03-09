@@ -31,7 +31,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(() => new VCHCVTKT());
+            NavigationService.Navigate(() => new VIIIBaoDuongSuaChua.KeHoachSuaChua());
         }
 
         public void ShowView(UserControl view)

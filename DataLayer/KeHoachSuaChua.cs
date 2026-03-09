@@ -9,7 +9,7 @@ using unvell.ReoGrid;
 
 namespace BoDoiApp.DataLayer
 {
-    internal class KeHoachSuaChua
+    internal class KeHoachSuaChuaData
     {
         private const string connectionString = "Data Source=data.db;Version=3;";
         private static double GetDouble(object value)

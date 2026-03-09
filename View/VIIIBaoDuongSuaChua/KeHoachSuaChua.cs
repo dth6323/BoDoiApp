@@ -19,7 +19,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book2.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "Test2.xlsx");
 
         private ReoGridControl reoGridControl1;
         public KeHoachSuaChua()
@@ -163,38 +163,43 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             reoGridControl1.Load(EXCEL_PATH);
 
             // ===== Chọn sheet sửa chữa =====
+
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["QSTBKT"];
+            VCHCVTKTDATA.LoadTrangKiThuat(reoGridControl1);
             reoGridControl1.CurrentWorksheet =
-                reoGridControl1.Worksheets["KeHoachSuaChua"];
+                reoGridControl1.Worksheets["TiLeVuKhiHuHong"];
 
             var ws = reoGridControl1.CurrentWorksheet;
 
             // Khóa hàng 1-3
-            for (int row = 0; row < 3; row++)
+            for (int r = 0; r < ws.RowCount; r++)
             {
-                for (int col = 0; col < ws.ColumnCount; col++)
-                    ws.Cells[row, col].IsReadOnly = true;
+                for (int c = 0; c < ws.ColumnCount; c++)
+                {
+                    ws.Cells[r, c].IsReadOnly = true;
+                }
             }
 
-            // Khóa cột A,B,C
-            for (int col = 0; col <= 2; col++)
-            {
-                for (int row = 0; row < ws.RowCount; row++)
-                    ws.Cells[row, col].IsReadOnly = true;
-            }
+            // =============================
+            // 2. MỞ KHÓA D,J,K từ dòng 3-12
+            // =============================
 
-            // Khóa cột E-I
-            for (int col = 4; col <= 8; col++)
+            int[] editableCols = { 3, 9, 10 }; // D, J, K
+
+            for (int r = 2; r <= 11; r++) // dòng 3-12
             {
-                for (int row = 0; row < ws.RowCount; row++)
-                    ws.Cells[row, col].IsReadOnly = true;
+                foreach (int c in editableCols)
+                {
+                    ws.Cells[r, c].IsReadOnly = false;
+                }
             }
-            ws.HideColumns(17, ws.ColumnCount - 17);
+            ws.HideColumns(16, ws.ColumnCount - 16);
 
             // Ẩn dòng 15 trở đi
-            ws.HideRows(14, ws.RowCount - 14);
+            ws.HideRows(12, ws.RowCount - 12);
 
             // Ẩn sheet tab
-            reoGridControl1.SheetTabVisible = false;
+            reoGridControl1.SheetTabVisible = true;
             // ===== Load dữ liệu DB =====
             SuaChuaData.LoadAll(reoGridControl1);
         }
