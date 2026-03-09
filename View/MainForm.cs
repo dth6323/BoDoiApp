@@ -3,6 +3,7 @@ using BoDoiApp.DataLayer.KhaiBao;
 using BoDoiApp.form;
 using BoDoiApp.View.Baovehaucankythuat;
 using BoDoiApp.View.IIIToChucSudung;
+using BoDoiApp.View.IVVuKhiKyThuat;
 using BoDoiApp.View.IXCongTacVanTai;
 using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.Main;
@@ -11,6 +12,7 @@ using BoDoiApp.View.VIBaoDamSinhHoat;
 using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
+using BoDoiApp.View.VVatChatHauCanKyThuat2;
 using BoDoiApp.View.XIHauCanKyThuat;
 using System;
 using System.Collections.Generic;
@@ -30,7 +32,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(new dn());
+            NavigationService.Navigate(new NhuCauDan("LL còn lại"));
         }
 
         public void ShowView(UserControl view)
