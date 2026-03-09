@@ -36,12 +36,13 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
         private void button3_Click(object sender, System.EventArgs e)
         {
-            if(MessageBox.Show("Bạn có chắc muốn chuyển sang phần Biện Pháp Bảo Đảm không? Dữ liệu hiện tại sẽ được lưu lại.", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Bạn có chắc muốn chuyển sang phần Biện Pháp Bảo Đảm không? Dữ liệu hiện tại sẽ được lưu lại.", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (IsDataExists())
                 {
                     UpdateData();
-                }else
+                }
+                else
                 {
                     InsertData();
                 }
@@ -84,11 +85,82 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
         private void LoadExcel()
         {
-            LoadSumOfAllSection();
-            LoadSection(13, 22, "Hướng Chủ Yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
-            LoadSection(23, 32, "Hướng Thứ Yếu", UserId, new string[] { "phao_pk_127", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
-            LoadSection(33, 39, "Phòng ngự phía sau", UserId, new string[] { "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
-            LoadSection(40, 46, "LL còn lại", UserId, new string[] { "phao_pk_127", "coi_100", "pct_spg9", "b41_m79", "tl", "sn", "luu_dan" });
+           if(IsDataExists())
+            {
+                LoadSumOfAllSection();
+                LoadSection(13, 23, "Hướng Chủ Yếu", UserId, new string[] { "phao_pk_127", "coi_100", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+                LoadSection(24, 34, "Hướng Thứ Yếu", UserId, new string[] { "phao_pk_127", "coi_100", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+                LoadSection(35, 45, "Phòng ngự phía sau", UserId, new string[] { "phao_pk_127", "coi_100", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+                LoadSection(46, 56, "LL còn lại", UserId, new string[] { "phao_pk_127", "coi_100", "coi_82", "coi_60", "pct_spg9", "b41_m79", "dl", "trl", "tl", "sn", "luu_dan" });
+                LoadSupplyPlanData();
+            }
+
+        }
+
+        private void LoadSupplyPlanData()
+        {
+            string sql = @"SELECT bo_sung_thoi_gian, bo_sung_dia_diem, bo_sung_phuong_thuc 
+                           FROM tbkt_supply_plan 
+                           WHERE userId = @UserId 
+                           ORDER BY id";
+
+            try
+            {
+                using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+                {
+                    connection.Open();
+
+                    using (var command = new SQLiteCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@UserId", UserId);
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            int row = 2;
+
+                            while (reader.Read() && row <= 56)
+                            {
+                                // Column 10: bo_sung_thoi_gian
+                                string boSungThoiGian = reader["bo_sung_thoi_gian"]?.ToString() ?? "";
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 10, boSungThoiGian);
+
+                                // Column 11: bo_sung_dia_diem
+                                string boSungDiaDiem = reader["bo_sung_dia_diem"]?.ToString() ?? "";
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 11, boSungDiaDiem);
+
+                                // Column 12: bo_sung_phuong_thuc
+                                string boSungPhuongThuc = reader["bo_sung_phuong_thuc"]?.ToString() ?? "";
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 12, boSungPhuongThuc);
+
+                                row++;
+                            }
+
+                            // Fill remaining rows with empty strings if data is insufficient
+                            while (row <= 56)
+                            {
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 10, "");
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 11, "");
+                                reoGridControl1.CurrentWorksheet.SetCellData(row, 12, "");
+                                row++;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi tải dữ liệu bổ sung: {ex.Message}\nError Code: {ex.ErrorCode}", 
+                                "Lỗi SQLite", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi tải dữ liệu bổ sung: {ex.Message}", 
+                                "Lỗi", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Error);
+            }
         }
 
         private int[] SumOfChuYeuData()
@@ -186,19 +258,21 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
                     int index = 2;
                     string[] columnName = new string[] { "sum_phao_pk_127", "sum_coi_100", "sum_coi_82", "sum_coi_60", "sum_pct_spg9", "sum_b41_m79", "sum_dl", "sum_trl", "sum_tl", "sum_sn", "sum_luu_dan" };
                     int i = 0;
-                    reader.Read();
-                    foreach (var col in columnName)
+                    if (reader.Read())
                     {
-                        var value = reader[col]?.ToString() ?? "0";
-                        reoGridControl1.CurrentWorksheet.SetCellData(index, 3, value);
-                        i++;
-                        index++;
+                        foreach (var col in columnName)
+                        {
+                            var value = reader[col]?.ToString() ?? "0";
+                            reoGridControl1.CurrentWorksheet.SetCellData(index, 3, value);
+                            i++;
+                            index++;
 
-                    }
-                    int k = 1;
-                    for (int j = 2; j <= 12; j++)
-                    {
-                        reoGridControl1.CurrentWorksheet.SetCellData(j, 4, arraySum[k++]);
+                        }
+                        int k = 1;
+                        for (int j = 2; j <= 12; j++)
+                        {
+                            reoGridControl1.CurrentWorksheet.SetCellData(j, 4, arraySum[k++]);
+                        }
                     }
                 }
             }
@@ -250,7 +324,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
                             reoGridControl1.CurrentWorksheet.SetCellData(row, 3, value);
 
                             int sumVal;
-                            if (arraySum != null && arraySum.TryGetValue("sum_" +col, out sumVal))
+                            if (arraySum != null && arraySum.TryGetValue("sum_" + col, out sumVal))
                                 reoGridControl1.CurrentWorksheet.SetCellData(row, 4, sumVal.ToString());
                             else
                                 reoGridControl1.CurrentWorksheet.SetCellData(row, 4, "0");
@@ -300,8 +374,8 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
     bo_sung_thoi_gian TEXT,
     bo_sung_dia_diem TEXT,
     bo_sung_phuong_thuc TEXT
-);";        
-            using(var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+);";
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
                 connection.Open();
                 using (var command = new SQLiteCommand(sql, connection))

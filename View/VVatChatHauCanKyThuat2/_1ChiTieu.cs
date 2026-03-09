@@ -34,8 +34,32 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             NavigationService.Navigate(() => new _2PhanCap());
         }
 
-        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        private void button8_Click(object sender, EventArgs e)
         {
+            NavigationService.Navigate(()=>new NhuCauDan("Toàn d"));
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(() => new NhuCauDan("Hướng chủ yếu"));
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(() => new NhuCauDan("Hướng thứ yếu"));
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(() => new NhuCauDan("BP PNPS"));
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(() => new NhuCauDan("LL còn lại"));
 
         }
     }

@@ -164,7 +164,6 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(853, 380);
             this.flowLayoutPanel2.TabIndex = 26;
-            this.flowLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel2_Paint);
             // 
             // button8
             // 
@@ -176,6 +175,17 @@
             this.button8.Text = "Toàn trận";
             this.button8.UseVisualStyleBackColor = true;
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(2, 2);
+            this.button8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(849, 63);
+            this.button8.TabIndex = 0;
+            this.button8.Text = "Toàn trận";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(2, 69);
@@ -185,6 +195,7 @@
             this.button4.TabIndex = 0;
             this.button4.Text = "HƯỚNG CHỦ YẾU";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -195,6 +206,7 @@
             this.button5.TabIndex = 0;
             this.button5.Text = "HƯỚNG THỨ YẾU";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -205,6 +217,7 @@
             this.button6.TabIndex = 0;
             this.button6.Text = "LỰC LƯỢNG DỰ BỊ\t\t\t\t";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -215,6 +228,7 @@
             this.button7.TabIndex = 0;
             this.button7.Text = "LỰC LƯỢNG CÒN LẠI";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // _1ChiTieu
             // 

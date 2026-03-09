@@ -3,6 +3,7 @@ using BoDoiApp.DataLayer.KhaiBao;
 using BoDoiApp.form;
 using BoDoiApp.View.Baovehaucankythuat;
 using BoDoiApp.View.IIIToChucSudung;
+using BoDoiApp.View.IVVuKhiKyThuat;
 using BoDoiApp.View.IXCongTacVanTai;
 using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.Main;
