@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 
 namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 {
@@ -29,12 +30,29 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 
             DanData.CreateDatabase();
             reoGridControl1.Load(EXCEL_PATH);
-            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["Dan"];
-            reoGridControl1.CurrentWorksheet.HideColumns(0, 30);
-            reoGridControl1.CurrentWorksheet.HideRows(0, 27);
+            
+            // Access the worksheet first
+            var qstbktWorksheet = reoGridControl1.Worksheets["QSTBKT"];
+            if (qstbktWorksheet != null)
+            {
+                reoGridControl1.CurrentWorksheet = qstbktWorksheet;
+                qstbktWorksheet.SetSettings(WorksheetSettings.View_ShowHeaders, false);
+                VCHCVTKTDATA.LoadTrangKiThuat(reoGridControl1);
+            }
+            
+            // Switch to Dan worksheet
+            var danWorksheet = reoGridControl1.Worksheets["Dan"];
+            if (danWorksheet != null)
+            {
+                reoGridControl1.CurrentWorksheet = danWorksheet;
+                reoGridControl1.CurrentWorksheet.HideColumns(0, 30);
+                reoGridControl1.CurrentWorksheet.HideRows(0, 26);
+            }
+            
             switch (Section)
             {
                 case "Toàn d":
+                    reoGridControl1.CurrentWorksheet.HideRows(41, 100);
                     rows = new Dictionary<int, int>() {
                          {0,28},
                          {1,30},
@@ -48,8 +66,15 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                          {9,39},
                          {10,40},
                     };
+
+                    LoadData(rows, "Toàn d");
+                    LoadData(rows, "Tiểu đoàn");
+                    LoadData(rows, "Phối thuộc");
+
                     break;
                 case "Hướng chủ yếu":
+                    reoGridControl1.CurrentWorksheet.HideRows(26, 15);
+                    reoGridControl1.CurrentWorksheet.HideRows(56, 101);
                     rows = new Dictionary<int, int>() {
                              {0,43},
                              {1,45},
@@ -62,9 +87,15 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                              {8,53},
                              {9,54},
                              {10,55},
-};
+};      
+                    LoadData(rows, Section);
+                    
+
                     break;
                 case "Hướng thứ yếu":
+
+                    reoGridControl1.CurrentWorksheet.HideRows(26, 30);
+                    reoGridControl1.CurrentWorksheet.HideRows(71, 101);
                     rows = new Dictionary<int, int>() {
                          {0,58},
                          {1,60},
@@ -78,8 +109,12 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                          {9,69},
                          {10,70 },
                     };
+                    LoadData(rows,Section);
+
                     break;
                 case "BP PNPS":
+                    reoGridControl1.CurrentWorksheet.HideRows(26, 45);
+                    reoGridControl1.CurrentWorksheet.HideRows(86, 101);
                     rows = new Dictionary<int, int>() {
                          {0,73},
                          {1,75},
@@ -93,8 +128,11 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                          {9,84},
                          {10,85 },
 };
+                    LoadData(rows, Section);    
                     break;
                 case "LL còn lại":
+                    reoGridControl1.CurrentWorksheet.HideRows(0,86);
+
                     rows = new Dictionary<int, int>() {
                          {0,88},
                          {1,90},
@@ -108,15 +146,16 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                          {9,99},
                          {10,100},
 };
+                    LoadData(rows,Section);
+
                     break;
             }
             
-            LoadData(rows);
         }
 
-        private void LoadData(Dictionary<int, int> rows)
+        private void LoadData(Dictionary<int, int> rows,string section)
         {
-            string sql = $"SELECT ItemCode,Tr1_1V, SV_CS, TL_1CS FROM Dan WHERE UserId = '{Constants.CURRENT_USER_ID_VALUE}' AND Note = '{Section}'";
+            string sql = $"SELECT ItemCode,Tr1_1V, SV_CS, TL_1CS FROM Dan WHERE UserId = '{Constants.CURRENT_USER_ID_VALUE}' AND Note = '{section}'";
             using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
                 connection.Open();
@@ -124,17 +163,45 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                 {
                     var reader = command.ExecuteReader();
                     int index = 0;
-                    while (reader.Read())
+                    if(Section == "Tiểu đoàn")
                     {
+                        while(reader.Read())
+                        {
+                            var item = reader["ItemCode"]?.ToString() ?? "0";
+                            var trl = reader["Tr1_1V"].ToString() ?? "0";
+                            var svcs = reader["SV_CS"].ToString();
 
-                        var item = reader["ItemCode"]?.ToString() ?? "0";
-                        var trl = reader["Tr1_1V"].ToString() ?? "0";
-                        var svcs = reader["SV_CS"].ToString();
-
-                        reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 0, item);
-                        reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 2, trl);
-                        reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 3, svcs);
-                        index++;
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 35, item);
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 37, trl);
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 38, svcs);
+                            index++;
+                        }
+                    }
+                    else if (Section == "Phối thuộc")
+                    {
+                        while(reader.Read())
+                        {
+                            var item = reader["ItemCode"]?.ToString() ?? "0";
+                            var trl = reader["Tr1_1V"].ToString() ?? "0";
+                            var svcs = reader["SV_CS"].ToString();
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 41, item);
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 43, trl);
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 44, svcs);
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        while(reader.Read())
+                        {
+                            var item = reader["ItemCode"]?.ToString() ?? "0";
+                            var trl = reader["Tr1_1V"].ToString() ?? "0";
+                            var svcs = reader["SV_CS"].ToString();
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 30, item);
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 32, trl);
+                            reoGridControl1.CurrentWorksheet.SetCellData(rows[index], 33, svcs);
+                            index++;
+                        }
                     }
                 }
             }
@@ -145,10 +212,26 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 
             if (MessageBox.Show("Bạn có muốn lưu hay không", "Info", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                DanData.UpdateHangLoat(reoGridControl1, rows, Section);
+                if (Section == "Toàn d")
+                {
+                    DanData.UpdateHangLoat(reoGridControl1, rows, "Toàn d");
+                    DanData.UpdateHangLoat(reoGridControl1, rows, "Tiểu đoàn");
+                    DanData.UpdateHangLoat(reoGridControl1, rows, "Phối thuộc");
+                }
+                else
+                {
+                    DanData.UpdateHangLoat(reoGridControl1, rows, Section);
+                }
             }
+            reoGridControl1.Dispose();
             NavigationService.Navigate(() => new NhuCauDan(Section));
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
+        }
+        
     }
 }
