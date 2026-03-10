@@ -36,31 +36,37 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 
         private void button8_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Dan("Toàn d"));
+
+            NavigationService.Navigate(() => new Dan("Toàn d"));
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Dan("Hướng chủ yếu"));
+            NavigationService.Navigate(() => new Dan("Hướng chủ yếu"));
+
 
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Dan("Hướng thứ yếu"));
+
+            NavigationService.Navigate(() => new Dan("Hướng thứ yếu"));
 
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Dan("BP PNPS"));
+
+            NavigationService.Navigate(() => new Dan("BP PNPS"));
 
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Dan("LL còn lại"));
+
+            NavigationService.Navigate(() => new Dan("LL còn lại"));
 
         }
+
     }
 }

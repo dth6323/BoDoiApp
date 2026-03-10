@@ -3,12 +3,18 @@ using BoDoiApp.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 {
     public partial class Dan : UserControl
     {
+        private static readonly string BaseDir =
+           AppDomain.CurrentDomain.BaseDirectory;
+
+        private static readonly string EXCEL_PATH =
+            Path.Combine(BaseDir, "Resources", "Sheet", "DANTEST.xlsx");
         private string Section = "";
         private Dictionary<int, int> rows = new Dictionary<int, int>();
         public Dan(string section)
@@ -22,6 +28,10 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         {
 
             DanData.CreateDatabase();
+            reoGridControl1.Load(EXCEL_PATH);
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["Dan"];
+            reoGridControl1.CurrentWorksheet.HideColumns(0, 30);
+            reoGridControl1.CurrentWorksheet.HideRows(0, 27);
             switch (Section)
             {
                 case "Toàn d":
@@ -100,6 +110,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 };
                     break;
             }
+            
             LoadData(rows);
         }
 
@@ -136,7 +147,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             {
                 DanData.UpdateHangLoat(reoGridControl1, rows, Section);
             }
-            NavigationService.Navigate(new NhuCauDan(Section));
+            NavigationService.Navigate(() => new NhuCauDan(Section));
 
         }
     }
