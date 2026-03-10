@@ -10,19 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BoDoiApp.View.VIIBaoDamQuanY
+namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 {
-    public partial class _3YDinh : UserControl
+    public partial class BienPhapDamBao : UserControl
     {
         private RichTextBoxData dataLayer = new RichTextBoxData();
-        public _3YDinh(int part=0)
+        public BienPhapDamBao()
         {
             InitializeComponent();
-
-            if (part == 1)
-            {
-                this.label3.Text = "2. Biện pháp đảm bảo";
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,9 +30,9 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             NavigationService.Navigate(() => new Form1());
         }
 
-        private void _3YDinh_Load(object sender, EventArgs e)
+        private void BienPhapDamBao_Load(object sender, EventArgs e)
         {
-            var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh");   
+            var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BienPhapDamBao");
             if (content == string.Empty)
             {
                 return;
@@ -47,12 +42,12 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if(dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh") == string.Empty)
+            if (dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BienPhapDamBao") == string.Empty)
             {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "_3YDinh");
+                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapDamBao");
                 return;
             }
-            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "_3YDinh");
+            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapDamBao");
         }
     }
 }

@@ -25,12 +25,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
             this.headerPanel.SuspendLayout();
             this.footerPanel.SuspendLayout();
             this.contentPanel.SuspendLayout();
@@ -111,12 +105,6 @@
             this.contentPanel.Controls.Add(this.button1);
             this.contentPanel.Controls.Add(this.button2);
             this.contentPanel.Controls.Add(this.comboBox1);
-            this.contentPanel.Controls.Add(this.label2);
-            this.contentPanel.Controls.Add(this.label3);
-            this.contentPanel.Controls.Add(this.label4);
-            this.contentPanel.Controls.Add(this.textBox3);
-            this.contentPanel.Controls.Add(this.textBox4);
-            this.contentPanel.Controls.Add(this.textBox5);
             this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanel.Location = new System.Drawing.Point(0, 70);
             this.contentPanel.Name = "contentPanel";
@@ -127,16 +115,16 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(350, 40);
+            this.button1.Location = new System.Drawing.Point(43, 43);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(191, 66);
             this.button1.TabIndex = 0;
             this.button1.Text = "Tiểu đoàn";
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(40, 140);
+            this.button2.Location = new System.Drawing.Point(46, 136);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -145,56 +133,11 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Location = new System.Drawing.Point(140, 140);
+            this.comboBox1.Location = new System.Drawing.Point(46, 165);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(150, 24);
+            this.comboBox1.Size = new System.Drawing.Size(188, 24);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(350, 145);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 23);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Hướng Thứ yếu";
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(550, 145);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 23);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Phòng ngự phía sau";
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(350, 240);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 23);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Lực lượng còn lại";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(450, 140);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(80, 22);
-            this.textBox3.TabIndex = 6;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(680, 140);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(80, 22);
-            this.textBox4.TabIndex = 7;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(450, 240);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(80, 22);
-            this.textBox5.TabIndex = 8;
             // 
             // BienChe
             // 
@@ -206,7 +149,6 @@
             this.headerPanel.ResumeLayout(false);
             this.footerPanel.ResumeLayout(false);
             this.contentPanel.ResumeLayout(false);
-            this.contentPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -225,13 +167,5 @@
         private System.Windows.Forms.Button button5;
 
         private System.Windows.Forms.ComboBox comboBox1;
-
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
     }
 }

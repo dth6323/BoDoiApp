@@ -1,6 +1,6 @@
-﻿namespace BoDoiApp.View.VIIBaoDamQuanY
+﻿namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 {
-    partial class _3YDinh
+    partial class BienPhapDamBao
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -100,7 +101,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(114, 16);
             this.label3.TabIndex = 12;
-            this.label3.Text = "3. Ý định bảo đảm";
+            this.label3.Text = "2. Biện pháp bảo đảm";
             // 
             // richTextBox1
             // 
@@ -119,7 +120,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(153, 17);
             this.label2.TabIndex = 9;
-            this.label2.Text = "VII. Bảo đảm quân y";
+            this.label2.Text = "V. Bảo đảm đạn, vật chất hậu cần, vật tư kỹ thuật";
             // 
             // label1
             // 
@@ -173,13 +174,12 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "_3YDinh";
             this.Size = new System.Drawing.Size(1138, 576);
-            this.Load += new System.EventHandler(this._3YDinh_Load);
+            this.Load += new System.EventHandler(this.BienPhapDamBao_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

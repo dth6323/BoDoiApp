@@ -1,6 +1,7 @@
 ﻿using BoDoiApp.DataLayer;
 using BoDoiApp.Resources;
 using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Data.SqlClient;
@@ -9,6 +10,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Security.Policy;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 
 namespace BoDoiApp.View.IVVuKhiKyThuat
 {
@@ -21,6 +23,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
         {
             CreateDatabase();
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -56,8 +59,50 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
         {
             reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[7];
+            var sheet2 = reoGridControl1.CurrentWorksheet;
+            LockSheet(reoGridControl1);
             LoadExcel();
 
+            sheet2.HideColumns(13, sheet2.ColumnCount - 13);
+
+            // Ẩn từ dòng 82 trở đi
+            sheet2.HideRows(57, sheet2.RowCount - 57);
+            reoGridControl1.SheetTabVisible = false;
+        }
+        public static void LockSheet(ReoGridControl grid)
+        {
+            var ws = grid.CurrentWorksheet;
+            if (ws == null) return;
+
+            // Lock toàn bộ sheet
+            for (int r = 0; r < ws.RowCount; r++)
+            {
+                for (int c = 0; c < ws.ColumnCount; c++)
+                {
+                    ws.Cells[r, c].IsReadOnly = true;
+                }
+            }
+
+            // Mở khóa các ô được phép nhập
+            for (int r = 0; r < ws.RowCount; r++)
+            {
+                for (int c = 0; c < ws.ColumnCount; c++)
+                {
+                    if (IsCellAllowed(r, c))
+                    {
+                        ws.Cells[r, c].IsReadOnly = false;
+                    }
+                }
+            }
+        }
+        private static bool IsCellAllowed(int r, int c)
+        {
+            // chỉ cho edit từ row 3 -> 57
+            if (r < 2 || r > 56)
+                return false;
+
+            // chỉ cho edit các cột E,F,K,L,M
+            return c == 4 || c == 5 || c == 10 || c == 11 || c == 12;
         }
         private bool IsDataExists()
         {
@@ -82,7 +127,34 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
                 return false;
             }
         }
+        private void LoadAllowedCells(SQLiteDataReader reader)
+        {
+            var ws = reoGridControl1.CurrentWorksheet;
 
+            int row = 2; // Excel row 3
+
+            while (reader.Read() && row <= 56) // tới row 57
+            {
+                ws.SetCellData(row, 4, reader["hien_co_tong_so"]?.ToString() ?? "");            // E
+                ws.SetCellData(row, 5, reader["hien_co_so_tot"]?.ToString() ?? "");     // F
+                ws.SetCellData(row, 10, reader["bo_sung_thoi_gian"]?.ToString() ?? "");  // K
+                ws.SetCellData(row, 11, reader["bo_sung_dia_diem"]?.ToString() ?? "");   // L
+                ws.SetCellData(row, 12, reader["bo_sung_phuong_thuc"]?.ToString() ?? "");// M
+
+                row++;
+            }
+
+            // nếu DB ít dòng hơn thì fill rỗng
+            while (row <= 56)
+            {
+                ws.SetCellData(row, 4, "");
+                ws.SetCellData(row, 5, "");
+                ws.SetCellData(row, 10, "");
+                ws.SetCellData(row, 11, "");
+                ws.SetCellData(row, 12, "");
+                row++;
+            }
+        }
         private void LoadExcel()
         {
            if(IsDataExists())
@@ -99,10 +171,11 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
         private void LoadSupplyPlanData()
         {
-            string sql = @"SELECT bo_sung_thoi_gian, bo_sung_dia_diem, bo_sung_phuong_thuc 
-                           FROM tbkt_supply_plan 
-                           WHERE userId = @UserId 
-                           ORDER BY id";
+            string sql = @"SELECT hien_co_tong_so, hien_co_so_tot, 
+                          bo_sung_thoi_gian, bo_sung_dia_diem, bo_sung_phuong_thuc 
+                   FROM tbkt_supply_plan 
+                   WHERE userId = @UserId 
+                   ORDER BY id";
 
             try
             {
@@ -116,33 +189,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
                         using (var reader = command.ExecuteReader())
                         {
-                            int row = 2;
-
-                            while (reader.Read() && row <= 56)
-                            {
-                                // Column 10: bo_sung_thoi_gian
-                                string boSungThoiGian = reader["bo_sung_thoi_gian"]?.ToString() ?? "";
-                                reoGridControl1.CurrentWorksheet.SetCellData(row, 10, boSungThoiGian);
-
-                                // Column 11: bo_sung_dia_diem
-                                string boSungDiaDiem = reader["bo_sung_dia_diem"]?.ToString() ?? "";
-                                reoGridControl1.CurrentWorksheet.SetCellData(row, 11, boSungDiaDiem);
-
-                                // Column 12: bo_sung_phuong_thuc
-                                string boSungPhuongThuc = reader["bo_sung_phuong_thuc"]?.ToString() ?? "";
-                                reoGridControl1.CurrentWorksheet.SetCellData(row, 12, boSungPhuongThuc);
-
-                                row++;
-                            }
-
-                            // Fill remaining rows with empty strings if data is insufficient
-                            while (row <= 56)
-                            {
-                                reoGridControl1.CurrentWorksheet.SetCellData(row, 10, "");
-                                reoGridControl1.CurrentWorksheet.SetCellData(row, 11, "");
-                                reoGridControl1.CurrentWorksheet.SetCellData(row, 12, "");
-                                row++;
-                            }
+                            LoadAllowedCells(reader);
                         }
                     }
                 }
@@ -406,7 +453,7 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
                     {
                         try
                         {
-                            for (int row = 2; row <= 46; row++)
+                            for (int row = 2; row <= 56; row++)
                             {
                                 using (var command = new SQLiteCommand(sql, connection, transaction))
                                 {

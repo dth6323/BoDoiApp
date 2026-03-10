@@ -7,8 +7,9 @@ using System.Data.SQLite;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 using unvell.ReoGrid.Outline;
-
+using unvell.ReoGrid.Graphics;
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
     public partial class ChuYeu : UserControl
@@ -25,7 +26,30 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             BoPhan = boPhan;
             InitializeComponent();
         }
+        public static void LockSheet(ReoGridControl grid)
+        {
+            var ws = grid.CurrentWorksheet;
+            if (ws == null) return;
 
+            for (int r = 0; r < ws.RowCount; r++)
+            {
+                for (int c = 0; c < ws.ColumnCount; c++)
+                {
+                    ws.Cells[r, c].IsReadOnly = !IsCellAllowed(r, c);
+                }
+            }
+        }
+
+        private static bool IsCellAllowed(int row, int col)
+        {
+            // lock hàng 1 → 7 và 9
+            if (row <= 6 || row == 8)
+                return false;
+            if (row == 7 && col == 0)
+                return false;
+
+            return true;
+        }
         private void ChuYeu_Load(object sender, EventArgs e)
         {
             if (!File.Exists(EXCEL_PATH))
@@ -63,6 +87,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         break;
                     default: break;
                 }
+                LockSheet(reoGridControl1);
+                
                 if (IsDataExists(BoPhan) && BoPhan != "LL còn lại")
                 {
                     LoadDataWithUser();
@@ -71,6 +97,13 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi tải file Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void SetCellIfUnlocked(Worksheet ws, int row, int col, object value)
+        {
+            if (!ws.Cells[row, col].IsReadOnly)
+            {
+                ws.SetCellData(row, col, value);
             }
         }
 
@@ -89,7 +122,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 }
             }
         }
-
+        
         private void button2_Click(object sender, EventArgs e)
         {
             if(MessageBox.Show("Bạn có chắc muốn lưu dữ liệu không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
@@ -129,21 +162,21 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                     row++;
                                     continue;
                                 }
-                                ws.SetCellData(row, 0, reader["ll"]?.ToString());
-                                ws.SetCellData(row, 1, reader["quan_so"]?.ToString());
-                                ws.SetCellData(row, 2, reader["sn"]?.ToString());
-                                ws.SetCellData(row, 3, reader["tl"]?.ToString());
-                                ws.SetCellData(row, 4, reader["trl"]?.ToString());
-                                ws.SetCellData(row, 5, reader["dl"]?.ToString());
-                                ws.SetCellData(row, 6, reader["b41_m79"]?.ToString());
-                                ws.SetCellData(row, 7, reader["luu_dan"]?.ToString());
-                                ws.SetCellData(row, 8, reader["coi_60"]?.ToString());
-                                ws.SetCellData(row, 9, reader["coi_82"]?.ToString());
-                                ws.SetCellData(row, 10, reader["coi_100"]?.ToString());
-                                ws.SetCellData(row, 11, reader["pct_spg9"]?.ToString());
-                                ws.SetCellData(row, 12, reader["phao_pk_127"]?.ToString());
-                                ws.SetCellData(row, 13, reader["ons"]?.ToString());
-                                ws.SetCellData(row, 14, reader["db"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 0, reader["ll"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 1, reader["quan_so"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 2, reader["sn"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 3, reader["tl"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 4, reader["trl"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 5, reader["dl"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 6, reader["b41_m79"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 7, reader["luu_dan"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 8, reader["coi_60"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 9, reader["coi_82"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 10, reader["coi_100"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 11, reader["pct_spg9"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 12, reader["phao_pk_127"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 13, reader["ons"]?.ToString());
+                                SetCellIfUnlocked(ws, row, 14, reader["db"]?.ToString());
                                 row++;
                             }
                         }
@@ -196,7 +229,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 LoadDataWithUser();
             }
         }
-
+        
         private int[] ArrayData(string option, string columnName)
         {
             string sql =

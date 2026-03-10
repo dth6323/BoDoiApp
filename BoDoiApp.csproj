@@ -462,6 +462,12 @@
     <Compile Include="View\VIIIBaoDuongSuaChua\_3CanDoiVaYdinhBaoDam.Designer.cs">
       <DependentUpon>_3CanDoiVaYdinhBaoDam.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\BienPhapDamBao.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VVatChatHauCanKyThuat2\BienPhapDamBao.Designer.cs">
+      <DependentUpon>BienPhapDamBao.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VVatChatHauCanKyThuat2\Dan.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -674,6 +680,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\_3CanDoiVaYdinhBaoDam.resx">
       <DependentUpon>_3CanDoiVaYdinhBaoDam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\BienPhapDamBao.resx">
+      <DependentUpon>BienPhapDamBao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VVatChatHauCanKyThuat2\Dan.resx">
       <DependentUpon>Dan.cs</DependentUpon>

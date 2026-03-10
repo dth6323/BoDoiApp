@@ -73,7 +73,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         private void button3_Click(object sender, EventArgs e)
         {
             VCHCVTKTDATA.SaveAll(reoGridControl1);
-
+            NavigationService.Navigate(() => new BienPhapDamBao());
         }
 
         private void button2_Click(object sender, EventArgs e)
