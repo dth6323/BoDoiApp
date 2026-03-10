@@ -14,8 +14,10 @@ namespace BoDoiApp.View.IXCongTacVanTai
 {
     public partial class DuongVanT : UserControl
     {
-        public DuongVanT()
+        private int PART = 0;
+        public DuongVanT(int part = 0)
         {
+            PART = part;
             InitializeComponent();
             btnSave.Click += btnSave_Click;
 
@@ -24,8 +26,15 @@ namespace BoDoiApp.View.IXCongTacVanTai
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveVanTai();
-            NavigationService.Navigate(() => new DuTinhKhoiLuongVanChuyen());
+            if (PART == 0)
+            {
+                SaveVanTai();
+                NavigationService.Navigate(() => new DuTinhKhoiLuongVanChuyen());
+            }
+            else
+            {
+                NavigationService.Navigate(() => new KeHoach9_2());
+            }
 
         }
         private void SaveVanTai()

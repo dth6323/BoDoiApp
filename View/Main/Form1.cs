@@ -25,7 +25,8 @@ namespace BoDoiApp
         }
         private void btn_xuatbaocaodukien_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Chức năng đang được phát triển. Vui lòng chờ cập nhật sau.");
+            var export = new ExportKeHoach();
+            export.ExportWord();
         }
         private void button1_Click(object sender, EventArgs e)
         {

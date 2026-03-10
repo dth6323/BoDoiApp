@@ -12,9 +12,10 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
         private readonly BaoDuongSuaChuaData dataLayer = new BaoDuongSuaChuaData();
         private const string SectionKey = "BaoDuongSuaChua_1";
         private TextBox txtInput;
-
-        public _1BaoDuongSuaChua()
+        private int PART = 0;
+        public _1BaoDuongSuaChua(int part = 0)
         {
+            PART = part;
             InitializeComponent();
             this.Load += _1BaoDuongSuaChua_Load;
         }
@@ -105,10 +106,19 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 18, FontStyle.Bold)
             };
-            btnNext.Click += (s, e2) =>
+            if (PART == 0)
             {
-                NavigationService.Navigate(() => new _2SuaChua());
-            };
+                btnNext.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new _2SuaChua());
+                };
+            }
+            else {
+                btnNext.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new KeHoachSuaChua());
+                };
+            }
             pnlArrowRight.Controls.Add(btnNext);
 
             // ===== ADD CONTROLS =====

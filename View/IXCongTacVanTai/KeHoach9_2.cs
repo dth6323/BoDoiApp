@@ -91,7 +91,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -107,7 +107,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -123,7 +123,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
             Button btnSave = new Button
             {
                 Text = "Lưu",
-                Anchor = AnchorStyles.Left,
+                Anchor = AnchorStyles.None,
                 AutoSize = true
             };
 
@@ -133,12 +133,6 @@ namespace BoDoiApp.View.IXCongTacVanTai
 
 
             // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
-            Panel rightPanel = new Panel
-            {
-                Dock = DockStyle.Fill
-            };
-
-            bottom.Controls.Add(rightPanel, 3, 0);
 
 
             // ===== NÚT TIẾP =====
@@ -146,15 +140,14 @@ namespace BoDoiApp.View.IXCongTacVanTai
             btnTiep.Text = "Tiếp";
             btnTiep.Size = new Size(100, 30);
             btnTiep.Location = new Point(this.ClientSize.Width - 120, this.ClientSize.Height - 50);
-            btnTiep.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
+            btnTiep.Anchor = AnchorStyles.None;
 
             btnTiep.Click += (s, e2) =>
             {
-                NavigationService.Navigate(() => new _3CanDoiVaYdinhBaoDam());
+                NavigationService.Navigate(() => new KeHoach93());
             };
 
-            rightPanel.Controls.Add(btnTiep);
+            bottom.Controls.Add(btnTiep,3,0);
         }
 
         // =============================

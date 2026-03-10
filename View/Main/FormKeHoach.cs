@@ -1,5 +1,6 @@
 ﻿using BoDoiApp.View.Baovehaucankythuat;
 using BoDoiApp.View.IIIToChucSudung;
+using BoDoiApp.View.IXCongTacVanTai;
 using BoDoiApp.View.KhaiBaoDuLieuView;
 using BoDoiApp.View.VICongTacVanTai;
 using BoDoiApp.View.VIIBaoDamQuanY;
@@ -248,11 +249,11 @@ namespace BoDoiApp.View.Main
                     break;
 
                 case "VIII_BAO_DUONG":
-                    NavigationService.Navigate(() =>    new _1BaoDuongSuaChua());
+                    NavigationService.Navigate(() =>    new _1BaoDuongSuaChua(1));
                     break;
 
                 case "IX_VAN_TAI":
-                    NavigationService.Navigate(() => new _1DuongVanTai());
+                    NavigationService.Navigate(() => new DuongVanT());
                     break;
 
                 case "X_BAO_VE":

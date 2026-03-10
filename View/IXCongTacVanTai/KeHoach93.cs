@@ -28,7 +28,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
         private void button3_Click(object sender, EventArgs e)
         {
             KeHoachVanChuyenData.SaveAll(reoGridControl1);
-
+            NavigationService.Navigate(() => new _4YdinhVanChuyen());
         }
 
         private void button2_Click(object sender, EventArgs e)

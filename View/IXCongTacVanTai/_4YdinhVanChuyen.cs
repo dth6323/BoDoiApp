@@ -12,9 +12,10 @@ namespace BoDoiApp.View.IXCongTacVanTai
         private TextBox txtYdinh;
         private readonly RichTextBoxData _dataLayer = new RichTextBoxData();
         private const string SECTION = "IX_4_YdinhVanChuyen";
-
-        public _4YdinhVanChuyen()
+        private int PART = 0;
+        public _4YdinhVanChuyen(int part = 0)
         {
+            PART = part;
             InitializeComponent();
             Load += _4YdinhVanChuyen_Load;
         }
@@ -135,24 +136,37 @@ namespace BoDoiApp.View.IXCongTacVanTai
             contentLayout.Controls.Add(header, 0, 0);
 
             /* ===== SECTION TITLE ===== */
-            contentLayout.Controls.Add(new Label
+            if(PART == 0)
             {
-                Text = "4. Ý định vận chuyển",
-                Dock = DockStyle.Fill,
-                Font = new Font("Times New Roman", 11, FontStyle.Bold),
-                Padding = new Padding(10, 5, 0, 0),
-                TextAlign = ContentAlignment.MiddleLeft
-            }, 0, 1);
-
-            /* ===== TEXT AREA ===== */
-            txtYdinh = new TextBox
+                contentLayout.Controls.Add(new Label
+                {
+                    Text = "4. Ý định vận chuyển",
+                    Dock = DockStyle.Fill,
+                    Font = new Font("Times New Roman", 11, FontStyle.Bold),
+                    Padding = new Padding(10, 5, 0, 0),
+                    TextAlign = ContentAlignment.MiddleLeft
+                }, 0, 1);
+            }
+            else
             {
-                Dock = DockStyle.Fill,
-                Multiline = true,
-                Font = new Font("Times New Roman", 11),
-                Margin = new Padding(20, 10, 20, 20),
-                ScrollBars = ScrollBars.Vertical
-            };
+                contentLayout.Controls.Add(new Label
+                {
+                    Text = "4. Biện pháp vận chuyển",
+                    Dock = DockStyle.Fill,
+                    Font = new Font("Times New Roman", 11, FontStyle.Bold),
+                    Padding = new Padding(10, 5, 0, 0),
+                    TextAlign = ContentAlignment.MiddleLeft
+                }, 0, 1);
+            }
+                /* ===== TEXT AREA ===== */
+                txtYdinh = new TextBox
+                {
+                    Dock = DockStyle.Fill,
+                    Multiline = true,
+                    Font = new Font("Times New Roman", 11),
+                    Margin = new Padding(20, 10, 20, 20),
+                    ScrollBars = ScrollBars.Vertical
+                };
             contentLayout.Controls.Add(txtYdinh, 0, 2);
 
             // Load dữ liệu đã lưu
