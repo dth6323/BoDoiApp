@@ -68,15 +68,15 @@
             this.reoGridControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.reoGridControl1.ColumnHeaderContextMenuStrip = null;
             this.reoGridControl1.LeadHeaderContextMenuStrip = null;
-            this.reoGridControl1.Location = new System.Drawing.Point(20, 126);
-            this.reoGridControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControl1.Location = new System.Drawing.Point(20, 109);
+            this.reoGridControl1.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControl1.Name = "reoGridControl1";
             this.reoGridControl1.RowHeaderContextMenuStrip = null;
             this.reoGridControl1.Script = null;
             this.reoGridControl1.SheetTabContextMenuStrip = null;
             this.reoGridControl1.SheetTabNewButtonVisible = true;
             this.reoGridControl1.SheetTabVisible = true;
-            this.reoGridControl1.SheetTabWidth = 40;
+            this.reoGridControl1.SheetTabWidth = 60;
             this.reoGridControl1.ShowScrollEndSpacing = true;
             this.reoGridControl1.Size = new System.Drawing.Size(813, 279);
             this.reoGridControl1.TabIndex = 2;
@@ -93,7 +93,7 @@
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 423);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -104,7 +104,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(2, 2);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(71, 34);
             this.button1.TabIndex = 0;
@@ -115,7 +115,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(403, 2);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(73, 34);
             this.button2.TabIndex = 0;
@@ -126,7 +126,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(759, 2);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(78, 34);
             this.button3.TabIndex = 0;
@@ -142,7 +142,7 @@
             this.tableLayoutPanel3.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -173,7 +173,7 @@
             this.Controls.Add(this.reoGridControl1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "_1ToChucSudung";
             this.Size = new System.Drawing.Size(853, 468);
             this.Load += new System.EventHandler(this._1ToChucSudung_Load);

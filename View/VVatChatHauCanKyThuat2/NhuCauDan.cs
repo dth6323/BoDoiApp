@@ -27,6 +27,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             string sql = @"CREATE TABLE IF NOT EXISTS dan_report (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     userId TEXT NOT NULL,
+    tt INTEGER,
     huong TEXT NOT NULL,
     loai_dan TEXT,
     so_luong_vk INTEGER,
@@ -123,12 +124,24 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         }
         private void SaveDanSection(string section, int startRow, int endRow)
         {
+            int offsetTT = 0;
+
+            switch (section)
+            {
+                case "Toàn d": offsetTT = 0; break;
+                case "Hướng chủ yếu": offsetTT = 14; break;
+                case "Hướng thứ yếu": offsetTT = 28; break;
+                case "BP PNPS": offsetTT = 43; break;
+                case "LL còn lại": offsetTT = 58; break;
+            }
             using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
                 connection.Open();
 
                 for (int row = startRow; row <= endRow; row++)
                 {
+                    int tt = offsetTT + (row - startRow + 1);
+
                     string loaiDan = reoGridControl1.CurrentWorksheet.GetCellData(row, 0)?.ToString() ?? "";
 
                     // Check if record exists
@@ -147,6 +160,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                     if (exists)
                     {
                         sql = @"UPDATE dan_report SET 
+                            tt = @tt,
                             so_luong_vk = @soLuongVk,
                             nhu_cau_co_so = @nhuCauCoSo,
                             nhu_cau_tl = @nhuCauTl,
@@ -179,21 +193,22 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                     }
                     else
                     {
-                        sql = @"INSERT INTO dan_report (userId, huong, loai_dan, so_luong_vk, nhu_cau_co_so, nhu_cau_tl, 
+                        sql = @"INSERT INTO dan_report (tt,userId, huong, loai_dan, so_luong_vk, nhu_cau_co_so, nhu_cau_tl, 
                             tieu_thu_gdcb_co_so, tieu_thu_gdcb_tl, tieu_thu_gdcd_co_so, tieu_thu_gdcd_tl, 
                             pc_sd_dv_co_so, pc_sd_kho_co_so, pc_sd_tl, hien_co_dv_d, hien_co_dv_pt, hien_co_dv_tl, 
                             hien_co_kho_d, hien_co_kho_pt, hien_co_kho_tl, pc_tns_dv_co_so, pc_tns_kho_co_so, pc_tns_tl, 
                             kh_truoc_no_sung_dv_d, kh_truoc_no_sung_dv_pt, kh_truoc_no_sung_dv_tl, kh_truoc_no_sung_kho_d, 
                             kh_truoc_no_sung_kho_pt, kh_truoc_no_sung_kho_tl, th_no_sung_dv, th_no_sung_kho, th_no_sung_tl)
-                            VALUES (@userId, @huong, @loaiDan, @soLuongVk, @nhuCauCoSo, @nhuCauTl, @tieuThuGdcbCoSo, 
+                            VALUES (@tt,@userId, @huong, @loaiDan, @soLuongVk, @nhuCauCoSo, @nhuCauTl, @tieuThuGdcbCoSo, 
                             @tieuThuGdcbTl, @tieuThuGdcdCoSo, @tieuThuGdcdTl, @pcSdDvCoSo, @pcSdKhoCoSo, @pcSdTl, 
                             @hienCoDvD, @hienCoDvPt, @hienCoDvTl, @hienCoKhoD, @hienCoKhoPt, @hienCoKhoTl, @pcTnsDvCoSo, 
                             @pcTnsKhoCoSo, @pcTnsTl, @khTruocNoSungDvD, @khTruocNoSungDvPt, @khTruocNoSungDvTl, 
                             @khTruocNoSungKhoD, @khTruocNoSungKhoPt, @khTruocNoSungKhoTl, @thNoSungDv, @thNoSungKho, @thNoSungTl)";
                     }
-
+                    
                     using (var command = new SQLiteCommand(sql, connection))
                     {
+                        command.Parameters.AddWithValue("@tt", tt);
                         command.Parameters.AddWithValue("@userId", Constants.CURRENT_USER_ID_VALUE);
                         command.Parameters.AddWithValue("@huong", section);
                         command.Parameters.AddWithValue("@loaiDan", loaiDan);

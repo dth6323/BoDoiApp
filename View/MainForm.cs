@@ -33,7 +33,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(() => new VVatChatHauCanKyThuat2._1ChiTieu());
+            NavigationService.Navigate(() => new dn());
         }
 
         public void ShowView(UserControl view)

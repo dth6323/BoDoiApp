@@ -71,76 +71,82 @@ namespace BoDoiApp.Export
 
                 // ===== 5.1 =====
                 var cmd5 = new SQLiteCommand(
-                    "Select QuyDinh,HienCo,BOSUNG from \"5_1_VatTu\" WHERE UserId = @UserId",
+                    "Select * from dan_report WHERE UserId = @UserId ORDER BY tt ASC",
                     connection
                 );
 
                 cmd5.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
 
-                int index2 = 7;
+                int index2 = 535;
 
                 using (var reader = cmd5.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        data[$"{{{{{index2++}}}}}"] = reader["QuyDinh"]?.ToString() ?? "";
-                        data[$"{{{{{index2++}}}}}"] = reader["HienCo"]?.ToString() ?? "";
-                        data[$"{{{{{index2++}}}}}"] = reader["BOSUNG"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["so_luong_vk"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["nhu_cau_co_so"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["nhu_cau_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["tieu_thu_gdcb_co_so"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["tieu_thu_gdcb_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["tieu_thu_gdcd_co_so"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["tieu_thu_gdcd_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["pc_sd_dv_co_so"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["pc_sd_kho_co_so"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["pc_sd_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["hien_co_dv_d"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["hien_co_dv_pt"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["hien_co_dv_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["hien_co_kho_d"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["hien_co_kho_pt"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["hien_co_kho_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["pc_tns_dv_co_so"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["pc_tns_kho_co_so"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["pc_tns_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["kh_truoc_no_sung_dv_d"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["kh_truoc_no_sung_dv_pt"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["kh_truoc_no_sung_dv_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["kh_truoc_no_sung_kho_d"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["kh_truoc_no_sung_kho_pt"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["kh_truoc_no_sung_kho_tl"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["th_no_sung_dv"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["th_no_sung_kho"]?.ToString() ?? "";
+                        data[$"{{{{{index2++}}}}}"] = reader["th_no_sung_tl"]?.ToString() ?? "";
                     }
                 }
-
+                data["{{4520}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BienPhapDamBao") ?? "";
+                data["{{4521}}"] = dataLayer6.LayThongTin("BaoDamSinhHoat_AnUong");
+                data["{{4522"] = dataLayer6.LayThongTin("BaoDamSinhHoat_Mac");
+                data["{{4523}}"] = dataLayer6.LayThongTin("BaoDamSinhHoat_ONghi");
                 // ===== 5.2 =====
+
                 var cmd6 = new SQLiteCommand(
-                    @"SELECT
-                        TT,
-                        LoaiVatChat,
-                        DVT,
-                        PC_TDQ_KhoD,
-                        PC_TDQ_DonVi,
-                        PC_TDQ_Plus,
-                        PC_SCD_KhoD,
-                        PC_SCD_DonVi,
-                        PC_SCD_Plus
-                    FROM VatChat
-                    WHERE UserId = @UserId
-                    ORDER BY TT ASC;",
-                    connection
-                );
+                    @"SELECT Row,Col,Value
+                      FROM VCHCVTKT
+                      WHERE UserId=@User
+                      ORDER BY Row ASC, Col ASC",
+                    connection);
 
-                cmd6.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+                cmd6.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
 
-                int index4 = 111;
+                int index4 = 2495;
 
                 using (var reader = cmd6.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        data[$"{{{{{index4++}}}}}"] = reader["PC_TDQ_KhoD"]?.ToString() ?? "";
-                        data[$"{{{{{index4++}}}}}"] = reader["PC_TDQ_DonVi"]?.ToString() ?? "";
-                        data[$"{{{{{index4++}}}}}"] = reader["PC_TDQ_Plus"]?.ToString() ?? "";
-                        data[$"{{{{{index4++}}}}}"] = reader["PC_SCD_KhoD"]?.ToString() ?? "";
-                        data[$"{{{{{index4++}}}}}"] = reader["PC_SCD_DonVi"]?.ToString() ?? "";
-                        data[$"{{{{{index4++}}}}}"] = reader["PC_SCD_Plus"]?.ToString() ?? "";
+                        data[$"{{{{{index4++}}}}}"] = reader["Value"]?.ToString() ?? "";
                     }
                 }
-                //5.3 
-                data["{{26}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "TiepNhanBoXungV") ?? "";
-                data["{{27}}"] = dataLayer6.LayThongTin("BaoDamSinhHoat_AnUong");
-                data["{{27}}"] = dataLayer6.LayThongTin("BaoDamSinhHoat_Mac");
-                data["{{27}}"] = dataLayer6.LayThongTin("BaoDamSinhHoat_ONghi");
 
-                //6.1
+                ////6.1
                 var cmd7 = new SQLiteCommand(
-                    @"SELECT
-                        quan_so ,tb_qs ,tb_nguoi ,tbhh_qs ,tbhh_nguoi ,bb_qs ,bb_nguoi ,cong_nguoi
-                        FROM baodam_quany 
-                    WHERE User = @UserId",
+                    @"SELECT * FROM kehoach_baodam_quany WHERE User=@User",
                     connection
                 );
 
-                cmd7.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+                cmd7.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
 
-                int index3 = 177;
+                int index3 = 4524;
 
                 using (var reader = cmd7.ExecuteReader())
                 {
@@ -155,102 +161,95 @@ namespace BoDoiApp.Export
                         data[$"{{{{{index3++}}}}}"] = reader["bb_qs"]?.ToString() ?? "";
                         data[$"{{{{{index3++}}}}}"] = reader["bb_nguoi"]?.ToString() ?? "";
                         data[$"{{{{{index3++}}}}}"] = reader["cong_nguoi"]?.ToString() ?? "";
+                        data[$"{{{{{index3++}}}}}"] = reader["cang_bo"]?.ToString() ?? "";
+                        data[$"{{{{{index3++}}}}}"] = reader["tu_di"]?.ToString() ?? "";
+                        data[$"{{{{{index3++}}}}}"] = reader["tong"]?.ToString() ?? "";
                     }
                 }
-                var cmd8 = new SQLiteCommand(
-                        "SELECT * FROM CanDoi WHERE UserId = @UserId LIMIT 1;",
-                        connection
-                    );
+                data["{{4572}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh") ?? "";
+                data["{{4573}}"] = dataLayer6.LayThongTin("BaoDuongSuaChua_1");
 
-                cmd8.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
 
-                using (var reader = cmd8.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        data["{{33}}"] = reader["QYDTu"]?.ToString() ?? "";
-                        data["{{34}}"] = reader["QYDDen"]?.ToString() ?? "";
-                        data["{{35}}"] = reader["QYETu"]?.ToString() ?? "";
-                        data["{{36}}"] = reader["QYEDen"]?.ToString() ?? "";
-                        data["{{37}}"] = reader["TramYTeTu"]?.ToString() ?? "";
-                        data["{{38}}"] = reader["TramYTeDen"]?.ToString() ?? "";
-                        data["{{39}}"] = reader["TongTu"]?.ToString() ?? "";
-                        data["{{40}}"] = reader["TongDen"]?.ToString() ?? "";
-                    }
-                }
-                data["{{45}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh") ?? "";
-                data["{{46}}"] = dataLayer6.LayThongTin("BaoDuongSuaChua_1");
+                //data["{{45}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh") ?? "";
+                //data["{{46}}"] = dataLayer6.LayThongTin("BaoDuongSuaChua_1");
 
-                var cmd9 = new SQLiteCommand("SELECT sl,ty_le_hu_hong,nhe,vua,nang,huy,cong FROM suachua_tbkt WHERE User = @UserId", connection);
-                cmd9.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+                var cmd9 = new SQLiteCommand("SELECT * FROM kehoachsuachua WHERE User=@User", connection);
+                cmd9.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
                 using (var reader = cmd9.ExecuteReader())
                 {
-                    int i = 241;
+                    int i = 4574;
                     while (reader.Read())
                     {
-                        data["{{" + i++ + "}}"] = reader["sl"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["so_luong"]?.ToString() ?? "";
                         data["{{" + i++ + "}}"] = reader["ty_le_hu_hong"]?.ToString() ?? "";
-                        data["{{" + i++ + "}}"] = reader["nhe"]?.ToString() ?? "";
-                        data["{{" + i++ + "}}"] = reader["vua"]?.ToString() ?? "";
-                        data["{{" + i++ + "}}"] = reader["nang"]?.ToString() ?? "";
-                        data["{{" + i++ + "}}"] = reader["huy"]?.ToString() ?? "";
-                        data["{{" + i++ + "}}"] = reader["cong"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["tong_nhe"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["tong_vua"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["tong_nang"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["tong_huy"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["tong_cong"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["kha_nhe"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["kha_vua"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["kha_cong"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["con_nhe"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["con_vua"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["con_nang"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["con_huy"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["con_cong"]?.ToString() ?? "";
                     }
                 }
-                var cmd10 = new SQLiteCommand("SELECT * FROM du_tinh_khoi_luong WHERE UserId = @UserID", connection);
-                cmd10.Parameters.AddWithValue("@UserID", Constants.CURRENT_USER_ID_VALUE);
 
+                data["{{4714}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BienPhapSuaChua") ?? "";
+                
+                data["{{4715}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai1") ?? "";
+                data["{{4716}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai2") ?? "";
+                data["{{4717}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai3") ?? "";
+                data["{{4718}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai4") ?? "";
+
+                var cmd10 = new SQLiteCommand("SELECT * FROM KhoiLuongVanTai WHERE UserId=@User ORDER BY TT", connection);
+                cmd10.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
                 using (var reader = cmd10.ExecuteReader())
                 {
-                    if (reader.Read())
+                    int i = 4719;
+                    while (reader.Read())
                     {
-                        data["{{47}}"] = reader["KhoiLuongToanTran"]?.ToString();
-                        data["{{48}}"] = reader["VCHCToanTran"]?.ToString();
-                        data["{{49}}"] = reader["KhoiLuongGiaiDoanChuanBi"]?.ToString();
-                        data["{{50}}"] = reader["VCHCChuanBi"]?.ToString();
-                        data["{{51}}"] = reader["VCKTChuanBi"]?.ToString();
-                        data["{{52}}"] = reader["KhoiLuongGiaiDoanChienDau"]?.ToString();
-                        data["{{554}}"] = reader["VCHCChienDau"]?.ToString();
-                        data["{{555}}"] = reader["VCKTChienDau"]?.ToString();
-
-                    }
+                        data["{{" + i++ + "}}"] = reader["B"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["C"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["D"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["E"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["F"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["G"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["H"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["I"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["J"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["K"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["L"]?.ToString() ?? "";
+                        data["{{" + i++ + "}}"] = reader["M"]?.ToString() ?? "";
+                         }
                 }
-                data["{{318}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai1") ?? "";
-                data["{{319}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai2") ?? "";
-                data["{{320}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai3") ?? "";
-                data["{{321}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "vantai4") ?? "";
-
-
                 var cmd11 = new SQLiteCommand(
-                    "select vtbi_from,vtbi_to,vtle_from ,vtle_to ,danquan_from ,danquan_to ,xetho_count ,xetho_from,xetho_to,tongkha_from,tongkha_to,ketluan  FROM  candoivt WHERE UserId = @UserId",
-                    connection
-                );
+                    @"SELECT Row,Col,Value
+                      FROM KeHoachVanChuyen
+                      WHERE UserId=@User
+                      ORDER BY Row ASC, Col ASC",
+                    connection);
 
-                cmd11.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+                cmd11.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
 
-                using (var reader = cmd11.ExecuteReader())
+
+                int index7 = 4826;
+                using (var reader = cmd6.ExecuteReader())
                 {
-                    if (reader.Read())
+
+                    while (reader.Read())
                     {
-                        data["{{53}}"] = reader["vtbi_from"]?.ToString() ?? "";
-                        data["{{54}}"] = reader["vtbi_to"]?.ToString() ?? "";
-                        data["{{55}}"] = reader["vtle_from"]?.ToString() ?? "";
-                        data["{{56}}"] = reader["vtle_to"]?.ToString() ?? "";
-                        data["{{57}}"] = reader["danquan_from"]?.ToString() ?? "";
-                        data["{{58}}"] = reader["danquan_to"]?.ToString() ?? "";
-                        data["{{59}}"] = reader["xetho_count"]?.ToString() ?? "";
-                        data["{{60}}"] = reader["xetho_from"]?.ToString() ?? "";
-                        data["{{61}}"] = reader["xetho_to"]?.ToString() ?? "";
-                        data["{{62}}"] = reader["tongkha_from"]?.ToString() ?? "";
-                        data["{{63}}"] = reader["tongkha_to"]?.ToString() ?? "";
-                        data["{{64}}"] = reader["ketluan"]?.ToString() ?? "";
+                        data[$"{{{{{index7++}}}}}"] = reader["Value"]?.ToString() ?? "";
                     }
                 }
-                data["{{65}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "IX_4_YdinhVanChuyen") ?? "";
-                data["{{66}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "X_DuKien") ?? "";
-                data["{{67}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "X_BienPhap") ?? "";
+                data["{{5226}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "IX_4_YdinhVanChuyen") ?? "";
+                data["{{5227}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "X_DuKien") ?? "";
+                data["{{5228}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "X_BienPhap") ?? "";
                 var cmd12 = new SQLiteCommand(
-                    "SELECT chihuy_hckt, nguoithaythe\r\n           FROM thongtintepbai\r\n       WHERE User= @UserId",
+                    "SELECT chihuy_hckt, nguoithaythe FROM thongtintepbai   WHERE User= @UserId",
                     connection
                 );
 
@@ -260,8 +259,7 @@ namespace BoDoiApp.Export
                 {
                     if (reader.Read())
                     {
-                        data["{{68}}"] = reader["chihuy_hckt"]?.ToString() ?? "";
-                        data["{{69}}"] = reader["nguoithaythe"]?.ToString() ?? "";
+                        data["{{5229}}"] = reader["chihuy_hckt"]?.ToString() ?? "";
                     }
                 }
                 var cmd13 = new SQLiteCommand(
@@ -279,15 +277,55 @@ namespace BoDoiApp.Export
                 {
                     if (reader.Read())
                     {
-                        data["{{70}}"] = reader["lienlac1"]?.ToString() ?? "";
-                        data["{{71}}"] = reader["lienlac2"]?.ToString() ?? "";
-                        data["{{72}}"] = reader["moc1"]?.ToString() ?? "";
-                        data["{{73}}"] = reader["moc2"]?.ToString() ?? "";
+                        data["{{5230}}"] = reader["lienlac1"]?.ToString() ?? "";
+                        data["{{5231}}"] = reader["moc1"]?.ToString() ?? "";
                     }
                 }
+                var cmd14 = new SQLiteCommand(
+                    @"
+                    SELECT * from Users
+                    WHERE Username=@User
+                    LIMIT 1",
+                    connection
+                );
 
-                data["{{74}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "XI_Ketluan") ?? "";
-                data["{{75}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "XI_Denghi") ?? "";
+                cmd14.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
+
+                using (var reader = cmd13.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        data["{{5232}}"] = reader["FullName"]?.ToString() ?? "";
+                        data["{{11}}"] = reader["FullName"]?.ToString() ?? "";
+                    }
+                }
+                var cmd15 = new SQLiteCommand(
+                    @"
+                    SELECT * from thongtintepbai
+                    WHERE User=@User
+                    LIMIT 1",
+                    connection
+                );
+
+                cmd15.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
+
+                using (var reader = cmd15.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        data["{{2}}"] = reader["tenvankien"]?.ToString() ?? "";
+                        data["{{3}}"] = reader["vitrichihuy"]?.ToString() ?? "";
+                        data["{{4}}"] = reader["thoigian"]?.ToString() ?? "";
+                        data["{{7}}"] = reader["manh1"]?.ToString() ?? "";
+                        data["{{8}}"] = reader["manh2"]?.ToString() ?? "";
+                        data["{{9}}"] = reader["manh3"]?.ToString() ?? "";
+                        data["{{10}}"] = reader["manh4"]?.ToString() ?? "";
+                        data["{{5}}"] = reader["tyle"]?.ToString() ?? "";
+                        data["{{6}}"] = reader["nam"]?.ToString() ?? "";
+                    }
+                }
+                //data["{{74}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "XI_Ketluan") ?? "";
+                //data["{{75}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "XI_Denghi") ?? "";
 
                 ExportFromTemplate(template, output, data);
 

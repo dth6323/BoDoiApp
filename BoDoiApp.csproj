@@ -438,6 +438,12 @@
     <Compile Include="View\VIIBaoDamQuanY\_3YDinh.Designer.cs">
       <DependentUpon>_3YDinh.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\VIIIBaoDuongSuaChua\BienPhapSuaChua.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\VIIIBaoDuongSuaChua\BienPhapSuaChua.Designer.cs">
+      <DependentUpon>BienPhapSuaChua.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -669,6 +675,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\IXCongTacVanTai\_4YdinhVanChuyen.resx">
       <DependentUpon>_4YdinhVanChuyen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\BienPhapSuaChua.resx">
+      <DependentUpon>BienPhapSuaChua.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIIBaoDuongSuaChua\KeHoachSuaChua.resx">
       <DependentUpon>KeHoachSuaChua.cs</DependentUpon>
