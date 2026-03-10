@@ -36,21 +36,44 @@ namespace BoDoiApp.DataLayer
             using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
                 connection.Open();
-                var command = new SQLiteCommand(@"
-                    INSERT INTO Dan (UserId, ItemCode, SK, Tr1_1V, SV_CS, TL_1CS,Note)
-                    VALUES (@UserId, @ItemCode, @SK, @Tr1_1V, @SV_CS, @TL_1CS, @Note)
-                    ON CONFLICT(UserId, ItemCode,Note) DO UPDATE SET
-                        SK = excluded.SK,
-                        Tr1_1V = excluded.Tr1_1V,
-                        SV_CS = excluded.SV_CS,
-                        TL_1CS = excluded.TL_1CS;", connection);
+
+                // Check if record exists
+                var checkCommand = new SQLiteCommand(@"
+                    SELECT COUNT(*) FROM Dan 
+                    WHERE UserId = @UserId AND ItemCode = @ItemCode AND Note = @Note", connection);
+                checkCommand.Parameters.AddWithValue("@UserId", userId);
+                checkCommand.Parameters.AddWithValue("@ItemCode", itemCode);
+                checkCommand.Parameters.AddWithValue("@Note", note);
+
+                var exists = Convert.ToInt32(checkCommand.ExecuteScalar()) > 0;
+
+                SQLiteCommand command;
+                if (exists)
+                {
+                    // Update existing record
+                    command = new SQLiteCommand(@"
+                        UPDATE Dan SET 
+                            SK = @SK,
+                            Tr1_1V = @Tr1_1V,
+                            SV_CS = @SV_CS,
+                            TL_1CS = @TL_1CS
+                        WHERE UserId = @UserId AND ItemCode = @ItemCode AND Note = @Note", connection);
+                }
+                else
+                {
+                    // Insert new record
+                    command = new SQLiteCommand(@"
+                        INSERT INTO Dan (UserId, ItemCode, SK, Tr1_1V, SV_CS, TL_1CS, Note)
+                        VALUES (@UserId, @ItemCode, @SK, @Tr1_1V, @SV_CS, @TL_1CS, @Note)", connection);
+                }
+
                 command.Parameters.AddWithValue("@UserId", userId);
-                command.Parameters.AddWithValue("@SK", sk);
-                command.Parameters.AddWithValue("@Note", note);
                 command.Parameters.AddWithValue("@ItemCode", itemCode);
+                command.Parameters.AddWithValue("@SK", sk);
                 command.Parameters.AddWithValue("@Tr1_1V", tr1_1V);
                 command.Parameters.AddWithValue("@SV_CS", sv_cs);
                 command.Parameters.AddWithValue("@TL_1CS", tl_1cs);
+                command.Parameters.AddWithValue("@Note", note);
                 command.ExecuteNonQuery();
             }
         }
@@ -59,13 +82,36 @@ namespace BoDoiApp.DataLayer
         {
             foreach (var row in rows)
             {
-                var itemcode = ws.CurrentWorksheet.GetCellData(row.Value, 0)?.ToString() ?? string.Empty;
-                var sk = ws.CurrentWorksheet.GetCellData(row.Value, 1)?.ToString() ?? string.Empty;
-                var trl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 2) ?? 0.0);
-                var svcs = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 3) ?? 0.0);
-                var tl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 4) ?? 0.0);
-                var userId = Constants.CURRENT_USER_ID_VALUE;
-                InsertOrUpdateDan(userId, itemcode, trl, svcs, tl, sk, section);
+                if (section == "Tiểu đoàn")
+                {
+                    var itemcode = ws.CurrentWorksheet.GetCellData(row.Value, 36)?.ToString() ?? string.Empty;
+                    var sk = ws.CurrentWorksheet.GetCellData(row.Value, 37)?.ToString() ?? string.Empty;
+                    var trl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 38) ?? 0.0);
+                    var svcs = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 39) ?? 0.0);
+                    var tl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 40) ?? 0.0);
+                    var userId = Constants.CURRENT_USER_ID_VALUE;
+                    InsertOrUpdateDan(userId, itemcode, trl, svcs, tl, sk, section);
+                }
+                else if(section == "Phối thuộc")
+                {
+                    var itemcode = ws.CurrentWorksheet.GetCellData(row.Value, 42)?.ToString() ?? string.Empty;
+                    var sk = ws.CurrentWorksheet.GetCellData(row.Value, 43)?.ToString() ?? string.Empty;
+                    var trl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 44) ?? 0.0);
+                    var svcs = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 45) ?? 0.0);
+                    var tl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 46) ?? 0.0);
+                    var userId = Constants.CURRENT_USER_ID_VALUE;
+                    InsertOrUpdateDan(userId, itemcode, trl, svcs, tl, sk, section);
+                }
+                else
+                {
+                    var itemcode = ws.CurrentWorksheet.GetCellData(row.Value, 30)?.ToString() ?? string.Empty;
+                    var sk = ws.CurrentWorksheet.GetCellData(row.Value, 31)?.ToString() ?? string.Empty;
+                    var trl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 32) ?? 0.0);
+                    var svcs = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 33) ?? 0.0);
+                    var tl = Convert.ToDouble(ws.CurrentWorksheet.GetCellData(row.Value, 34) ?? 0.0);
+                    var userId = Constants.CURRENT_USER_ID_VALUE;
+                    InsertOrUpdateDan(userId, itemcode, trl, svcs, tl, sk, section);
+                }
             }
         }
     }
