@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace BoDoiApp.View
 {
     public partial class MainForm : Form
@@ -32,7 +33,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(() => new dn());
+            NavigationService.Navigate(() => new VVatChatHauCanKyThuat2._1ChiTieu());
         }
 
         public void ShowView(UserControl view)

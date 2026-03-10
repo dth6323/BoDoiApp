@@ -47,9 +47,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(55, 90);
+            this.label2.Location = new System.Drawing.Point(62, 112);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(368, 17);
+            this.label2.Size = new System.Drawing.Size(404, 20);
             this.label2.TabIndex = 31;
             this.label2.Text = "V. Bảo đảm đạn, vật chất hậu cần, vật tư kỹ thuật";
             // 
@@ -57,38 +57,38 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(437, 74);
+            this.label1.Location = new System.Drawing.Point(492, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(345, 20);
+            this.label1.Size = new System.Drawing.Size(404, 25);
             this.label1.TabIndex = 30;
             this.label1.Text = "Dự kiến kế hoạch bảo đảm hậu cần - kỹ thuật\t\t\t\t\t\t";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(7, 6);
+            this.button1.Location = new System.Drawing.Point(7, 7);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(81, 36);
+            this.button1.Size = new System.Drawing.Size(91, 45);
             this.button1.TabIndex = 0;
             this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(527, 6);
+            this.button2.Location = new System.Drawing.Point(592, 7);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(81, 36);
+            this.button2.Size = new System.Drawing.Size(91, 45);
             this.button2.TabIndex = 0;
             this.button2.Text = "Trang chủ";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1024, 6);
+            this.button3.Location = new System.Drawing.Point(1152, 7);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(80, 36);
+            this.button3.Size = new System.Drawing.Size(90, 45);
             this.button3.TabIndex = 0;
             this.button3.Text = "Tiếp Theo";
             this.button3.UseVisualStyleBackColor = true;
@@ -98,7 +98,7 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Controls.Add(this.label11, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -106,8 +106,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1138, 65);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1280, 81);
             this.tableLayoutPanel2.TabIndex = 35;
             // 
             // label11
@@ -118,7 +118,7 @@
             this.label11.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(3, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(1132, 65);
+            this.label11.Size = new System.Drawing.Size(1274, 81);
             this.label11.TabIndex = 18;
             this.label11.Text = "PHẦN MỀM HỖ TRỢ TẬP BÀI BẢO ĐẢM HẬU CẦN, KỸ THUẬT TIỂU ĐOÀN BỘ BINH CHIẾN ĐẤU";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -133,21 +133,22 @@
             this.tableLayoutPanel1.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.button3, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 527);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 659);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1138, 49);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1280, 61);
             this.tableLayoutPanel1.TabIndex = 32;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(55, 107);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(62, 134);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 16);
+            this.label4.Size = new System.Drawing.Size(110, 25);
             this.label4.TabIndex = 34;
             this.label4.Text = "1. Chỉ tiêu";
             // 
@@ -156,7 +157,7 @@
             this.reoGridControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.reoGridControl1.ColumnHeaderContextMenuStrip = null;
             this.reoGridControl1.LeadHeaderContextMenuStrip = null;
-            this.reoGridControl1.Location = new System.Drawing.Point(57, 155);
+            this.reoGridControl1.Location = new System.Drawing.Point(64, 194);
             this.reoGridControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reoGridControl1.Name = "reoGridControl1";
             this.reoGridControl1.RowHeaderContextMenuStrip = null;
@@ -164,24 +165,24 @@
             this.reoGridControl1.SheetTabContextMenuStrip = null;
             this.reoGridControl1.SheetTabNewButtonVisible = true;
             this.reoGridControl1.SheetTabVisible = true;
-            this.reoGridControl1.SheetTabWidth = 53;
+            this.reoGridControl1.SheetTabWidth = 68;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(1046, 354);
+            this.reoGridControl1.Size = new System.Drawing.Size(1177, 442);
             this.reoGridControl1.TabIndex = 33;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(64, 123);
+            this.label3.Location = new System.Drawing.Point(72, 165);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 16);
+            this.label3.Size = new System.Drawing.Size(56, 20);
             this.label3.TabIndex = 34;
             this.label3.Text = "a. Đạn";
             // 
             // Dan
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -192,7 +193,7 @@
             this.Controls.Add(this.reoGridControl1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Dan";
-            this.Size = new System.Drawing.Size(1138, 576);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.Load += new System.EventHandler(this.Dan_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
