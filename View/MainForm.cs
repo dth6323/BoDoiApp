@@ -33,7 +33,7 @@ namespace BoDoiApp.View
         {
             InitializeComponent();
             NavigationService.Init(this);
-            NavigationService.Navigate(() => new dn());
+            NavigationService.Navigate(() => new NhuCauDan("Toàn d"));
         }
 
         public void ShowView(UserControl view)
