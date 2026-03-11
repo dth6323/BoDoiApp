@@ -1,4 +1,6 @@
-﻿using BoDoiApp.Resources;
+﻿using BoDoiApp.DataLayer;
+using BoDoiApp.DataLayer.KhaiBao;
+using BoDoiApp.Resources;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Data.SQLite;
@@ -329,7 +331,18 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         {
 
             reoGridControl1.Load(EXCEL_PATH);
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["QSTBKT"];
+            VCHCVTKTDATA.LoadTrangKiThuat(reoGridControl1);
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["TinhHinhVC"];
+            TinhHinhVcData.LoadAllCell(reoGridControl1);
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["ChiLenhHCKT"];
+            ChiLenhHKT1Data.LoadAllCell(reoGridControl1);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["Dan"];
+            DanData.LoadAllCell(reoGridControl1, "Toàn d");
+            DanData.LoadAllCell(reoGridControl1, "Hướng chủ yếu");
+            DanData.LoadAllCell(reoGridControl1, "Hướng thứ yếu");
+            DanData.LoadAllCell(reoGridControl1, "BP PNPS");
+            DanData.LoadAllCell(reoGridControl1, "LL còn lại");
             reoGridControl1.CurrentWorksheet.HideColumns(29, 22);
             var ws = reoGridControl1.CurrentWorksheet;
             LockSheetAndOpenCells(ws);
