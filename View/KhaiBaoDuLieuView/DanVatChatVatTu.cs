@@ -25,17 +25,15 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             CreateTable();
             InitializeComponent();
         }
-
         private void DanVatChatVatTu_Load(object sender, EventArgs e)
         {   
             
             reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[3];
             reoGridControl1.SheetTabVisible = false;
-            if (IsDataExist())
-            {
-                LoadDataFromDatabse();
-            }
+            
+                LoadSummaryFromDB();
+            
         }
 
         private bool IsDataExist()
@@ -84,7 +82,78 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             }
             NavigationService.Navigate(() => new PhanCapVatLieu());
         }
+        private void LoadSummaryFromDB()
+        {
+            var ws = reoGridControl1.CurrentWorksheet;
 
+            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                connection.Open();
+
+                // ===== Load từ bảng dan_report =====
+                string sqlReport = @"SELECT nhu_cau_tl, hien_co_dv_tl, hien_co_kho_tl
+                             FROM dan_report
+                             WHERE tt = 1 AND userId = @User";
+
+                using (var cmd = new SQLiteCommand(sqlReport, connection))
+                {
+                    cmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
+
+                    using (var rd = cmd.ExecuteReader())
+                    {
+                        if (rd.Read())
+                        {
+                            int nhuCau = Convert.ToInt32(rd["nhu_cau_tl"]);
+                            int hienCoDv = Convert.ToInt32(rd["hien_co_dv_tl"]);
+                            int hienCoKho = Convert.ToInt32(rd["hien_co_kho_tl"]);
+
+                            ws.SetCellData(2, 2, hienCoDv + hienCoKho); // C3
+                            ws.SetCellData(2, 3, nhuCau);               // D3
+                        }
+                    }
+                }
+
+                // ===== Load từ bảng VCHCVTKT =====
+                string sql = @"SELECT Row, Col, Value
+                       FROM VCHCVTKT
+                       WHERE UserId = @User
+                       AND Row IN (7,13,18,20)
+                       AND Col IN (5,15)";
+
+                using (var cmd = new SQLiteCommand(sql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@User", Properties.Settings.Default.Username);
+
+                    using (var rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+                            int r = Convert.ToInt32(rd["Row"]);
+                            int c = Convert.ToInt32(rd["Col"]);
+                            double v = Convert.ToDouble(rd["Value"]);
+
+                            int excelRow = r + 1;
+
+                            if (c == 15) // P
+                            {
+                                if (excelRow == 8) ws.SetCellData(3, 2, v);   // C4
+                                if (excelRow == 14) ws.SetCellData(4, 2, v);  // C5
+                                if (excelRow == 19) ws.SetCellData(5, 2, v);  // C6
+                                if (excelRow == 21) ws.SetCellData(6, 2, v);  // C7
+                            }
+
+                            if (c == 5) // F
+                            {
+                                if (excelRow == 8) ws.SetCellData(3, 3, v);   // D4
+                                if (excelRow == 14) ws.SetCellData(4, 3, v);  // D5
+                                if (excelRow == 19) ws.SetCellData(5, 3, v);  // D6
+                                if (excelRow == 21) ws.SetCellData(6, 3, v);  // D7
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private bool LoadDataFromDatabse()
         {
             string userId = Properties.Settings.Default.Username;

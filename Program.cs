@@ -260,7 +260,7 @@ namespace BoDoiApp
     Id INTEGER PRIMARY KEY AUTOINCREMENT,
     Row INTEGER,
     Col INTEGER,
-    Value REAL,
+    Value TEXT,
     UserId TEXT
 );";
                 var command19 = new SQLiteCommand(sql19, connection);

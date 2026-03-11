@@ -168,13 +168,13 @@ ORDER BY vc.TT ASC;";
                     sheet[r, COL_LOAIVATCHAT] = row["LoaiVatChat"] == DBNull.Value ? "" : Convert.ToString(row["LoaiVatChat"]);
                     sheet[r, COL_DVT] = row["DVT"] == DBNull.Value ? "" : Convert.ToString(row["DVT"]);
 
-                    sheet[r, COL_PC_TDQ_KHOD] = row["PC_TDQ_KhoD"] == DBNull.Value ? 0 : Convert.ToInt32(row["PC_TDQ_KhoD"]);
-                    sheet[r, COL_PC_TDQ_DONVI] = row["PC_TDQ_DonVi"] == DBNull.Value ? 0 : Convert.ToInt32(row["PC_TDQ_DonVi"]);
-                    sheet[r, COL_PC_TDQ_PLUS] = row["PC_TDQ_Plus"] == DBNull.Value ? 0 : Convert.ToInt32(row["PC_TDQ_Plus"]);
+                    sheet[r, COL_PC_TDQ_KHOD] = row["PC_TDQ_KhoD"] == DBNull.Value ? 0 : Convert.ToDouble(row["PC_TDQ_KhoD"]);
+                    sheet[r, COL_PC_TDQ_DONVI] = row["PC_TDQ_DonVi"] == DBNull.Value ? 0 : Convert.ToDouble(row["PC_TDQ_DonVi"]);
+                    sheet[r, COL_PC_TDQ_PLUS] = row["PC_TDQ_Plus"] == DBNull.Value ? 0 : Convert.ToDouble(row["PC_TDQ_Plus"]);
 
-                    sheet[r, COL_PC_SCD_KHOD] = row["PC_SCD_KhoD"] == DBNull.Value ? 0 : Convert.ToInt32(row["PC_SCD_KhoD"]);
-                    sheet[r, COL_PC_SCD_DONVI] = row["PC_SCD_DonVi"] == DBNull.Value ? 0 : Convert.ToInt32(row["PC_SCD_DonVi"]);
-                    sheet[r, COL_PC_SCD_PLUS] = row["PC_SCD_Plus"] == DBNull.Value ? 0 : Convert.ToInt32(row["PC_SCD_Plus"]);
+                    sheet[r, COL_PC_SCD_KHOD] = row["PC_SCD_KhoD"] == DBNull.Value ? 0 : Convert.ToDouble(row["PC_SCD_KhoD"]);
+                    sheet[r, COL_PC_SCD_DONVI] = row["PC_SCD_DonVi"] == DBNull.Value ? 0 : Convert.ToDouble(row["PC_SCD_DonVi"]);
+                    sheet[r, COL_PC_SCD_PLUS] = row["PC_SCD_Plus"] == DBNull.Value ? 0 : Convert.ToDouble(row["PC_SCD_Plus"]);
 
                     rowIndex++;
                 }
@@ -223,7 +223,21 @@ ORDER BY vc.TT ASC;";
                                 {
                                     pRow.Value = r;
                                     pCol.Value = c;
-                                    pValue.Value = GetDouble(ws.GetCellData(r, c));
+
+                                    object v = ws.GetCellData(r, c);
+
+                                    if (v == null || string.IsNullOrWhiteSpace(v.ToString()))
+                                    {
+                                        pValue.Value = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        double d;
+                                        if (double.TryParse(v.ToString(), out d))
+                                            pValue.Value = d;
+                                        else
+                                            pValue.Value = DBNull.Value;
+                                    }
 
                                     cmd.ExecuteNonQuery();
                                 }
@@ -352,25 +366,31 @@ ORDER BY vc.TT ASC;";
             if (ws == null) return;
 
             // 1. Lock toàn bộ sheet
-            for (int r = 0; r < ws.RowCount; r++)
-            {
-                for (int c = 0; c < ws.ColumnCount; c++)
-                {
-                    ws.Cells[r, c].IsReadOnly = true;
-                }
-            }
+            ws.Ranges[new RangePosition(0, 0, ws.RowCount, ws.ColumnCount)].IsReadonly = true;
 
-            // 2. Mở khóa các ô được phép nhập
-            for (int r = 0; r < ws.RowCount; r++)
-            {
-                for (int c = 0; c < ws.ColumnCount; c++)
-                {
-                    if (IsCellAllowed(r, c))
-                    {
-                        ws.Cells[r, c].IsReadOnly = false;
-                    }
-                }
-            }
+            // ===== O column =====
+            foreach (var r in rows_O)
+                ws.Cells[r, 14].IsReadOnly = false;
+
+            // ===== F,G,H,J,N columns =====
+            int[] cols_FGHJN = { 5, 6, 7, 9, 13, 17 };
+            foreach (var r in rows_FGHJN)
+                foreach (var c in cols_FGHJN)
+                    ws.Cells[r, c].IsReadOnly = false;
+
+            // ===== P column =====
+            foreach (var r in rows_P)
+                ws.Cells[r, 15].IsReadOnly = false;
+
+            // ===== U column =====
+            foreach (var r in rows_U)
+                ws.Cells[r, 20].IsReadOnly = false;
+
+            // ===== Z block =====
+            int[] cols_Z = { 25, 26, 27, 28 };
+            foreach (var r in rows_Zblock)
+                foreach (var c in cols_Z)
+                    ws.Cells[r, c].IsReadOnly = false;
         }
         public static void LoadAll(ReoGridControl grid)
         {
