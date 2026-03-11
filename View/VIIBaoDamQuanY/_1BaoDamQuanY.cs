@@ -92,7 +92,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             // ===== TITLE =====
             root.Controls.Add(new Label
             {
-                Text = "PHẦN SỬA CHỮA",
+                Text = "BẢO ĐẢM QUÂN Y",
                 Dock = DockStyle.Fill,
                 BackColor = System.Drawing.Color.FromArgb(255, 242, 204),
                 Font = new System.Drawing.Font("Times New Roman", 13, System.Drawing.FontStyle.Bold),

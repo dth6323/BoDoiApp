@@ -95,7 +95,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             };
             btnPrev.Click += (s, e2) =>
             {
-                NavigationService.Navigate(() => new _1BaoDamAnUong());
+                NavigationService.Back();
             };
             pnlArrowLeft.Controls.Add(btnPrev);
 

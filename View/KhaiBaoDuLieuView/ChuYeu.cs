@@ -62,6 +62,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             {
 
                 reoGridControl1.Load(EXCEL_PATH);
+
                 switch (BoPhan)
                 {
                     case "Hướng Chủ yếu":
@@ -93,6 +94,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                 {
                     LoadDataWithUser();
                 }
+                var sheet2 = reoGridControl1.CurrentWorksheet;
+                sheet2.HideColumns(15, sheet2.ColumnCount - 15);
+                sheet2.HideColumns(25, sheet2.ColumnCount - 25);
+
             }
             catch (Exception ex)
             {
@@ -155,13 +160,15 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             var ws = reoGridControl1.CurrentWorksheet;
                             int startRow = 5;
                             int row = startRow;
-                            while (reader.Read())
+
+                            while (reader.Read() && row <= EndRow)
                             {
                                 if (row == 5 || row == 6 || row == 7 || row == 16)
                                 {
                                     row++;
                                     continue;
                                 }
+
                                 SetCellIfUnlocked(ws, row, 0, reader["ll"]?.ToString());
                                 SetCellIfUnlocked(ws, row, 1, reader["quan_so"]?.ToString());
                                 SetCellIfUnlocked(ws, row, 2, reader["sn"]?.ToString());
@@ -177,6 +184,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                                 SetCellIfUnlocked(ws, row, 12, reader["phao_pk_127"]?.ToString());
                                 SetCellIfUnlocked(ws, row, 13, reader["ons"]?.ToString());
                                 SetCellIfUnlocked(ws, row, 14, reader["db"]?.ToString());
+
                                 row++;
                             }
                         }

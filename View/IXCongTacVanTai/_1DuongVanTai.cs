@@ -1,5 +1,6 @@
 ﻿using BoDoiApp.DataLayer;
 using BoDoiApp.Resources;
+using BoDoiApp.View.IXCongTacVanTai;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -13,9 +14,10 @@ namespace BoDoiApp.View.VICongTacVanTai
 
         private DataGridView dgv;
         private RichTextBoxData dataLayer = new RichTextBoxData();
-
-        public _1DuongVanTai()
+        private int PART = 0;
+        public _1DuongVanTai(int part = 0)
         {
+            PART = part;
             InitializeComponent();
             this.Load += _1DuongVanTai_Load;
         }
@@ -189,13 +191,22 @@ namespace BoDoiApp.View.VICongTacVanTai
             };
 
             btnNext.FlatAppearance.BorderSize = 0;
-
-            btnNext.Click += (s, e2) =>
+            if(PART == 0)
             {
-                NavigationService.Navigate(() => new _2DuTinhKhoiLuongVanChuyen());
-            };
+                btnNext.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new _2DuTinhKhoiLuongVanChuyen());
+                };
 
-            pnlContentLayout.Controls.Add(btnNext, 1, 0);
+            }
+            else
+            {
+                btnNext.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new KeHoach9_2());
+                };
+            }
+                pnlContentLayout.Controls.Add(btnNext, 1, 0);
 
             /* ================= BUTTON PANEL ================= */
 

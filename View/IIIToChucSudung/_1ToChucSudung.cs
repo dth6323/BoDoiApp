@@ -42,6 +42,7 @@ namespace BoDoiApp.View.IIIToChucSudung
                 if (sheet == null) { MessageBox.Show("Không tìm thấy sheet"); return; }
 
                 reoGridControl1.CurrentWorksheet = sheet;
+                reoGridControl1.SheetTabVisible = false;
                 LockCells();
                 LoadData();
             }

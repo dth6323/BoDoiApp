@@ -147,7 +147,6 @@ namespace BoDoiApp.DataLayer.KhaiBao
                             while (SkipRows.Contains(row))
                                 row++;
 
-                                ws.SetCellData(row, 3, reader["qddc"]);
                                 ws.SetCellData(row, 4, reader["pc04n"]);
                                 ws.SetCellData(row, 5, reader["pcscd"]);
                                 ws.SetCellData(row, 6, reader["gdcb"]);

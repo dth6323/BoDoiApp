@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
     public partial class DanVatChatVatTu : UserControl
@@ -31,9 +32,14 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             reoGridControl1.Load(EXCEL_PATH);
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[3];
             reoGridControl1.SheetTabVisible = false;
-            
-                LoadSummaryFromDB();
-            
+            var sheet2 = reoGridControl1.CurrentWorksheet;
+            LoadSummaryFromDB();
+            sheet2.Ranges[new RangePosition(0, 0, sheet2.RowCount, sheet2.ColumnCount)].IsReadonly = true;
+
+            sheet2.HideColumns(5, sheet2.ColumnCount - 5);
+
+            // Ẩn từ dòng 82 trở đi
+            sheet2.HideRows(7, sheet2.RowCount - 7);
         }
 
         private bool IsDataExist()

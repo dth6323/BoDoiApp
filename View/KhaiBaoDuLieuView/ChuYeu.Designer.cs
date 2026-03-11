@@ -1,4 +1,6 @@
-﻿namespace BoDoiApp.View.KhaiBaoDuLieuView
+﻿using System.Windows.Forms;
+
+namespace BoDoiApp.View.KhaiBaoDuLieuView
 {
     partial class ChuYeu
     {
@@ -37,14 +39,14 @@
             this.reoGridControl1.Script = null;
             this.reoGridControl1.SheetTabContextMenuStrip = null;
             this.reoGridControl1.SheetTabNewButtonVisible = true;
-            this.reoGridControl1.SheetTabVisible = true;
-            this.reoGridControl1.SheetTabWidth = 60;
+            this.reoGridControl1.SheetTabVisible = false;
             this.reoGridControl1.ShowScrollEndSpacing = true;
             this.reoGridControl1.Size = new System.Drawing.Size(1270, 675);
             this.reoGridControl1.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
+            // tableLayoutPanel1
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34F));
@@ -57,38 +59,42 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1270, 45);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1270, 80);
             this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button1.Location = new System.Drawing.Point(3, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 30);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Trở về";
+
+            // button1 - Trở về
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.Margin = new Padding(10);
+            this.button1.Text = "⬅ Trở về";
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.button1.BackColor = System.Drawing.Color.FromArgb(108, 117, 125);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.FlatAppearance.BorderSize = 0;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button3
-            // 
-            this.button3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button3.Location = new System.Drawing.Point(579, 7);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(110, 30);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Trang chủ";
+
+            // button3 - Trang chủ
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button3.Margin = new Padding(10);
+            this.button3.Text = "🏠 Trang chủ";
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.button3.BackColor = System.Drawing.Color.FromArgb(13, 110, 253);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.FlatAppearance.BorderSize = 0;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button2
-            // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button2.Location = new System.Drawing.Point(1167, 7);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 30);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Lưu";
+
+            // button2 - Lưu
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Margin = new Padding(10);
+            this.button2.Text = "💾 Lưu";
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.button2.BackColor = System.Drawing.Color.FromArgb(25, 135, 84);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.FlatAppearance.BorderSize = 0;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+
             // 
             // ChuYeu
             // 

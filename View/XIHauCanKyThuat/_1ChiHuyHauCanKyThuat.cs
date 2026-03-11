@@ -103,13 +103,13 @@ namespace BoDoiApp.View.XIHauCanKyThuat
 
             AddLabel(form, "2. Quy định thông tin liên lạc");
 
-            txtLienLac1 = AddTextBox(form, "GĐĐ:");
-            txtLienLac2 = AddTextBox(form, "GĐĐ:");
+            txtLienLac1 = AddTextBox(form, "GĐCB:");
+            txtLienLac2 = AddTextBox(form, "GĐCĐ:");
 
             AddLabel(form, "3. Quy định bảo đảm và mốc thời gian");
 
-            txtMoc1 = AddTextBox(form, "GĐĐ:");
-            txtMoc2 = AddTextBox(form, "GĐĐ:");
+            txtMoc1 = AddTextBox(form, "GĐCB:");
+            txtMoc2 = AddTextBox(form, "GĐCĐ:");
 
             TableLayoutPanel bottom = new TableLayoutPanel
             {

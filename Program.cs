@@ -18,14 +18,9 @@ namespace BoDoiApp
         /// The main entry point for the application.
         /// </summary>
         /// 
-        [DllImport("kernel32.dll")]
-        static extern bool AllocConsole();
         [STAThread]
         static void Main()
         {
-            AllocConsole(); // mở console
-
-            Console.WriteLine("Console đã mở!");
             InitializeDatabase();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
