@@ -218,6 +218,7 @@ namespace BoDoiApp
                 VCKTChuanBi REAL NULL,
                 VCKTChienDau REAL NULL
             );";
+                command14.ExecuteNonQuery();
                 var command15 = new SQLiteCommand(sql15, connection);
                 command15.ExecuteNonQuery();
                 var sql16 = @"

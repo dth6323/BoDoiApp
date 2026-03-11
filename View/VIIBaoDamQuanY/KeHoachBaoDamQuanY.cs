@@ -20,7 +20,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book3.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "KeHoachBaoDamQuanY.xlsx");
 
         private ReoGridControl reoGridControl1;
         public KeHoachBaoDamQuanY()
