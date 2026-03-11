@@ -74,5 +74,10 @@ namespace BoDoiApp.View.IXCongTacVanTai
                 MessageBox.Show("LỖI: " + ex.ToString());
             }
         }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

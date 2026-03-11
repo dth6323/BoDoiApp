@@ -23,6 +23,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void NhiemVu_Load(object sender, EventArgs e)
         {
             var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "NhiemVu");
+            
             if (content != string.Empty)
             {
                 richTextBox1.Text = content;
@@ -40,12 +41,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "NhiemVu") == string.Empty)
-            {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "NhiemVu");
-                return;
-            }
-            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "NhiemVu");
+            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "NhiemVu");
+
         }
     }
 }

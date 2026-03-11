@@ -37,9 +37,35 @@ namespace BoDoiApp.Export
                 connection.Open();
 
                 // ===== Query 1 =====
+                data["{{84}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BoTriNew") ?? "";
                 data["{{12}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "TinhHinhTacDong") ?? "";
                 data["{{13}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "NhiemVu") ?? "";
+                var cmd43 = new SQLiteCommand(
+                    "SELECT * FROM ToChucSuDungLucLuong WHERE UserId = @UserId",
+                    connection
+                );
 
+                cmd43.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+
+                int index53 = 6000;
+
+                using (var reader = cmd43.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        data[$"{{{{{index53++}}}}}"] = reader["QS_SQ"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["QS_QNCN"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["QS_HSQ_BS"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["QS_Plus"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["VK_VuKhi"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["VK_XeMay"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["VK_TBKhac"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["HC_KT_QS"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["HC_KT_TB"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["TangCuong_QS"]?.ToString() ?? "";
+                        data[$"{{{{{index53++}}}}}"] = reader["TangCuong_TB"]?.ToString() ?? "";
+                    }
+                }
                 // ===== Query 2 =====
                 var cmd4 = new SQLiteCommand(
                     "SELECT * FROM tbkt_supply_plan WHERE UserId = @UserId",

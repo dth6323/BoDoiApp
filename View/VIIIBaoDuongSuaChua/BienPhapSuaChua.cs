@@ -31,12 +31,8 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BienPhapSuaChua") == string.Empty)
-            {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapSuaChua");
-                return;
-            }
-            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapSuaChua");
+            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapSuaChua");
+
         }
         private void BienPhapSuaChua_Load(object sender, EventArgs e)
         {

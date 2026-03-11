@@ -35,13 +35,8 @@ namespace BoDoiApp.View.KeHoach1
         private void button3_Click(object sender, EventArgs e)
         {
             var content = richTextBox1.Text;
-            var dataLayer = new RichTextBoxData();
-            if (dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "KeHoachDanhGia") == string.Empty)
-            {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, "KeHoachDanhGia");
-                return;
-            }
-            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, content, "KeHoachDanhGia");
+            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "KeHoachDanhGia");
+
         }
 
         private void _1DanhGia_Load(object sender, EventArgs e)

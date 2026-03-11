@@ -89,12 +89,11 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
 
             // ===== NÚT TRỞ VỀ =====
-            Button btnBack = new Button
-            {
-                Text = "Trở về",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
-            };
+
+            Button btnBack = CreateStyledButton("← Trở về", Color.FromArgb(108, 117, 125));
+            Button btnHome = CreateStyledButton("🏠 Trang chủ", Color.FromArgb(0, 123, 255));
+            Button btnSave = CreateStyledButton("💾 Lưu", Color.FromArgb(40, 167, 69));
+            Button btnNext = CreateStyledButton("Tiếp →", Color.FromArgb(255, 193, 7));
 
             btnBack.Click += (s, ev) =>
             {
@@ -105,12 +104,6 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
 
             // ===== NÚT TRANG CHỦ =====
-            Button btnHome = new Button
-            {
-                Text = "Trang chủ",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
-            };
 
             btnHome.Click += (s, ev) =>
             {
@@ -120,13 +113,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
             bottom.Controls.Add(btnHome, 1, 0);
 
 
-            // ===== NÚT LƯU =====
-            Button btnSave = new Button
-            {
-                Text = "Lưu",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
-            };
+            // ===== NÚT LƯU 
 
             btnSave.Click += BtnSave_Click;
 
@@ -137,12 +124,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
 
 
             // ===== NÚT TIẾP =====
-            Button btnNext = new Button
-            {
-                Text = "Tiếp",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
-            };
+            
 
 
             btnNext.Click += (s, e2) =>
@@ -150,6 +132,24 @@ namespace BoDoiApp.View.TinhHinhDonVi
                 NavigationService.Navigate(() => new ChiLenhHKT1());
             };
             bottom.Controls.Add(btnNext, 3, 0);
+        }
+        private Button CreateStyledButton(string text, Color bgColor)
+        {
+            Button btn = new Button();
+            btn.Text = text;
+            btn.BackColor = bgColor;
+            btn.ForeColor = Color.White;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+
+            btn.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+
+            btn.Width = 120;
+            btn.Height = 40;
+
+            btn.Anchor = AnchorStyles.None;
+
+            return btn;
         }
         private void LoadExcelAndData()
         {

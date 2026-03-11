@@ -44,7 +44,7 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                     return;
                 }
 
-
+                 
 
                 VCHCVTKTDATA.LoadAll(reoGridControl1);
                 reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["QSTBKT"];
@@ -79,6 +79,11 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
         private void button2_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(() => new Form1());
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NavigationService.Back();
         }
     }
 }

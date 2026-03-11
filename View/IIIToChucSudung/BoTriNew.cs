@@ -10,21 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BoDoiApp.View.VIIBaoDamQuanY
+namespace BoDoiApp.View.IIIToChucSuDung
 {
-    public partial class _3YDinh : UserControl
+    public partial class BoTriNew : UserControl
     {
         private RichTextBoxData dataLayer = new RichTextBoxData();
-        public _3YDinh(int part=0)
+
+        public BoTriNew()
         {
             InitializeComponent();
-
-            if (part == 1)
-            {
-                this.label3.Text = "2. Biện pháp đảm bảo";
-            }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             NavigationService.Back();
@@ -34,21 +29,20 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
         {
             NavigationService.Navigate(() => new Form1());
         }
-
-        private void _3YDinh_Load(object sender, EventArgs e)
-        {
-            var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "_3YDinh");   
-            if (content == string.Empty)
-            {
-                return;
-            }
-            richTextBox1.Text = content;
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
-            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "_3YDinh");
+            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BoTriNew");
 
+        }
+
+        private void BoTriNew_Load(object sender, EventArgs e)
+        {
+
+            var content = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BoTriNew");
+            if (content != string.Empty)
+            {
+                richTextBox1.Text = content;
+            }
         }
     }
 }

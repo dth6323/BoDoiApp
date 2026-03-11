@@ -110,8 +110,8 @@
             // 
             // reoGridControl1
             // 
-            this.reoGridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.reoGridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.reoGridControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.reoGridControl1.ColumnHeaderContextMenuStrip = null;
@@ -160,8 +160,9 @@
             this.label11.TabIndex = 0;
             this.label11.Text = "PHẦN MỀM HỖ TRỢ TẬP BÀI BẢO ĐẢM HẬU CẦN, KỸ THUẬT TIỂU ĐOÀN BỘ BINH CHIẾN ĐẤU";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
-            // VCHCVTKT
+            // KeHoach93
             // 
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -169,7 +170,7 @@
             this.Controls.Add(this.reoGridControl1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "VCHCVTKT";
+            this.Name = "KeHoach93";
             this.Size = new System.Drawing.Size(1280, 720);
             this.Load += new System.EventHandler(this.KeHoach93_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

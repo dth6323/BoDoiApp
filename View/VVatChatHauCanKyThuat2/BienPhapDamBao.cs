@@ -42,12 +42,8 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "BienPhapDamBao") == string.Empty)
-            {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapDamBao");
-                return;
-            }
-            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapDamBao");
+            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapDamBao");
+
         }
     }
 }

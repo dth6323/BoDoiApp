@@ -34,12 +34,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             var content = richTextBox1.Text;
             var dataLayer = new RichTextBoxData();
-            if(dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "TiepNhanBoSung") == string.Empty)
-            {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, content, "TiepNhanBoSung");
-                return;
-            }
-            dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, content, "TiepNhanBoSung");
+            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "TiepNhanBoSung");
+
         }
 
         private void TiepNhanBoSung_Load(object sender, EventArgs e)

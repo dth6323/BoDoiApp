@@ -184,6 +184,12 @@
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormMana.cs" />
+    <Compile Include="View\IIIToChucSuDung\BoTriNew.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\IIIToChucSuDung\BoTriNew.Designer.cs">
+      <DependentUpon>BoTriNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\IVVuKhiKyThuat\_1ChiTieu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -555,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\DangNhap\dn.resx">
       <DependentUpon>dn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\IIIToChucSuDung\BoTriNew.resx">
+      <DependentUpon>BoTriNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\IVVuKhiKyThuat\_1ChiTieu.resx">
       <DependentUpon>_1ChiTieu.cs</DependentUpon>

@@ -33,14 +33,8 @@ namespace BoDoiApp.View.IVVuKhiKyThuat
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if(content != string.Empty)
-            {
-                dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapBaoDam2");
-            }
-            else
-            {
-                dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapBaoDam2");
-            }
+            dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "BienPhapBaoDam2");
+
         }
 
         private void _2BienPhapBaoDam_Load(object sender, EventArgs e)

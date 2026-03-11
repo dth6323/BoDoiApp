@@ -4,6 +4,7 @@ using System;
 using System.Data.SQLite;
 using System.IO;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 
 namespace BoDoiApp.View.VVatChatHauCanKyThuat2
 {
@@ -68,8 +69,38 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                 }
             }
         }
+        private void LockSheetAndOpenCells(Worksheet ws)
+        {
+            // 1. Lock toàn bộ sheet
+            ws.Ranges[new RangePosition(0, 0, ws.RowCount, ws.ColumnCount)].IsReadonly = true;
+
+            // 2. Mở I,M,P,R từ dòng 28 → 41
+            int[] cols1 = { 8, 12, 15, 17 }; // I,M,P,R
+
+            for (int r = 28; r <= 41; r++)
+            {
+                foreach (var c in cols1)
+                {
+                    ws.Cells[r, c].IsReadOnly = false;
+                }
+            }
+
+            // 3. Mở G,I,L,R ở các dòng 56,71,86,101
+            int[] rows2 = { 56, 71, 86, 101 };
+            int[] cols2 = { 6, 8, 11, 17 }; // G,I,L,R
+
+            foreach (var r in rows2)
+            {
+                foreach (var c in cols2)
+                {
+                    ws.Cells[r, c].IsReadOnly = false;
+                }
+            }
+        }
         private void LoadDanSection(string section, int skipSectionStart, int skipSectionEnd, int startRow, int endRow)
         {
+            var ws = reoGridControl1.CurrentWorksheet;
+
             string sql = "SELECT * FROM dan_report WHERE userId = @userId AND huong = @huong";
             using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
             {
@@ -87,35 +118,43 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
                         //{
                         //    continue; // Skip rows in the specified range
                         //}
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 0, reader["loai_dan"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 1, reader["so_luong_vk"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 2, reader["nhu_cau_co_so"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 3, reader["nhu_cau_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 4, reader["tieu_thu_gdcb_co_so"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 5, reader["tieu_thu_gdcb_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 6, reader["tieu_thu_gdcd_co_so"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 7, reader["tieu_thu_gdcd_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 8, reader["pc_sd_dv_co_so"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 9, reader["pc_sd_kho_co_so"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 10, reader["pc_sd_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 11, reader["hien_co_dv_d"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 12, reader["hien_co_dv_pt"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 13, reader["hien_co_dv_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 14, reader["hien_co_kho_d"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 15, reader["hien_co_kho_pt"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 16, reader["hien_co_kho_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 17, reader["pc_tns_dv_co_so"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 18, reader["pc_tns_kho_co_so"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 19, reader["pc_tns_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 20, reader["kh_truoc_no_sung_dv_d"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 21, reader["kh_truoc_no_sung_dv_pt"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 22, reader["kh_truoc_no_sung_dv_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 23, reader["kh_truoc_no_sung_kho_d"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 24, reader["kh_truoc_no_sung_kho_pt"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 25, reader["kh_truoc_no_sung_kho_tl"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 26, reader["th_no_sung_dv"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 27, reader["th_no_sung_kho"].ToString());
-                        reoGridControl1.CurrentWorksheet.SetCellData(row, 28, reader["th_no_sung_tl"].ToString());
+                        void SetIfUnlocked(int col, object value)
+                        {
+                            if (!ws.Cells[row, col].IsReadOnly)
+                            {
+                                ws.SetCellData(row, col, value?.ToString());
+                            }
+                        }
+
+                        SetIfUnlocked(0, reader["loai_dan"]);
+                        SetIfUnlocked(1, reader["so_luong_vk"]);
+                        SetIfUnlocked(2, reader["nhu_cau_co_so"]);
+                        SetIfUnlocked(3, reader["nhu_cau_tl"]);
+                        SetIfUnlocked(4, reader["tieu_thu_gdcb_co_so"]);
+                        SetIfUnlocked(5, reader["tieu_thu_gdcb_tl"]);
+                        SetIfUnlocked(6, reader["tieu_thu_gdcd_co_so"]);
+                        SetIfUnlocked(7, reader["tieu_thu_gdcd_tl"]);
+                        SetIfUnlocked(8, reader["pc_sd_dv_co_so"]);
+                        SetIfUnlocked(9, reader["pc_sd_kho_co_so"]);
+                        SetIfUnlocked(10, reader["pc_sd_tl"]);
+                        SetIfUnlocked(11, reader["hien_co_dv_d"]);
+                        SetIfUnlocked(12, reader["hien_co_dv_pt"]);
+                        SetIfUnlocked(13, reader["hien_co_dv_tl"]);
+                        SetIfUnlocked(14, reader["hien_co_kho_d"]);
+                        SetIfUnlocked(15, reader["hien_co_kho_pt"]);
+                        SetIfUnlocked(16, reader["hien_co_kho_tl"]);
+                        SetIfUnlocked(17, reader["pc_tns_dv_co_so"]);
+                        SetIfUnlocked(18, reader["pc_tns_kho_co_so"]);
+                        SetIfUnlocked(19, reader["pc_tns_tl"]);
+                        SetIfUnlocked(20, reader["kh_truoc_no_sung_dv_d"]);
+                        SetIfUnlocked(21, reader["kh_truoc_no_sung_dv_pt"]);
+                        SetIfUnlocked(22, reader["kh_truoc_no_sung_dv_tl"]);
+                        SetIfUnlocked(23, reader["kh_truoc_no_sung_kho_d"]);
+                        SetIfUnlocked(24, reader["kh_truoc_no_sung_kho_pt"]);
+                        SetIfUnlocked(25, reader["kh_truoc_no_sung_kho_tl"]);
+                        SetIfUnlocked(26, reader["th_no_sung_dv"]);
+                        SetIfUnlocked(27, reader["th_no_sung_kho"]);
+                        SetIfUnlocked(28, reader["th_no_sung_tl"]);
                         row++;
                     }
                 }
@@ -293,7 +332,8 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets["Dan"];
             reoGridControl1.CurrentWorksheet.HideColumns(29, 22);
             var ws = reoGridControl1.CurrentWorksheet;
-            reoGridControl1.SheetTabNewButtonVisible = false;
+            LockSheetAndOpenCells(ws);
+            reoGridControl1.SheetTabVisible = false;
             switch (Section)
             {
                 case "Toàn d":
