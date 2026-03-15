@@ -76,25 +76,43 @@ namespace BoDoiApp.DataLayer
         }
 
 
-        public static void ThemHangLoat(ReoGridControl data, string option, int endRow)
+        public static void ThemHangLoat(ReoGridControl data, string option)
         {
-            for (int i = 5; i <= endRow; i++)
+            var sheet = data.CurrentWorksheet;
+
+            // tìm dòng cuối có dữ liệu ở cột 0
+            int lastRow = 5;
+
+            for (int i = sheet.RowCount - 1; i >= 5; i--)
             {
-                string ll = data.CurrentWorksheet.GetCellData(i, 0)?.ToString();
-                string quanSo = data.CurrentWorksheet.GetCellData(i, 1)?.ToString();
-                string sn = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
-                string tl = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
-                string trl = data.CurrentWorksheet.GetCellData(i, 4)?.ToString();
-                string dl = data.CurrentWorksheet.GetCellData(i, 5)?.ToString();
-                string b41_m79 = data.CurrentWorksheet.GetCellData(i, 6)?.ToString();
-                string luuDan = data.CurrentWorksheet.GetCellData(i, 7)?.ToString();
-                string coi60 = data.CurrentWorksheet.GetCellData(i, 8)?.ToString();
-                string coi82 = data.CurrentWorksheet.GetCellData(i, 9)?.ToString();
-                string coi100 = data.CurrentWorksheet.GetCellData(i, 10)?.ToString();
-                string pctSpg9 = data.CurrentWorksheet.GetCellData(i, 11)?.ToString();
-                string phaoPk127 = data.CurrentWorksheet.GetCellData(i, 12)?.ToString();
-                string on = data.CurrentWorksheet.GetCellData(i, 13)?.ToString();
-                string db = data.CurrentWorksheet.GetCellData(i, 14)?.ToString();
+                var value = sheet.GetCellData(i, 0);
+
+                if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
+                {
+                    lastRow = i;
+                    break;
+                }
+            }
+
+            // insert dữ liệu
+            for (int i = 5; i <= lastRow; i++)
+            {
+                string ll = sheet.GetCellData(i, 0)?.ToString() ?? "";
+                string quanSo = sheet.GetCellData(i, 1)?.ToString();
+                string sn = sheet.GetCellData(i, 2)?.ToString();
+                string tl = sheet.GetCellData(i, 3)?.ToString();
+                string trl = sheet.GetCellData(i, 4)?.ToString();
+                string dl = sheet.GetCellData(i, 5)?.ToString();
+                string b41_m79 = sheet.GetCellData(i, 6)?.ToString();
+                string luuDan = sheet.GetCellData(i, 7)?.ToString();
+                string coi60 = sheet.GetCellData(i, 8)?.ToString();
+                string coi82 = sheet.GetCellData(i, 9)?.ToString();
+                string coi100 = sheet.GetCellData(i, 10)?.ToString();
+                string pctSpg9 = sheet.GetCellData(i, 11)?.ToString();
+                string phaoPk127 = sheet.GetCellData(i, 12)?.ToString();
+                string on = sheet.GetCellData(i, 13)?.ToString();
+                string db = sheet.GetCellData(i, 14)?.ToString();
+
                 ThemThongTin(
                     ll,
                     quanSo,
@@ -154,25 +172,43 @@ namespace BoDoiApp.DataLayer
                 MessageBox.Show($"Đã xảy ra lỗi khi cập nhật thông tin: {ex.Message}\nError Code: {ex.ErrorCode}");
             }
         }
-        public static void UpdateHangLoat(ReoGridControl data, string option, int endRow)
+        public static void UpdateHangLoat(ReoGridControl data, string option)
         {
-            for (int i = 5; i <= endRow; i++)
+            var sheet = data.CurrentWorksheet;
+
+            // tìm dòng cuối có dữ liệu
+            int lastRow = 5;
+
+            for (int i = sheet.RowCount - 1; i >= 5; i--)
             {
-                string ll = data.CurrentWorksheet.GetCellData(i, 0)?.ToString();
-                string quanSo = data.CurrentWorksheet.GetCellData(i, 1)?.ToString();
-                string sn = data.CurrentWorksheet.GetCellData(i, 2)?.ToString();
-                string tl = data.CurrentWorksheet.GetCellData(i, 3)?.ToString();
-                string trl = data.CurrentWorksheet.GetCellData(i, 4)?.ToString();
-                string dl = data.CurrentWorksheet.GetCellData(i, 5)?.ToString();
-                string b41_m79 = data.CurrentWorksheet.GetCellData(i, 6)?.ToString();
-                string luuDan = data.CurrentWorksheet.GetCellData(i, 7)?.ToString();
-                string coi60 = data.CurrentWorksheet.GetCellData(i, 8)?.ToString();
-                string coi82 = data.CurrentWorksheet.GetCellData(i, 9)?.ToString();
-                string coi100 = data.CurrentWorksheet.GetCellData(i, 10)?.ToString();
-                string pctSpg9 = data.CurrentWorksheet.GetCellData(i, 11)?.ToString();
-                string phaoPk127 = data.CurrentWorksheet.GetCellData(i, 12)?.ToString();
-                string on = data.CurrentWorksheet.GetCellData(i, 13)?.ToString();
-                string db = data.CurrentWorksheet.GetCellData(i, 14)?.ToString();
+                var value = sheet.GetCellData(i, 0);
+
+                if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
+                {
+                    lastRow = i;
+                    break;
+                }
+            }
+
+            // update dữ liệu
+            for (int i = 5; i <= lastRow; i++)
+            {
+                string ll = sheet.GetCellData(i, 0)?.ToString() ?? "";
+                string quanSo = sheet.GetCellData(i, 1)?.ToString();
+                string sn = sheet.GetCellData(i, 2)?.ToString();
+                string tl = sheet.GetCellData(i, 3)?.ToString();
+                string trl = sheet.GetCellData(i, 4)?.ToString();
+                string dl = sheet.GetCellData(i, 5)?.ToString();
+                string b41_m79 = sheet.GetCellData(i, 6)?.ToString();
+                string luuDan = sheet.GetCellData(i, 7)?.ToString();
+                string coi60 = sheet.GetCellData(i, 8)?.ToString();
+                string coi82 = sheet.GetCellData(i, 9)?.ToString();
+                string coi100 = sheet.GetCellData(i, 10)?.ToString();
+                string pctSpg9 = sheet.GetCellData(i, 11)?.ToString();
+                string phaoPk127 = sheet.GetCellData(i, 12)?.ToString();
+                string on = sheet.GetCellData(i, 13)?.ToString();
+                string db = sheet.GetCellData(i, 14)?.ToString();
+
                 UpdateThongTin(
                     ll,
                     quanSo,

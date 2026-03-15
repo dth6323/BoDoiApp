@@ -19,8 +19,8 @@ namespace BoDoiApp.View.VICongTacVanTai
         public _2DuTinhKhoiLuongVanChuyen()
         {
             InitializeComponent();
-            this.Load += _2DuTinhKhoiLuongVanChuyen_Load;
             CreateDatabase();
+
         }
 
         private void _2DuTinhKhoiLuongVanChuyen_Load(object sender, EventArgs e)
@@ -296,8 +296,8 @@ namespace BoDoiApp.View.VICongTacVanTai
 
             layout.Controls.Add(pnlButton, 0, 3);
 
+            LoadCalculatedValues();
             // Load data after all controls are created
-            LoadData();
         }
 
         private TextBox[] CreateFormRow(Panel parent, string labelText, int yPos, int labelWidth, int textBoxWidth)
@@ -423,6 +423,99 @@ namespace BoDoiApp.View.VICongTacVanTai
                 UpdateFontRecursive(child);
         }
 
+   
+        private double GetValue(SQLiteConnection conn, int row, int col)
+        {
+            string sql = @"SELECT Value 
+                   FROM VCHCVTKT
+                   WHERE Row = @Row 
+                   AND Col = @Col 
+                   AND UserId = @UserId
+                   LIMIT 1";
+
+            using (var cmd = new SQLiteCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@Row", row);
+                cmd.Parameters.AddWithValue("@Col", col);
+                cmd.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+
+                var result = cmd.ExecuteScalar();
+
+                if (result != null && double.TryParse(result.ToString(), out double value))
+                    return value;
+            }
+
+            return 0;
+        }
+        private void LoadCalculatedValues()
+        {
+            using (var conn = new SQLiteConnection(Constants.CONNECTION_STRING))
+            {
+                conn.Open();
+
+                // ===== ROW 7 : TOÀN TRẬN =====
+                double mid1 =
+                    GetValue(conn, 7, 25);
+
+                // ===== ROW 8 : CHUẨN BỊ =====
+                double mid2 =
+                    GetValue(conn, 8, 19) +
+                    GetValue(conn, 8, 20) +
+                    GetValue(conn, 8, 21) +
+                    GetValue(conn, 8, 22);
+
+                // ===== ROW 9 : CHIẾN ĐẤU =====
+                double mid3 =
+                    GetValue(conn, 9, 23) +
+                    GetValue(conn, 9, 24);
+
+                // ===== RIGHT (VCKT) =====
+                double right1 = 0;
+                double right2 = 0;
+                double right3 = 0;
+
+                string sql = @"SELECT
+        th_no_sung_tl + kh_truoc_no_sung_kho_tl + kh_truoc_no_sung_dv_tl as a,
+        kh_truoc_no_sung_kho_tl + kh_truoc_no_sung_dv_tl as b,
+        th_no_sung_tl as c
+        FROM dan_report
+        WHERE tt = 1 AND userId = @UserId";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            right1 = Convert.ToDouble(reader["a"]);
+                            right2 = Convert.ToDouble(reader["b"]);
+                            right3 = Convert.ToDouble(reader["c"]);
+                        }
+                    }
+                }
+
+                // ===== MID =====
+                txtVCHCToanTran.Text = mid1.ToString();
+                txtVCHCChuanBi.Text = mid2.ToString();
+                txtVCHCChienDau.Text = mid3.ToString();
+                // ===== RIGHT =====
+                txtVCKTToanTran.Text = right1.ToString();
+                txtVCKTChuanBi.Text = right2.ToString();
+                txtVCKTChienDau.Text = right3.ToString();
+
+                // ===== LEFT = MID + RIGHT =====
+                txtKhoiLuongToanTran.Text = (mid1 + right1).ToString();
+                txtKhoiLuongChuanBi.Text = (mid2 + right2).ToString();
+                txtKhoiLuongChienDau.Text = (mid3 + right3).ToString();
+                txtKhoiLuongToanTran.Text = (mid1 + right1).ToString();
+                txtKhoiLuongChuanBi.Text = (mid2 + right2).ToString();
+                txtKhoiLuongChienDau.Text = (mid3 + right3).ToString();
+            }
+        }
+    
+        
         private void CreateDatabase()
         {
             string sql = @"CREATE TABLE IF NOT EXISTS du_tinh_khoi_luong (
@@ -448,47 +541,6 @@ namespace BoDoiApp.View.VICongTacVanTai
             }
         }
 
-        private void LoadData()
-        {
-            string sql = "SELECT * FROM du_tinh_khoi_luong WHERE UserId = @UserId LIMIT 1;";
-            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
-            {
-                connection.Open();
-                using (var command = new SQLiteCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@UserId", Constants.CURRENT_USER_ID_VALUE);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            // Row 1: Toàn trận
-                            txtKhoiLuongToanTran.Text = reader["KhoiLuongToanTran"] != DBNull.Value
-                                ? reader["KhoiLuongToanTran"].ToString() : "";
-                            txtVCHCToanTran.Text = reader["VCHCToanTran"] != DBNull.Value
-                                ? reader["VCHCToanTran"].ToString() : "";
-                            txtVCKTToanTran.Text = reader["VCKTToanTran"] != DBNull.Value
-                                ? reader["VCKTToanTran"].ToString() : "";
-
-                            // Row 2: Chuẩn bị
-                            txtKhoiLuongChuanBi.Text = reader["KhoiLuongGiaiDoanChuanBi"] != DBNull.Value
-                                ? reader["KhoiLuongGiaiDoanChuanBi"].ToString() : "";
-                            txtVCHCChuanBi.Text = reader["VCHCChuanBi"] != DBNull.Value
-                                ? reader["VCHCChuanBi"].ToString() : "";
-                            txtVCKTChuanBi.Text = reader["VCKTChuanBi"] != DBNull.Value
-                                ? reader["VCKTChuanBi"].ToString() : "";
-
-                            // Row 3: Chiến đấu
-                            txtKhoiLuongChienDau.Text = reader["KhoiLuongGiaiDoanChienDau"] != DBNull.Value
-                                ? reader["KhoiLuongGiaiDoanChienDau"].ToString() : "";
-                            txtVCHCChienDau.Text = reader["VCHCChienDau"] != DBNull.Value
-                                ? reader["VCHCChienDau"].ToString() : "";
-                            txtVCKTChienDau.Text = reader["VCKTChienDau"] != DBNull.Value
-                                ? reader["VCKTChienDau"].ToString() : "";
-                        }
-                    }
-                }
-            }
-        }
         private void SaveAllData(string userId, double khoiLuongToanTran, double khoiLuongChuanBi, double khoiLuongChienDau,
             double vchcToanTran, double vchcChuanBi, double vchcChienDau,
             double vcktToanTran, double vcktChuanBi, double vcktChienDau)

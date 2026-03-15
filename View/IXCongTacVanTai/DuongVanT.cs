@@ -19,16 +19,15 @@ namespace BoDoiApp.View.IXCongTacVanTai
         {
             PART = part;
             InitializeComponent();
-            btnSave.Click += btnSave_Click;
 
         }
         private RichTextBoxData dataLayer = new RichTextBoxData();
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            SaveVanTai();
             if (PART == 0)
             {
-                SaveVanTai();
                 NavigationService.Navigate(() => new DuTinhKhoiLuongVanChuyen());
             }
             else
@@ -37,28 +36,35 @@ namespace BoDoiApp.View.IXCongTacVanTai
             }
 
         }
+        private void DuongVanT_Load(object sender, EventArgs e)
+        {
+            LoadVanTai(); // ← Thêm dòng này
+        }
+
+        private void LoadVanTai()
+        {
+            TextBox[] listText = { txt1, txt2, txt3, txt4 };
+
+            for (int i = 0; i < listText.Length; i++)
+            {
+                string key = "vantai" + (i + 1);
+                string content = dataLayer.LoadDataFromDatabase(
+                    Constants.CURRENT_USER_ID_VALUE, key);
+                listText[i].Text = content;
+            }
+        }
+
         private void SaveVanTai()
         {
-            TextBox[] listText =
-            {
-        txt1,
-        txt2,
-        txt3,
-        txt4
-    };
+            TextBox[] listText = { txt1, txt2, txt3, txt4 };
 
             for (int i = 0; i < listText.Length; i++)
             {
                 string key = "vantai" + (i + 1);
                 string value = listText[i].Text.Trim();
 
-                var content = dataLayer.LoadDataFromDatabase(
-                    Constants.CURRENT_USER_ID_VALUE, key);
-
-                if (string.IsNullOrEmpty(content))
-                    dataLayer.AddData(Constants.CURRENT_USER_ID_VALUE, value, key);
-                else
-                    dataLayer.UpdateData(Constants.CURRENT_USER_ID_VALUE, value, key);
+                dataLayer.SaveOrUpdate( // ← Dùng SaveOrUpdate thay vì tự check
+                    Constants.CURRENT_USER_ID_VALUE, value, key);
             }
         }
 
@@ -72,9 +78,5 @@ namespace BoDoiApp.View.IXCongTacVanTai
             NavigationService.Back();
         }
 
-        private void DuongVanT_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

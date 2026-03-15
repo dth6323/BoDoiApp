@@ -101,34 +101,43 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             mainLayout.Controls.Add(txt_thoigian, 1, 3);
 
             // MẢNH BẢN CHẮP
-            label4 = new Label();
+            // MẢNH BẢN CHẮP
+label4 = new Label();
             label4.Text = "Mảnh bản chắp";
             label4.Font = labelFont;
             label4.Dock = DockStyle.Fill;
 
-            FlowLayoutPanel mapPanel = new FlowLayoutPanel();
+            // Grid 2x2
+            TableLayoutPanel mapPanel = new TableLayoutPanel();
             mapPanel.Dock = DockStyle.Fill;
-            mapPanel.Padding = new Padding(5);
+            mapPanel.RowCount = 2;
+            mapPanel.ColumnCount = 2;
+
+            mapPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            mapPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+
+            mapPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            mapPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 
             txt_m1 = new TextBox();
             txt_m2 = new TextBox();
             txt_m3 = new TextBox();
             txt_m4 = new TextBox();
 
-            txt_m1.Width = 100;
-            txt_m2.Width = 100;
-            txt_m3.Width = 100;
-            txt_m4.Width = 100;
-
             txt_m1.Font = inputFont;
             txt_m2.Font = inputFont;
             txt_m3.Font = inputFont;
             txt_m4.Font = inputFont;
 
-            mapPanel.Controls.Add(txt_m1);
-            mapPanel.Controls.Add(txt_m2);
-            mapPanel.Controls.Add(txt_m3);
-            mapPanel.Controls.Add(txt_m4);
+            txt_m1.Dock = DockStyle.Fill;
+            txt_m2.Dock = DockStyle.Fill;
+            txt_m3.Dock = DockStyle.Fill;
+            txt_m4.Dock = DockStyle.Fill;
+
+            mapPanel.Controls.Add(txt_m1, 0, 0);
+            mapPanel.Controls.Add(txt_m2, 1, 0);
+            mapPanel.Controls.Add(txt_m3, 0, 1);
+            mapPanel.Controls.Add(txt_m4, 1, 1);
 
             mainLayout.Controls.Add(label4, 0, 4);
             mainLayout.Controls.Add(mapPanel, 1, 4);

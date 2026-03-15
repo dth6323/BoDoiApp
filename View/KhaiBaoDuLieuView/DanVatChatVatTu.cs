@@ -34,8 +34,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             reoGridControl1.SheetTabVisible = false;
             var sheet2 = reoGridControl1.CurrentWorksheet;
             LoadSummaryFromDB();
-            sheet2.Ranges[new RangePosition(0, 0, sheet2.RowCount, sheet2.ColumnCount)].IsReadonly = true;
-
+            sheet2.Ranges[new RangePosition(0, 0, 20, 5)].IsReadonly = true;
             sheet2.HideColumns(5, sheet2.ColumnCount - 5);
 
             // Ẩn từ dòng 82 trở đi
@@ -113,8 +112,10 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                             int hienCoDv = Convert.ToInt32(rd["hien_co_dv_tl"]);
                             int hienCoKho = Convert.ToInt32(rd["hien_co_kho_tl"]);
 
+                            ws.SuspendUIUpdates();
                             ws.SetCellData(2, 2, hienCoDv + hienCoKho); // C3
-                            ws.SetCellData(2, 3, nhuCau);               // D3
+                            ws.SetCellData(2, 3, nhuCau);
+                            ws.ResumeUIUpdates();            // D3
                         }
                     }
                 }
@@ -132,6 +133,8 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
                     using (var rd = cmd.ExecuteReader())
                     {
+                        ws.SuspendUIUpdates();
+
                         while (rd.Read())
                         {
                             int r = Convert.ToInt32(rd["Row"]);
@@ -140,56 +143,29 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
                             int excelRow = r + 1;
 
-                            if (c == 15) // P
+                            if (c == 15)
                             {
-                                if (excelRow == 8) ws.SetCellData(3, 2, v);   // C4
-                                if (excelRow == 14) ws.SetCellData(4, 2, v);  // C5
-                                if (excelRow == 19) ws.SetCellData(5, 2, v);  // C6
-                                if (excelRow == 21) ws.SetCellData(6, 2, v);  // C7
+                                if (excelRow == 8) ws[3, 2] = v;
+                                if (excelRow == 14) ws[4, 2] = v;
+                                if (excelRow == 19) ws[5, 2] = v;
+                                if (excelRow == 21) ws[6, 2] = v;
                             }
 
-                            if (c == 5) // F
+                            if (c == 5)
                             {
-                                if (excelRow == 8) ws.SetCellData(3, 3, v);   // D4
-                                if (excelRow == 14) ws.SetCellData(4, 3, v);  // D5
-                                if (excelRow == 19) ws.SetCellData(5, 3, v);  // D6
-                                if (excelRow == 21) ws.SetCellData(6, 3, v);  // D7
+                                if (excelRow == 8) ws[3, 3] = v;
+                                if (excelRow == 14) ws[4, 3] = v;
+                                if (excelRow == 19) ws[5, 3] = v;
+                                if (excelRow == 21) ws[6, 3] = v;
                             }
                         }
+
+                        ws.ResumeUIUpdates();
                     }
                 }
             }
         }
-        private bool LoadDataFromDatabse()
-        {
-            string userId = Properties.Settings.Default.Username;
-            string sql = @"SELECT Loai, DVT, QUYDINH, HIENCO, BOSUNG 
-                           FROM ""5_1_VatTu"" 
-                           WHERE UserId = @UserId;";
-            using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))
-            {
-                connection.Open();
-                using (var command = new SQLiteCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@UserId", userId);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        var worksheet = reoGridControl1.CurrentWorksheet;
-                        int row = 1; // Assuming first row is header
-                        while (reader.Read())
-                        {
-                            worksheet.SetCellData(row, 0, reader["Loai"]?.ToString());
-                            worksheet.SetCellData(row, 1, reader["DVT"]?.ToString());
-                            worksheet.SetCellData(row, 2, reader["QUYDINH"]?.ToString());
-                            worksheet.SetCellData(row, 3, reader["HIENCO"]?.ToString());
-                            worksheet.SetCellData(row, 4, reader["BOSUNG"]?.ToString());
-                            row++;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
+ 
         private void CreateTable()
         {
             using (var connection = new SQLiteConnection(Constants.CONNECTION_STRING))

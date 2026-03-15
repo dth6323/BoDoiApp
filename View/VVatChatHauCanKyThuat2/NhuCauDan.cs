@@ -343,15 +343,14 @@ namespace BoDoiApp.View.VVatChatHauCanKyThuat2
             DanData.LoadAllCell(reoGridControl1, "Hướng thứ yếu");
             DanData.LoadAllCell(reoGridControl1, "BP PNPS");
             DanData.LoadAllCell(reoGridControl1, "LL còn lại");
-            reoGridControl1.CurrentWorksheet.HideColumns(29, 22);
             var ws = reoGridControl1.CurrentWorksheet;
             LockSheetAndOpenCells(ws);
-            reoGridControl1.SheetTabVisible = false;
+            reoGridControl1.SheetTabVisible = true;
             switch (Section)
             {
                 case "Toàn d":
                     LoadDanSection(Section,-1,-1, 27, 40);
-                    reoGridControl1.CurrentWorksheet.HideRows(42,60);
+                    reoGridControl1.CurrentWorksheet.HideRows(42, 60);
 
                     ws.HideColumns(61, ws.ColumnCount - 61);
 

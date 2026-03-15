@@ -1,5 +1,6 @@
 ﻿using BoDoiApp.DataLayer;
 using BoDoiApp.Resources;
+using BoDoiApp.View.Main;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(() => new Form1());
+            NavigationService.Navigate(() => new FormBaoDamHauCan());
         }
 
         private void TinhHinhTacDong_Load(object sender, EventArgs e)
@@ -42,6 +43,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void button3_Click(object sender, EventArgs e)
         {
             dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "TinhHinhTacDong");
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
 
         }
     }

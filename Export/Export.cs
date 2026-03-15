@@ -36,6 +36,23 @@ namespace BoDoiApp.Export
                 connection.Open();
 
                 // ===== Query 1 =====
+                var cmd15 = new SQLiteCommand(
+                    @"
+                    SELECT * from thongtintepbai
+                    WHERE User=@User
+                    LIMIT 1",
+                    connection
+                );
+
+                cmd15.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
+
+                using (var reader = cmd15.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        data["{{9999}}"] = reader["tenvankien"]?.ToString() ?? "";
+                    }
+                }
                 data["{{1}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "TinhHinhTacDong") ?? "";
                 data["{{2}}"] = dataLayer.LoadDataFromDatabase(Constants.CURRENT_USER_ID_VALUE, "NhiemVu") ?? "";
 

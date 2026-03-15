@@ -28,10 +28,6 @@ namespace BoDoiApp
             var export = new ExportKeHoach();
             export.ExportWord();
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-           NavigationService.Navigate(() => new KhaiBaoDuLieu());
-        }
         private void button5_Click(object sender, EventArgs e)
         {
             var export = new WordExporter();

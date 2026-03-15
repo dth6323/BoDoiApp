@@ -135,38 +135,40 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
 
             if (IsDataExists(BoPhan))
             {
-                ChuYeuData.UpdateHangLoat(reoGridControl1, BoPhan, EndRow);
+                ChuYeuData.UpdateHangLoat(reoGridControl1, BoPhan);
             }
             else
             {
-                ChuYeuData.ThemHangLoat(reoGridControl1, BoPhan, EndRow);
+                ChuYeuData.ThemHangLoat(reoGridControl1, BoPhan);
             }
         }
 
         private void LoadDataWithUser()
         {
-            string sql = $"SELECT * FROM trangkithuat WHERE User = @User AND option = @Option";
+            string sql = "SELECT * FROM trangkithuat WHERE User = @User AND option = @Option";
+
             try
             {
-                using (var connection = new System.Data.SQLite.SQLiteConnection("Data Source=data.db;Version=3;"))
+                using (var connection = new SQLiteConnection("Data Source=data.db;Version=3;"))
                 {
                     connection.Open();
-                    using (var command = new System.Data.SQLite.SQLiteCommand(sql, connection))
+
+                    using (var command = new SQLiteCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@User", Constants.CURRENT_USER_ID_VALUE);
                         command.Parameters.AddWithValue("@Option", BoPhan);
+
                         using (var reader = command.ExecuteReader())
                         {
                             var ws = reoGridControl1.CurrentWorksheet;
-                            int startRow = 5;
-                            int row = startRow;
+                            int row = 5;
 
-                            while (reader.Read() && row <= EndRow)
+                            while (reader.Read())
                             {
+                                // bỏ qua các dòng header trong sheet
                                 if (row == 5 || row == 6 || row == 7 || row == 16)
                                 {
                                     row++;
-                                    continue;
                                 }
 
                                 SetCellIfUnlocked(ws, row, 0, reader["ll"]?.ToString());
@@ -190,11 +192,12 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
                         }
                     }
                 }
+
                 reoGridControl1.Refresh();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message);
             }
         }
 

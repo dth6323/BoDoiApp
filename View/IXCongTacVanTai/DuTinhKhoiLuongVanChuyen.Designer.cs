@@ -220,6 +220,7 @@ namespace BoDoiApp.View.IXCongTacVanTai
             this.Controls.Add(this.btnSave);
             this.Name = "DuTinhKhoiLuongVanChuyen";
             this.Size = new System.Drawing.Size(850, 400);
+            this.Load += new System.EventHandler(this.DuTinhKhoiLuongVanChuyen_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

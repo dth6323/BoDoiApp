@@ -183,7 +183,6 @@
     <Compile Include="View\DangNhap\DangKy.Designer.cs">
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FormMana.cs" />
     <Compile Include="View\IIIToChucSuDung\BoTriNew.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -256,12 +255,6 @@
     <Compile Include="View\KhaiBaoDuLieuView\DanVatChatVatTu.Designer.cs">
       <DependentUpon>DanVatChatVatTu.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.Designer.cs">
-      <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
-    </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\NhiemVu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -273,18 +266,6 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.Designer.cs">
       <DependentUpon>PhanCapVatLieu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\QuanSoChienDau.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\QuanSoChienDau.Designer.cs">
-      <DependentUpon>QuanSoChienDau.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\QuyDinhDuTruTieuThuBoSungVatChat.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\QuyDinhDuTruTieuThuBoSungVatChat.Designer.cs">
-      <DependentUpon>QuyDinhDuTruTieuThuBoSungVatChat.cs</DependentUpon>
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ThongTinTapBai.cs">
       <SubType>UserControl</SubType>
@@ -321,18 +302,6 @@
     </Compile>
     <Compile Include="View\KhaiBaoDuLieuView\ToChucSuDungBoTri.Designer.cs">
       <DependentUpon>ToChucSuDungBoTri.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\VatChatHienCoView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\VatChatHienCoView.Designer.cs">
-      <DependentUpon>VatChatHienCoView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\VuKhiTrangBi.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\KhaiBaoDuLieuView\VuKhiTrangBi.Designer.cs">
-      <DependentUpon>VuKhiTrangBi.cs</DependentUpon>
     </Compile>
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
@@ -395,12 +364,6 @@
     </Compile>
     <Compile Include="View\VIBaoDamSinhHoat\_3BaoDamONghi.Designer.cs">
       <DependentUpon>_3BaoDamONghi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\IXCongTacVanTai\_1DuongVanTai.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="View\IXCongTacVanTai\_1DuongVanTai.Designer.cs">
-      <DependentUpon>_1DuongVanTai.cs</DependentUpon>
     </Compile>
     <Compile Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.cs">
       <SubType>UserControl</SubType>
@@ -598,20 +561,11 @@
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\DanVatChatVatTu.resx">
       <DependentUpon>DanVatChatVatTu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\KhaiBaoDuLieuView\KhaiBaoDuLieu.resx">
-      <DependentUpon>KhaiBaoDuLieu.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\NhiemVu.resx">
       <DependentUpon>NhiemVu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\PhanCapVatLieu.resx">
       <DependentUpon>PhanCapVatLieu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\KhaiBaoDuLieuView\QuanSoChienDau.resx">
-      <DependentUpon>QuanSoChienDau.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\KhaiBaoDuLieuView\QuyDinhDuTruTieuThuBoSungVatChat.resx">
-      <DependentUpon>QuyDinhDuTruTieuThuBoSungVatChat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\ThongTinTapBai.resx">
       <DependentUpon>ThongTinTapBai.cs</DependentUpon>
@@ -630,12 +584,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\KhaiBaoDuLieuView\ToChucSuDungBoTri.resx">
       <DependentUpon>ToChucSuDungBoTri.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\KhaiBaoDuLieuView\VatChatHienCoView.resx">
-      <DependentUpon>VatChatHienCoView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\KhaiBaoDuLieuView\VuKhiTrangBi.resx">
-      <DependentUpon>VuKhiTrangBi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -672,9 +620,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\VIIBaoDamQuanY\_3YDinh.resx">
       <DependentUpon>_3YDinh.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\IXCongTacVanTai\_1DuongVanTai.resx">
-      <DependentUpon>_1DuongVanTai.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\IXCongTacVanTai\_2DuTinhKhoiLuongVanChuyen.resx">
       <DependentUpon>_2DuTinhKhoiLuongVanChuyen.cs</DependentUpon>
