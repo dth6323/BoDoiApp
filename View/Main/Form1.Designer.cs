@@ -20,6 +20,7 @@ namespace BoDoiApp
 
         private void InitializeComponent()
         {
+
             this.root = new TableLayoutPanel();
             this.buttonGrid = new TableLayoutPanel();
 
@@ -33,12 +34,12 @@ namespace BoDoiApp
             this.root.SuspendLayout();
             this.buttonGrid.SuspendLayout();
             this.SuspendLayout();
-
+            this.BackColor = Color.Transparent;
             // ================= ROOT =================
             this.root.ColumnCount = 3;
             this.root.RowCount = 3;
             this.root.Dock = DockStyle.Fill;
-            this.root.BackColor = Color.WhiteSmoke;
+            this.root.BackColor = Color.Transparent;
 
             this.root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.root.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
@@ -55,7 +56,7 @@ namespace BoDoiApp
             this.buttonGrid.RowCount = 2;
             this.buttonGrid.AutoSize = true;
             this.buttonGrid.Anchor = AnchorStyles.None;
-            this.buttonGrid.BackColor = Color.White;
+            this.buttonGrid.BackColor = Color.Transparent;
             this.buttonGrid.Padding = new Padding(20);
 
             this.buttonGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
@@ -122,7 +123,7 @@ namespace BoDoiApp
             // ================= FORM =================
             this.AutoScaleMode = AutoScaleMode.Dpi;
             this.Controls.Add(this.root);
-            this.BackColor = Color.White;
+            this.BackColor = Color.Transparent;
             this.Size = new Size(1137, 576);
 
             this.root.ResumeLayout(false);

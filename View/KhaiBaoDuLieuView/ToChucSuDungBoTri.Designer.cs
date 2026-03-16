@@ -43,9 +43,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
-            // 
             // tableLayoutPanel1
-            // 
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
@@ -56,39 +54,54 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 526);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1138, 50);
-            this.tableLayoutPanel1.TabIndex = 7;
+
+            // button1 (Trở về)
+            this.button1.BackColor = System.Drawing.Color.FromArgb(108, 117, 125);
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(370, 44);
+            this.button1.Text = "Trở về";
+            this.button1.UseVisualStyleBackColor = false;
+
+            // button2 (Trang chủ)
+            this.button2.BackColor = System.Drawing.Color.FromArgb(13, 110, 253);
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(379, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(370, 44);
+            this.button2.Text = "Trang Chủ";
+            this.button2.UseVisualStyleBackColor = false;
+
+            // button3 (Lưu)
+            this.button3.BackColor = System.Drawing.Color.FromArgb(25, 135, 84);
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Location = new System.Drawing.Point(755, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(380, 44);
+            this.button3.Text = "Lưu";
+            this.button3.UseVisualStyleBackColor = false;
             // 
             // button1
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(127, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 35);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Trở về";
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button2.Location = new System.Drawing.Point(502, 7);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(120, 35);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Trang Chủ";
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button3.Location = new System.Drawing.Point(884, 7);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 35);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Lưu";
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label2
