@@ -114,30 +114,34 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             // ===== BOTTOM =====
             // ===== BOTTOM PANEL =====
+            // ===== BOTTOM =====
             TableLayoutPanel bottom = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                ColumnCount = 4,
+                ColumnCount = 3,
                 RowCount = 1
             };
 
-            // Chia 4 cột đều nhau
-            for (int i = 0; i < 4; i++)
-            {
-                bottom.ColumnStyles.Add(
-                    new ColumnStyle(SizeType.Percent, 25));
-            }
+            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
+            bottom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34));
 
             root.Controls.Add(bottom, 0, 2);
 
+            // ===== STYLE CHUNG =====
+            Font btnFont = new Font("Segoe UI", 10F, FontStyle.Bold);
 
             // ===== NÚT TRỞ VỀ =====
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont,
+                BackColor = Color.FromArgb(108, 117, 125),
+                ForeColor = Color.White
             };
+            btnBack.FlatAppearance.BorderSize = 0;
 
             btnBack.Click += (s, ev) =>
             {
@@ -146,14 +150,17 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             bottom.Controls.Add(btnBack, 0, 0);
 
-
             // ===== NÚT TRANG CHỦ =====
             Button btnHome = new Button
             {
                 Text = "Trang chủ",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont,
+                BackColor = Color.FromArgb(13, 110, 253),
+                ForeColor = Color.White
             };
+            btnHome.FlatAppearance.BorderSize = 0;
 
             btnHome.Click += (s, ev) =>
             {
@@ -162,37 +169,29 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             bottom.Controls.Add(btnHome, 1, 0);
 
-
             // ===== NÚT LƯU =====
             Button btnSave = new Button
             {
-                Text = "Lưu",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
+                Text = "Tiếp",
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont,
+                BackColor = Color.FromArgb(25, 135, 84),
+                ForeColor = Color.White
             };
+            btnSave.FlatAppearance.BorderSize = 0;
 
-            btnSave.Click += BtnSave_Click;
-
+            btnSave.Click += (s, ev) =>
+            {
+                BaoDamQuanYData.SaveAll(reoGridControl1);
+                NavigationService.Navigate(() => new Form1());
+            };
             bottom.Controls.Add(btnSave, 2, 0);
 
 
             // ===== PANEL PHẢI (CHO NÚT TIẾP) =====
 
 
-            // ===== NÚT TIẾP =====
-            Button btnNext = new Button
-            {
-                Text = "Tiếp",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
-            };
-
-            btnNext.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(() => new _2CanDoi());
-            };
-
-            bottom.Controls.Add(btnNext);
             LoadTrangKiThuatToColumnC();
         }
         private void LoadExcelAndData()

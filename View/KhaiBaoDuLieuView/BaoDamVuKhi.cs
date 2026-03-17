@@ -21,7 +21,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book1.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "4151.xlsx");
 
         public BaoDamVuKhi()
         {
@@ -47,7 +47,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         private void BaoDamVuKhi_Load(object sender, EventArgs e)
         {
             reoGridControl1.Load(EXCEL_PATH);
-            var sheet = reoGridControl1.Worksheets[2];
+            var sheet = reoGridControl1.Worksheets[0];
             reoGridControl1.CurrentWorksheet = sheet;
             reoGridControl1.SheetTabVisible = false;
             if (IsDataExists(Properties.Settings.Default.Username))

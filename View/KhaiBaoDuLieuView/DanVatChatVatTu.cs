@@ -20,7 +20,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     AppDomain.CurrentDomain.BaseDirectory;
 
         private static readonly string EXCEL_PATH =
-            Path.Combine(BaseDir, "Resources", "Sheet", "Book1.xlsx");
+            Path.Combine(BaseDir, "Resources", "Sheet", "4151.xlsx");
         public DanVatChatVatTu()
         {
             CreateTable();
@@ -31,7 +31,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {   
             
             reoGridControl1.Load(EXCEL_PATH);
-            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[3];
+            reoGridControl1.CurrentWorksheet = reoGridControl1.Worksheets[1];
             reoGridControl1.SheetTabVisible = false;
             var sheet2 = reoGridControl1.CurrentWorksheet;
             LoadSummaryFromDB();

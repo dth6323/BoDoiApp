@@ -173,8 +173,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                     dataLayer.ThemThongTin(content, SectionKey);
                 else
                     dataLayer.CapNhatThongTin(content, SectionKey);
-
-                MessageBox.Show("Lưu thành công!");
+                NavigationService.Navigate(() => new _3BaoDamONghi(PART));
             };
 
             // ===== ADD =====

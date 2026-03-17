@@ -174,7 +174,7 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 else
                     dataLayer.CapNhatThongTin(txt.Text, SectionKey);
 
-                NavigationService.Navigate(() => new _2BaoDamMac());
+                NavigationService.Navigate(() => new _2BaoDamMac(PART));
             };
 
             // ===== ADD =====

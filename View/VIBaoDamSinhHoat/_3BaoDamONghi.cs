@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.View.Main;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -11,9 +12,11 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
         private readonly BaoDamSinhHoatData dataLayer = new BaoDamSinhHoatData();
         private const string SectionKey = "BaoDamSinhHoat_ONghi";
         private TextBox txtInput;
+        private int PART = 0;
 
-        public _3BaoDamONghi()
+        public _3BaoDamONghi(int part = 0)
         {
+            PART = part;
             InitializeComponent();
         }
 
@@ -69,12 +72,11 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 Text = "3. Bảo đảm ở, ngủ nghỉ",
                 Dock = DockStyle.Top,
                 Height = 30,
-                Font = new Font("Times New Roman", 11),
-                TextAlign = ContentAlignment.MiddleLeft
+                Font = new Font("Times New Roman", 11)
             };
 
             // ===== TEXTBOX =====
-             txtInput = new TextBox
+            txtInput = new TextBox
             {
                 Multiline = true,
                 Dock = DockStyle.Fill,
@@ -82,90 +84,106 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 ScrollBars = ScrollBars.Vertical
             };
 
-            // ===== ARROW LEFT =====
-            Panel pnlArrowLeft = new Panel
-            {
-                Dock = DockStyle.Left,
-                Width = 60
-            };
-
-            Button btnPrev = new Button
-            {
-                Text = "◀",
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 18, FontStyle.Bold)
-            };
-            btnPrev.Click += (s, e2) =>
-            {
-                NavigationService.Back();
-            };
-            pnlArrowLeft.Controls.Add(btnPrev);
-
-            // ===== ADD CONTROLS =====
             pnlMain.Controls.Add(txtInput);
             pnlMain.Controls.Add(lblContent);
             pnlMain.Controls.Add(lblHeader);
-            pnlMain.Controls.Add(pnlArrowLeft);
 
             // ===== BOTTOM BUTTONS =====
             TableLayoutPanel pnlButton = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                ColumnCount = 3
+                ColumnCount = 3,
+                RowCount = 1
             };
             pnlButton.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             pnlButton.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34));
             pnlButton.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             layout.Controls.Add(pnlButton, 0, 2);
 
+            Font btnFont = new Font("Segoe UI", 10, FontStyle.Bold);
+
+            // ===== BACK =====
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.Left
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(108, 117, 125),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont
             };
+            btnBack.FlatAppearance.BorderSize = 0;
             btnBack.Click += (s, e2) => NavigationService.Back();
 
+            // ===== HOME =====
             Button btnHome = new Button
             {
-                Text = "Trang chủ",
-                BackColor = Color.Yellow,
-                Anchor = AnchorStyles.None
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(13, 110, 253),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont
             };
-            btnHome.Click += (s, e2) =>
-            {
-                //NavigationService.Navigate(new HomeView());
-            };
+            btnHome.FlatAppearance.BorderSize = 0;
 
+            if (PART == 0)
+            {
+                btnHome.Text = "Dự kiến";
+                btnHome.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new FormBaoDamHauCan());
+                };
+            }
+            else
+            {
+                btnHome.Text = "Kế hoạch";
+                btnHome.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new FormKeHoach());
+                };
+            }
+
+            // ===== SAVE =====
             Button btnSave = new Button
             {
                 Text = "Lưu",
-                Anchor = AnchorStyles.Right
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(25, 135, 84),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont
             };
+            btnSave.FlatAppearance.BorderSize = 0;
 
             btnSave.Click += (s, e2) =>
             {
-                var content = txtInput.Text;
-                var existing = dataLayer.LayThongTin(SectionKey);
-                if (string.IsNullOrWhiteSpace(existing))
+                var content = txtInput.Text?.Trim();
+
+                if (string.IsNullOrWhiteSpace(content))
                 {
-                    dataLayer.ThemThongTin(content, SectionKey);
+                    MessageBox.Show("Vui lòng nhập nội dung!");
                     return;
                 }
-                dataLayer.CapNhatThongTin(content, SectionKey);
+
+                var existing = dataLayer.LayThongTin(SectionKey);
+
+                if (string.IsNullOrWhiteSpace(existing))
+                    dataLayer.ThemThongTin(content, SectionKey);
+                else
+                    dataLayer.CapNhatThongTin(content, SectionKey);
+
+                MessageBox.Show("Đã lưu thành công!");
             };
 
             pnlButton.Controls.Add(btnBack, 0, 0);
             pnlButton.Controls.Add(btnHome, 1, 0);
             pnlButton.Controls.Add(btnSave, 2, 0);
 
+            // ===== LOAD DATA =====
             var savedContent = dataLayer.LayThongTin(SectionKey);
             if (!string.IsNullOrWhiteSpace(savedContent))
             {
                 txtInput.Text = savedContent;
-            }
-            else
-            {
-                txtInput.Text = "(Học viên nhập văn bản)";
             }
         }
 
