@@ -27,6 +27,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             InitializeComponent();
             CreateTable();
+            this.BackColor = System.Drawing.Color.Transparent;
         }
 
         private bool IsDataExists(string userId)

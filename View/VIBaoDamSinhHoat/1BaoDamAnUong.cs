@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.View.Main;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
         private readonly BaoDamSinhHoatData dataLayer = new BaoDamSinhHoatData();
         private const string SectionKey = "BaoDamSinhHoat_AnUong";
         private TextBox txtInput;
-
-        public _1BaoDamAnUong()
+        private int PART = 0;
+        public _1BaoDamAnUong(int part = 0)
         {
+            this.PART = part;
             InitializeComponent();
+            this.BackColor = Color.Transparent;
         }
 
         private void _1BaoDamAnUong_Load(object sender, EventArgs e)
@@ -81,33 +84,14 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
                 ScrollBars = ScrollBars.Vertical
             };
 
-            // ===== ARROW RIGHT =====
-            Panel pnlArrowRight = new Panel
-            {
-                Dock = DockStyle.Right,
-                Width = 60
-            };
 
-            Button btnNext = new Button
-            {
-                Text = "▶",
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 18, FontStyle.Bold)
-            };
-
-            btnNext.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(() => new _2BaoDamMac());
-            };
-
-            pnlArrowRight.Controls.Add(btnNext);
 
             // ===== ADD CONTROLS =====
             pnlMain.Controls.Add(txtInput);
             pnlMain.Controls.Add(lblContent);
             pnlMain.Controls.Add(lblHeader);
-            pnlMain.Controls.Add(pnlArrowRight);
 
+            // ===== BOTTOM BUTTONS =====
             // ===== BOTTOM BUTTONS =====
             TableLayoutPanel pnlButton = new TableLayoutPanel
             {
@@ -119,40 +103,81 @@ namespace BoDoiApp.View.VIBaoDamSinhHoat
             pnlButton.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33));
             layout.Controls.Add(pnlButton, 0, 2);
 
+            // ===== STYLE CHUNG =====
+            Font btnFont = new Font("Segoe UI", 10, FontStyle.Bold);
+
+            // ===== BACK =====
             Button btnBack = new Button
             {
                 Text = "Trở về",
-                Anchor = AnchorStyles.Left
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(108, 117, 125),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont
             };
+            btnBack.FlatAppearance.BorderSize = 0;
             btnBack.Click += (s, e2) => NavigationService.Back();
 
+            // ===== HOME =====
             Button btnHome = new Button
             {
-                Text = "Trang chủ",
-                BackColor = Color.Yellow,
-                Anchor = AnchorStyles.None
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(13, 110, 253),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont
             };
-            btnHome.Click += (s, e2) =>
-            {
-                //NavigationService.Navigate(new HomeView());
-            };
+            btnHome.FlatAppearance.BorderSize = 0;
 
+            if (PART == 0)
+            {
+                btnHome.Text = "Dự kiến";
+                btnHome.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new FormBaoDamHauCan());
+                };
+            }
+            else
+            {
+                btnHome.Text = "Kế hoạch";
+                btnHome.Click += (s, e2) =>
+                {
+                    NavigationService.Navigate(() => new FormKeHoach());
+                };
+            }
+
+            // ===== SAVE / NEXT =====
             Button btnSave = new Button
             {
-                Text = "Lưu",
-                Anchor = AnchorStyles.Right
+                Text = "Tiếp",
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(25, 135, 84),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = btnFont
             };
+            btnSave.FlatAppearance.BorderSize = 0;
+
             btnSave.Click += (s, e2) =>
             {
                 var txt = pnlMain.Controls.OfType<TextBox>().FirstOrDefault();
-                var existing = dataLayer.LayThongTin(SectionKey);
-                if (string.IsNullOrWhiteSpace(existing))
+                if (txt == null || string.IsNullOrWhiteSpace(txt.Text))
                 {
-                    dataLayer.ThemThongTin(txt.Text, SectionKey);
+                    MessageBox.Show("Vui lòng nhập nội dung trước khi lưu!");
                     return;
                 }
-                dataLayer.CapNhatThongTin(txt.Text, SectionKey);
+                var existing = dataLayer.LayThongTin(SectionKey);
+
+                if (string.IsNullOrWhiteSpace(existing))
+                    dataLayer.ThemThongTin(txt.Text, SectionKey);
+                else
+                    dataLayer.CapNhatThongTin(txt.Text, SectionKey);
+
+                NavigationService.Navigate(() => new _2BaoDamMac());
             };
+
+            // ===== ADD =====
             pnlButton.Controls.Add(btnBack, 0, 0);
             pnlButton.Controls.Add(btnHome, 1, 0);
             pnlButton.Controls.Add(btnSave, 2, 0);

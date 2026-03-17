@@ -110,6 +110,7 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "I. Đánh giá tình hình tác động đến hậu cần - kỹ thuật";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // richTextBox1
             // 

@@ -17,6 +17,8 @@ namespace BoDoiApp.View.Main
         {
             InitializeComponent();
             this.Load += FormBaoDamHauCan_Load;
+
+            this.BackColor = Color.Transparent;
         }
 
         private void FormBaoDamHauCan_Load(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using BoDoiApp.Resources;
 using BoDoiApp.View.TinhHinhDonVi;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using unvell.ReoGrid;
@@ -19,6 +20,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         public PhanCapVatLieu()
         {
             InitializeComponent();
+            this.BackColor = Color.Transparent;
         }
 
         private void PhanCapVatLieu_Load(object sender, EventArgs e)

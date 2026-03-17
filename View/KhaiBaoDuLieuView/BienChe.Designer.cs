@@ -147,32 +147,40 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
             // 
             // button4
             // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button4.Location = new System.Drawing.Point(3, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 54);
-            this.button4.TabIndex = 0;
+            // Trở về
+            this.button4.Dock = DockStyle.Fill;
+            this.button4.BackColor = System.Drawing.Color.FromArgb(108, 117, 125);
+            this.button4.FlatStyle = FlatStyle.Flat;
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Text = "Trở về";
+
+            // Trang chủ
+            this.button5.Dock = DockStyle.Fill;
+            this.button5.BackColor = System.Drawing.Color.FromArgb(13, 110, 253);
+            this.button5.FlatStyle = FlatStyle.Flat;
+            this.button5.FlatAppearance.BorderSize = 0;
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button5.ForeColor = System.Drawing.Color.White;
+            this.button5.Text = "Trang chủ";
+
+            // Tiếp theo
+            this.button3.Dock = DockStyle.Fill;
+            this.button3.BackColor = System.Drawing.Color.FromArgb(25, 135, 84);
+            this.button3.FlatStyle = FlatStyle.Flat;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Text = "Tiếp theo";
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
-            this.button5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button5.Location = new System.Drawing.Point(380, 18);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(140, 23);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "Trang chủ";
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button3
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button3.Location = new System.Drawing.Point(777, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 54);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Tiếp";
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // BienChe

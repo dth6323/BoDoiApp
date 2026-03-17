@@ -25,6 +25,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         {
             CreateTable();
             InitializeComponent();
+            this.BackColor = Color.Transparent;
         }
         private void DanVatChatVatTu_Load(object sender, EventArgs e)
         {   

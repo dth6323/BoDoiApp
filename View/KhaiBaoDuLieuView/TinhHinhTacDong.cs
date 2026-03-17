@@ -19,6 +19,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         public TinhHinhTacDong()
         {
             InitializeComponent();
+            this.BackColor = Color.Transparent;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,6 +48,11 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }

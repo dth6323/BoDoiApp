@@ -27,6 +27,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
         public TinhHinhVc()
         {
             InitializeComponent();
+            this.BackColor = Color.Transparent;
         }
 
         private void TinhHinhVc_Load(object sender, EventArgs e)

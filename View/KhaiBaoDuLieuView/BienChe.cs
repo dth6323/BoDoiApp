@@ -2,6 +2,7 @@
 using BoDoiApp.View.TinhHinhDonVi;
 using System;
 using System.Data.SQLite;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BoDoiApp.View.KhaiBaoDuLieuView
@@ -23,6 +24,7 @@ namespace BoDoiApp.View.KhaiBaoDuLieuView
     });
 
             _isLoaded = true; // Only true AFTER items are loaded
+            this.BackColor = Color.Transparent;
         }
 
 

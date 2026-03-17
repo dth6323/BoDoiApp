@@ -27,6 +27,7 @@ namespace BoDoiApp.View.TinhHinhDonVi
         public ChiLenhHKT1()
         {
             InitializeComponent();
+            this.BackColor = Color.Transparent;
         }
 
         private void ChiLenhHKT1_Load(object sender, EventArgs e)

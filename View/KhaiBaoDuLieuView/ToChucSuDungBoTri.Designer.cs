@@ -43,7 +43,9 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
+            // 
             // tableLayoutPanel1
+            // 
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
@@ -54,54 +56,53 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 526);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1138, 50);
-
-            // button1 (Trở về)
-            this.button1.BackColor = System.Drawing.Color.FromArgb(108, 117, 125);
+            this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(370, 44);
+            this.button1.Size = new System.Drawing.Size(369, 44);
+            this.button1.TabIndex = 0;
             this.button1.Text = "Trở về";
             this.button1.UseVisualStyleBackColor = false;
-
-            // button2 (Trang chủ)
-            this.button2.BackColor = System.Drawing.Color.FromArgb(13, 110, 253);
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(379, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(370, 44);
-            this.button2.Text = "Trang Chủ";
-            this.button2.UseVisualStyleBackColor = false;
-
-            // button3 (Lưu)
-            this.button3.BackColor = System.Drawing.Color.FromArgb(25, 135, 84);
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(755, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(380, 44);
-            this.button3.Text = "Lưu";
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(110)))), ((int)(((byte)(253)))));
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(378, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(369, 44);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Dự Kiến";
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(135)))), ((int)(((byte)(84)))));
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Location = new System.Drawing.Point(753, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(382, 44);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "Lưu";
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label2
@@ -110,7 +111,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.label2.Location = new System.Drawing.Point(30, 110);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(357, 15);
+            this.label2.Size = new System.Drawing.Size(421, 18);
             this.label2.TabIndex = 5;
             this.label2.Text = "III. Tổ chức, sử dụng lực lượng, bố trí hậu cần - kỹ thuật";
             // 
@@ -121,7 +122,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label1.Location = new System.Drawing.Point(350, 80);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(295, 17);
+            this.label1.Size = new System.Drawing.Size(345, 20);
             this.label1.TabIndex = 6;
             this.label1.Text = "Dự kiến kế hoạch bảo đảm hậu cần - kỹ thuật";
             // 
@@ -130,7 +131,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(60, 140);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(149, 13);
+            this.label3.Size = new System.Drawing.Size(177, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "1. Tổ chức, sử dụng lực lượng";
             // 
@@ -149,7 +150,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(60, 340);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 13);
+            this.label4.Size = new System.Drawing.Size(155, 16);
             this.label4.TabIndex = 2;
             this.label4.Text = "2. Bố trí hậu cần - kỹ thuật";
             // 
