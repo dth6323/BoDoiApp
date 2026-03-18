@@ -1,4 +1,6 @@
-﻿namespace BoDoiApp.View
+﻿using System.Windows.Forms;
+
+namespace BoDoiApp.View
 {
     partial class MainForm
     {
@@ -53,6 +55,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Phần mềm hỗ trợ bài tập đảm bảo hậu cần kỹ thuật";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.WindowState = FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }

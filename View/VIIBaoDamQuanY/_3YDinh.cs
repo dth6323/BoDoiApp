@@ -21,7 +21,8 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             if (part == 1)
             {
-                this.label3.Text = "2. Biện pháp đảm bảo";
+                this.lblSub.Text = "2. Biện pháp đảm bảo";
+                this.button2.Text = "Kế Hoạch";
             }
         }
 
@@ -48,6 +49,11 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
         private void button3_Click(object sender, EventArgs e)
         {
             dataLayer.SaveOrUpdate(Constants.CURRENT_USER_ID_VALUE, richTextBox1.Text, "_3YDinh");
+
+        }
+
+        private void panelBody_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

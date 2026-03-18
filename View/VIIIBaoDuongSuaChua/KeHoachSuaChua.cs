@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.View.Main;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -78,7 +79,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             };
 
             // Chia 4 cột đều nhau
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
                 bottom.ColumnStyles.Add(
                     new ColumnStyle(SizeType.Percent, 25));
@@ -90,9 +91,12 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             // ===== NÚT TRỞ VỀ =====
             Button btnBack = new Button
             {
+
                 Text = "Trở về",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(108, 117, 125),
+                ForeColor = Color.White
             };
 
             btnBack.Click += (s, ev) =>
@@ -106,14 +110,16 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             // ===== NÚT TRANG CHỦ =====
             Button btnHome = new Button
             {
-                Text = "Trang chủ",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
+                Text = "Kế Hoạch",
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(13, 110, 253),
+                ForeColor = Color.White
             };
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(() => new Form1());
+                NavigationService.Navigate(() => new FormKeHoach());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -122,9 +128,11 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             // ===== NÚT LƯU =====
             Button btnSave = new Button
             {
-                Text = "Lưu",
-                Anchor = AnchorStyles.None,
-                AutoSize = true
+                Text = "Tiếp",
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(25, 135, 84),
+                ForeColor = Color.White
             };
 
             btnSave.Click += BtnSave_Click;
@@ -136,17 +144,6 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 
 
             // ===== NÚT TIẾP =====
-            Button btnTiep = new Button();
-            btnTiep.Text = "Tiếp";
-            btnTiep.Anchor =  AnchorStyles.None;
-            btnTiep.AutoSize=true;
-
-            btnTiep.Click += (s, e2) =>
-            {
-                NavigationService.Navigate(() => new _3CanDoiVaYdinhBaoDam());
-            };
-
-            bottom.Controls.Add(btnTiep);
         }
 
         // =============================
@@ -210,6 +207,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
         private void BtnSave_Click(object sender, EventArgs e)
         {
             KeHoachSuaChuaData.SaveAll(reoGridControl1);
+            NavigationService.Navigate(() => new BienPhapSuaChua());
         }
     }
 }

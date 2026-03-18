@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.DataLayer;
+using BoDoiApp.View.Main;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -135,29 +136,7 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 txtYdinh.Text = ydinhSaved;
 
             // ===== ARROWS =====
-            Button btnLeft = new Button
-            {
-                Text = "◀",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                Size = new Size(60, 140),
-                Location = new Point(10, 220)
-            };
-            btnLeft.Click += (s, e) => NavigationService.Back();
-            border.Controls.Add(btnLeft);
 
-            Button btnRight = new Button
-            {
-                Text = "▶",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                Size = new Size(60, 140),
-                Anchor = AnchorStyles.Right
-            };
-            border.Controls.Add(btnRight);
-
-            border.Resize += (s, e) =>
-            {
-                btnRight.Location = new Point(border.Width - 70, 220);
-            };
 
             // ===== BOTTOM =====
             TableLayoutPanel bottom = new TableLayoutPanel
@@ -172,28 +151,35 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             Button back = new Button
             {
                 Text = "Trở về",
-                BackColor = Color.FromArgb(252, 213, 180),
-                Anchor = AnchorStyles.Left,
-                Width = 100
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(108, 117, 125),
+                ForeColor = Color.White
             }; 
             back.Click += (s, e) => NavigationService.Back();
 
             bottom.Controls.Add(back, 0, 0);
-
-            bottom.Controls.Add(new Button
+            Button home = new Button
             {
-                Text = "Trang\nchủ",
-                BackColor = Color.Yellow,
-                Anchor = AnchorStyles.None,
-                Width = 100
-            }, 1, 0);
 
+                Text = "Dự Kiến",
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(13, 110, 253),
+                ForeColor = Color.White
+            };
+            bottom.Controls.Add(home, 1, 0);
+            home.Click += (s, e) =>
+            {
+                NavigationService.Navigate(() => new FormBaoDamHauCan());
+            };
             Button btnSave = new Button
             {
                 Text = "Lưu",
-                BackColor = Color.FromArgb(189, 215, 238),
-                Anchor = AnchorStyles.Right,
-                Width = 100
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(25, 135, 84),
+                ForeColor = Color.White
             };
             btnSave.Click += (s, e) =>
             {

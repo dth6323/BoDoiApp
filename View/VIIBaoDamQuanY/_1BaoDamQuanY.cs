@@ -1,5 +1,6 @@
 ﻿using BoDoiApp.DataLayer;
 using BoDoiApp.Resources;
+using BoDoiApp.View.Main;
 using BoDoiApp.View.VIIIBaoDuongSuaChua;
 using System;
 using System.Data;
@@ -70,7 +71,6 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            Load += _1BaoDamQuanY_Load;
         }
 
         private void _1BaoDamQuanY_Load(object sender, EventArgs e)
@@ -153,7 +153,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             // ===== NÚT TRANG CHỦ =====
             Button btnHome = new Button
             {
-                Text = "Trang chủ",
+                Text = "Dự Kiến",
                 Dock = DockStyle.Fill,
                 FlatStyle = FlatStyle.Flat,
                 Font = btnFont,
@@ -164,7 +164,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
             btnHome.Click += (s, ev) =>
             {
-                NavigationService.Navigate(() => new Form1());
+                NavigationService.Navigate(() => new FormBaoDamHauCan());
             };
 
             bottom.Controls.Add(btnHome, 1, 0);
@@ -184,7 +184,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
             btnSave.Click += (s, ev) =>
             {
                 BaoDamQuanYData.SaveAll(reoGridControl1);
-                NavigationService.Navigate(() => new Form1());
+                NavigationService.Navigate(() => new _2CanDoi());
             };
             bottom.Controls.Add(btnSave, 2, 0);
 

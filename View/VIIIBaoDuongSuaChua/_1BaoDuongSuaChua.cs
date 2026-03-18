@@ -1,7 +1,10 @@
 ﻿using BoDoiApp.DataLayer;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Color = System.Drawing.Color;
+using Font = System.Drawing.Font;
 
 namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 {
@@ -93,39 +96,11 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
                 txtInput.Text = savedContent;
             }
 
-            // ===== ARROW RIGHT =====
-            Panel pnlArrowRight = new Panel
-            {
-                Dock = DockStyle.Right,
-                Width = 60
-            };
-
-            Button btnNext = new Button
-            {
-                Text = "▶",
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 18, FontStyle.Bold)
-            };
-            if (PART == 0)
-            {
-                btnNext.Click += (s, e2) =>
-                {
-                    NavigationService.Navigate(() => new _2SuaChua());
-                };
-            }
-            else {
-                btnNext.Click += (s, e2) =>
-                {
-                    NavigationService.Navigate(() => new KeHoachSuaChua());
-                };
-            }
-            pnlArrowRight.Controls.Add(btnNext);
-
+            
             // ===== ADD CONTROLS =====
             pnlMain.Controls.Add(txtInput);
             pnlMain.Controls.Add(lblContent);
             pnlMain.Controls.Add(lblHeader);
-            pnlMain.Controls.Add(pnlArrowRight);
 
             // ===== BOTTOM BUTTONS =====
             TableLayoutPanel pnlButton = new TableLayoutPanel
@@ -140,32 +115,54 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
 
             Button btnBack = new Button
             {
+
                 Text = "Trở về",
-                BackColor = Color.FromArgb(252, 213, 180),
-                Anchor = AnchorStyles.Left
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(108, 117, 125),
+                ForeColor = Color.White
             };
             btnBack.Click += (s, e2) => NavigationService.Back();
 
             Button btnHome = new Button
             {
-                Text = "Trang\nchủ",
-                BackColor = Color.Yellow,
-                Anchor = AnchorStyles.None
+                Text = "Dự Kiến",
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(13, 110, 253),
+                ForeColor = Color.White
             };
-
+            if (PART == 1) btnHome.Text = "Kế Hoạch";
             Button btnSave = new Button
             {
-                Text = "Lưu",
-                BackColor = Color.FromArgb(189, 215, 238),
-                Anchor = AnchorStyles.Right
+                Text = "Tiếp",
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.FromArgb(25, 135, 84),
+                ForeColor = Color.White
             };
-            btnSave.Click += (s, e2) =>
+            if (PART == 0)
             {
-                if (dataLayer.TonTai(SectionKey))
-                    dataLayer.CapNhatThongTin(txtInput.Text, SectionKey);
-                else
-                    dataLayer.ThemThongTin(txtInput.Text, SectionKey);
-            };
+                btnSave.Click += (s, e2) =>
+                {
+                    if (dataLayer.TonTai(SectionKey))
+                        dataLayer.CapNhatThongTin(txtInput.Text, SectionKey);
+                    else
+                        dataLayer.ThemThongTin(txtInput.Text, SectionKey);
+                    NavigationService.Navigate(() => new _2SuaChua());
+                };
+            }
+            else
+            {
+                btnSave.Click += (s, e2) =>
+                {
+                    if (dataLayer.TonTai(SectionKey))
+                        dataLayer.CapNhatThongTin(txtInput.Text, SectionKey);
+                    else
+                        dataLayer.ThemThongTin(txtInput.Text, SectionKey);
+                    NavigationService.Navigate(() => new KeHoachSuaChua());
+                };
+            }
 
             pnlButton.Controls.Add(btnBack, 0, 0);
             pnlButton.Controls.Add(btnHome, 1, 0);
@@ -178,7 +175,6 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             if (keyData == (Keys.Control | Keys.Add))
             {
                 currentFontSize++;
-                UpdateFontRecursive(this);
                 return true;
             }
 
@@ -186,18 +182,11 @@ namespace BoDoiApp.View.VIIIBaoDuongSuaChua
             {
                 if (currentFontSize > 8)
                     currentFontSize--;
-                UpdateFontRecursive(this);
                 return true;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void UpdateFontRecursive(Control control)
-        {
-            control.Font = new Font("Times New Roman", currentFontSize, control.Font.Style);
-            foreach (Control child in control.Controls)
-                UpdateFontRecursive(child);
-        }
     }
 }

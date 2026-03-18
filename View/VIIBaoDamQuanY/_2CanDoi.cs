@@ -1,4 +1,5 @@
 ﻿using BoDoiApp.Resources;
+using BoDoiApp.View.Main;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,7 @@ namespace BoDoiApp.View.VIIBaoDamQuanY
 
         private void button2_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(() => new Form1());
+            NavigationService.Navigate(() => new FormBaoDamHauCan());
         }
 
         private void button3_Click(object sender, EventArgs e)
